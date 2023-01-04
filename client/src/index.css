@@ -1,13 +1,24 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+:root {
+    --main-color: #82194e;
+    --secondary-color: #4e102f;
+    --card-color: #efeded;
+    --font-color: #554148;
+    --border-color: #707070;
+}
+
+@font-face {
+    font-family: Tajawal;
+    src: url('./fonts/Tajawal/Tajawal-Regular.ttf');
+}
+
+body {
+    font-family: Tajawal;
 }
