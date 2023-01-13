@@ -1,0 +1,575 @@
+/* START HOME SECTION */
+.home {
+    height: 100vh;
+    background-image: url('../../../public/images/Group9.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: -300px;
+    display: grid;
+    grid-template-rows: repeat(8, 1fr);
+    grid-gap: 20px;
+    animation-name: backgroundAnimation;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    overflow: hidden;
+}
+
+@keyframes backgroundAnimation {
+    0% {
+        background-position-y: 500px;
+        background-position-x: 0px;
+    }
+
+    50% {
+        background-position-x: -300px;
+    }
+
+    100% {
+        background-position-y: -500px;
+        background-position-x: -500px;
+    }
+}
+
+/* start Navbar */
+.navbar {
+    background-image: linear-gradient(
+        45deg,
+        var(--secondary-color),
+        var(--main-color)
+    );
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10%;
+    color: var(--card-color);
+    grid-row: 1 / 2;
+}
+
+/* list of navbar */
+.listContainer {
+    display: flex;
+}
+
+.list {
+    display: flex;
+    list-style: none;
+}
+
+.listContainer .logo {
+    font-size: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 0 0 40px;
+}
+
+.list li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 0 0 40px;
+}
+
+.list li a {
+    color: var(--card-color);
+    font-size: 0.9rem;
+}
+
+.listContainer .bar {
+    display: none;
+}
+
+@media (min-width: 283px) and (max-width: 992px) {
+    .listContainer {
+        position: relative;
+    }
+
+    .listContainer .logo {
+        display: none;
+    }
+
+    .listContainer .bar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 20px;
+    }
+
+    .listContainer .list {
+        display: none;
+    }
+
+    .listContainer:hover .list {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        background-image: linear-gradient(
+            45deg,
+            var(--secondary-color),
+            var(--main-color)
+        );
+        top: 50%;
+        padding: 25px;
+        width: 300px;
+        border-radius: 10px;
+    }
+
+    .listContainer:hover .list li {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--secondary-color);
+    }
+
+    .listContainer:hover .list li a {
+        font-size: 1.3rem;
+    }
+}
+
+/* login btn */
+.btn {
+    border-radius: 10px;
+    width: 120px;
+    height: 40px;
+}
+/* end Navbar */
+
+/* start login section */
+.loginContainer {
+    display: none;
+}
+
+.loginSection {
+    width: 70%;
+    height: 70vh;
+    display: flex;
+}
+
+.loginSection .content {
+    width: 40%;
+    background-image: linear-gradient(
+        45deg,
+        var(--secondary-color),
+        var(--main-color)
+    );
+    border-radius: 0 10px 10px 0;
+    color: var(--card-color);
+    padding: 25px;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loginSection .content h1 {
+    color: inherit;
+    font-size: 1.7rem;
+    margin: 45px 0 20px 0;
+}
+
+.loginSection .content .loginForm .link {
+    color: var(--card-color);
+    font-size: 0.8rem;
+}
+
+.loginSection .content .loginForm .link:hover {
+    color: var(--border-color);
+    transform: none;
+}
+
+.loginSection .content .loginForm .btn {
+    background-color: var(--card-color);
+    border-radius: 5px;
+    width: 170px;
+    margin: 15px auto;
+    font-weight: 600;
+}
+
+.loginSection .content .loginForm .btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.loginSection .img {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.loginSection .img img {
+    width: 90%;
+    margin: 0 auto;
+}
+
+@media (min-width: 283px) and (max-width: 768px) {
+    .loginSection .btnClose {
+        color: var(--card-color);
+        margin: 15px;
+    }
+
+    .loginSection .btnClose:hover {
+        color: var(--secondary-color);
+    }
+
+    .loginSection .img {
+        display: none;
+    }
+
+    .loginSection .content {
+        width: 100%;
+        border-radius: 10px;
+    }
+}
+/* end login section */
+
+/* start Hero section */
+.heroSection {
+    grid-row: 2 / 6;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.heroSection header {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.heroSection header h1 {
+    font-size: 1.7rem;
+}
+
+@media (min-width: 283px) and (max-width: 992px) {
+    .heroSection {
+        text-align: center;
+    }
+
+    .heroSection header h1 {
+        font-size: 2rem;
+    }
+}
+
+/* end Hero section */
+
+/* start Sechedule search section */
+.sechduleSearch {
+    grid-row: 6 / 9;
+    background-color: var(--card-color);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 10%;
+}
+
+.sechduleSearch .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sechduleSearch .content h1 {
+    font-size: 1.7rem;
+}
+
+.sechduleSearch .content h1 svg {
+    margin: 0 0 0 10px;
+}
+
+.sechduleSearch .content p {
+    margin: 10px 0;
+}
+
+.sechduleSearch .btn {
+    background-color: var(--main-color);
+    color: var(--card-color);
+    width: 150px;
+    height: 50px;
+    font-weight: 600;
+    border-radius: 35px 5px 35px 5px;
+}
+
+.sechduleSearch .btn:hover {
+    background-color: var(--border-color);
+}
+
+@media (min-width: 283px) and (max-width: 992px) {
+    .sechduleSearch {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .sechduleSearch .btn {
+        margin: 15px auto;
+    }
+}
+/* end Sechedule search section */
+/* END HOME SECTION */
+
+/* START OUR SYSTEM SECTION */
+.ourSystem {
+    margin: 40px 0;
+    padding: 25px 10%;
+    height: 80vh;
+    display: flex;
+    overflow: hidden;
+}
+
+.ourSystem .content {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ourSystem .content header h1 {
+    font-size: 2rem;
+}
+
+.ourSystem .img {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ourSystem .img img {
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (min-width: 283px) and (max-width: 992px) {
+    .ourSystem {
+        flex-direction: column;
+        justify-content: space-evenly;
+        text-align: center;
+    }
+
+    .ourSystem .content {
+        width: 100%;
+        margin: 30px auto;
+    }
+
+    .ourSystem .content header h1 {
+        margin: 20px auto;
+    }
+
+    .ourSystem .img {
+        width: 100%;
+    }
+}
+/* END OUR SYSTEM SECTION */
+
+/* START FEATURS */
+.features {
+    margin: 35px 0;
+    padding: 30px 10%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px;
+    min-height: 80vh;
+    overflow: hidden;
+}
+
+.features .feature {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.features .feature .img {
+    width: 80%;
+    margin: 10px auto;
+}
+
+.features .feature .img img {
+    width: 100%;
+}
+
+@media (min-width: 283px) and (max-width: 992px) {
+    .features {
+        grid-template-columns: repeat(1, 1fr);
+        grid-column-gap: 25px;
+        margin: 40px auto;
+    }
+
+    .features .feature {
+        margin: 25px auto;
+    }
+
+    .features .feature h1 {
+        margin: 15px auto;
+    }
+
+    .features .feature .img {
+        width: 60%;
+        margin: 10px auto;
+    }
+}
+/* END FEATURES SECTION */
+
+/* START CONTACT US SECTION */
+.contactUs {
+    width: 80%;
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+    height: 60vh;
+    animation-name: showAnimation;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes showAnimation {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.contactUs header {
+    width: 450px;
+    margin: auto 0 auto 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    height: 50%;
+    padding: 25px;
+    border-radius: 50px 10px 50px 10px;
+    position: relative;
+}
+
+.contactUs header::after {
+    content: url('../../../public/images/Mask\ Group\ 33.png');
+    background-image: linear-gradient(
+        45deg,
+        var(--secondary-color),
+        var(--main-color)
+    );
+    position: absolute;
+    left: -90px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contactUs .formContactUs {
+    width: 350px;
+    padding: 25px 5%;
+    height: 80%;
+    background-image: linear-gradient(
+        45deg,
+        var(--secondary-color),
+        var(--main-color)
+    );
+    margin: auto 30px auto 0;
+    color: var(--card-color);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contactUs .formContactUs label {
+    margin-bottom: 7px;
+}
+
+.contactUs .formContactUs .input,
+.loginSection .content .loginForm .input {
+    margin-bottom: 10px;
+    background-color: var(--secondary-color);
+    padding: 7px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
+
+.contactUs .formContactUs .input input,
+.loginSection .content .loginForm .input input {
+    width: 90%;
+    background-color: transparent;
+    color: var(--card-color);
+}
+
+.contactUs .formContactUs .btn {
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+    color: var(--card-color);
+    width: 200px;
+    margin: 5px auto;
+}
+
+.contactUs .formContactUs .btn:hover {
+    background-color: var(--main-color);
+}
+
+@media (min-width: 283px) and (max-width: 992px) {
+    .contactUs {
+        flex-direction: column;
+    }
+
+    .contactUs header {
+        width: 100%;
+        margin: 10px auto;
+        text-align: center;
+    }
+
+    .contactUs header::after {
+        bottom: -60px;
+        left: 0;
+        transform: rotate(270deg);
+    }
+
+    .contactUs .formContactUs {
+        width: 80%;
+        margin: 15px auto;
+    }
+}
+/* END CONTACT US SECTION */
+
+/* START FOOTER SECTION */
+.footer {
+    background-image: linear-gradient(
+        45deg,
+        var(--secondary-color),
+        var(--main-color)
+    );
+    padding: 20px;
+    color: var(--card-color);
+    text-align: center;
+}
+
+.footer .iconList {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 15px auto 0;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.footer .iconList li a {
+    color: var(--card-color);
+    margin: 0 10px;
+    font-size: 1.3rem;
+}
+
+.footer .iconList li a:hover {
+    color: var(--border-color);
+    transform: scale(1.1);
+}
+
+.footer .copyrigth {
+    color: var(--border-color);
+    font-size: 0.8rem;
+    padding: 15px 0 0 0;
+}
+/* END FOOTER SECTION */

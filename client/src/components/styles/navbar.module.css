@@ -1,0 +1,153 @@
+.navbar {
+    background-image: linear-gradient(
+        45deg,
+        var(--secondary-color),
+        var(--main-color)
+    );
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 10%;
+    color: var(--card-color);
+    grid-row: 1 / 2;
+}
+
+/* list of navbar */
+.listContainer {
+    display: flex;
+}
+
+.list {
+    display: flex;
+    list-style: none;
+}
+
+.listContainer .logo {
+    font-size: 1.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 0 0 40px;
+}
+
+.list li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 0 0 40px;
+}
+
+.list li a {
+    color: var(--card-color);
+    font-size: 0.9rem;
+}
+
+.listContainer .bar {
+    display: none;
+}
+
+.iconsContainer {
+    display: flex;
+}
+
+.iconsContainer .icons {
+    margin-right: 25px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.iconsContainer .icons .list {
+    display: none;
+    text-align: center;
+    position: absolute;
+    background-image: linear-gradient(
+        45deg,
+        var(--secondary-color),
+        var(--main-color)
+    );
+    width: 200px;
+    top: 30%;
+    left: 0%;
+    border-radius: 5px;
+}
+
+.iconsContainer .icons:hover .list {
+    display: block;
+}
+
+.notivcations .listNotivications header {
+    padding: 10px;
+    border-bottom: 2px solid var(--secondary-color);
+}
+.notivcations .listNotivications .ntivication {
+    padding: 5px;
+    width: 90%;
+    margin: 10px auto;
+    border: 1px solid var(--secondary-color);
+    border-radius: 2.5px;
+}
+
+.profile .listProfile {
+    padding: 20px 0;
+    text-align: center;
+    width: 250px;
+}
+
+.profile .listProfile li {
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.profile .listProfile li svg {
+    margin: 0 5px;
+}
+
+@media (min-width: 283px) and (max-width: 992px) {
+    .listContainer {
+        position: relative;
+    }
+
+    .listContainer .logo {
+        display: none;
+    }
+
+    .listContainer .bar {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 20px;
+    }
+
+    .listContainer .list {
+        display: none;
+    }
+
+    .listContainer:hover .list {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        background-image: linear-gradient(
+            45deg,
+            var(--secondary-color),
+            var(--main-color)
+        );
+        top: 50%;
+        padding: 25px;
+        width: 300px;
+        border-radius: 10px;
+    }
+
+    .listContainer:hover .list li {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--secondary-color);
+    }
+
+    .listContainer:hover .list li a {
+        font-size: 1.3rem;
+    }
+}
