@@ -19,6 +19,193 @@
     src: url('./fonts/Tajawal/Tajawal-Regular.ttf');
 }
 
+html {
+    direction: rtl;
+}
+
 body {
     font-family: Tajawal;
+    color: var(--font-color);
+}
+
+h1 {
+    color: var(--main-color);
+}
+
+/* layout */
+.layout {
+    display: flex;
+}
+
+/* links style */
+.link {
+    display: block;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: var(--border-color);
+    transform: scale(1.05);
+    transition: 0.1s;
+}
+
+/* button style */
+.btn {
+    cursor: pointer;
+    padding: 7px 10px;
+    border-radius: 5px;
+    box-shadow: 0px 3px 3px 0px var(--border-color);
+    color: var(--main-color);
+    border: none;
+    font-family: Tajawal;
+}
+
+.btn:hover {
+    background-color: var(--secondary-color);
+    color: var(--card-color);
+    transform: scale(1.02);
+    transition: 0.05s;
+}
+
+.btnContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* CONTAINER SECTION */
+.container-section {
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(30, 30, 30, 0.6);
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    z-index: 10;
+}
+
+.center-section {
+    width: 350px;
+    min-height: 180px;
+    background-color: var(--card-color);
+    margin: 0 auto;
+    border-radius: 10px;
+    position: relative;
+}
+
+.center-section article {
+    padding: 10px;
+    text-align: right;
+}
+
+.center-section .addForm {
+    width: 90%;
+    margin: 15px auto;
+    text-align: right;
+}
+
+.center-section .addForm label {
+    margin: 8px 0;
+    color: var(--main-color);
+}
+
+.center-section .addForm .input {
+    padding: 5px 10px 5px 2px;
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
+.center-section .addForm .input input {
+    width: calc(100% - 16px);
+    color: var(--font-color);
+}
+
+.center-section .addForm .btn {
+    width: 180px;
+    margin: 15px auto;
+    background-color: var(--main-color);
+    color: var(--card-color);
+}
+
+.center-section .addForm .btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.close-btn {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: var(--main-color);
+}
+
+/* input & label */
+label {
+    display: inline-block;
+    margin-bottom: 7px;
+}
+
+input {
+    padding: 7px 10px;
+    border: none;
+    font-family: Tajawal;
+}
+
+input:focus-visible {
+    outline: none;
+}
+
+/* active link in sidebar */
+.sidebar .active {
+    background-color: var(--secondary-color);
+}
+
+/* container page for admin */
+.containerPage {
+    width: calc(100% - 300px);
+    min-height: 100vh;
+    position: relative;
+    right: 300px;
+}
+
+@media (min-width: 283px) and (max-width: 767px) {
+    .containerPage {
+        width: 90%;
+        right: 0;
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .containerPage {
+        width: calc(100% - 50px);
+        right: 50px;
+    }
+}
+
+/* ANIMATION */
+.translateAnimation {
+    animation-name: translateAnimation;
+    animation-duration: 1s;
+    /* animation-iteration-count: infinite; */
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes translateAnimation {
+    0% {
+        transform: translateY(300px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
 }

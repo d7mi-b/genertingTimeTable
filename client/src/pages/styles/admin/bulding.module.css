@@ -1,0 +1,66 @@
+.buldingPage header {
+    width: 90%;
+    margin: 35px auto 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.buldingPage header .btn {
+    background-color: var(--main-color);
+    color: var(--card-color);
+    margin: 0 10px;
+    width: 120px;
+}
+
+.buldingPage header .btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.buldingsContainer {
+    width: 90%;
+    margin: 35px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    text-align: center;
+}
+
+.bulding {
+    border: 1px solid var(--border-color);
+    padding: 25px;
+    box-shadow: 3px 3px 3px 1px var(--border-color);
+    cursor: pointer;
+}
+
+.bulding:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+    border-color: var(--main-color);
+}
+
+.addBuldingSection {
+    display: none;
+    width: calc(100% - 300px);
+}
+
+.bulding .img {
+    width: 35%;
+    margin: 10px auto;
+}
+
+.bulding .img img {
+    width: 100%;
+}
+
+.bulding h1 {
+    font-size: 1.5rem;
+}
+
+@media (min-width: 283px) and (max-width: 767px) {
+    .buldingPage header .btn {
+        width: 90px;
+    }
+    .buldingsContainer {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

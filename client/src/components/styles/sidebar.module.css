@@ -1,0 +1,145 @@
+.sidebar {
+    width: 300px;
+    height: 100vh;
+    position: fixed;
+    background-image: linear-gradient(
+        45deg,
+        var(--secondary-color),
+        var(--main-color)
+    );
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sidebar .bars {
+    width: 50px;
+    display: none;
+    color: var(--card-color);
+    text-align: right;
+}
+
+.sidebar .logo {
+    color: var(--card-color);
+    font-size: 2rem;
+    text-align: center;
+}
+
+.sidebar .list {
+    list-style: none;
+}
+
+.sidebar .list li a {
+    color: var(--card-color);
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--secondary-color);
+}
+
+.sidebar .list li a:hover {
+    color: var(--border-color);
+}
+
+.sidebar .list li a svg {
+    margin: 0 0 0 7px;
+}
+
+.sidebar .btn {
+    width: 180px;
+    margin: 10px auto;
+}
+
+.logoutIcon {
+    display: none;
+    color: var(--card-color);
+    cursor: pointer;
+}
+
+.logoutIcon:hover {
+    color: var(--border-color);
+}
+
+@media (min-width: 283px) and (max-width: 767px) {
+    .sidebar {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        overflow: hidden;
+        z-index: 10;
+        background-image: none;
+        text-align: right;
+    }
+    .sidebar .bars {
+        display: block;
+        color: var(--secondary-color);
+        margin-right: 0;
+    }
+    .sidebar .logo {
+        display: none;
+    }
+    .sidebar:hover {
+        height: 100vh;
+        background-image: linear-gradient(
+            45deg,
+            var(--secondary-color),
+            var(--main-color)
+        );
+        height: 500px;
+        width: 200px;
+        transition: 0.5s;
+        border-radius: 10px 0 0 10px;
+        animation-name: sidebarAnimation;
+        animation-duration: 0.2s;
+        animation-timing-function: linear;
+        animation-fill-mode: forwards;
+        animation-direction: alternate;
+    }
+    .sidebar .btn {
+        display: none;
+    }
+
+    .sidebar .logoutIcon {
+        display: block;
+    }
+}
+
+@keyframes sidebarAnimation {
+    0% {
+        width: 50px;
+    }
+
+    100% {
+        height: 500px;
+        width: 200px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .sidebar {
+        width: 50px;
+    }
+
+    .sidebar .bars {
+        display: block;
+    }
+
+    .sidebar .logo {
+        display: none;
+    }
+
+    .sidebar .list li a span {
+        display: none;
+    }
+
+    .sidebar .btn {
+        display: none;
+    }
+
+    .sidebar .logoutIcon {
+        display: block;
+    }
+}

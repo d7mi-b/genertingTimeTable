@@ -1,0 +1,64 @@
+.users header {
+    width: 90%;
+    margin: 35px auto 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.users header .btn {
+    background-color: var(--main-color);
+    color: var(--card-color);
+}
+
+.users header .btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.users .addUsersSection {
+    display: none;
+    width: calc(100% - 300px);
+}
+
+.usersContainer {
+    width: 90%;
+    margin: 45px auto 20px;
+}
+
+.user {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px 1px var(--border-color);
+    margin: 15px auto;
+}
+
+.user .userIcons svg {
+    margin: 0 15px 0 0;
+    cursor: pointer;
+}
+
+.user .userIcons svg:hover {
+    color: var(--border-color);
+}
+
+@media (min-width: 283px) and (max-width: 767px) {
+    .users header {
+        margin-top: 45px;
+    }
+
+    .user {
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .user p {
+        margin: 5px 0;
+    }
+
+    .user .userIcons svg {
+        margin: 5px;
+    }
+}

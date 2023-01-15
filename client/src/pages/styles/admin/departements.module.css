@@ -1,0 +1,58 @@
+.departemntsPage header {
+    width: 90%;
+    margin: 35px auto 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.departemntsPage header .btn {
+    background-color: var(--main-color);
+    color: var(--card-color);
+    margin: 0 10px;
+    width: 120px;
+}
+
+.addDepartementSection {
+    width: calc(100% - 300px);
+    display: none;
+}
+
+.departemntsPage header .btn:hover {
+    background-color: var(--secondary-color);
+}
+
+.departemntsContainer {
+    width: 90%;
+    margin: 35px auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 30px;
+    text-align: center;
+}
+
+.departemnt {
+    border: 1px solid var(--border-color);
+    padding: 25px;
+    box-shadow: 3px 3px 3px 1px var(--border-color);
+    cursor: pointer;
+}
+
+.departemnt:hover {
+    transform: scale(1.05);
+    transition: 0.3s;
+    border-color: var(--main-color);
+}
+
+.departemnt .img {
+    margin: 10px auto;
+}
+
+.departemnt .img img {
+    width: 100%;
+}
+
+@media (min-width: 283px) and (max-width: 767px) {
+    .departemntsContainer {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
