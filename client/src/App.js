@@ -6,6 +6,7 @@ import Departements from './pages/admin/Departements';
 import HomeAdmin from './pages/admin/HomeAdmin';
 import Users from './pages/admin/Users';
 import Home from './pages/Home';
+import HomeHOD from './pages/HOD/HomeHOD';
 
 const routerHome = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +30,7 @@ const routerAdmin = createBrowserRouter(
 const routerHOD = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<HodLayout />}>
-      <Route index element={<HomeAdmin />} />
+      <Route index element={<HomeHOD />} />
     </Route>
   )
 )
@@ -44,7 +45,7 @@ const routerSecretary = createBrowserRouter(
 
 function App() {
   return (
-    <RouterProvider router={routerHome} />
+    <RouterProvider router={routerHOD} />
   );
 }
 
