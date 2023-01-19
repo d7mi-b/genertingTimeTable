@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import {createBrowserRouter, RouterProvider, Route, createRoutesFromElements} from 'react-router-dom';
+import NotFound from './pages/NotFound';
 
 const AdminLayout = lazy( () => import('./Layouts/AdminLayout'));
 const HodLayout = lazy( () => import('./Layouts/hodLayout'));
@@ -11,7 +12,9 @@ const Home = lazy( () => import('./pages/Home'));
 
 const routerHome = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<Home />} />
+    <Route path='/' element={<Home />}>
+      <Route path='*' element={<NotFound />} />
+    </Route>
   )
 )
 
@@ -24,6 +27,7 @@ const routerAdmin = createBrowserRouter(
 
       </Route>
       <Route path='departements' element={<Departements />} />
+      <Route path='*' element={<NotFound />} />
     </Route>
   )
 )
@@ -32,6 +36,7 @@ const routerHOD = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<HodLayout />}>
       <Route index element={<HomeAdmin />} />
+      <Route path='*' element={<NotFound />} />
     </Route>
   )
 )
@@ -40,6 +45,7 @@ const routerSecretary = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<HodLayout />}>
       <Route index element={<HomeAdmin />} />
+      <Route path='*' element={<NotFound />} />
     </Route>
   )
 )
