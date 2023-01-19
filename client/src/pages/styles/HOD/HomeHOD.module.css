@@ -1,0 +1,32 @@
+
+.Home_header {
+    margin-top: 3%;
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.Home_header a {
+    color: var(--font-color);
+}
+
+.Home_header div{
+    display: flex;
+    font-size: 20;
+    font-family: Tajawal;
+}
+
+.Home_header button{
+    background-color: var(--main-color);
+    color: var(--card-color);
+    margin: 0 10px;
+    width: 120px;
+}
+
+.Home_main{
+    background-color: var(--card-color);
+    margin-top: 50px;
+    margin-left: -200px;
+    margin-right: -200px;
+    height: 350px;
+}

@@ -9,6 +9,7 @@ const Departements = lazy( () => import('./pages/admin/Departements'));
 const HomeAdmin = lazy( () => import('./pages/admin/HomeAdmin'));
 const Users = lazy( () => import('./pages/admin/Users'));
 const Home = lazy( () => import('./pages/Home'));
+const HomeHOD = lazy( () => import('./pages/HOD/HomeHOD'));
 
 const routerHome = createBrowserRouter(
   createRoutesFromElements(
@@ -35,7 +36,7 @@ const routerAdmin = createBrowserRouter(
 const routerHOD = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<HodLayout />}>
-      <Route index element={<HomeAdmin />} />
+      <Route index element={<HomeHOD />} />
       <Route path='*' element={<NotFound />} />
     </Route>
   )
@@ -53,7 +54,7 @@ const routerSecretary = createBrowserRouter(
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <RouterProvider router={routerAdmin} />
+      <RouterProvider router={routerHOD} />
     </Suspense>
   );
 }
