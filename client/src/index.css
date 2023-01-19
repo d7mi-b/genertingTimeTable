@@ -94,6 +94,8 @@ h1 {
     margin: 0 auto;
     border-radius: 10px;
     position: relative;
+    padding: 20px;
+    color: var(--main-color);
 }
 
 .center-section article {

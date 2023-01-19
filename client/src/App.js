@@ -1,12 +1,14 @@
+import { lazy, Suspense } from 'react';
 import {createBrowserRouter, RouterProvider, Route, createRoutesFromElements} from 'react-router-dom';
-import AdminLayout from './Layouts/AdminLayout';
-import HodLayout from './Layouts/hodLayout';
-import Bulding from './pages/admin/Bulding';
-import Departements from './pages/admin/Departements';
-import HomeAdmin from './pages/admin/HomeAdmin';
-import Users from './pages/admin/Users';
-import Home from './pages/Home';
-import HomeHOD from './pages/HOD/HomeHOD';
+
+const AdminLayout = lazy( () => import('./Layouts/AdminLayout'));
+const HodLayout = lazy( () => import('./Layouts/hodLayout'));
+const Bulding = lazy( () => import('./pages/admin/Bulding'));
+const Departements = lazy( () => import('./pages/admin/Departements'));
+const HomeAdmin = lazy( () => import('./pages/admin/HomeAdmin'));
+const Users = lazy( () => import('./pages/admin/Users'));
+const Home = lazy( () => import('./pages/Home'));
+const HomeHOD = lazy( () => import('./pages/HOD/HomeHOD'));
 
 const routerHome = createBrowserRouter(
   createRoutesFromElements(
@@ -45,7 +47,9 @@ const routerSecretary = createBrowserRouter(
 
 function App() {
   return (
-    <RouterProvider router={routerHOD} />
+    <Suspense fallback={<div>Loading...</div>}>
+      <RouterProvider router={routerHOD} />
+    </Suspense>
   );
 }
 
