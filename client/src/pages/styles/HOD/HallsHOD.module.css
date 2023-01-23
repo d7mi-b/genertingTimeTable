@@ -1,0 +1,39 @@
+.halls_header{
+    margin-top: 4%;
+    display: flex;
+    margin-bottom: 5%;
+}
+
+.halls_header a{
+    color: var(--font-color);
+}
+
+.halls_main{
+    display: grid;
+    grid-template-columns: repeat(4,100px);
+    grid-gap: 30px 120px;
+    justify-content: center;
+}
+
+.halls_main .box{
+    border: 1px solid rgba(85,65,72,0.5);
+    display: flex;
+    padding: 10px;
+    width: fit-content;
+    box-shadow: 0px 3px 2px 1px var(--card-color);
+    border-radius: 5px;
+}
+
+.halls_main .box div{
+    text-align: center;
+    width: 120px;
+    margin-left: 10px;
+    padding: 10px;
+    border-left: 1px solid var(--card-color);
+}
+
+.icon{
+    width: 50px;
+    height: 100%;
+    color: var(--main-color);
+}

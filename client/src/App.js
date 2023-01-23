@@ -9,6 +9,10 @@ const HomeAdmin = lazy( () => import('./pages/admin/HomeAdmin'));
 const Users = lazy( () => import('./pages/admin/Users'));
 const Home = lazy( () => import('./pages/Home'));
 const HomeHOD = lazy( () => import('./pages/HOD/HomeHOD'));
+const LecturersHOD = lazy( () => import('./pages/HOD/LecturersHOD'));
+const HallsHOD = lazy(() => import('./pages/HOD/HallsHOD'));
+const Review_Requests = lazy(() => import('./pages/HOD/ReviewRequestsHOD'));
+const Sudents_Groups = lazy(() => import('./pages/HOD/StudentsGroupsHOD'));
 
 const routerHome = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +37,10 @@ const routerHOD = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<HodLayout />}>
       <Route index element={<HomeHOD />} />
+      <Route path='lecturers' element={<LecturersHOD/>} />
+      <Route path='halls' element={<HallsHOD/>} />
+      <Route path='review_requests' element={<Review_Requests/>} />
+      <Route path='students_groups' element={<Sudents_Groups/>} />
     </Route>
   )
 )

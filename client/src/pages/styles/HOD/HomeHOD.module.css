@@ -1,6 +1,6 @@
 
 .Home_header {
-    margin-top: 3%;
+    margin-top: 4%;
     display: flex;
     justify-content: space-between;
     
@@ -29,4 +29,57 @@
     margin-left: -200px;
     margin-right: -200px;
     height: 350px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    padding: 50px;
+}
+.Home_main a{
+    
+    color: var(--font-color);
+}
+
+.Home_main div{
+    width: 186px;
+    height: 244px;
+    border: 1px solid var(--font-color);
+    border-radius: 6px;
+    box-shadow: 1px 1px 1px var(--font-color);
+    display: grid;
+    grid-template-rows: 100px 100px;
+    grid-gap: 30px;
+    padding-top: 40px;
+}
+
+.Home_main div:hover{
+    background-color: var(--secondary-color);
+    color: var(--card-color);
+    transform: scale(1.02);
+    transition: 0.05s;
+    cursor: pointer;
+}
+
+.Home_main p{
+    text-align:center;
+    justify-self:center;
+}
+
+.icon{
+    margin: 50px;
+    align-self: center;
+    width: 86;
+    height: auto;
+}
+
+.Home_footer{
+    text-align: center;
+    margin-top: 40px;
+}
+
+.Home_footer button{
+    background-color: var(--main-color);
+    color: var(--card-color);
+    margin: 0 10px;
+    width: 130px;
+    padding: 9px 12px;
 }
