@@ -16,7 +16,7 @@ const pool = createPool({
     database: process.env.MYSQL_DATABASE,
     connectionLimit: process.env.MYSQL_CONNECTION
 }).promise()
- 
+
 //run this query in mysql workbench to activate 
 //ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
 
