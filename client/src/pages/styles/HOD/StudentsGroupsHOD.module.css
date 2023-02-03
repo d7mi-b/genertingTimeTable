@@ -1,0 +1,33 @@
+.students_header{
+    margin-top: 4%;
+    display: flex;
+}
+
+.students_header a{
+    color: var(--font-color);
+}
+
+.students_main{
+    margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.students_main table{
+    text-align: center;
+    table-layout: var(--font-color);
+    
+}
+
+.students_main section{
+    background-color: #f7f7f7;
+    padding: 30px;
+    width: fit-content;
+    border-radius: 5px;
+    box-shadow: 2px 3px 3px 2px rgba(85,65,72,0.5);
+}
+
+.table_level{
+    background-color: #C9C9C9;
+}

@@ -1,32 +1,38 @@
-import { faAngleDoubleLeft, faUserGroup, faBookOpen, faHospital } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDoubleLeft, faUserGroup, faBookOpen, faBuilding, faFile } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
+import { NavLink } from "react-router-dom";
 import style from '../styles/HOD/HomeHOD.module.css';
 
 const services = [
     {
         id:1,
         name: 'مراجعة الطلبات',
-        icon: faUserGroup
+        icon: faFile,
+        route:'/review_requests'
     },
     {
         id:2,
         name: 'مجموعات الطلاب',
-        icon: faUserGroup 
+        icon: faUserGroup,
+        route:'/students_groups' 
     },
     {
         id:3,
         name: 'المقررات الدراسية',
-        icon: faBookOpen
+        icon: faBookOpen,
+        route:'/courses'
     },
     {
         id:4,
         name: 'القاعات',
-        icon: faHospital
+        icon: faBuilding,
+        route:'/halls'
     },
     {
         id:5,
         name: 'أعضاء هيئة التدريس',
-        icon: faUserGroup
+        icon: faUserGroup,
+        route:'/lecturers'
     }
     
 ]
@@ -38,7 +44,7 @@ const HomeHOD = () => {
                 <div>
                     <h3>رئيس القسم</h3>
                     <FontAwesomeIcon className='arrows' icon={faAngleDoubleLeft} />
-                    <h3><a className="link" href="#">الصفحة الرئيسية</a></h3>
+                    <h3><NavLink className="link" to="/">الصفحة الرئيسية</NavLink></h3>
                 </div>
                 <button className="btn">الجداول</button>
             </header>
@@ -46,14 +52,19 @@ const HomeHOD = () => {
             {
                 services.map(i => {
                     return (
+                        <NavLink to={i.route} className='link'>
                         <div key={i.id}>
-                            <FontAwesomeIcon icon={i.icon} />
+                            <FontAwesomeIcon icon={i.icon} className={style.icon} />
                             <p>{i.name}</p>
                         </div>
+                        </NavLink>
                     )
                 })
             }
             </main>
+            <footer className={style.Home_footer}>
+                <NavLink to='/create_table'><button className="btn">إنشاء جدول</button></NavLink>
+            </footer>
         </section>
     );
 }
