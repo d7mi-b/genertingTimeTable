@@ -1,9 +1,18 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRightFromBracket, faBars, faBuilding, faCalendarDay, faHome, faTableCellsLarge, faUser } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import { useLogout } from '../hooks/useLogout';
 import style from './styles/sidebar.module.css';
 
 const Sidebar = () => {
+    const { logout } = useLogout();
+
+    const handelLogout = () => {
+        logout();
+
+        window.location.replace('/');
+    }
+
     return (
         <aside className={`sidebar ${style.sidebar}`}>
             <FontAwesomeIcon className={`${style.bars}`} icon={faBars} size='xl' />
@@ -29,8 +38,8 @@ const Sidebar = () => {
             </ul>
 
             <section className='btnContainer'>
-                <FontAwesomeIcon className={`${style.logoutIcon}`} icon={faArrowRightFromBracket} size='xl' />
-                <button className={`btn ${style.btn}`}>تسجيل الخروج</button>
+                <FontAwesomeIcon className={`${style.logoutIcon}`} onClick={handelLogout} icon={faArrowRightFromBracket} size='xl' />
+                <button className={`btn ${style.btn}`} onClick={handelLogout}>تسجيل الخروج</button>
             </section>
         </aside>
     );

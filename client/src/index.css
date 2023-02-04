@@ -75,16 +75,15 @@ h1 {
 
 /* CONTAINER SECTION */
 .container-section {
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     background-color: rgba(30, 30, 30, 0.6);
     position: fixed;
     top: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+    display: grid;
+    place-items: center;
     z-index: 10;
+    transition: .5s;
 }
 
 .center-section {
@@ -93,14 +92,53 @@ h1 {
     background-color: var(--card-color);
     margin: 0 auto;
     border-radius: 10px;
-    position: relative;
+    position: fixed;
+    top: center;
+    right: -300px;
+    translate: 50%, -50%;
     padding: 20px;
     color: var(--main-color);
+    transition: .5s;
+    animation: modal-in 1s both;
+}
+
+.center-section form,
+.center-section header {
+    animation: modal-content-in 1s both;
+}
+
+@keyframes modal-in {
+    0%, 50% {
+        width: 350px;
+        height: 350px;
+        border-radius: 50%;
+    }
+    55%, 100% {
+        right: 50%;
+        height: auto;
+    }
+    60% {
+        width: 600px;
+        border-radius: 10px;
+    }
+    75% {
+        translate: 50%, -50%;
+    }
+}
+
+@keyframes modal-content-in {
+    0%, 25% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 .center-section article {
     padding: 10px;
     text-align: right;
+    transition: .5s;
 }
 
 .center-section .addForm {
@@ -121,7 +159,7 @@ h1 {
     border: 1px solid var(--border-color);
 }
 
-.center-section .addForm .input input {
+.center-section .addForm .input input, select {
     width: calc(100% - 16px);
     color: var(--font-color);
 }
@@ -149,13 +187,28 @@ h1 {
     color: var(--main-color);
 }
 
+@media (min-width: 283px) and (max-width: 992px) {
+    .container-section {
+        animation: none;
+    }
+    .center-section {
+        animation: none;
+        right: auto;
+        position: sticky;
+    }
+}
+
 /* input & label */
 label {
     display: inline-block;
     margin-bottom: 7px;
 }
 
-input {
+select {
+    background-color: transparent;
+}
+
+input, select {
     padding: 7px 10px;
     border: none;
     font-family: Tajawal;

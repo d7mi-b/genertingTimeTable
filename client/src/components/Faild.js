@@ -3,23 +3,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect } from "react";
 import style from './styles/Done&Faild.module.css';
 
-const Faild = () => {
+const Faild = (props) => {
 
     useEffect(() =>{
-        const containerSection = document.querySelector('.container-section');
-        const btnCloseSection = document.querySelector('.close-btn');
-
+        const containerSection = document.querySelector('#containerComponent');
+        const btnCloseSection = document.querySelector('#colseComponente');
+        
         btnCloseSection.addEventListener('click', () => {
             containerSection.style.cssText = 'display: none';
+            window.location.reload();
         });
     }, [])
 
     return (
-        <section className={`container-section ${style.container}`}>
+        <section id="containerComponent" className={`container-section ${style.container}`}>
             <article className={`center-section ${style.centerSection}`}>
-                <FontAwesomeIcon className={`close-btn ${style.btnClose}`} id='colseLogin' icon={faXmark} size='xl' />
+                <FontAwesomeIcon className={`close-btn ${style.btnClose}`} id='colseComponente' icon={faXmark} size='xl' />
                 <FontAwesomeIcon className={`${style.icon}`} icon={faXmark} size="xl" />
-                <p>فشل</p>
+                <p>{props.errorMessage}</p>
             </article>
         </section>
     );

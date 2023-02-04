@@ -10,7 +10,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquareTwitter, faSquareFacebook, faSquareInstagram } from '@fortawesome/free-brands-svg-icons';
 import style from './styles/home.module.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useLogin } from '../hooks/useLogin';
 
 const features = [
     {
@@ -34,6 +35,15 @@ const features = [
 ]
 
 const Home = () => {
+    const { login, isLoading, erroe } = useLogin();
+    const [User_Name, setUser_Name] = useState('');
+    const [Password, setPassword] = useState('');
+
+    const handelSubmit = async (e) => {
+        e.preventDefault();
+
+        await login(User_Name, Password);
+    }
 
     useEffect(() => {
         const featuresSection = document.getElementById('features');
@@ -93,16 +103,26 @@ const Home = () => {
                             <header>
                                 <h1>تسجيل الدخول</h1>
                             </header>
-                            <form className={`${style.loginForm}`}>
-                                <label htmlFor='name'>اسم المستخدم:</label>
+                            <form className={`${style.loginForm}`} onSubmit={handelSubmit}>
+                                <label htmlFor='User_Name'>اسم المستخدم:</label>
                                 <section className={`${style.input}`}>
                                     <FontAwesomeIcon icon={faUser} />
-                                    <input type='name' name='name' />
+                                    <input 
+                                        type='name' 
+                                        name='User_Name' 
+                                        value={User_Name}
+                                        onChange={e => setUser_Name(e.target.value)}
+                                    />
                                 </section>
                                 <label htmlFor='password'>كلمة المرور:</label>
                                 <section className={`${style.input}`}>
                                     <FontAwesomeIcon icon={faLock} />
-                                    <input type='password' name='password' />
+                                    <input 
+                                        type='password' 
+                                        name='password' 
+                                        value={Password}
+                                        onChange={e => setPassword(e.target.value)}
+                                    />
                                 </section>
                                 <Link to='/' className={`link ${style.link}`}>نسيت كلمة المرور</Link>
                                 <section className='btnContainer'>

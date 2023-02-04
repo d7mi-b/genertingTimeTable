@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
-import {createBrowserRouter, RouterProvider, Route, createRoutesFromElements} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Navigate} from 'react-router-dom';
+import { useAuthContext } from './hooks/useAuthContext';
 import NotFound from './pages/NotFound';
 
 const AdminLayout = lazy( () => import('./Layouts/AdminLayout'));
@@ -41,14 +42,11 @@ const routerHOD = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<HodLayout />}>
       <Route index element={<HomeHOD />} />
-<<<<<<< HEAD
       <Route path='lecturers' element={<LecturersHOD/>} />
       <Route path='halls' element={<HallsHOD/>} />
       <Route path='review_requests' element={<Review_Requests/>} />
       <Route path='students_groups' element={<Sudents_Groups/>} />
-=======
       <Route path='*' element={<NotFound />} />
->>>>>>> 90131e9d744b3880fcdd48997f823763181c34ce
     </Route>
   )
 )
@@ -63,9 +61,25 @@ const routerSecretary = createBrowserRouter(
 )
 
 function App() {
+  const { user } = useAuthContext();
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <RouterProvider router={routerHOD} />
+      {
+        !user && <RouterProvider router={routerHome} />
+      }
+
+      {
+        user && user.type === 1 && <RouterProvider router={routerAdmin} />
+      }
+
+      {
+        user && user.type === 2 && <RouterProvider router={routerSecretary} />
+      }
+
+      {
+        user && user.type === 3 && <RouterProvider router={routerHOD} />
+      }
     </Suspense>
   );
 }

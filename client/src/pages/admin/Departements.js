@@ -1,36 +1,11 @@
 import { faXmark, faBuilding } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
+import useFetch from '../../hooks/useFetch';
 import style from '../styles/admin/departements.module.css';
 
-const departemnts = [
-    {
-        id: 1,
-        name: 'هندسة حاسوب'
-    },
-    {
-        id: 2,
-        name: 'هندسة إلكنرونية وإتصالات'
-    },
-    {
-        id: 3,
-        name: 'هندسة معمارية'
-    },
-    {
-        id: 4,
-        name: 'هندسة مدنية'
-    },
-    {
-        id: 5,
-        name: 'هندسة كيميائية'
-    },
-    {
-        id: 6,
-        name: 'هندسة بترولية'
-    },
-]
-
 const Departements = () => {
+    const { data, isPending, error } = useFetch('http://localhost:5000/departements');
 
     useEffect(() => {
         const btnAddBulding = document.querySelector('.btnAddBulding');
@@ -75,14 +50,14 @@ const Departements = () => {
             </section>
 
             <section className={`${style.departemntsContainer}`}>
-                {
-                    departemnts.map(e => {
+                {   data &&
+                    data.map(e => {
                         return (
-                            <article className={`${style.departemnt}`} key={e.id}>
+                            <article className={`${style.departemnt}`} key={e.Department_ID}>
                                 <section className={`${style.img}`}>
                                     <img src='/images/Mask Group 36.png' alt='bulding' />
                                 </section>
-                                <h1>{e.name}</h1>
+                                <h1>{e.Department_Name}</h1>
                             </article>
                         )
                     })

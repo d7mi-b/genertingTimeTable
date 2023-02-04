@@ -55,4 +55,15 @@
     .departemntsContainer {
         grid-template-columns: repeat(1, 1fr);
     }
+
+    .addDepartementSection {
+        width: 100%;
+        right: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .addDepartementSection {
+        width: calc(100% - 50px);
+    }
 }

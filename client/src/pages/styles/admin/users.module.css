@@ -19,6 +19,19 @@
     width: calc(100% - 300px);
 }
 
+.users .addUsersSection article {
+    padding: 0 20px;
+}
+
+.users .addUsersSection article header {
+    margin-top: 25px;
+    margin-bottom: 0;
+}
+
+.users .addUsersSection article form {
+    margin-top: 5px;
+}
+
 .usersContainer {
     width: 90%;
     margin: 45px auto 20px;
@@ -61,4 +74,21 @@
     .user .userIcons svg {
         margin: 5px;
     }
+
+    .users .addUsersSection {
+        width: 100%;
+        right: 0;
+    }
 }
+
+@media (min-width: 768px) and (max-width: 1124px) {
+    .users .addUsersSection {
+        width: calc(100% - 50px);
+    }
+
+    .users .addUsersSection article {
+        position: sticky;
+    }
+}
+
+
