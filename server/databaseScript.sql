@@ -3,74 +3,74 @@ Create database timetable;
 Use timetable;
 
 Create table day (
-	Day_ID int not null,
-    Day_Name varchar(15) not null,
+	Day_ID int auto_increment not null,
+    Day_Name varchar(30) not null,
     primary key(Day_ID)
     );
     
     Create table time (
-	Time_ID int not null,
-    Start_Time varchar(15) not null,
-    End_Time varchar(15) not null,
-    Duration varchar(15) not null,
+	Time_ID int auto_increment not null,
+    Start_Time varchar(50) not null,
+    End_Time varchar(50) not null,
+    Duration varchar(50) not null,
     primary key(Time_ID)
     );
     
     Create table user_type (
-	User_Type_ID int not null,
-    User_Type_Name varchar(15) not null,
+	User_Type_ID int auto_increment not null,
+    User_Type_Name varchar(50) not null,
     primary key(User_Type_ID)
     );
     
     Create table batch_type (
-	Batch_Type_ID int not null,
-    Batch_Type varchar(15) not null,
+	Batch_Type_ID int auto_increment not null,
+    Batch_Type varchar(50) not null,
     primary key(Batch_Type_ID)
     );
     
     Create table level (
-	Level_ID int not null,
-    Level_Name varchar(15) not null,
+	Level_ID int auto_increment not null,
+    Level_Name varchar(50) not null,
     primary key(Level_ID)
     );
     
 	Create table hall_type (
-	Hall_Type_ID int not null,
-    Type_Name varchar(15) not null,
+	Hall_Type_ID int auto_increment not null,
+    Type_Name varchar(50) not null,
     primary key(Hall_Type_ID)
     );
     
     Create table building (
-    Building_ID int not null,
-    Building_Name varchar(15) not null,
+    Building_ID int auto_increment not null,
+    Building_Name varchar(50) not null,
     primary key(Building_ID)
     );
     
     Create table semester (
-    Semester_ID int not null,
-    Semester_Name varchar(15) not null,
+    Semester_ID int auto_increment not null,
+    Semester_Name varchar(50) not null,
     primary key(Semester_ID)
     );
     
     Create table college (
-    College_ID int not null,
-    College_Name varchar(15) not null,
+    College_ID int auto_increment not null,
+    College_Name varchar(150) not null,
     primary key(College_ID)
     );
     
     Create table department (
-    Department_ID int not null,
-    Department_Name varchar(15) not null,
+    Department_ID int auto_increment not null,
+    Department_Name varchar(150) not null,
     College_ID int,
     primary key(Department_ID),
     foreign key(College_ID) references college(College_ID)
     );
     
     Create table users (
-    User_ID int not null,
-    Name varchar(15) not null,
-    User_Name varchar(15) not null,
-    Password varchar(30) not null,
+    User_ID int auto_increment not null,
+    Name varchar(150) not null,
+    User_Name varchar(150) not null,
+    Password varchar(300) not null,
     Department_ID int,
     User_Type_ID int,
     primary key(User_ID),
@@ -79,21 +79,22 @@ Create table day (
     );
     
     Create table batches (
-    Batch_ID int not null,
-    Batch_Type varchar(15) not null,
+    Batch_ID int auto_increment not null,
+    Batch_Type_ID int,
     Batch_Count int not null,
     College_ID int,
     Level_ID int,
     Department_ID int,
     primary key(Batch_ID),
+    foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID),
     foreign key(College_ID) references college(College_ID),
     foreign key(Level_ID) references level(Level_ID),
     foreign key(Department_ID) references department(Department_ID)
     );
     
     Create table halls (
-    Hall_ID int not null,
-    Hall_Name varchar(15) not null,
+    Hall_ID int auto_increment not null,
+    Hall_Name varchar(100) not null,
     Hall_Capacity int not null,
     Department_ID int,
     Building_ID int,
@@ -105,9 +106,9 @@ Create table day (
     );
     
     Create table subjects(
-    Subject_ID int not null,
-    Subject_Name varchar(15) not null,
-    Subject_Code varchar(10) not null,
+    Subject_ID int auto_increment not null,
+    Subject_Name varchar(100) not null,
+    Subject_Code varchar(50) not null,
     Subject_Credit int not null,
     Department_ID int,
     College_ID int,
@@ -117,8 +118,8 @@ Create table day (
     );
     
     Create table lecturer(
-    Lecturer_ID int not null,
-    Lecturer_Name varchar(15) not null,
+    Lecturer_ID int auto_increment not null,
+    Lecturer_Name varchar(100) not null,
     Department_ID int,
     College_ID int,
     primary key(Lecturer_ID),
@@ -127,8 +128,8 @@ Create table day (
     );
     
     Create table batch_groups(
-    Group_ID int not null,
-    Group_ varchar(15) not null,
+    Group_ID int auto_increment not null,
+    Group_ varchar(100) not null,
     Group_Count int not null,
     Batch_Type_ID int,
     primary key(Group_ID),
@@ -136,7 +137,7 @@ Create table day (
     );
     
     Create table module(
-    Module_ID int not null,
+    Module_ID int auto_increment not null,
     Semester_ID int,
     Subject_ID int,
     Lecturer_ID int,
@@ -147,7 +148,7 @@ Create table day (
     );
     
     Create table E_T_T(
-    ETT_ID int not null,
+    ETT_ID int auto_increment not null,
     Module_ID int,
     Hall_ID int,
     Time_ID int,
