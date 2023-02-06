@@ -1,24 +1,12 @@
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect } from "react";
 import style from './styles/Done&Faild.module.css';
 
 const Faild = (props) => {
-
-    useEffect(() =>{
-        const containerSection = document.querySelector('#containerComponent');
-        const btnCloseSection = document.querySelector('#colseComponente');
-        
-        btnCloseSection.addEventListener('click', () => {
-            containerSection.style.cssText = 'display: none';
-            window.location.reload();
-        });
-    }, [])
-
     return (
-        <section id="containerComponent" className={`container-section ${style.container}`}>
+        <section id="faildComponent" className={`container-section ${style.container}`}>
             <article className={`center-section ${style.centerSection}`}>
-                <FontAwesomeIcon className={`close-btn ${style.btnClose}`} id='colseComponente' icon={faXmark} size='xl' />
+                <FontAwesomeIcon className={`close-btn ${style.btnClose}`} id='colseFaildComponente' icon={faXmark} size='xl' />
                 <FontAwesomeIcon className={`${style.icon}`} icon={faXmark} size="xl" />
                 <p>{props.errorMessage}</p>
             </article>

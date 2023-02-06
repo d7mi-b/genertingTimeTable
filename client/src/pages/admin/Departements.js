@@ -1,11 +1,27 @@
-import { faXmark, faBuilding } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faBuilding, faTableCellsLarge } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useFetchPost } from '../../hooks/useFetchPost';
+import Loading from '../../components/Loading';
 import useFetch from '../../hooks/useFetch';
+import Done from '../../components/Done';
+import Faild from '../../components/Faild';
 import style from '../styles/admin/departements.module.css';
 
 const Departements = () => {
     const { data, isPending, error } = useFetch('http://localhost:5000/departements');
+    const { data: colleges } = useFetch('http://localhost:5000/colleges');
+    const { fetchPost, result, isLoading, error: errorAddDepartment } = useFetchPost();
+    const [Department_Name, setDepartment_Name] = useState('');
+    const [College_ID, setCollege_ID] = useState('');
+
+    const handelSubmit = async (e) => {
+        e.preventDefault();
+        
+        await fetchPost('http://localhost:5000/departements/addDepartment', {
+            Department_Name, College_ID
+        });
+    }
 
     useEffect(() => {
         const btnAddBulding = document.querySelector('.btnAddBulding');
@@ -19,7 +35,34 @@ const Departements = () => {
         btnCloseAddBuldingsSec.addEventListener('click', () => {
             addBuldingSection.style.cssText = 'display: none';
         });
-    }, [])
+
+        if (colleges && !College_ID) {
+            setCollege_ID(colleges[0].College_ID)
+        }
+
+        const doneComponent = document.getElementById('doneComponent');
+        const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
+    
+        if (result) {
+            doneComponent.style.cssText = 'display: grid';
+        }
+    
+        btnCloseDoneComponent.addEventListener('click', () => {
+            doneComponent.style.cssText = 'display: none';
+        })
+    
+        const faildComponent = document.getElementById('faildComponent');
+        const btnCloseFaildComponent = document.getElementById('colseFaildComponente');
+    
+        if (errorAddDepartment) {
+            faildComponent.style.cssText = 'display: grid';
+        }
+    
+        btnCloseFaildComponent.addEventListener('click', () => {
+            faildComponent.style.cssText = 'display: none';
+        })
+
+    }, [data, colleges, College_ID, result, errorAddDepartment])
 
     return (
         <section className={`containerPage ${style.departemntsPage}`}>
@@ -36,18 +79,49 @@ const Departements = () => {
                     <header>
                         <h1>إضافة قسم</h1>
                     </header>
-                    <form className={`addForm`}>
+                    <form className={`addForm`} onSubmit={handelSubmit}>
                         <label htmlFor='name'>إسم القسم:</label>
                         <section className={`input`}>
+                            <FontAwesomeIcon icon={faTableCellsLarge} />
+                            <input 
+                                type='text' 
+                                name='name'
+                                required
+                                value={Department_Name}
+                                onChange={e => setDepartment_Name(e.target.value)} 
+                            />
+                        </section>
+                        <label htmlFor="departement">الكلية:</label>
+                        <section className="input">
                             <FontAwesomeIcon icon={faBuilding} />
-                            <input type='text' name='name' />
+                            <select value={College_ID} onChange={e => setCollege_ID(+e.target.value)}>
+                                {
+                                    colleges &&
+                                    colleges.map(e => {
+                                        return (
+                                        <option value={e.College_ID} key={e.College_ID}>{e.College_Name}</option>
+                                        )
+                                    })
+                                }
+                            </select>
                         </section>
-                        <section className='btnContainer'>
-                            <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة قسم' />
-                        </section>
+                        {
+                            !isLoading &&
+                            <section className='btnContainer'>
+                                <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة قسم' />
+                            </section>
+                        }
                     </form>
                 </article>
             </section>
+
+            <Done />
+
+            <Faild errorMessage={errorAddDepartment} />
+
+            { !data && !isPending && <p className='emptyElement'>لا توجد أقسام</p> }
+
+            { error && <p className='emptyElement'>{error}</p> }
 
             <section className={`${style.departemntsContainer}`}>
                 {   data &&
@@ -61,6 +135,9 @@ const Departements = () => {
                             </article>
                         )
                     })
+                }
+                {
+                    isPending && <Loading />
                 }
             </section>
         </section>

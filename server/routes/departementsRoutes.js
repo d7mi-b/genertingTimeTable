@@ -7,5 +7,6 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.get('/', departmentController.getDepartements);
+router.post('/addDepartment', departmentController.addDepartment);
 
 module.exports = router;

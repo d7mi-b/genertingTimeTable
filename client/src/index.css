@@ -153,10 +153,10 @@ h1 {
 }
 
 .center-section .addForm .input {
-    padding: 5px 10px 5px 2px;
+    padding: 3px 10px 3px 2px;
     background-color: #fff;
     border-radius: 5px;
-    border: 1px solid var(--border-color);
+    border: 1px solid #7070708a;
 }
 
 .center-section .addForm .input input, select {
@@ -201,7 +201,8 @@ h1 {
 /* input & label */
 label {
     display: inline-block;
-    margin-bottom: 7px;
+    margin-bottom: 5px;
+    font-size: .9rem;
 }
 
 select {
@@ -279,4 +280,22 @@ input:focus-visible {
     align-self: center;
     margin-right: 4px;
     margin-left: 4px;
+}
+
+/* Error Messgae */
+.errorMessage {
+    font-size: .8rem;
+    text-align: center;
+    margin: 5px auto 0;
+}
+
+/* for Messgae if DB empty */
+.emptyElement {
+    width: 100%;
+    height: 70%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 1.4rem;
 }

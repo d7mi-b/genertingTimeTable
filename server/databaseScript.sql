@@ -42,7 +42,7 @@ Create table day (
     
     Create table building (
     Building_ID int auto_increment not null,
-    Building_Name varchar(50) not null,
+    Building_Name varchar(50) not null UNIQUE,
     primary key(Building_ID)
     );
     
@@ -54,13 +54,13 @@ Create table day (
     
     Create table college (
     College_ID int auto_increment not null,
-    College_Name varchar(150) not null,
+    College_Name varchar(150) not null UNIQUE,
     primary key(College_ID)
     );
     
     Create table department (
     Department_ID int auto_increment not null,
-    Department_Name varchar(150) not null,
+    Department_Name varchar(150) not null UNIQUE,
     College_ID int,
     primary key(Department_ID),
     foreign key(College_ID) references college(College_ID)
@@ -69,7 +69,7 @@ Create table day (
     Create table users (
     User_ID int auto_increment not null,
     Name varchar(150) not null,
-    User_Name varchar(150) not null,
+    User_Name varchar(150) not null UNIQUE,
     Password varchar(300) not null,
     Department_ID int,
     User_Type_ID int,
@@ -94,7 +94,7 @@ Create table day (
     
     Create table halls (
     Hall_ID int auto_increment not null,
-    Hall_Name varchar(100) not null,
+    Hall_Name varchar(100) not null UNIQUE,
     Hall_Capacity int not null,
     Department_ID int,
     Building_ID int,

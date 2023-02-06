@@ -1,5 +1,6 @@
 .container {
     width: calc(100% - 300px);
+    display: none;
 }
 
 .centerSection {

@@ -10,7 +10,7 @@ module.exports.login = async (req, res) => {
     const { User_Name, Password } = req.body;
 
     if (!User_Name || !Password)
-        return res.status(400).json({message: 'يجب ملء جميع الحقول'});
+        throw Error('يجب ملء جميع الحقول');
 
     try {
         const [ user ] = await db.query(`
@@ -60,7 +60,7 @@ module.exports.addUser = async (req, res) => {
     const {  User_Name, Password, Name, Department_ID, User_Type_ID } = req.body;
 
     if (!User_Name || !Password || !Name || !Department_ID || !User_Type_ID)
-        return res.status(400).json({message: 'يجب ملء جميع الحقول'});
+        throw Error('يجب ملء جميع الحقول');
 
     // encrypt password
     const salt = await bcrypt.genSalt(10);

@@ -1,34 +1,37 @@
 import { useState } from "react";
 import { useAuthContext } from "./useAuthContext";
 
-export const useLogin = () => {
+export const useFetchPost = () => {
+    const [result, setResult] = useState(null);
     const [error, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
-    const { dispatch } = useAuthContext();
+    const { user } = useAuthContext();
 
-    const login = async (User_Name, Password) => {
+    const fetchPost = async (url, body) => {
         setIsLoading(true);
         setError(null);
 
-        await fetch('http://localhost:5000/users/login', {
+        await fetch(url, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ User_Name, Password })
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${user.token}`
+            },
+            body: JSON.stringify(body)
         })
         .then(result => result.json())
         .then(data => {
             if (data.err)
                 throw Error(data.err);
             
-            localStorage.setItem("user", JSON.stringify(data));
-            dispatch({ type: "LOGIN", payload: data });
+            setResult(data);
             setIsLoading(false);
         })
         .catch(err => {
             setIsLoading(false);
-            setError(err.message);
+            setError(err.message)
         })
     }
 
-    return { login, isLoading, error };
+    return { fetchPost, result, isLoading, error };
 }

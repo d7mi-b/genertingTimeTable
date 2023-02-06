@@ -1,28 +1,25 @@
 import { faBuilding, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import Loading from '../../components/Loading';
+import useFetch from '../../hooks/useFetch';
+import { useFetchPost } from '../../hooks/useFetchPost';
 import style from '../styles/admin/bulding.module.css';
-
-const buldings = [
-    {
-        id: 1,
-        name: 'A'
-    },
-    {
-        id: 2,
-        name: 'B'
-    },
-    {
-        id: 3,
-        name: 'C'
-    },
-    {
-        id: 4,
-        name: 'D'
-    }
-]
+import Done from '../../components/Done';
+import Faild from '../../components/Faild';
 
 const Bulding = () => {
+    const { data: buildings, isPending, error } = useFetch('http://localhost:5000/building');
+    const { fetchPost, result, isLoading, error: errorAddBuilding } = useFetchPost();
+    const [Building_Name, setBuilding_Name] = useState('');
+
+    const handelSubmit = async (e) => {
+        e.preventDefault();
+
+        await fetchPost('http://localhost:5000/building/addBuilding', {
+            Building_Name
+        });
+    }
 
     useEffect(() => {
         const btnAddBulding = document.querySelector('.btnAddBulding');
@@ -36,7 +33,29 @@ const Bulding = () => {
         btnCloseAddBuldingSec.addEventListener('click', () => {
             addBuldingSection.style.cssText = 'display: none';
         });
-    }, [])
+
+    const doneComponent = document.getElementById('doneComponent');
+    const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
+
+    if (result) {
+        doneComponent.style.cssText = 'display: grid';
+    }
+
+    btnCloseDoneComponent.addEventListener('click', () => {
+        doneComponent.style.cssText = 'display: none';
+    })
+
+    const faildComponent = document.getElementById('faildComponent');
+    const btnCloseFaildComponent = document.getElementById('colseFaildComponente');
+
+    if (errorAddBuilding) {
+        faildComponent.style.cssText = 'display: grid';
+    }
+
+    btnCloseFaildComponent.addEventListener('click', () => {
+        faildComponent.style.cssText = 'display: none';
+    })
+    }, [result, errorAddBuilding])
 
     return (
         <section className={`containerPage ${style.buldingPage}`}>
@@ -54,31 +73,52 @@ const Bulding = () => {
                     <header>
                         <h1>إضافة مبنى</h1>
                     </header>
-                    <form className={`addForm`}>
+                    <form className={`addForm`} onSubmit={handelSubmit}>
                         <label htmlFor='name'>إسم المبنى:</label>
                         <section className={`input`}>
                             <FontAwesomeIcon icon={faBuilding} />
-                            <input type='text' name='name' />
+                            <input 
+                                type='text' 
+                                name='name' 
+                                required
+                                value={Building_Name}
+                                onChange={e => setBuilding_Name(e.target.value)}
+                            />
                         </section>
-                        <section className='btnContainer'>
-                            <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة مبنى' />
-                        </section>
+                        {
+                            !isLoading &&
+                            <section className='btnContainer'>
+                                <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة مبنى' />
+                            </section>
+                        }
                     </form>
                 </article>
             </section>
 
+            <Done />
+
+            <Faild errorMessage={errorAddBuilding} />
+
+            { !buildings && !isPending && <p className='emptyElement'>لا توجد مباني</p> }
+
+            { error && <p className='emptyElement'>{error}</p> }
+
             <section className={`${style.buldingsContainer}`}>
                 {
-                    buldings.map(e => {
+                    buildings &&
+                    buildings.map(e => {
                         return (
-                            <article className={`${style.bulding}`} key={e.id}>
+                            <article className={`${style.bulding}`} id={e.Building_ID} key={e.Building_ID}>
                                 <section className={`${style.img}`}>
                                     <img src='/images/Mask Group 10.png' alt='bulding' />
                                 </section>
-                                <h1>{e.name}</h1>
+                                <h1>{e.Building_Name}</h1>
                             </article>
                         )
                     })
+                }
+                {
+                    isPending && <Loading />
                 }
             </section>
         </section>

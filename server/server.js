@@ -4,6 +4,8 @@ const cros = require('cors');
 
 const usersRoutes = require('./routes/usersRoutes');
 const departementsRoutes = require('./routes/departementsRoutes');
+const buildingRoutes = require('./routes/buildingRoutes');
+const collegeRoutes = require('./routes/collegeRoutes');
 
 // express app
 const app = express();
@@ -22,6 +24,8 @@ app.get('/', (req, res) => {
 
 app.use('/users', usersRoutes)
 app.use('/departements', departementsRoutes);
+app.use('/building', buildingRoutes);
+app.use('/colleges', collegeRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

@@ -35,7 +35,7 @@ const features = [
 ]
 
 const Home = () => {
-    const { login, isLoading, erroe } = useLogin();
+    const { login, isLoading, error } = useLogin();
     const [User_Name, setUser_Name] = useState('');
     const [Password, setPassword] = useState('');
 
@@ -109,7 +109,8 @@ const Home = () => {
                                     <FontAwesomeIcon icon={faUser} />
                                     <input 
                                         type='name' 
-                                        name='User_Name' 
+                                        name='User_Name'
+                                        required 
                                         value={User_Name}
                                         onChange={e => setUser_Name(e.target.value)}
                                     />
@@ -120,19 +121,24 @@ const Home = () => {
                                     <input 
                                         type='password' 
                                         name='password' 
+                                        required
                                         value={Password}
                                         onChange={e => setPassword(e.target.value)}
                                     />
                                 </section>
                                 <Link to='/' className={`link ${style.link}`}>نسيت كلمة المرور</Link>
+                                { error && <p className='errorMessage'>{error}</p> }
                                 <section className='btnContainer'>
                                     <input className={`btn ${style.btn}`} type='submit' name='submit' value='تسجيل الدخول' />
                                 </section>
                             </form>
                         </section>
-                        <section className={`${style.img}`}>
-                            <img src='/images/Mask Group 23.png' alt='login' />
-                        </section>
+                        {
+                            !isLoading && 
+                            <section className={`${style.img}`}>
+                                <img src='/images/Mask Group 23.png' alt='login' />
+                            </section>
+                        }
                     </article>
                 </section>
 

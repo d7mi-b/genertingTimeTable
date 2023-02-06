@@ -12,25 +12,14 @@ import useFetch from "../../hooks/useFetch";
 import Done from '../../components/Done';
 import Faild from '../../components/Faild';
 import style from "../styles/admin/users.module.css";
-
-const users = [
-  {
-    id: 1,
-    name: "مكارم بامطرف",
-    type: "رئيس قسم هندسة الحاسوب",
-    User_Name: "User_Name",
-  },
-  {
-    id: 2,
-    name: "خالد بن إسحاق",
-    type: "رئيس قسم هندسة الإلكترونية والإتصالات",
-    User_Name: "User_Name",
-  },
-];
+import Loading from "../../components/Loading";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const Users = () => {
-  const { data: departements, isPending, error} = useFetch('http://localhost:5000/departements');
-  const { data: userTypes, isPending: isPendingUserType, error: errorUserType } = useFetch('http://localhost:5000/users/getUsersType');
+  const { user } = useAuthContext();
+  const { data: users, isPending: usersLoading, error: errorUsers } = useFetch("http://localhost:5000/users");
+  const { data: departements } = useFetch('http://localhost:5000/departements');
+  const { data: userTypes } = useFetch('http://localhost:5000/users/getUsersType');
   const [Name, setName] = useState('');
   const [User_Name, setUser_Name] = useState('');
   const [Password, setPassword] = useState('');
@@ -38,31 +27,37 @@ const Users = () => {
   const [departement, setDepartement] = useState('');
   const [userType, setUserType] = useState('');
   const [errPassword, setErrPassword] = useState(null);
-  const [done, setDone] = useState(null);
+  const [done, setDone] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handelSubmitUser = (e) => {
+  const handelSubmitUser = async (e) => {
     e.preventDefault();
 
     if (!departement)
-      setDepartement(departements[0].departement_id);
+      setDepartement(departements[0].Department_ID);
 
     if (!userType)
-      setUserType(userTypes[0].type_id);
+      setUserType(userTypes[0].User_Type_ID);
 
-    if (Name && User_Name && Password === rePassword && departement && userType)
-    fetch('http://localhost:5000/users/addUsers', {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        Name, User_Name, Password, Department_ID: departement, User_Type_ID: userType
-      })
-    })
-    .then(result => {
-      if (result.status === 200)
+    if (Name && User_Name && Password === rePassword && departement && userType) {
+      const res = await fetch('http://localhost:5000/users/addUsers', {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${user.token}`
+        },
+        body: JSON.stringify({
+          Name, User_Name, Password, Department_ID: departement, User_Type_ID: userType
+        })
+      }).then(data => data.json())
+
+      if (res.ok && res.status === 200)
         setDone(true);
-    })
-    .catch(err => console.log(err));
+
+      if (!res.ok || res.status === 400) {
+        setErrorMessage(res.err)
+      }
+    }
     
   };
 
@@ -86,7 +81,31 @@ const Users = () => {
       addUsersSection.style.cssText = "display: none";
     });
 
-  }, []);
+    const doneComponent = document.getElementById('doneComponent');
+    const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
+
+    if (done) {
+      doneComponent.style.cssText = 'display: grid';
+    }
+
+    btnCloseDoneComponent.addEventListener('click', () => {
+      setDone(false);
+      doneComponent.style.cssText = 'display: none';
+    })
+
+    const faildComponent = document.getElementById('faildComponent');
+    const btnCloseFaildComponent = document.getElementById('colseFaildComponente');
+
+    if (errorMessage) {
+      faildComponent.style.cssText = 'display: grid';
+    }
+
+    btnCloseFaildComponent.addEventListener('click', () => {
+      setErrorMessage(false);
+      faildComponent.style.cssText = 'display: none';
+    })
+
+  }, [done, errorMessage]);
 
   return (
     <section className={`containerPage ${style.users}`}>
@@ -97,6 +116,7 @@ const Users = () => {
         </button>
       </header>
 
+      {/* Add users Section */}
       <section className={`container-section ${style.addUsersSection}`}>
         <article className={`center-section`}>
           <FontAwesomeIcon
@@ -116,13 +136,25 @@ const Users = () => {
             <label htmlFor="name">الإسم:</label>
             <section className="input">
               <FontAwesomeIcon icon={faUser} />
-              <input type="text" name="name" value={Name} onChange={(e) => setName(e.target.value)}/>
+              <input 
+                type="text" 
+                name="name" 
+                required 
+                value={Name} 
+                onChange={(e) => setName(e.target.value)}
+              />
             </section>
 
             <label htmlFor="User_Name">اسم المستخدم:</label>
             <section className="input">
               <FontAwesomeIcon icon={faUser} />
-              <input type="text" name="User_Name" value={User_Name} onChange={e => setUser_Name(e.target.value)} />
+              <input 
+                type="text" 
+                name="User_Name" 
+                required 
+                value={User_Name} 
+                onChange={e => setUser_Name(e.target.value)} 
+              />
             </section>
 
             <label htmlFor="departement">القسم:</label>
@@ -161,6 +193,7 @@ const Users = () => {
               <input 
                 type="password" 
                 name="Password" 
+                required
                 value={Password} 
                 onChange={e => setPassword(e.target.value)} 
               />
@@ -172,6 +205,7 @@ const Users = () => {
               <input 
                 type="password" 
                 name="rePassword" 
+                required
                 value={rePassword} 
                 onChange={e => setRePassword(e.target.value)}
                 onBlur={copmarePasswords}
@@ -195,24 +229,48 @@ const Users = () => {
         </article>
       </section>
 
-      { done && <Done />}
+      <Done />
 
-      { errorMessage && <Faild errorMessage={errorMessage} />}
+      <Faild errorMessage={errorMessage} />
+      {/* End Add Users Section */}
+
+      { !users && !usersLoading && <p className='emptyElement'>لا يوجد مستخدمين</p> }
+
+      { errorUsers && <p className='emptyElement'>{errorUsers}</p> }
 
       <section className={`${style.usersContainer}`}>
-        {users.map((e) => {
-          return (
-            <article className={`${style.user}`} key={e.id}>
-              <p>{e.name}</p>
-              <p>{e.type}</p>
-              <p>{e.User_Name}</p>
-              <section className={`${style.userIcons}`}>
-                <FontAwesomeIcon icon={faEdit} />
-                <FontAwesomeIcon icon={faTrash} />
-              </section>
-            </article>
-          );
-        })}
+        { 
+          users &&
+          users.map((e) => {
+            return (
+              <article className={`${style.user}`} id={e.User_ID} key={e.User_ID}>
+                <p>{e.Name}</p>
+                <p>
+                  {
+                    departements &&
+                    departements.filter(dep => e.Department_ID === dep.Department_ID)
+                    .map(dep => dep.Department_Name)
+                  }
+                </p>
+                <p>
+                  {
+                    userTypes &&
+                    userTypes.filter(type => e.User_Type_ID === type.User_Type_ID)
+                    .map(type => type.User_Type_Name)
+                  }
+                </p>
+                <p>{e.User_Name}</p>
+                <section className={`${style.userIcons}`}>
+                  <FontAwesomeIcon icon={faEdit} />
+                  <FontAwesomeIcon icon={faTrash} />
+                </section>
+              </article>
+            );
+          })
+        }
+        {
+          usersLoading && <Loading />
+        }
       </section>
     </section>
   );
