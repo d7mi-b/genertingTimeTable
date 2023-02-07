@@ -1,0 +1,74 @@
+.container header {
+    width: 90%;
+    margin: 35px auto 20px;
+    font-size: .8rem;
+}
+
+header svg {
+    margin: 0 0 0 7px;
+}
+
+.batchs,
+.lecturers,
+.halls {
+    margin: 55px auto;
+}
+
+.batchesContainer,
+.lecturersContainer,
+.hallsContainer {
+    width: 90%;
+    margin: 15px auto 20px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 20px;
+}
+
+.batch {
+    padding: 10px 15px;
+    border: 1px solid var(--main-color);
+    text-align: center;
+    box-shadow: 1px 1px 3px 1px var(--border-color);
+}
+
+.batch header {
+    margin: 10px auto;
+    color: var(--main-color);
+}
+
+.lecturer {
+    text-align: center;
+    padding: 5px;
+    border-bottom: 1px solid var(--main-color);
+}
+
+.hallsContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 15px;
+    justify-content: center;
+}
+
+.hall {
+    margin: 5px auto;
+    border: 1px solid rgba(85,65,72,0.5);
+    display: flex;
+    padding: 10px;
+    width: fit-content;
+    box-shadow: 0px 3px 2px 1px var(--card-color);
+    border-radius: 5px;
+}
+
+.hall div {
+    text-align: center;
+    width: 120px;
+    margin-left: 10px;
+    padding: 10px;
+    border-left: 1px solid var(--card-color);
+}
+
+.hall .icon{
+    width: 50px;
+    height: 100%;
+    color: var(--main-color);
+}

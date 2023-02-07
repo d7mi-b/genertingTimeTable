@@ -37,8 +37,13 @@ h1 {
     display: flex;
 }
 
+.sub-layout {
+    width: 100%;
+}
+
 /* links style */
 .link {
+    color: var(--card-color);
     display: block;
     text-decoration: none;
 }
@@ -54,14 +59,14 @@ h1 {
     cursor: pointer;
     padding: 7px 10px;
     border-radius: 5px;
-    box-shadow: 0px 3px 3px 0px var(--border-color);
+    box-shadow: 0px 3px 2px 0px var(--border-color);
     color: var(--main-color);
     border: none;
     font-family: Tajawal;
 }
 
 .btn:hover {
-    background-color: var(--secondary-color);
+    background-color: var(--border-color);
     color: var(--card-color);
     transform: scale(1.02);
     transition: 0.05s;
@@ -219,7 +224,13 @@ input:focus-visible {
     outline: none;
 }
 
-/* active link in sidebar */
+/* active Nav link */
+.active {
+    color: var(--border-color);
+    padding-bottom: 2px;
+    border-bottom: 2px solid var(--border-color);
+}
+
 .sidebar .active {
     background-color: var(--secondary-color);
 }

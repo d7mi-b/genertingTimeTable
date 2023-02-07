@@ -21,19 +21,19 @@ const Sidebar = () => {
             </section>
             <ul className={`${style.list}`}>
                 <li>
-                    <NavLink to='/'><FontAwesomeIcon icon={faHome} /><span>الرئيسية</span></NavLink>
+                    <NavLink to='/' className='link'><FontAwesomeIcon icon={faHome} /><span>الرئيسية</span></NavLink>
                 </li>
                 <li>
-                    <NavLink to='users'><FontAwesomeIcon icon={faUser} /><span>المستخدمين</span></NavLink>
+                    <NavLink to='users' className='link'><FontAwesomeIcon icon={faUser} /><span>المستخدمين</span></NavLink>
                 </li>
                 <li>
-                    <NavLink to='bulding'><FontAwesomeIcon icon={faBuilding} /><span>المباني والقاعات</span></NavLink>
+                    <NavLink to='bulding' className='link'><FontAwesomeIcon icon={faBuilding} /><span>المباني والقاعات</span></NavLink>
                 </li>
                 <li>
-                    <NavLink to='departements'><FontAwesomeIcon icon={faTableCellsLarge} /><span>الأقسام</span></NavLink>
+                    <NavLink to='departements' className='link'><FontAwesomeIcon icon={faTableCellsLarge} /><span>الأقسام</span></NavLink>
                 </li>
                 <li>
-                    <NavLink to='timetables'><FontAwesomeIcon icon={faCalendarDay} /><span>الجداول</span></NavLink>
+                    <NavLink to='timetables' className='link'><FontAwesomeIcon icon={faCalendarDay} /><span>الجداول</span></NavLink>
                 </li>
             </ul>
 

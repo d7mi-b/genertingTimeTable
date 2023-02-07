@@ -31,7 +31,6 @@
 }
 
 .sidebar .list li a {
-    color: var(--card-color);
     text-decoration: none;
     display: block;
     width: 100%;
@@ -42,6 +41,7 @@
 
 .sidebar .list li a:hover {
     color: var(--border-color);
+    transform: none;
 }
 
 .sidebar .list li a svg {

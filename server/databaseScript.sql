@@ -80,13 +80,13 @@ Create table day (
     
     Create table batches (
     Batch_ID int auto_increment not null,
-    Batch_Type_ID int,
-    Batch_Count int not null,
+    Batch_General_Count int,
+    Batch_Payment_Count int,
+    Batch_Parallel_Count int;
     College_ID int,
     Level_ID int,
     Department_ID int,
     primary key(Batch_ID),
-    foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID),
     foreign key(College_ID) references college(College_ID),
     foreign key(Level_ID) references level(Level_ID),
     foreign key(Department_ID) references department(Department_ID)

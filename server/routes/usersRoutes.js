@@ -11,6 +11,7 @@ router.use(requireAuth);
 router.post('/addUsers', usersControllers.addUser);
 router.get('/', usersControllers.getUsers);
 router.get('/getUsersType', usersControllers.getUsersTypes);
+router.delete('/deleteUser', usersControllers.deleteUser);
 
 
 module.exports = router;

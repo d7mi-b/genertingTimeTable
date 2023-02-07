@@ -13,10 +13,12 @@ import Done from '../../components/Done';
 import Faild from '../../components/Faild';
 import style from "../styles/admin/users.module.css";
 import Loading from "../../components/Loading";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import { useFetchPost } from "../../hooks/useFetchPost";
+import { useFetchDelete } from "../../hooks/useFetchDelete";
 
 const Users = () => {
-  const { user } = useAuthContext();
+  const { fetchPost, result, isLoading, error: errorAddUsers} = useFetchPost();
+  const { fetchDelete, result: resultDeleteUser, error: errorDeleteUser } = useFetchDelete();
   const { data: users, isPending: usersLoading, error: errorUsers } = useFetch("http://localhost:5000/users");
   const { data: departements } = useFetch('http://localhost:5000/departements');
   const { data: userTypes } = useFetch('http://localhost:5000/users/getUsersType');
@@ -27,38 +29,15 @@ const Users = () => {
   const [departement, setDepartement] = useState('');
   const [userType, setUserType] = useState('');
   const [errPassword, setErrPassword] = useState(null);
-  const [done, setDone] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
 
   const handelSubmitUser = async (e) => {
     e.preventDefault();
 
-    if (!departement)
-      setDepartement(departements[0].Department_ID);
-
-    if (!userType)
-      setUserType(userTypes[0].User_Type_ID);
-
     if (Name && User_Name && Password === rePassword && departement && userType) {
-      const res = await fetch('http://localhost:5000/users/addUsers', {
-        method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${user.token}`
-        },
-        body: JSON.stringify({
-          Name, User_Name, Password, Department_ID: departement, User_Type_ID: userType
-        })
-      }).then(data => data.json())
-
-      if (res.ok && res.status === 200)
-        setDone(true);
-
-      if (!res.ok || res.status === 400) {
-        setErrorMessage(res.err)
-      }
+      await fetchPost('http://localhost:5000/users/addUsers', {
+        Name, User_Name, Password, Department_ID: departement, User_Type_ID: userType
+      })
     }
-    
   };
 
   const copmarePasswords = () => {
@@ -68,7 +47,21 @@ const Users = () => {
       setErrPassword(null);
   }
 
+  const handelDeleteUser = async (e) => {
+    const User_ID = +e.target.parentElement.parentElement.parentElement.id;
+
+    await fetchDelete('http://localhost:5000/users/deleteUser', {
+      User_ID
+    });
+  }
+
   useEffect(() => {
+    if (!departement && departements)
+      setDepartement(departements[0].Department_ID);
+
+    if (!userType && userTypes)
+      setUserType(userTypes[0].User_Type_ID);
+
     const btnAddUsers = document.querySelector(".btnAddUsers");
     const addUsersSection = document.querySelector(".container-section");
     const btnCloseAddUsersSec = document.querySelector(".close-btn");
@@ -84,28 +77,26 @@ const Users = () => {
     const doneComponent = document.getElementById('doneComponent');
     const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
 
-    if (done) {
+    if ((result && !errorAddUsers) || (resultDeleteUser && !errorDeleteUser)) {
       doneComponent.style.cssText = 'display: grid';
     }
 
     btnCloseDoneComponent.addEventListener('click', () => {
-      setDone(false);
       doneComponent.style.cssText = 'display: none';
     })
 
     const faildComponent = document.getElementById('faildComponent');
     const btnCloseFaildComponent = document.getElementById('colseFaildComponente');
 
-    if (errorMessage) {
+    if (errorAddUsers || errorDeleteUser) {
       faildComponent.style.cssText = 'display: grid';
     }
 
     btnCloseFaildComponent.addEventListener('click', () => {
-      setErrorMessage(false);
       faildComponent.style.cssText = 'display: none';
     })
 
-  }, [done, errorMessage]);
+  }, [departement, departements, userType, userTypes, result, errorAddUsers, resultDeleteUser, errorDeleteUser]);
 
   return (
     <section className={`containerPage ${style.users}`}>
@@ -216,14 +207,17 @@ const Users = () => {
               errPassword && <p>{errPassword}</p>
             }
 
-            <section className="btnContainer">
-              <input
-                className={`btn ${style.btn}`}
-                type="submit"
-                name="submit"
-                value="إضافة مستخدم"
-              />
-            </section>
+            {
+              !isLoading &&
+              <section className="btnContainer">
+                <input
+                  className={`btn ${style.btn}`}
+                  type="submit"
+                  name="submit"
+                  value="إضافة مستخدم"
+                />
+              </section>
+            }
 
           </form>
         </article>
@@ -231,7 +225,7 @@ const Users = () => {
 
       <Done />
 
-      <Faild errorMessage={errorMessage} />
+      <Faild errorMessage={errorAddUsers || errorDeleteUser} />
       {/* End Add Users Section */}
 
       { !users && !usersLoading && <p className='emptyElement'>لا يوجد مستخدمين</p> }
@@ -245,24 +239,13 @@ const Users = () => {
             return (
               <article className={`${style.user}`} id={e.User_ID} key={e.User_ID}>
                 <p>{e.Name}</p>
-                <p>
-                  {
-                    departements &&
-                    departements.filter(dep => e.Department_ID === dep.Department_ID)
-                    .map(dep => dep.Department_Name)
-                  }
-                </p>
-                <p>
-                  {
-                    userTypes &&
-                    userTypes.filter(type => e.User_Type_ID === type.User_Type_ID)
-                    .map(type => type.User_Type_Name)
-                  }
-                </p>
+                <p>{e.User_Type_Name}</p>
+                <p>{e.Department_Name}</p>
+                <p>{e.College_Name}</p>
                 <p>{e.User_Name}</p>
                 <section className={`${style.userIcons}`}>
                   <FontAwesomeIcon icon={faEdit} />
-                  <FontAwesomeIcon icon={faTrash} />
+                  <FontAwesomeIcon icon={faTrash} onClick={handelDeleteUser} />
                 </section>
               </article>
             );

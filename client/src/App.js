@@ -1,10 +1,16 @@
 import { lazy, Suspense } from 'react';
-import {createBrowserRouter, RouterProvider, Route, createRoutesFromElements, Navigate} from 'react-router-dom';
+import {createBrowserRouter, RouterProvider, Route, createRoutesFromElements} from 'react-router-dom';
 import { useAuthContext } from './hooks/useAuthContext';
-import NotFound from './pages/NotFound';
+import Department from './pages/admin/Department';
+import Halls from './pages/HOD/HallsHOD';
+
+const NotFound = lazy( () => import('./pages/NotFound'));
 
 const AdminLayout = lazy( () => import('./Layouts/AdminLayout'));
 const HodLayout = lazy( () => import('./Layouts/hodLayout'));
+const SecretaryLayout = lazy( () => import('./Layouts/SecretaryLayout'));
+const DepartmentLayout = lazy( () => import('./Layouts/DepartmentLayout') );
+
 const Bulding = lazy( () => import('./pages/admin/Bulding'));
 const Departements = lazy( () => import('./pages/admin/Departements'));
 const HomeAdmin = lazy( () => import('./pages/admin/HomeAdmin'));
@@ -30,9 +36,13 @@ const routerAdmin = createBrowserRouter(
       <Route index element={<HomeAdmin />} />
       <Route path='users' element={<Users />} />
       <Route path='bulding' element={<Bulding />}>
-
+        <Route index element={<Bulding />} />
+        {/* <Route path=':Building_ID' element={<Halls />} /> */}
       </Route>
-      <Route path='departements' element={<Departements />} />
+      <Route path='departements' element={<DepartmentLayout />}>
+        <Route index element={<Departements />} />
+        <Route path=':Department_ID' element={<Department />} />
+      </Route>
       <Route path='*' element={<NotFound />} />
     </Route>
   )
@@ -53,7 +63,7 @@ const routerHOD = createBrowserRouter(
 
 const routerSecretary = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<HodLayout />}>
+    <Route path='/' element={<SecretaryLayout />}>
       <Route index element={<HomeAdmin />} />
       <Route path='*' element={<NotFound />} />
     </Route>

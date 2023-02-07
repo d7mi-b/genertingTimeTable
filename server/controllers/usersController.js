@@ -38,7 +38,12 @@ module.exports.login = async (req, res) => {
 
 module.exports.getUsers = async (req, res) => {
     try {
-        const [ row ] = await db.query('select * from users');
+        const [ row ] = await db.query(`
+            select User_ID, Name, User_Name, User_Type_Name, Department_Name, College_Name from users 
+            join department on department.Department_ID = users.Department_ID
+            join college on college.College_ID = department.College_ID
+            join user_type on user_type.User_Type_ID = users.User_Type_ID;
+        `);
         return res.status(200).json(row);
     }
     catch(err) {
@@ -75,6 +80,21 @@ module.exports.addUser = async (req, res) => {
         return res.status(200).json(result);
     }
     catch(err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
+module.exports.deleteUser = async (req, res) => {
+    const { User_ID } = req.body;
+
+    try {
+        const [ result ] = await db.query(`
+            delete from users where User_ID = ?
+        `, [User_ID]);
+
+        return res.status(200).json(result);
+    }
+    catch (err) {
         res.status(400).json({err: err.message});
     }
 }

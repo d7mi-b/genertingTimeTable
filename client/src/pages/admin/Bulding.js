@@ -7,6 +7,7 @@ import { useFetchPost } from '../../hooks/useFetchPost';
 import style from '../styles/admin/bulding.module.css';
 import Done from '../../components/Done';
 import Faild from '../../components/Faild';
+import { Link } from 'react-router-dom';
 
 const Bulding = () => {
     const { data: buildings, isPending, error } = useFetch('http://localhost:5000/building');
@@ -37,7 +38,7 @@ const Bulding = () => {
     const doneComponent = document.getElementById('doneComponent');
     const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
 
-    if (result) {
+    if (result && !errorAddBuilding) {
         doneComponent.style.cssText = 'display: grid';
     }
 
@@ -108,12 +109,12 @@ const Bulding = () => {
                     buildings &&
                     buildings.map(e => {
                         return (
-                            <article className={`${style.bulding}`} id={e.Building_ID} key={e.Building_ID}>
+                            <Link className={`${style.bulding}`} id={e.Building_ID} key={e.Building_ID}>
                                 <section className={`${style.img}`}>
                                     <img src='/images/Mask Group 10.png' alt='bulding' />
                                 </section>
                                 <h1>{e.Building_Name}</h1>
-                            </article>
+                            </Link>
                         )
                     })
                 }

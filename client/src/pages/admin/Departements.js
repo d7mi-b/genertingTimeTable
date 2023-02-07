@@ -1,4 +1,4 @@
-import { faXmark, faBuilding, faTableCellsLarge } from '@fortawesome/free-solid-svg-icons';
+import { faXmark, faTableCellsLarge, faBuildingColumns } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import { useFetchPost } from '../../hooks/useFetchPost';
@@ -7,6 +7,7 @@ import useFetch from '../../hooks/useFetch';
 import Done from '../../components/Done';
 import Faild from '../../components/Faild';
 import style from '../styles/admin/departements.module.css';
+import { Link } from 'react-router-dom';
 
 const Departements = () => {
     const { data, isPending, error } = useFetch('http://localhost:5000/departements');
@@ -43,7 +44,7 @@ const Departements = () => {
         const doneComponent = document.getElementById('doneComponent');
         const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
     
-        if (result) {
+        if (result && !errorAddDepartment) {
             doneComponent.style.cssText = 'display: grid';
         }
     
@@ -93,7 +94,7 @@ const Departements = () => {
                         </section>
                         <label htmlFor="departement">الكلية:</label>
                         <section className="input">
-                            <FontAwesomeIcon icon={faBuilding} />
+                            <FontAwesomeIcon icon={faBuildingColumns} />
                             <select value={College_ID} onChange={e => setCollege_ID(+e.target.value)}>
                                 {
                                     colleges &&
@@ -127,12 +128,12 @@ const Departements = () => {
                 {   data &&
                     data.map(e => {
                         return (
-                            <article className={`${style.departemnt}`} key={e.Department_ID}>
+                            <Link to={`${e.Department_ID}`} className={`${style.departemnt}`} key={e.Department_ID}>
                                 <section className={`${style.img}`}>
                                     <img src='/images/Mask Group 36.png' alt='bulding' />
                                 </section>
                                 <h1>{e.Department_Name}</h1>
-                            </article>
+                            </Link>
                         )
                     })
                 }

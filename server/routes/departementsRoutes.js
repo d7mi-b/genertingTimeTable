@@ -8,5 +8,6 @@ router.use(requireAuth);
 
 router.get('/', departmentController.getDepartements);
 router.post('/addDepartment', departmentController.addDepartment);
+router.get('/:Department_ID', departmentController.getOneDepartment);
 
 module.exports = router;
