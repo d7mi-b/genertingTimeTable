@@ -12,8 +12,17 @@
     width: 120px;
 }
 
-.buldingPage header .btn:hover {
+.buldingPage header .btn:hover,
+.buldingPage header a:hover {
+    transform: scale(1.05);
     background-color: var(--secondary-color);
+}
+
+.buldingPage header a {
+    text-decoration: none;
+    font-size: .9rem;
+    display: inline-block;
+    text-align: center;
 }
 
 .buldingsContainer {

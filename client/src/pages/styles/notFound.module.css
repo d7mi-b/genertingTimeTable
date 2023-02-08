@@ -22,6 +22,7 @@
 .notFound .content p a {
     display: inline-block;
     color: var(--main-color);
+    text-decoration: underline
 }
 
 .notFound .content p a:hover {
@@ -39,4 +40,23 @@
 .notFound .img img {
     width: 80%;
     margin: 0 auto;
+}
+
+@media (min-width: 283px) and (max-width: 992px) {
+    .notFound {
+        flex-direction: column;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .notFound .content  {
+        width: 90%;
+        margin: 35px auto;
+    }
+
+    .notFound .img {
+        width: 90%;
+        margin: 15px auto;
+        min-height: auto;
+    }
 }

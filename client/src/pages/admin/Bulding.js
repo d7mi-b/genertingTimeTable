@@ -35,27 +35,27 @@ const Bulding = () => {
             addBuldingSection.style.cssText = 'display: none';
         });
 
-    const doneComponent = document.getElementById('doneComponent');
-    const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
+        const doneComponent = document.getElementById('doneComponent');
+        const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
 
-    if (result && !errorAddBuilding) {
-        doneComponent.style.cssText = 'display: grid';
-    }
+        if (result && !errorAddBuilding) {
+            doneComponent.style.cssText = 'display: grid';
+        }
 
-    btnCloseDoneComponent.addEventListener('click', () => {
-        doneComponent.style.cssText = 'display: none';
-    })
+        btnCloseDoneComponent.addEventListener('click', () => {
+            doneComponent.style.cssText = 'display: none';
+        })
 
-    const faildComponent = document.getElementById('faildComponent');
-    const btnCloseFaildComponent = document.getElementById('colseFaildComponente');
+        const faildComponent = document.getElementById('faildComponent');
+        const btnCloseFaildComponent = document.getElementById('colseFaildComponente');
 
-    if (errorAddBuilding) {
-        faildComponent.style.cssText = 'display: grid';
-    }
+        if (errorAddBuilding) {
+            faildComponent.style.cssText = 'display: grid';
+        }
 
-    btnCloseFaildComponent.addEventListener('click', () => {
-        faildComponent.style.cssText = 'display: none';
-    })
+        btnCloseFaildComponent.addEventListener('click', () => {
+            faildComponent.style.cssText = 'display: none';
+        })
     }, [result, errorAddBuilding])
 
     return (
@@ -63,7 +63,7 @@ const Bulding = () => {
             <header>
                 <h1>المباني</h1>
                 <section>
-                    <button className={`btn btnAddUsers ${style.btn}`}>أنواع القاعات</button>
+                    <Link to='hallType' className={`btn btnAddUsers ${style.btn}`}>أنواع القاعات</Link>
                     <button className={`btn btnAddBulding ${style.btn}`}>إضافة مبنى</button>
                 </section>
             </header>

@@ -28,7 +28,8 @@ header svg {
     padding: 10px 15px;
     border: 1px solid var(--main-color);
     text-align: center;
-    box-shadow: 1px 1px 3px 1px var(--border-color);
+    border-radius: 5px;
+    box-shadow: 2px 3px 3px 2px var(--card-color);
 }
 
 .batch header {
@@ -71,4 +72,25 @@ header svg {
     width: 50px;
     height: 100%;
     color: var(--main-color);
+}
+
+@media (min-width: 283px) and (max-width: 767px) {
+    .container header:not(.batch header) {
+        margin-top: 55px;
+        text-align: center;
+    }
+
+    .batchesContainer,
+    .lecturersContainer,
+    .hallsContainer {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .batchesContainer,
+    .lecturersContainer,
+    .hallsContainer {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }

@@ -1,10 +1,10 @@
 import { lazy, Suspense } from 'react';
 import {createBrowserRouter, RouterProvider, Route, createRoutesFromElements} from 'react-router-dom';
 import { useAuthContext } from './hooks/useAuthContext';
-import Department from './pages/admin/Department';
-import Halls from './pages/HOD/HallsHOD';
 
+const Home = lazy( () => import('./pages/Home'));
 const NotFound = lazy( () => import('./pages/NotFound'));
+const ErrorElement = lazy( () => import('./components/ErrorElement') );
 
 const AdminLayout = lazy( () => import('./Layouts/AdminLayout'));
 const HodLayout = lazy( () => import('./Layouts/hodLayout'));
@@ -13,14 +13,17 @@ const DepartmentLayout = lazy( () => import('./Layouts/DepartmentLayout') );
 
 const Bulding = lazy( () => import('./pages/admin/Bulding'));
 const Departements = lazy( () => import('./pages/admin/Departements'));
+const Department = lazy( () => import('./pages/admin/Department') );
 const HomeAdmin = lazy( () => import('./pages/admin/HomeAdmin'));
 const Users = lazy( () => import('./pages/admin/Users'));
-const Home = lazy( () => import('./pages/Home'));
+const HallType = lazy( () => import('./pages/admin/HallType') ); 
+
 const HomeHOD = lazy( () => import('./pages/HOD/HomeHOD'));
 const LecturersHOD = lazy( () => import('./pages/HOD/LecturersHOD'));
 const HallsHOD = lazy(() => import('./pages/HOD/HallsHOD'));
 const Review_Requests = lazy(() => import('./pages/HOD/ReviewRequestsHOD'));
 const Sudents_Groups = lazy(() => import('./pages/HOD/StudentsGroupsHOD'));
+
 
 const routerHome = createBrowserRouter(
   createRoutesFromElements(
@@ -35,11 +38,12 @@ const routerAdmin = createBrowserRouter(
     <Route path='/' element={<AdminLayout />}>
       <Route index element={<HomeAdmin />} />
       <Route path='users' element={<Users />} />
-      <Route path='bulding' element={<Bulding />}>
+      <Route path='bulding' element={<DepartmentLayout />} errorElement={<ErrorElement />}>
         <Route index element={<Bulding />} />
+        <Route path='hallType' element={<HallType />} />
         {/* <Route path=':Building_ID' element={<Halls />} /> */}
       </Route>
-      <Route path='departements' element={<DepartmentLayout />}>
+      <Route path='departements' element={<DepartmentLayout />} errorElement={<ErrorElement />}>
         <Route index element={<Departements />} />
         <Route path=':Department_ID' element={<Department />} />
       </Route>

@@ -1,5 +1,6 @@
 import { faBuilding, faBuildingColumns, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../../components/Loading";
 import useFetch from "../../hooks/useFetch";
@@ -7,10 +8,15 @@ import style from '../styles/admin/depaetment.module.css';
 
 const Department = () => {
     const { Department_ID } = useParams();
-    const { data: department, isPending: loadingDepartment, error: errorDepartmenr } = useFetch(`http://localhost:5000/departements/${Department_ID}`);
+    const { data: department, isPending: loadingDepartment, error: errorDepartment } = useFetch(`http://localhost:5000/departements/${Department_ID}`);
     const { data: batches, isPending: loadingBatches, error: errorBatches } = useFetch(`http://localhost:5000/batches/department/${Department_ID}`);
     const { data: lecturers, isPending: loadingLeactures, errorLectures } = useFetch(`http://localhost:5000/lecturers/department/${Department_ID}`);
     const { data: halls, isPending: loadingHalls, error: errorHalls } = useFetch(`http://localhost:5000/building/department/${Department_ID}`);
+
+    useEffect(() => {
+        if (errorDepartment)
+            throw Error('لم يتم العثور القسم الذي تبحث عنه')
+    }, [errorDepartment])
 
     return (
         <div className={`containerPage ${style.container}`}>
@@ -24,7 +30,7 @@ const Department = () => {
                 </h1>
             </header>
 
-            { errorDepartmenr && <p className="emptyElement">{errorDepartmenr}</p>}
+            { errorDepartment && <p className="emptyElement">{errorDepartment}</p>}
 
             <article className={`${style.batches}`}>
                 <header>

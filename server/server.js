@@ -8,6 +8,7 @@ const buildingRoutes = require('./routes/buildingRoutes');
 const collegeRoutes = require('./routes/collegeRoutes');
 const batchesRoutes = require('./routes/batchesRoutes');
 const lecturersRoutes = require('./routes/lecturerRoutes');
+const hallTypesRoutes = require('./routes/hallTypesRoutes');
 
 // express app
 const app = express();
@@ -30,6 +31,7 @@ app.use('/building', buildingRoutes);
 app.use('/colleges', collegeRoutes);
 app.use('/batches', batchesRoutes);
 app.use('/lecturers', lecturersRoutes);
+app.use('/hallTypes', hallTypesRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
