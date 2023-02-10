@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import {createBrowserRouter, RouterProvider, Route, createRoutesFromElements} from 'react-router-dom';
+import Loading from './components/Loading';
 import { useAuthContext } from './hooks/useAuthContext';
 
 const Home = lazy( () => import('./pages/Home'));
@@ -78,7 +79,7 @@ function App() {
   const { user } = useAuthContext();
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading />}>
       {
         !user && <RouterProvider router={routerHome} />
       }

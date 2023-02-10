@@ -1,8 +1,24 @@
 import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect } from "react";
 import style from './styles/Done&Faild.module.css';
 
-const Done = () => {
+const Done = (props) => {
+
+    useEffect(() => {
+        const doneComponent = document.getElementById('doneComponent');
+        const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
+
+        if (props.result && !props.error) {
+            doneComponent.style.cssText = 'display: grid';
+        }
+
+        btnCloseDoneComponent.addEventListener('click', () => {
+            doneComponent.style.cssText = 'display: none';
+        })
+        
+    }, [props.result, props.error])
+
     return (
         <section id="doneComponent" className={`container-section ${style.container}`}>
             <article className={`center-section ${style.centerSection}`}>

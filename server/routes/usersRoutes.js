@@ -12,6 +12,7 @@ router.post('/addUsers', usersControllers.addUser);
 router.get('/', usersControllers.getUsers);
 router.get('/getUsersType', usersControllers.getUsersTypes);
 router.delete('/deleteUser', usersControllers.deleteUser);
+router.put('/updateUser', usersControllers.updateUser);
 
 
 module.exports = router;

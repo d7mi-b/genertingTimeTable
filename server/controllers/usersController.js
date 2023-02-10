@@ -39,10 +39,11 @@ module.exports.login = async (req, res) => {
 module.exports.getUsers = async (req, res) => {
     try {
         const [ row ] = await db.query(`
-            select User_ID, Name, User_Name, User_Type_Name, Department_Name, College_Name from users 
-            join department on department.Department_ID = users.Department_ID
+            select User_ID, Name, User_Name, Department_ID, Department_Name, 
+            User_Type_ID, User_Type_Name, College_Name from users 
+            natural join department
             join college on college.College_ID = department.College_ID
-            join user_type on user_type.User_Type_ID = users.User_Type_ID;
+            natural join user_type;
         `);
         return res.status(200).json(row);
     }
@@ -93,6 +94,21 @@ module.exports.deleteUser = async (req, res) => {
         `, [User_ID]);
 
         return res.status(200).json(result);
+    }
+    catch (err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
+module.exports.updateUser = async (req, res) => {
+    const { User_ID, User_Name, Name, Department_ID, User_Type_ID } = req.body;
+
+    try {
+        const [ user ] = await db.query(`
+            update users set User_Name = ?, Name = ?, Department_ID = ?, User_Type_ID = ? where User_ID = ?
+        `, [User_Name, Name, Department_ID, User_Type_ID, User_ID]);
+
+        return res.status(200).json(user);
     }
     catch (err) {
         res.status(400).json({err: err.message});

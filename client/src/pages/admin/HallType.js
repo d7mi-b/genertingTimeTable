@@ -1,6 +1,6 @@
 import { faEdit, faFlaskVial, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Done from '../../components/Done';
 import Faild from '../../components/Faild';
 import Loading from '../../components/Loading';
@@ -34,15 +34,16 @@ const HallType = () => {
         });
     }
 
-    const handelUpdate = async (e) => {
+    const handelUpdate = useCallback( async (e) => {
         e.preventDefault();
 
         await fetchPut('http://localhost:5000/hallTypes/updateHallType', {
             Hall_Type_ID, Type_Name
         });
-    }
+    }, [Hall_Type_ID, Type_Name, fetchPut]);
 
     useEffect(() => {
+
         const btnAddHallType = document.querySelector('.btnAddHallType');
         const addHallTypeSection = document.querySelector('.container-section');
         const btnCloseAddHallTypeSec = document.querySelector('.close-btn');
@@ -66,33 +67,12 @@ const HallType = () => {
 
             btnCloseUpdateHallTypeSec.addEventListener('click', () => {
                 updateHallTypeSection.style.cssText = 'display: none';
+                setType_Name('');
+                setHall_Type_ID(null);
             });
         }
 
-        const doneComponent = document.getElementById('doneComponent');
-        const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
-
-        if ((result && !errorAddHallType) || (deleteResult && !errorDelete) || (updateResult && !errorUpdate)) {
-            doneComponent.style.cssText = 'display: grid';
-        }
-
-        btnCloseDoneComponent.addEventListener('click', () => {
-            doneComponent.style.cssText = 'display: none';
-        })
-
-        const faildComponent = document.getElementById('faildComponent');
-        const btnCloseFaildComponent = document.getElementById('colseFaildComponente');
-
-        if (errorAddHallType || errorDelete || errorUpdate) {
-            faildComponent.style.cssText = 'display: grid';
-        }
-
-        btnCloseFaildComponent.addEventListener('click', () => {
-            faildComponent.style.cssText = 'display: none';
-        });
-
-        console.log('result: ', result, 'deleteRes:', deleteResult, 'updateRes: ', updateResult)
-    }, [result, errorAddHallType, deleteResult, errorDelete, updateResult, errorUpdate, Hall_Type_ID])
+    }, [Hall_Type_ID])
 
     return (
         <section className={`containerPage ${style.hallTypesPage}`}>
@@ -112,13 +92,18 @@ const HallType = () => {
                     types &&
                     types.map(e => {
                         return (
-                            <article className={style.type} id={e.Hall_Type_ID} key={e.Hall_Type_ID} onMouseOver={() => setHall_Type_ID(e.Hall_Type_ID)}>
+                            <article className={style.type} id={e.Hall_Type_ID} key={e.Hall_Type_ID}>
                                 <header>
                                     <FontAwesomeIcon icon={faFlaskVial} />
                                     <h3>{e.Type_Name}</h3>
                                 </header>
                                 <section className={style.icon}>
-                                    <FontAwesomeIcon icon={faEdit} id={`edit-icon-${e.Hall_Type_ID}`} />
+                                    <FontAwesomeIcon 
+                                        icon={faEdit} 
+                                        id={`edit-icon-${e.Hall_Type_ID}`} 
+                                        onMouseOver={() => setHall_Type_ID(e.Hall_Type_ID)}
+                                        onClick={() => setType_Name(e.Type_Name)}
+                                    />
                                     {
                                         !loadingDelete && <FontAwesomeIcon icon={faTrash} onClick={handelDelete} />
                                     }
@@ -185,9 +170,9 @@ const HallType = () => {
                 </article>
             </section>
 
-            <Done />
+            <Done result={result || deleteResult || updateResult} error={errorAddHallType || errorDelete || errorUpdate} />
 
-            <Faild errorMessage={errorAddHallType || errorDelete || errorUpdate} />
+            <Faild error={errorAddHallType || errorDelete || errorUpdate} />
 
         </section>
     )

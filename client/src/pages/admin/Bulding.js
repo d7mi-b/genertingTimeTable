@@ -33,30 +33,10 @@ const Bulding = () => {
 
         btnCloseAddBuldingSec.addEventListener('click', () => {
             addBuldingSection.style.cssText = 'display: none';
+            setBuilding_Name('');
         });
 
-        const doneComponent = document.getElementById('doneComponent');
-        const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
-
-        if (result && !errorAddBuilding) {
-            doneComponent.style.cssText = 'display: grid';
-        }
-
-        btnCloseDoneComponent.addEventListener('click', () => {
-            doneComponent.style.cssText = 'display: none';
-        })
-
-        const faildComponent = document.getElementById('faildComponent');
-        const btnCloseFaildComponent = document.getElementById('colseFaildComponente');
-
-        if (errorAddBuilding) {
-            faildComponent.style.cssText = 'display: grid';
-        }
-
-        btnCloseFaildComponent.addEventListener('click', () => {
-            faildComponent.style.cssText = 'display: none';
-        })
-    }, [result, errorAddBuilding])
+    }, [])
 
     return (
         <section className={`containerPage ${style.buldingPage}`}>
@@ -96,9 +76,9 @@ const Bulding = () => {
                 </article>
             </section>
 
-            <Done />
+            <Done result={result} error={errorAddBuilding} />
 
-            <Faild errorMessage={errorAddBuilding} />
+            <Faild error={errorAddBuilding} />
 
             { !buildings && !isPending && <p className='emptyElement'>لا توجد مباني</p> }
 

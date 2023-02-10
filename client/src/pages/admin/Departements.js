@@ -41,29 +41,7 @@ const Departements = () => {
             setCollege_ID(colleges[0].College_ID)
         }
 
-        const doneComponent = document.getElementById('doneComponent');
-        const btnCloseDoneComponent = document.getElementById('colseDoneComponente');
-    
-        if (result && !errorAddDepartment) {
-            doneComponent.style.cssText = 'display: grid';
-        }
-    
-        btnCloseDoneComponent.addEventListener('click', () => {
-            doneComponent.style.cssText = 'display: none';
-        })
-    
-        const faildComponent = document.getElementById('faildComponent');
-        const btnCloseFaildComponent = document.getElementById('colseFaildComponente');
-    
-        if (errorAddDepartment) {
-            faildComponent.style.cssText = 'display: grid';
-        }
-    
-        btnCloseFaildComponent.addEventListener('click', () => {
-            faildComponent.style.cssText = 'display: none';
-        })
-
-    }, [data, colleges, College_ID, result, errorAddDepartment])
+    }, [data, colleges, College_ID])
 
     return (
         <section className={`containerPage ${style.departemntsPage}`}>
@@ -116,9 +94,9 @@ const Departements = () => {
                 </article>
             </section>
 
-            <Done />
+            <Done result={result} />
 
-            <Faild errorMessage={errorAddDepartment} />
+            <Faild error={errorAddDepartment} />
 
             { !data && !isPending && <p className='emptyElement'>لا توجد أقسام</p> }
 
