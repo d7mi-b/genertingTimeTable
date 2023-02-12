@@ -108,7 +108,7 @@ const Home = () => {
                                 <section className={`${style.input}`}>
                                     <FontAwesomeIcon icon={faUser} />
                                     <input 
-                                        type='name' 
+                                        type='text' 
                                         name='User_Name'
                                         required 
                                         value={User_Name}

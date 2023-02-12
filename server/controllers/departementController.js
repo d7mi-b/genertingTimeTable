@@ -32,14 +32,50 @@ module.exports.getOneDepartment = async (req, res) => {
     const { Department_ID } = req.params;
 
     try {
-        const [ departement ] = await db.query(`
-            select College_Name, Department_Name from department 
-            natural join college where department.Department_ID = ?
+        const [ department ] = await db.query(`
+            select Department_Name, College_Name, department.College_ID, Name, 
+            sum(Batch_General_Count) + sum(Batch_Payment_Count) + sum(Batch_Parallel_Count) as countOfStudent
+            from department 
+            left outer join college on department.College_ID = college.College_ID
+            left outer join users on users.Department_ID = department.Department_ID
+            left outer join batches on batches.Department_ID = department.Department_ID
+            where department.Department_ID = ?
+            group by Department_Name, College_Name, Name;
         `, [Department_ID]);
 
-        return res.status(200).json(departement[0]);
+        return res.status(200).json(department[0]);
     }
     catch (err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
+module.exports.updateDepartment = async (req, res) => {
+    const { Department_ID, Department_Name, College_ID } = req.body;
+
+    try {
+        const [ department ] = await db.query(`
+            update department set Department_Name = ?, College_ID = ? where Department_ID = ?
+        `, [Department_Name, College_ID, Department_ID]);
+
+        return res.status(200).json(department);
+    }
+    catch(err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
+module.exports.deleteDepartment = async (req, res) => {
+    const { Department_ID } = req.body;
+    
+    try {
+        const [ department ] = await db.query(`
+            delete from department where Department_ID = ?;
+        `, [Department_ID]);
+
+        return res.status(200).json(department);
+    }
+    catch(err) {
         res.status(400).json({err: err.message});
     }
 }
