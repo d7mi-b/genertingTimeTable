@@ -77,3 +77,7 @@
     display: none;
     right: 0;
 }
+
+.addLecturerSection article{
+    margin-right: -10%;
+}

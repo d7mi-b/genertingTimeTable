@@ -65,7 +65,7 @@ const Review_Requests = () => {
                     <option name='export' value='export'>الصادرة</option>
                 </select>
                 {
-                    info.filter(e => state === e.type).map(i => {
+                    info.filter(e => e.type === state ).map(i => {
                         return(
                             <section key={i.id} className={style.section}>
                                 <div className={style.leftBorder}>
@@ -73,29 +73,43 @@ const Review_Requests = () => {
                                     <p>المقرر الدراسي: {i.course}</p>
                                     <p>المستوى: {i.level}</p>
                                 </div>
-                                <div className={style.reply_Div} id='replyForm'>
-                                    <select name="lecturers">
-                                        <option>د.خالد فوزي اشبير</option>
-                                        <option>د.رشا بن ثعلب</option>
-                                        <option>أ.فاطمة بافرج</option>
-                                        <option>أ.عصمت</option>
-                                    </select>
+                                {    
+                                    state === "import" &&
                                     <div>
-                                        <button className="btn" id='approve'>تأكيد</button>
-                                        <button className="btn" id='decline'>رفض</button>
+                                        <div className={style.reply_Div} id='replyForm'>
+                                            <select name="lecturers">
+                                                <option>اختر المدرس</option>
+                                                <option>د.خالد فوزي اشبير</option>
+                                                <option>د.رشا بن ثعلب</option>
+                                                <option>أ.فاطمة بافرج</option>
+                                                <option>أ.عصمت</option>
+                                            </select>
+                                            <div>
+                                                <button className="btn" id='approve'>تأكيد</button>
+                                                <button className="btn" id='decline'>رفض</button>
+                                            </div>
+                                        </div>
+                                        <div className={style.replyAnswer} id='approveSection'>
+                                            <h2>تم الرد</h2>
+                                            <FontAwesomeIcon icon={faCheckCircle} className={style.icon} />
+                                        </div>
+                                        <div className={style.declineAnswer} id='declineSection'>
+                                            <h2>تم الرفض</h2>
+                                            <FontAwesomeIcon icon={faTimesCircle} className={style.icon} />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className={style.replyAnswer} id='approveSection'>
-                                    <h2>تم الرد</h2>
-                                    <FontAwesomeIcon icon={faCheckCircle} className={style.icon} />
-                                </div>
-                                <div className={style.declineAnswer} id='declineSection'>
-                                    <h2>تم الرفض</h2>
-                                    <FontAwesomeIcon icon={faTimesCircle} className={style.icon} />
-                                </div>
+                                    }
+                                    {
+                                        state === "export" &&
+                                        <div className={style.reply_DivExport}>
+                                            <h4>اسم المدرس :</h4>
+                                            <input type="text" className="input" placeholder="بانتظار الرد" readOnly />
+                                        </div>
+                                    }
                             </section>
                         )
                     })
+
                 }
             </main>
         </section>

@@ -65,6 +65,12 @@
     width: 50px;
 }
 
+.reply_DivExport{
+    display: flex;
+    align-items: center;
+    
+}
+
 .replyAnswer{
     display: none;
     flex-direction: column;
