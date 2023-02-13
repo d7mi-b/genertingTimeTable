@@ -8,8 +8,8 @@ router.post('/login', usersControllers.login);
 
 router.use(requireAuth);
 
-router.post('/addUsers', usersControllers.addUser);
 router.get('/', usersControllers.getUsers);
+router.post('/addUsers', usersControllers.addUser);
 router.get('/getUsersType', usersControllers.getUsersTypes);
 router.delete('/deleteUser', usersControllers.deleteUser);
 router.put('/updateUser', usersControllers.updateUser);

@@ -15,7 +15,7 @@ const Department = () => {
     const { data: department, isPending: loadingDepartment, error: errorDepartment } = useFetch(`http://localhost:5000/departements/${Department_ID}`);
     const { data: batches, isPending: loadingBatches, error: errorBatches } = useFetch(`http://localhost:5000/batches/department/${Department_ID}`);
     const { data: lecturers, isPending: loadingLeactures, errorLectures } = useFetch(`http://localhost:5000/lecturers/department/${Department_ID}`);
-    const { data: halls, isPending: loadingHalls, error: errorHalls } = useFetch(`http://localhost:5000/building/department/${Department_ID}`);
+    const { data: halls, isPending: loadingHalls, error: errorHalls } = useFetch(`http://localhost:5000/halls/department/${Department_ID}`);
     const { data: colleges } = useFetch('http://localhost:5000/colleges');
     const { fetchPut, result, isLoading: loadingUpdate, error: errorUpdate } = useFetchPut();
     const [ Department_Name, setDepartment_Name ] = useState('');
