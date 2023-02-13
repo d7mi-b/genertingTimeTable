@@ -25,6 +25,8 @@ const LecturersHOD = lazy( () => import('./pages/HOD/LecturersHOD'));
 const HallsHOD = lazy(() => import('./pages/HOD/HallsHOD'));
 const Review_Requests = lazy(() => import('./pages/HOD/ReviewRequestsHOD'));
 const Sudents_Groups = lazy(() => import('./pages/HOD/StudentsGroupsHOD'));
+const Courses = lazy(() => import('./pages/HOD/CoursesHOD'))
+const CreateTable = lazy(() => import('./pages/HOD/CreateTableHOD'))
 
 
 const routerHome = createBrowserRouter(
@@ -62,6 +64,8 @@ const routerHOD = createBrowserRouter(
       <Route path='halls' element={<HallsHOD/>} />
       <Route path='review_requests' element={<Review_Requests/>} />
       <Route path='students_groups' element={<Sudents_Groups/>} />
+      <Route path='courses' element={<Courses/>} />
+      <Route path='create_table' element={<CreateTable/>} />
       <Route path='*' element={<NotFound />} />
     </Route>
   )

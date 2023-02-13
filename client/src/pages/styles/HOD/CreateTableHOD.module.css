@@ -1,0 +1,137 @@
+.createTable_header{
+    margin-top: 4%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.createTable_header a{
+    color: var(--font-color);
+}
+
+.createTable_header div{
+    display: flex;
+}
+
+.createTable_main{
+    display: flex;
+    padding: 60px;
+}
+
+.createTable_main ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.createTable_main li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.16);
+    font-weight: 900;
+    font-size:270%;
+    z-index: 0;
+}
+
+.createTable_main li:hover{
+    cursor: pointer;
+    background-color: var(--card-color);
+}
+
+.listDiv div{
+    background-color: var(--card-color);
+    width: 8px;
+    height: 15px;
+}
+
+.link{
+    height: 13px;
+    width: 40px;
+    background-color: var(--card-color);
+    position: relative;
+    top: 25px;
+}
+
+.createTable_main main{
+    background-color: var(--card-color);
+    width: 100%;
+    height: 50vh;
+    overflow: auto;
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.16);
+    z-index: 1;
+    padding: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.createTable_main hr{
+    height: 100%;
+}
+
+.courseDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D8D4D6;
+    border-radius: 10px;
+    padding: 3px;
+    padding-left: 10px;
+    text-align: center;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.16);
+}
+
+.courseDiv select{
+    width: 30%;
+    margin-left: 15px;
+}
+
+.courseDiv select:hover{
+    cursor: pointer;
+    
+}
+
+.courseDiv option{
+    background-color: var(--card-color);
+}
+
+.courseDiv p{
+    width: 20%;
+}
+
+.courseDiv h4{
+    width: 50%;
+}
+
+.createTable_footer{
+    text-align: center;
+    margin-top: -20px;
+}
+
+.button{
+    background-color: var(--main-color);
+    color: white;
+    width: 10%;
+}
+
+.sendRequest{
+    display: none;
+    left: 0;
+    z-index: 1;
+}
+
+.sendRequest article{
+    margin-right: -10%;
+}
+
+.sendRequestForm{
+    display: flex;
+    flex-direction: column;
+}
+
+.sendRequestForm select{
+    width: 100%;
+}

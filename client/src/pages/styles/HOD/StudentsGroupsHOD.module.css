@@ -26,8 +26,122 @@
     width: fit-content;
     border-radius: 5px;
     box-shadow: 2px 3px 3px 2px rgba(85,65,72,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.students_main table{
+    border-collapse: collapse;
+}
+
+.students_main th{
+    border-left: 1px solid #707070;
+    padding: 8px;
+}
+
+.students_main tr{
+    border: 1px solid var(--border-color);
+    background-color: var(--card-color);
+    box-shadow: 1px 3px 3px 3px var(--card-color);
+    border-radius: 50px;
+}
+
+.students_main td{
+    border-left: 1px solid #707070;
+    padding: 8px;
+}
+
+.students_main input{
+    background-color: transparent;
+    text-align: center;
+    width:40px;
+    height: 20px;
 }
 
 .table_level{
     background-color: #C9C9C9;
 }
+
+.div{
+    display: flex;
+    background-color: white;
+    align-items: center;
+    width: 60%;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding-right: 8px;
+}
+
+.div p{
+    border-left: 1px solid var(--border-color);
+    padding: 8px;
+    width: 35%;
+    text-align: center;
+}
+
+.div input{
+    width: 98px;
+    height: 20px;
+    text-align: center;  
+}
+
+.div h1{
+    border-left: 1px solid var(--border-color);
+    padding: 5px; 
+    padding-left: 10px;
+    color: var(--font-color);  
+}
+
+.editbtn{
+    display: flex;
+    margin-right: 25px;
+}
+
+.editbtn:hover{
+    transform: scale(1.05);
+    transition: 0.1s;
+    color: #000;
+    cursor: pointer;
+}
+
+.savebtn{
+    display: none;
+    margin-right: 25px;
+}
+
+.savebtn:hover{
+    transform: scale(1.05);
+    transition: 0.1s;
+    color: #000;
+    cursor: pointer;
+}
+
+.a1{
+    background-color: #C9C9C9;
+    position: absolute;
+    width: 13px ;
+    height: 89px;
+    left: 770px;
+    top: 191px;
+}
+
+.a2{
+    background-color: #C9C9C9;
+    position: absolute;
+    width: 50px ;
+    height: 10px;
+    left: 723px;
+    top: 215px;
+}
+
+.a3{
+    background-color: #C9C9C9;
+    position: absolute;
+    width: 50px ;
+    height: 10px;
+    left: 723px;
+    top: 270px;
+}
+

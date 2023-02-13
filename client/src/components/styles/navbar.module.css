@@ -75,6 +75,7 @@
 
 .iconsContainer .icons:hover .list {
     display: block;
+    z-index: 1;
 }
 
 .notivcations .listNotivications header {
@@ -87,12 +88,14 @@
     margin: 10px auto;
     border: 1px solid var(--secondary-color);
     border-radius: 2.5px;
+    
 }
 
 .profile .listProfile {
     padding: 20px 0;
     text-align: center;
     width: 250px;
+    z-index: 1;
 }
 
 .profile .listProfile li {
