@@ -1,6 +1,7 @@
 const db = require('../DB');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { use } = require('../routes/usersRoutes');
 
 const createToken = (id) => {
     return jwt.sign({id}, process.env.SECRET, {expiresIn: "3d"})
@@ -113,4 +114,26 @@ module.exports.updateUser = async (req, res) => {
     catch (err) {
         res.status(400).json({err: err.message});
     }
+}
+
+module.exports.getUserInfo = async (req,res) => {
+    
+    const id  = req.user.user_id;
+   
+
+    try {
+
+        const [ user ]= await db.query(`
+            select user_id,name,user_name,department_id,department_name,college.college_id,college_name from users
+            natural join department
+            join college on college.College_ID = department.College_ID
+            where user_id = ?
+        `, [id])
+
+        res.status(200).json(user)
+    }
+    catch (err) {
+        res.status(400).json({error: err.message});
+    }
+
 }

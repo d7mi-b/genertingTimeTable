@@ -2,6 +2,8 @@ import { faAngleDoubleLeft, faUserGroup, faBookOpen, faBuilding, faFile } from "
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { NavLink } from "react-router-dom";
 import style from '../styles/HOD/HomeHOD.module.css';
+import useFetch from '../../hooks/useFetch';
+import Loading from '../../components/Loading';
 
 const services = [
     {
@@ -26,7 +28,7 @@ const services = [
         id:4,
         name: 'القاعات',
         icon: faBuilding,
-        route:'/halls'
+        route:`/halls`
     },
     {
         id:5,
@@ -38,6 +40,8 @@ const services = [
 ]
 
 const HomeHOD = () => {
+    const { data:user } = useFetch('http://localhost:5000/users/getUserInfo')
+
     return (
         <section className={`container`}>
             <header className={style.Home_header}>
@@ -50,10 +54,11 @@ const HomeHOD = () => {
             </header>
             <main className={style.Home_main}>
             {
+                user &&
                 services.map(i => {
                     return (
-                        <NavLink to={i.route} className='link'>
-                        <div key={i.id}>
+                        <NavLink to={`${i.route}/${user[0].department_id}`} className='link' key={i.id}>
+                        <div>
                             <FontAwesomeIcon icon={i.icon} className={style.icon} />
                             <p>{i.name}</p>
                         </div>

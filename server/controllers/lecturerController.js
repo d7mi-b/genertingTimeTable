@@ -5,7 +5,7 @@ module.exports.getLecturersOfDepartment = async (req, res) => {
 
     try {
         const [ lecturers ] = await db.query(`
-            select Lecturer_ID, Lecturer_Name from lecturer natural join department
+            select Lecturer_ID, Lecturer_Name, Department_Name from lecturer natural join department
             where department.Department_ID = ?;
         `, [Department_ID]);
 

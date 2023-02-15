@@ -7,8 +7,10 @@ const useFetch = (url) => {
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
     const { user } = useAuthContext();
+    
 
     useEffect(() => {
+        
         setTimeout(() => {
             fetch(url, {
                 headers: { "Authorization": `Bearer ${user.token}`}

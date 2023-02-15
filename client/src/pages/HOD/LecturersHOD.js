@@ -1,8 +1,10 @@
 import { faAngleDoubleLeft, faXmark, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import style from '../styles/HOD/LecturersHOD.module.css';
 import { useEffect } from "react";
+import useFetch from '../../hooks/useFetch';
+import Loading from '../../components/Loading';
 
 const info = [
     {
@@ -27,6 +29,9 @@ const info = [
 
 
 const Lecturers = () => {
+    const {department_id} = useParams();
+    const { data:info, isPending, error } = useFetch(`http://localhost:5000/lecturers/department/${department_id}`)
+
     const handelSubmit = (e) => {
         e.preventDefault();
       };
@@ -51,15 +56,19 @@ const Lecturers = () => {
             addLecturerSection.style.cssText = "display: none";
           });
 
+          
     },[]);
 
     return(
         <section className={`container ${style.section_HOD}`}>
+            {
+                    isPending && <Loading />
+            }
             <header className={style.lecturers_header}>
                 <div>
                     <h3>رئيس القسم</h3>
                     <FontAwesomeIcon className='arrows' icon={faAngleDoubleLeft} />
-                    <h3><NavLink className="link" to="/lectrers">أعضاء هيئة التدريس</NavLink></h3>    
+                    <h3><NavLink className="link" to="/lecturers">أعضاء هيئة التدريس</NavLink></h3>    
                 </div>
                 <button className="btn btnAddLecturer">إضافة مدرس</button>
             </header>
@@ -98,16 +107,17 @@ const Lecturers = () => {
             </section>
             <main className={style.lecturers_main}>
                 {
+                    info &&
                     info.map(i => {
                         return(
-                            <div key={i.id}>
+                            <div key={i.Lecturer_ID}>
                                 <section className={style.first_section}>
                                     <label className={style.labels}>
                                     {position(i)}
-                                    <p>{i.name}</p>
+                                    <p>{i.Lecturer_Name}</p>
                                     </label>
                                     <label className={style.labels}>
-                                    <p>قسم: {i.department}</p>
+                                    <p>قسم: {i.Department_Name}</p>
                                     </label>
                                     <label className={style.labels}>
                                     <input type='checkbox' name='avilable' value='avilable' />
