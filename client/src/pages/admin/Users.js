@@ -11,15 +11,14 @@ import { useEffect, useState } from "react";
 import useFetch from "../../hooks/useFetch";
 import Done from '../../components/Done';
 import Faild from '../../components/Faild';
+import Delete from '../../components/Delete';
 import style from "../styles/admin/users.module.css";
 import Loading from "../../components/Loading";
 import { useFetchPost } from "../../hooks/useFetchPost";
-import { useFetchDelete } from "../../hooks/useFetchDelete";
 import { useFetchPut } from "../../hooks/useFetchPut";
 
 const Users = () => {
   const { fetchPost, result, isLoading, error: errorAddUsers} = useFetchPost();
-  const { fetchDelete, result: resultDeleteUser, error: errorDeleteUser } = useFetchDelete();
   const { fetchPut, result: updateResult, isLoading: loadingUpdate, error: errorUpdate} = useFetchPut();
 
   const { data: users, isPending: usersLoading, error: errorUsers } = useFetch("http://localhost:5000/users");
@@ -53,14 +52,6 @@ const Users = () => {
       setErrPassword(null);
   }
 
-  const handelDeleteUser = async (e) => {
-    const User_ID = +e.target.parentElement.parentElement.parentElement.id;
-
-    await fetchDelete('http://localhost:5000/users/deleteUser', {
-      User_ID
-    });
-  }
-
   const failUpdateData = e => {
     setName(e.Name);
     setUser_Name(e.User_Name);
@@ -78,9 +69,9 @@ const Users = () => {
 
   useEffect(() => {
 
-    const btnAddUsers = document.querySelector(".btnAddUsers");
-    const addUsersSection = document.querySelector(".container-section");
-    const btnCloseAddUsersSec = document.querySelector(".close-btn");
+    const btnAddUsers = document.querySelector("#btnAddUsersSection");
+    const addUsersSection = document.querySelector("#addUserSection");
+    const btnCloseAddUsersSec = document.querySelector("#closeAddUserSection");
 
     btnAddUsers.addEventListener("click", () => {
       addUsersSection.style.cssText = "display: grid";
@@ -91,6 +82,13 @@ const Users = () => {
     });
 
     if (User_ID) {
+      const deleteIconUser = document.getElementById(`user-delete-icon-${User_ID}`);
+      const deletComponent = document.querySelector('#deletComponent');
+
+      deleteIconUser.addEventListener('click', () => {
+        deletComponent.style.cssText = 'display: flex';
+      })
+
       const editIconUser = document.getElementById(`user-edit-icon-${User_ID}`);
       const updateUserSection = document.querySelector('#updateUserSection');
       const btnCloseUpdateUserSec = document.querySelector('#colseUpdateUserSec');
@@ -117,7 +115,7 @@ const Users = () => {
     <section className={`containerPage ${style.users}`}>
       <header>
         <h1>المستخدمين</h1>
-        <button className={`btn btnAddUsers ${style.btn}`}>
+        <button className={`btn ${style.btn}`} id='btnAddUsersSection'>
           إضافة مستخدمين
         </button>
       </header>
@@ -144,7 +142,11 @@ const Users = () => {
                     onMouseOver={() => setUser_ID(e.User_ID)} 
                     onClick={() => failUpdateData(e)} 
                   />
-                  <FontAwesomeIcon icon={faTrash} onClick={handelDeleteUser} />
+                  <FontAwesomeIcon 
+                    icon={faTrash} 
+                    id={`user-delete-icon-${e.User_ID}`}
+                    onMouseOver={() => setUser_ID(e.User_ID)}
+                  />
                 </section>
               </article>
             );
@@ -158,11 +160,11 @@ const Users = () => {
       </section>
 
       {/* Add users Section */}
-      <section className={`container-section ${style.addUsersSection}`}>
+      <section className={`container-section ${style.addUsersSection}`} id="addUserSection">
         <article className={`center-section`}>
           <FontAwesomeIcon
             className={`close-btn ${style.btnClose}`}
-            id="colseLogin"
+            id="closeAddUserSection"
             icon={faXmark}
             size="xl"
           />
@@ -254,7 +256,7 @@ const Users = () => {
             </section>
 
             {
-              errPassword && <p>{errPassword}</p>
+              errPassword && <p className="errorMessage">{errPassword}</p>
             }
 
             {
@@ -361,9 +363,11 @@ const Users = () => {
         </article>
       </section>
 
-      <Done result={result || resultDeleteUser || updateResult} />
+      <Done result={result || updateResult} />
 
-      <Faild error={errorAddUsers || errorDeleteUser || errorUpdate} />
+      <Faild error={errorAddUsers || errorUpdate} />
+
+      <Delete url='http://localhost:5000/users/deleteUser' body={{ User_ID }} />
 
     </section>
   );

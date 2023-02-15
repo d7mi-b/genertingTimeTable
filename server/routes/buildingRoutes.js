@@ -8,7 +8,8 @@ router.use(requireAuth);
 
 router.get('/', buildingController.getAllBuilding);
 router.post('/addBuilding', buildingController.addBuilding);
-router.get('/building/:Building_ID', buildingController.getHallsOfBuilding);
-router.get('/department/:Department_ID', buildingController.getHallsOfDepartment);
+router.get('/:Building_ID', buildingController.getOneBuilding);
+router.put('/updateBuilding', buildingController.updateBuilding);
+router.delete('/deleteBuilding', buildingController.deleteBuilding);
 
 module.exports = router;

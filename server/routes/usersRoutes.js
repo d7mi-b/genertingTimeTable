@@ -9,6 +9,7 @@ router.post('/login', usersControllers.login);
 router.use(requireAuth);
 
 router.get('/', usersControllers.getUsers);
+
 router.get('/getUsersType', usersControllers.getUsersTypes);
 router.get('/getUserInfo',usersControllers.getUserInfo)
 router.delete('/deleteUser', usersControllers.deleteUser);

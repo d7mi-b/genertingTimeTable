@@ -89,7 +89,7 @@ const Bulding = () => {
                     buildings &&
                     buildings.map(e => {
                         return (
-                            <Link className={`${style.bulding}`} id={e.Building_ID} key={e.Building_ID}>
+                            <Link to={`${e.Building_ID}`} className={`${style.bulding}`} id={e.Building_ID} key={e.Building_ID}>
                                 <section className={`${style.img}`}>
                                     <img src='/images/Mask Group 10.png' alt='bulding' />
                                 </section>

@@ -1,0 +1,82 @@
+.content header {
+    width: 90%;
+    margin: 35px auto 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.content header h1 {
+    font-size: x-large;
+}
+
+.content header svg {
+    margin-left: 5px;
+}
+
+.btn {
+    background-color: var(--main-color);
+    color: var(--card-color)
+}
+
+.hallsContainer {
+    width: 90%;
+    margin: 15px auto 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+}
+
+.hall {
+    margin: 5px;
+    border: 1px solid rgba(85,65,72,0.5);
+    display: flex;
+    padding: 10px;
+    box-shadow: 0px 3px 2px 1px var(--card-color);
+    border-radius: 5px;
+}
+
+.hall div {
+    text-align: center;
+    width: 70%;
+    margin-left: 10px;
+    padding: 10px;
+    border-left: 1px solid var(--card-color);
+}
+
+.hall .icon{
+    width: 50px;
+    height: 100%;
+    color: var(--main-color);
+}
+
+.hall div .icon {
+    width: 100%;
+    text-align: center;
+    margin: 5px;
+}
+
+.hall div .icon svg {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.hall div .icon svg:hover {
+    color: var(--border-color);
+}
+
+.buttons {
+    text-align: center;
+    margin: 25px auto 40px;
+}
+
+.buttons button {
+    width: 150px;
+    background-color: var(--main-color);
+    color: var(--card-color);
+    margin: 0 15px;
+}
+
+.updateBuldingSection,
+.addHallSection {
+    display: none;
+}

@@ -12,7 +12,8 @@ const HodLayout = lazy( () => import('./Layouts/hodLayout'));
 const SecretaryLayout = lazy( () => import('./Layouts/SecretaryLayout'));
 const DepartmentLayout = lazy( () => import('./Layouts/DepartmentLayout') );
 
-const Bulding = lazy( () => import('./pages/admin/Bulding'));
+const Buldings = lazy( () => import('./pages/admin/Buldings'));
+const Building = lazy( () => import('./pages/admin/Building') );
 const Departements = lazy( () => import('./pages/admin/Departements'));
 const Department = lazy( () => import('./pages/admin/Department') );
 const HomeAdmin = lazy( () => import('./pages/admin/HomeAdmin'));
@@ -42,9 +43,9 @@ const routerAdmin = createBrowserRouter(
       <Route index element={<HomeAdmin />} />
       <Route path='users' element={<Users />} />
       <Route path='bulding' element={<DepartmentLayout />} errorElement={<ErrorElement />}>
-        <Route index element={<Bulding />} />
+        <Route index element={<Buldings />} />
+        <Route path=':Building_ID' element={<Building />} />
         <Route path='hallType' element={<HallType />} />
-        {/* <Route path=':Building_ID' element={<Halls />} /> */}
       </Route>
       <Route path='departements' element={<DepartmentLayout />} errorElement={<ErrorElement />}>
         <Route index element={<Departements />} />
