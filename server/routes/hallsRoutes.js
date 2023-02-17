@@ -7,6 +7,7 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.post('/addHall', hallsController.addHall);
+router.put('/updateHall', hallsController.updateHall);
 router.delete('/deleteHall', hallsController.deleteHall);
 router.get('/building/:Building_ID', hallsController.hallsOfBuilding);
 router.get('/department/:Department_ID', hallsController.hallsOfDepartment);

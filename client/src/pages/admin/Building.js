@@ -44,12 +44,27 @@ const Building = () => {
         setDeleteBody({ Building_ID });
     }
 
-    const handelUpdateHall = async (e) => {
+    const handelAddHall = async (e) => {
         e.preventDefault();
         
         await fetchPost('http://localhost:5000/halls/addHall', {
             Hall_Name, Hall_Capacity, Department_ID, Building_ID, Hall_Type_ID
         })
+    }
+
+    const fillUpdateHallData = e => {
+        setHall_Name(e.Hall_Name);
+        setHall_Capacity(e.Hall_Capacity);
+        setDepartment_ID(e.Department_ID);
+        setHall_Type_ID(e.Hall_Type_ID);
+    }
+
+    const handelUpdateHall = async e => {
+        e.preventDefault();
+
+        await fetchPut('http://localhost:5000/halls/updateHall', {
+            Hall_ID, Hall_Name, Hall_Capacity, Department_ID, Building_ID, Hall_Type_ID
+        });
     }
 
     const handelDeleteHall = () => {
@@ -97,6 +112,18 @@ const Building = () => {
             })
 
             if (Hall_ID) {
+                const editIconHall = document.getElementById(`edit-icon-${Hall_ID}`);
+                const updateHallSection = document.getElementById('updateHallSection');
+                const closeUpdateHallSection = document.getElementById('closeUpdateHallSection');
+
+                editIconHall.addEventListener('click', () => {
+                    updateHallSection.style.cssText = 'display: grid';
+                })
+
+                closeUpdateHallSection.addEventListener('click', () => {
+                    updateHallSection.style.cssText = 'display: none';
+                })
+
                 const deleteIconHall = document.getElementById(`delete-icon-${Hall_ID}`);
                 const deletComponent = document.querySelector('#deletComponent');
 
@@ -147,12 +174,13 @@ const Building = () => {
                                                 <p>مبنى {e.Building_Name}</p>
                                                 <p>{e.Hall_Capacity} مقعد</p>
                                                 <p>{e.Type_Name}</p>
+                                                <p>{e.Department_Name}</p>
                                                 <section className={style.icon}>
                                                     <FontAwesomeIcon 
                                                         icon={faEdit} 
                                                         id={`edit-icon-${e.Hall_ID}`} 
-                                                        onMouseOver={() => ''}
-                                                        onClick={() => ''}
+                                                        onMouseOver={() => setHall_ID(e.Hall_ID)}
+                                                        onClick={() => fillUpdateHallData(e)}
                                                     />
                                                     <FontAwesomeIcon 
                                                         icon={faTrash} 
@@ -215,7 +243,7 @@ const Building = () => {
                             <header>
                                 <h1>إضافة قاعة</h1>
                             </header>
-                            <form className={`addForm`} onSubmit={handelUpdateHall}>
+                            <form className={`addForm`} onSubmit={handelAddHall}>
                                 <label htmlFor='name'>اسم القاعة: </label>
                                 <section className={`input ${style.input}`}>
                                     <FontAwesomeIcon icon={faBuilding} />
@@ -271,6 +299,74 @@ const Building = () => {
                                     !loadingPost &&
                                     <section className='btnContainer'>
                                         <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة قاعة' />
+                                    </section>
+                                }
+                            </form>
+                        </article>
+                    </section>
+
+                    <section className={`container-section ${style.addHallSection}`} id="updateHallSection">
+                        <article className={`center-section`}>
+                            <FontAwesomeIcon className={`close-btn ${style.btnClose}`} id='closeUpdateHallSection' icon={faXmark} size='xl' />
+                            <header>
+                                <h1>تعديل بيانات قاعة</h1>
+                            </header>
+                            <form className={`addForm`} onSubmit={handelUpdateHall}>
+                                <label htmlFor='name'>اسم القاعة: </label>
+                                <section className={`input ${style.input}`}>
+                                    <FontAwesomeIcon icon={faBuilding} />
+                                    <input 
+                                        type='text' 
+                                        name='name' 
+                                        required
+                                        value={Hall_Name}
+                                        onChange={e => setHall_Name(e.target.value)}
+                                    />
+                                </section>
+                                <label htmlFor='capacity'>سعة القاعة: </label>
+                                <section className={`input ${style.input}`}>
+                                    <FontAwesomeIcon icon={faChair} />
+                                    <input 
+                                        type='number' 
+                                        name='capacity' 
+                                        min='1'
+                                        required
+                                        value={Hall_Capacity}
+                                        onChange={e => setHall_Capacity(e.target.value)}
+                                    />
+                                </section>
+                                <label htmlFor="department">القسم:</label>
+                                <section className="input">
+                                    <FontAwesomeIcon icon={faTableCellsLarge} />
+                                    <select name='department' value={Department_ID} onChange={e => setDepartment_ID(+e.target.value)}>
+                                        {
+                                            departements &&
+                                            departements.map(e => {
+                                                return (
+                                                <option value={e.Department_ID} key={e.Department_ID}>{e.Department_Name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </section>
+                                <label htmlFor="hall_type">نوع القاعة:</label>
+                                <section className="input">
+                                    <FontAwesomeIcon icon={faFlask} />
+                                    <select name='department' value={Hall_Type_ID} onChange={e => setHall_Type_ID(+e.target.value)}>
+                                        {
+                                            hall_types &&
+                                            hall_types.map(e => {
+                                                return (
+                                                <option value={e.Hall_Type_ID} key={e.Hall_Type_ID}>{e.Type_Name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </section>
+                                {
+                                    !loadingUpdate &&
+                                    <section className='btnContainer'>
+                                        <input className={`btn ${style.btn}`} type='submit' name='submit' value='تعديل بيانات القاعة' />
                                     </section>
                                 }
                             </form>

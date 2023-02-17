@@ -16,6 +16,22 @@ module.exports.addHall = async (req, res) => {
     }
 }
 
+module.exports.updateHall = async (req, res) => {
+    const { Hall_ID, Hall_Name, Hall_Capacity, Department_ID, Hall_Type_ID } = req.body;
+    
+    try {
+        const [ hall ] = await db.query(`
+            update halls set Hall_Name = ?, Hall_Capacity = ?, Department_ID = ?, Hall_Type_ID = ?
+            where Hall_ID = ?
+        `, [Hall_Name, Hall_Capacity, Department_ID, Hall_Type_ID, Hall_ID]);
+
+        return res.status(200).json(hall);
+    }
+    catch(err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
 module.exports.deleteHall = async (req, res) => {
     const { Hall_ID } = req.body;
 
@@ -36,7 +52,8 @@ module.exports.hallsOfBuilding = async (req, res) => {
 
     try {
         const [ halls ] = await db.query(`
-            select Hall_ID, Hall_Name, Hall_Capacity, Type_Name, Department_Name, College_Name from halls 
+            select Hall_ID, Hall_Name, Hall_Capacity, Type_Name, halls.Hall_Type_ID,
+            Department_Name, halls.Department_ID, College_Name from halls 
             join hall_type on halls.Hall_Type_ID = hall_type.Hall_Type_ID
             join building on halls.Building_ID = building.Building_ID 
             join department on halls.Department_ID = department.Department_ID
