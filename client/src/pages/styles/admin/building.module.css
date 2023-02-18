@@ -28,10 +28,10 @@
 
 .hall {
     margin: 5px;
-    border: 1px solid rgba(85,65,72,0.5);
+    border: 2px solid var(--card-color);
     display: flex;
     padding: 10px;
-    box-shadow: 0px 3px 2px 1px var(--card-color);
+    box-shadow: 0px 0px 3px 2px var(--card-color);
     border-radius: 5px;
 }
 
