@@ -5,13 +5,12 @@ import style from '../styles/HOD/HallsHOD.module.css';
 import useFetch from '../../hooks/useFetch';
 import Loading from '../../components/Loading';
 import { useEffect } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 
 const Halls = () => {
-    const { department_id } = useParams();
-    console.log(department_id)
-    const {data:info,isPending , error:errorHalls} = useFetch(`http://localhost:5000/halls/department/${department_id}`)
-    console.log(info)
+    const { user } = useAuthContext();
+    const {data:info,isPending , error:errorHalls} = useFetch(`http://localhost:5000/halls/department/${user.Department_ID}`)
 
     useEffect(() => {
         if(errorHalls){
@@ -24,7 +23,7 @@ const Halls = () => {
             <header className={style.halls_header}>
                     <h3>رئيس القسم</h3>
                     <FontAwesomeIcon className='arrows' icon={faAngleDoubleLeft} />
-                    <h3><NavLink className="link" to={`/halls/${department_id}`}>القاعات والمعامل الدراسية</NavLink></h3>    
+                    <h3><NavLink className="link" to={`/halls`}>القاعات والمعامل الدراسية</NavLink></h3>    
             </header>
             {
                     isPending && <Loading />

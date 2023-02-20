@@ -1,8 +1,9 @@
 import { faAngleDoubleLeft, faXmark, faUser, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import style from '../styles/HOD/LecturersHOD.module.css';
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 import useFetch from '../../hooks/useFetch';
 import { useFetchPost } from "../../hooks/useFetchPost";
 import { useFetchPut } from "../../hooks/useFetchPut";
@@ -11,8 +12,8 @@ import Loading from '../../components/Loading';
 
 
 const Lecturers = () => {
-    const { department_id} = useParams();
-    const { data:info, isPending, error } = useFetch(`http://localhost:5000/lecturers/department/${department_id}`)
+    const { user } = useAuthContext();
+    const { data:info, isPending, error } = useFetch(`http://localhost:5000/lecturers/department/${user.Department_ID}`)
     const { data:colleges } = useFetch(`http://localhost:5000/colleges`)
     const { data:departments } = useFetch(`http://localhost:5000/departements`)
     const { fetchPost} = useFetchPost()
