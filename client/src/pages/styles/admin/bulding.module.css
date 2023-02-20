@@ -66,8 +66,12 @@
 }
 
 @media (min-width: 283px) and (max-width: 767px) {
+    .buldingPage header {
+        margin-top: 50px
+    }
+
     .buldingPage header .btn {
-        width: 90px;
+        width: fit-content;
     }
     .buldingsContainer {
         grid-template-columns: repeat(1, 1fr);

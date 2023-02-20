@@ -7,9 +7,11 @@
 
 .homeAdmin .containerNumbers {
     display: grid;
-    grid-template-columns: repeat(4, 220px);
+    grid-template-columns: repeat(4, 1fr);
     place-content: center;
     grid-gap: 20px;
+    width: 90%;
+    margin: 15px auto;
 }
 
 .homeAdmin .containerNumbers .numbers {
@@ -41,18 +43,8 @@
     }
 }
 
-@media (min-width: 768px) and (max-width: 992px) {
+@media (min-width: 768px) and (max-width: 1250px) {
     .homeAdmin .containerNumbers {
         grid-template-columns: repeat(2, 1fr);
-        width: 90%;
-        margin: 15px auto;
-    }
-}
-
-@media (min-width: 993px) and (max-width: 1250px) {
-    .homeAdmin .containerNumbers {
-        grid-template-columns: repeat(3, 1fr);
-        width: 90%;
-        margin: 15px auto;
     }
 }
