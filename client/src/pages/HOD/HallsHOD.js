@@ -9,11 +9,12 @@ import { useEffect } from "react";
 
 const Halls = () => {
     const { department_id } = useParams();
-    const {data:info,isPending , error:errorHalls} = useFetch(`http://localhost:5000/building/department/${department_id}`)
+    console.log(department_id)
+    const {data:info,isPending , error:errorHalls} = useFetch(`http://localhost:5000/halls/department/${department_id}`)
     console.log(info)
 
     useEffect(() => {
-        if(errorHalls == null){
+        if(errorHalls){
             throw Error("لا يوجد قاعات لهذا القسم")
         }
     },[errorHalls])
@@ -36,7 +37,7 @@ const Halls = () => {
                         return(
                             <div key={i.Hall_ID} className={style.box}>
                                 <div>
-                                    <p>{i.Hall_Name}</p>
+                                    <h2>{i.Hall_Name}</h2>
                                     <p>مبنى {i.Building_Name}</p>
                                     <p>{i.Hall_Capacity} مقعد</p>
                                     <p>{i.Type_Name}</p>

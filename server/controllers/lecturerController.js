@@ -5,13 +5,107 @@ module.exports.getLecturersOfDepartment = async (req, res) => {
 
     try {
         const [ lecturers ] = await db.query(`
-            select Lecturer_ID, Lecturer_Name, Department_Name from lecturer natural join department
+            select Lecturer_ID, Lecturer_Name, Department_ID, Department_Name, College_ID, Rank_,Not_Available,
+            NO_Available_Days, Sunday, Monday, Tuesday, Wednesday, Thursday from lecturer natural join department
             where department.Department_ID = ?;
         `, [Department_ID]);
 
         return res.status(200).json(lecturers);
     }
     catch (err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
+module.exports.postLecturersOfDepartment = async (req,res) => {
+    const { Lecturer_Name, Department_ID, College_ID, Rank_, Not_Available, NO_Available_Days,
+        Sunday, Monday, Tuesday, Wednesday, Thursday } = req.body;
+
+    try{
+        const [Lecturer] = await db.query(`
+        insert into lecturer ( Lecturer_Name ,Department_ID ,College_ID, Rank_, Not_Available, NO_Available_Days,
+            Sunday, Monday, Tuesday, Wednesday, Thursday )
+        values (?,?,?,?,?,?,?,?,?,?,?)`
+        ,[ Lecturer_Name, Department_ID, College_ID, Rank_, Not_Available, NO_Available_Days,
+            Sunday, Monday, Tuesday, Wednesday, Thursday ]);
+        
+        return res.status(201).json(Lecturer)
+    }
+    catch (err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
+module.exports.updateLecturer = async (req,res) => {
+    const {Lecturer_ID, Not_Available, NO_Available_Days,Sunday, 
+        Monday, Tuesday, Wednesday, Thursday } = req.body;
+            let Lecturer1,Lecturer2,Lecturer3,Lecturer4,Lecturer5,Lecturer6,Lecturer7;
+        
+         
+            try{
+                if(NO_Available_Days)
+                {
+                    [Lecturer1] = await db.query(`
+                    update lecturer set NO_Available_Days=? 
+                    where Lecturer_ID= ?`
+                    ,[NO_Available_Days, Lecturer_ID]);
+                }
+                if(Sunday){
+                    [Lecturer2] = await db.query(`
+                    update lecturer set Sunday=? 
+                    where Lecturer_ID= ?`
+                ,[Sunday, Lecturer_ID]);
+                }
+                if(Monday){
+                    [Lecturer3] = await db.query(`
+                    update lecturer set Monday=? 
+                    where Lecturer_ID= ?`
+                ,[Monday, Lecturer_ID]);
+                }
+                if(Tuesday){
+                    [Lecturer4] = await db.query(`
+                    update lecturer set Tuesday=?
+                    where Lecturer_ID= ?`
+                ,[Tuesday,  Lecturer_ID]);
+                }
+                if(Wednesday){
+                    [Lecturer5] = await db.query(`
+                    update lecturer set Wednesday=?
+                    where Lecturer_ID= ?`
+                ,[Wednesday, Lecturer_ID]);
+                }
+                if(Thursday){
+                    [Lecturer6] = await db.query(`
+                    update lecturer set Thursday=? 
+                    where Lecturer_ID= ?`
+                ,[ Thursday, Lecturer_ID]);
+                }
+                if(Not_Available){
+                    [Lecturer7] = await db.query(`
+                    update lecturer set Not_Available= ? 
+                    where Lecturer_ID= ?`
+                ,[Not_Available, Lecturer_ID]);
+                }
+            return res.status(201).json(Lecturer1+Lecturer2+Lecturer3+Lecturer4+Lecturer5+Lecturer6+Lecturer7)
+            }
+            catch (err) {
+                res.status(400).json({err: err.message});
+            }
+        
+}
+
+
+module.exports.deleteLecturer = async (req,res) => {
+    const {Lecturer_ID} = req.body;
+
+    try{
+        const [Lecturer] = await db.query(`
+        delete from lecturer where Lecturer_ID = ?`,
+        [Lecturer_ID]);
+
+        return res.status(200).json(Lecturer);
+    }
+    catch(err){
         res.status(400).json({err: err.message});
     }
 }
