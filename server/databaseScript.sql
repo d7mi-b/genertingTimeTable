@@ -99,6 +99,7 @@ Create table day (
     Department_ID int,
     Building_ID int,
     Hall_Type_ID int,
+    Is_Available BOOLEAN NULL,
 	primary key(Hall_ID),
     foreign key(Department_ID) references department(Department_ID),
     foreign key(Building_ID) references building(Building_ID),
@@ -109,7 +110,9 @@ Create table day (
     Subject_ID int auto_increment not null,
     Subject_Name varchar(100) not null,
     Subject_Code varchar(50) not null,
-    Subject_Credit int not null,
+    Credit_Theoretical int,
+    Credit_Practical int,
+    Credit_Tutorial int,
     Department_ID int,
     College_ID int,
     primary key(Subject_ID),
@@ -149,10 +152,14 @@ Create table day (
     Semester_ID int,
     Subject_ID int,
     Lecturer_ID int,
+    Department_ID int,
+    Hall_Type_ID int,
     primary key(Module_ID),
     foreign key(Semester_ID) references semester(Semester_ID),
     foreign key(Subject_ID) references subjects(Subject_ID),
-    foreign key(Lecturer_ID) references lecturer(Lecturer_ID)
+    foreign key(Lecturer_ID) references lecturer(Lecturer_ID),
+    foreign key(Department_ID) references department(Department_ID),
+    foreign key(Hall_Type_ID) references hall_type(Hall_Type_ID)
     );
     
     Create table E_T_T(
@@ -162,10 +169,25 @@ Create table day (
     Time_ID int,
     Day_ID int,
     Group_ID int,
+    Lecturer_ID int,
     primary key(ETT_ID),
     foreign key(Module_ID) references module(Module_ID),
     foreign key(Hall_ID) references halls(Hall_ID),
     foreign key(Time_ID) references time(Time_ID),
     foreign key(Day_ID) references day(Day_ID),
+    foreign key(Lecturer_ID) references lecturer(Lecturer_ID),
     foreign key(Group_ID) references batch_groups(Group_ID)
     );
+
+    create table lecturer_requsets(
+        Request_ID int primary key auto_increment,
+        Sender_ID int,
+        Reciver_ID int,
+        Lecturer_ID int,
+        Subject_ID int,
+        Reply varchar(300),
+        foreign key(Sender_ID) references users(User_ID),
+        foreign key(Reciver_ID) references users(User_ID),
+        foreign key(Lecturer_ID) references lecturer(Lecturer_ID),
+        foreign key(Subject_ID) references subjects(Subject_ID),
+    )
