@@ -18,7 +18,6 @@ const requireAuth = async (req, res, next) => {
         `, [id])
 
         req.user = User_ID[0][0];
-
         next();
     }
     catch (err) {

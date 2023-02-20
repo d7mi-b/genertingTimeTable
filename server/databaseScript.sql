@@ -122,6 +122,14 @@ Create table day (
     Lecturer_Name varchar(100) not null,
     Department_ID int,
     College_ID int,
+    Rank_ VARCHAR(100) NULL,
+    Not_Available BOOLEAN NULL,
+    NO_Available_Days INT NULL,
+    Sunday BOOLEAN NULL,
+    Monday BOOLEAN NULL,
+    Tuesday BOOLEAN NULL,
+    Wednesday BOOLEAN NULL,
+    Thursday BOOLEAN NULL;
     primary key(Lecturer_ID),
     foreign key(Department_ID) references department(Department_ID),
     foreign key(College_ID) references college(College_ID)

@@ -87,13 +87,13 @@ const routerHOD = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<HodLayout />}>
       <Route index element={<HomeHOD />} />
-      <Route path="lecturers" element={<LecturersHOD />} />
-      <Route path="halls" element={<HallsHOD />} />
-      <Route path="review_requests" element={<Review_Requests />} />
-      <Route path="students_groups" element={<Sudents_Groups />} />
-      <Route path="courses" element={<Courses />} />
-      <Route path="create_table" element={<CreateTable />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path='lecturers' element={<LecturersHOD/>} />
+      <Route path='halls' element={<HallsHOD/>} />
+      <Route path='review_requests' element={<Review_Requests/>} />
+      <Route path='students_groups' element={<Sudents_Groups/>} />
+      <Route path='courses' element={<Courses/>} />
+      <Route path='create_table' element={<CreateTable/>} />
+      <Route path='*' element={<NotFound />} />
     </Route>
   )
 );

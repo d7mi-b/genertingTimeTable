@@ -1,6 +1,8 @@
 .section_HOD{
     padding: 33px;
     background-color: var(--card-color);
+    min-height: 100vh;
+    height:auto;
 }
 
 .lecturers_header{
@@ -61,11 +63,16 @@
     height: 18px;
 }
 
+
 .lecturers_main input[type="number"]{
     width: 48px;
     height: 25px;
     background-color:var(--card-color);
     border-radius: 3px;
+}
+
+.lecturers_main input[type="number"]:focus{
+    border: 1px solid black;
 }
 
 .first_section{
@@ -80,4 +87,61 @@
 
 .addLecturerSection article{
     margin-right: -10%;
+}
+
+.selected{
+    color:lightgray;
+}
+
+.selected input[type="number"]{
+    color: lightgray;
+}
+
+.editbtn{
+    display: flex;
+    gap: 200px;
+}
+
+.editbtn button{
+    background-color: var(--main-color);
+    color: var(--card-color);
+    margin: 0 8px;
+    width: 60px;
+}
+
+.editbtn section{
+    display: flex;
+    left: o;
+}
+
+.deletebtn{
+    font-size: large;
+}
+
+.deleteLecturer{
+    display: none;
+    right: 0;
+}
+
+.deleteLecturer article{
+    margin-right: -10%;
+    min-height: fit-content;
+
+}
+
+.deleteLecturer header{
+    text-align: center;
+}
+
+.deletebtns{
+    display: flex;
+    margin-top: 10%;
+    justify-content: center;
+}
+
+.deletebtns button{
+    background-color: var(--main-color);
+    color: var(--card-color);
+    margin: 0 8px;
+    width: 60px;
 }
