@@ -1,5 +1,18 @@
 const db = require('../DB');
 
+module.exports.getHalls = async (req, res) => {
+    try {
+        const [ halls ] = await db.query(`
+            select * from halls
+        `);
+        
+        return res.status(200).json(halls);
+    }
+    catch(err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
 module.exports.addHall = async (req, res) => {
     const { Hall_Name, Hall_Capacity, Department_ID, Building_ID, Hall_Type_ID } = req.body;
 

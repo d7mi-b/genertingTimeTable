@@ -1,6 +1,7 @@
 const db = require('../DB');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const { use } = require('../routes/usersRoutes');
 
 const createToken = (id) => {
     return jwt.sign({id}, process.env.SECRET, {expiresIn: "3d"})
@@ -29,7 +30,7 @@ module.exports.login = async (req, res) => {
 
         const token = createToken(user[0].User_ID);
 
-        return res.status(200).json({token, name: user[0].Name, type: user[0].User_Type_ID});
+        return res.status(200).json({token, name: user[0].Name, type: user[0].User_Type_ID, Department_ID: user[0].Department_ID});
     }
     catch(err) {
         res.status(400).json({err: err.message})
@@ -39,10 +40,10 @@ module.exports.login = async (req, res) => {
 module.exports.getUsers = async (req, res) => {
     try {
         const [ row ] = await db.query(`
-            select User_ID, Name, User_Name, Department_ID, Department_Name, 
+            select User_ID, Name, User_Name, users.Department_ID, Department_Name, 
             User_Type_ID, User_Type_Name, College_Name from users 
-            natural join department
-            join college on college.College_ID = department.College_ID
+            left outer join department on department.Department_ID = users.Department_ID
+            left outer join college on college.College_ID = department.College_ID
             natural join user_type;
         `);
         return res.status(200).json(row);
@@ -113,4 +114,26 @@ module.exports.updateUser = async (req, res) => {
     catch (err) {
         res.status(400).json({err: err.message});
     }
+}
+
+module.exports.getUserInfo = async (req,res) => {
+    
+    const id  = req.user.user_id;
+   
+
+    try {
+
+        const [ user ]= await db.query(`
+            select user_id,name,user_name,department_id,department_name,college.college_id,college_name from users
+            natural join department
+            join college on college.College_ID = department.College_ID
+            where user_id = ?
+        `, [id])
+
+        res.status(200).json(user)
+    }
+    catch (err) {
+        res.status(400).json({error: err.message});
+    }
+
 }

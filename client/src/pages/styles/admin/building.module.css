@@ -28,10 +28,10 @@
 
 .hall {
     margin: 5px;
-    border: 1px solid rgba(85,65,72,0.5);
+    border: 2px solid var(--card-color);
     display: flex;
     padding: 10px;
-    box-shadow: 0px 3px 2px 1px var(--card-color);
+    box-shadow: 0px 0px 3px 2px var(--card-color);
     border-radius: 5px;
 }
 
@@ -43,9 +43,20 @@
     border-left: 1px solid var(--card-color);
 }
 
-.hall .icon{
-    width: 50px;
+.hall .buildingIcon {
+    width: 30%;
     height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hall .buildingIcon .icon {
+    width: 70%;
+    height: 80%;
     color: var(--main-color);
 }
 
@@ -79,4 +90,42 @@
 .updateBuldingSection,
 .addHallSection {
     display: none;
+}
+
+@media (min-width: 283px) and (max-width: 767px) {
+    .content header {
+        margin-top: 50px
+    }
+
+    .content header svg {
+        margin-left: 10px;
+    }
+    
+    .hallsContainer {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .buttons button {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .addHallSection {
+        width: 100%;
+        right: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .content header svg {
+        margin-left: 10px;
+    }
+    
+    .hallsContainer {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .addHallSection {
+        width: calc(100% - 50px);
+    }
 }

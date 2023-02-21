@@ -158,7 +158,9 @@ const Department = () => {
                                         <p>{e.Hall_Capacity} مقعد</p>
                                         <p>{e.Type_Name}</p>
                                     </div>
-                                    <FontAwesomeIcon icon={faBuilding} className={style.icon} />
+                                    <div className={style.buildingIcon}>
+                                        <FontAwesomeIcon icon={faBuilding} className={style.icon} />
+                                    </div>
                                 </article>
                             )
                         })

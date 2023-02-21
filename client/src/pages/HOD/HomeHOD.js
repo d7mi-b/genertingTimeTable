@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { NavLink } from "react-router-dom";
 import style from '../styles/HOD/HomeHOD.module.css';
 
+
 const services = [
     {
         id:1,
@@ -26,7 +27,7 @@ const services = [
         id:4,
         name: 'القاعات',
         icon: faBuilding,
-        route:'/halls'
+        route:`/halls`
     },
     {
         id:5,
@@ -38,6 +39,7 @@ const services = [
 ]
 
 const HomeHOD = () => {
+
     return (
         <section className={`container`}>
             <header className={style.Home_header}>
@@ -52,8 +54,8 @@ const HomeHOD = () => {
             {
                 services.map(i => {
                     return (
-                        <NavLink to={i.route} className='link'>
-                        <div key={i.id}>
+                        <NavLink to={i.route} className='link' key={i.id}>
+                        <div>
                             <FontAwesomeIcon icon={i.icon} className={style.icon} />
                             <p>{i.name}</p>
                         </div>

@@ -190,7 +190,9 @@ const Building = () => {
                                                     />
                                                 </section>
                                             </div>
-                                            <FontAwesomeIcon icon={faBuilding} className={style.icon} />
+                                            <div className={style.buildingIcon}>
+                                                <FontAwesomeIcon icon={faBuilding} className={style.icon} />
+                                            </div>
                                         </article>
                                     )
                                 })

@@ -50,34 +50,60 @@ header p {
 }
 
 .hallsContainer {
+    width: 90%;
+    margin: 15px auto 20px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
 }
 
 .hall {
-    margin: 5px auto;
-    border: 1px solid rgba(85,65,72,0.5);
+    margin: 5px;
+    border: 2px solid var(--card-color);
     display: flex;
     padding: 10px;
-    width: fit-content;
-    box-shadow: 0px 3px 2px 1px var(--card-color);
+    box-shadow: 0px 0px 3px 2px var(--card-color);
     border-radius: 5px;
 }
 
 .hall div {
     text-align: center;
-    width: 120px;
+    width: 70%;
     margin-left: 10px;
     padding: 10px;
     border-left: 1px solid var(--card-color);
 }
 
-.hall .icon{
-    width: 50px;
+.hall .buildingIcon {
+    width: 30%;
     height: 100%;
+    margin: 0 auto;
+    padding: 0;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hall .buildingIcon .icon {
+    width: 70%;
+    height: 80%;
     color: var(--main-color);
+}
+
+.hall div .icon {
+    width: 100%;
+    text-align: center;
+    margin: 5px;
+}
+
+.hall div .icon svg {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.hall div .icon svg:hover {
+    color: var(--border-color);
 }
 
 .buttons {
@@ -106,6 +132,11 @@ header p {
     .lecturersContainer,
     .hallsContainer {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .buttons button {
+        margin-top: 15px;
+        margin-bottom: 15px;
     }
 }
 
