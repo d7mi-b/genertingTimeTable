@@ -56,8 +56,8 @@ const SecretaryHome = () => {
         <div className={style.semester}>
           <p>الترم:</p>
           <select>
-            {semesters.map((element) => (
-              <option> {element} </option>
+            {semesters.map((element, index) => (
+              <option key={index}> {element} </option>
             ))}
           </select>
         </div>
