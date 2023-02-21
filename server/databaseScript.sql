@@ -1,11 +1,15 @@
 Drop database if exists timetable;
+
 Create database timetable;
+
 Use timetable;
+
 Create table day (
     Day_ID int auto_increment not null,
     Day_Name varchar(30) not null,
     primary key(Day_ID)
 );
+
 Create table time (
     Time_ID int auto_increment not null,
     Start_Time varchar(50) not null,
@@ -13,6 +17,7 @@ Create table time (
     Duration varchar(50) not null,
     primary key(Time_ID)
 );
+
 Create table user_type (
     User_Type_ID int auto_increment not null,
     User_Type_Name varchar(50) not null,
@@ -22,11 +27,14 @@ INSERT INTO user_type (User_Type_ID, User_Type_Name)
 VALUES (1, 'ادمن'),
     (2, 'سكرتير'),
     (3, 'رئيس قسم');
+
+
 Create table batch_type (
     Batch_Type_ID int auto_increment not null,
     Batch_Type varchar(50) not null,
     primary key(Batch_Type_ID)
 );
+
 Create table level (
     Level_ID int auto_increment not null,
     Level_Name varchar(50) not null,
@@ -38,11 +46,14 @@ VALUES (1, 'الأول'),
     (3, 'الثالث'),
     (4, 'الرابع'),
     (5, 'الخامس');
+
+
 Create table hall_type (
     Hall_Type_ID int auto_increment not null,
     Type_Name varchar(50) not null,
     primary key(Hall_Type_ID)
 );
+
 INSERT INTO hall_type (Hall_Type_ID, Type_Name)
 VALUES (1, 'مختبر حاسوب'),
     (2, 'مختبر شبكات'),
@@ -55,29 +66,38 @@ VALUES (1, 'مختبر حاسوب'),
     (9, 'مختبر جيولوجيا'),
     (10, 'مختبر منطق رقمي'),
     (11, 'مختبر أنظمة تحكم');
+
+
 Create table building (
     Building_ID int auto_increment not null,
     Building_Name varchar(50) not null UNIQUE,
     primary key(Building_ID)
 );
+
 INSERT INTO building (Building_ID, Building_Name)
 VALUES (1, 'A'),
     (2, 'B'),
     (3, 'C'),
     (4, 'D');
+
+
 Create table semester (
     Semester_ID int auto_increment not null,
     Semester_Name varchar(50) not null,
     primary key(Semester_ID)
 );
+
 Create table college (
     College_ID int auto_increment not null,
     College_Name varchar(150) not null UNIQUE,
     primary key(College_ID)
 );
+
 INSERT INTO college(College_ID, College_Name)
 VALUES (1, 'كلية الهندسة والبترول'),
     (2, 'كلية الطب');
+
+
 Create table department (
     Department_ID int auto_increment not null,
     Department_Name varchar(150) not null UNIQUE,
@@ -85,6 +105,7 @@ Create table department (
     primary key(Department_ID),
     foreign key(College_ID) references college(College_ID)
 );
+
 INSERT INTO department(Department_ID, Department_Name, College_ID)
 VALUES (1, 'هندسة حاسوب', 1),
     (2, 'هندسة الكترونية واتصالات', 1),
@@ -95,6 +116,8 @@ VALUES (1, 'هندسة حاسوب', 1),
     (7, 'العمادة', 1),
     (8, 'هندسة ميكانيكية', 1),
     (9, 'هندسة كهربائية', 1);
+
+
 Create table users (
     User_ID int auto_increment not null,
     Name varchar(150) not null,
@@ -106,6 +129,7 @@ Create table users (
     foreign key(Department_ID) references department(Department_ID),
     foreign key(User_Type_ID) references user_type(User_Type_ID)
 );
+
 INSERT INTO users(
         User_ID,
         Name,
@@ -146,6 +170,8 @@ VALUES (
         7,
         2
     );
+
+
 Create table batches (
     Batch_ID int auto_increment not null,
     College_ID int,
@@ -159,6 +185,7 @@ Create table batches (
     foreign key(Level_ID) references level(Level_ID),
     foreign key(Department_ID) references department(Department_ID)
 );
+
 INSERT INTO batches(
         College_ID,
         Level_ID,
@@ -177,6 +204,8 @@ VALUES (1, 5, 1, 33, 4, 4),
     (1, 3, 1, 45, 4, 8),
     (1, 2, 1, 38, 12, 6),
     (1, 1, 1, 67, 8, 9);
+    
+
 Create table halls (
     Hall_ID int auto_increment not null,
     Hall_Name varchar(100) not null UNIQUE,
@@ -190,6 +219,7 @@ Create table halls (
     foreign key(Building_ID) references building(Building_ID),
     foreign key(Hall_Type_ID) references hall_type(Hall_Type_ID)
 );
+
 INSERT INTO halls(
         Hall_Name,
         Hall_Capacity,
@@ -208,6 +238,8 @@ VALUES ('C101', 70, 1, 1, 3, 1),
     ('Physic Lab', 35, 1, 1, 1, 1),
     ('D209', 55, 1, 1, 1, 1),
     ('C201', 64, 1, 1, 1, 1);
+
+
 Create table subjects(
     Subject_ID int auto_increment not null,
     Subject_Name varchar(100) not null,
@@ -221,6 +253,8 @@ Create table subjects(
     foreign key(Department_ID) references department(Department_ID),
     foreign key(College_ID) references college(College_ID)
 );
+
+
 Create table lecturer(
     Lecturer_ID int auto_increment not null,
     Lecturer_Name varchar(100) not null,
@@ -238,6 +272,8 @@ Create table lecturer(
     foreign key(Department_ID) references department(Department_ID),
     foreign key(College_ID) references college(College_ID)
 );
+
+
 INSERT INTO lecturer (
         Lecturer_ID,
         Lecturer_Name,
@@ -259,6 +295,8 @@ VALUES (1, 'خالد فوزي اشبير', 1, 1),
     (13, 'عادل معلم بامعلم', 3, 1),
     (14, 'عامر بن مرضاح', 6, 1),
     (15, 'سالم بامومن', 6, 1);
+
+
 CREATE TABLE lecturer_requsets (
     Request_ID int NOT NULL AUTO_INCREMENT,
     Sender_ID int DEFAULT NULL,
@@ -272,6 +310,7 @@ CREATE TABLE lecturer_requsets (
     FOREIGN KEY (Lecturer_ID) REFERENCES lecturer (Lecturer_ID),
     FOREIGN KEY (Subject_ID) REFERENCES subjects (Subject_ID)
 );
+
 Create table batch_groups(
     Group_ID int auto_increment not null,
     Group_ varchar(100) not null,
@@ -280,6 +319,7 @@ Create table batch_groups(
     primary key(Group_ID),
     foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID)
 );
+
 Create table module(
     Module_ID int auto_increment not null,
     Semester_ID int,
