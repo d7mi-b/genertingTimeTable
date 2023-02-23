@@ -89,7 +89,7 @@ const routerHOD = createBrowserRouter(
       <Route index element={<HomeHOD />} />
       <Route path='lecturers' element={<LecturersHOD/>} />
       <Route path='halls' element={<HallsHOD/>} />
-      <Route path='review_requests' element={<ReviewRequests/>} />
+      <Route path='requests' element={<ReviewRequests/>} />
       <Route path='students_groups' element={<SudentsGroups/>} />
       <Route path='courses' element={<Courses/>} />
       <Route path='create_table' element={<CreateTable/>} />
@@ -103,10 +103,10 @@ const routerSecretary = createBrowserRouter(
     <Route path="/" element={<SecretaryLayout />}>
       <Route index element={<SecretaryHome />} />
       <Route path="createTable" element={<SecretaryCreateSchedule />} />
-      <Route path="laps" element={<SecretaryLaps />} />
+      <Route path="halls" element={<SecretaryLaps />} />
       <Route path="departments" element={<SecretaryDepartments />} />
       <Route path="requests" element={<SecretaryRequestManager />} />
-      <Route path="lecturesrs" element={<SecretaryLecturers />} />
+      <Route path="lecturers" element={<SecretaryLecturers />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

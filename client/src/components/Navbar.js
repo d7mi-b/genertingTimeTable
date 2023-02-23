@@ -3,12 +3,15 @@ import { faBars, faBell, faGear, faUserCircle } from '@fortawesome/free-solid-sv
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
+import useFetch from '../hooks/useFetch';
 import { useLogout } from '../hooks/useLogout';
 import style from './styles/navbar.module.css';
 
 const Navbar = () => {
     const { logout } = useLogout();
     const { user } = useAuthContext();
+
+    const { data: department } = useFetch(`http://localhost:5000/departements/${user.Department_ID}`);
 
     const handelLogout = () => {
         logout();
@@ -23,8 +26,9 @@ const Navbar = () => {
                 <p className={`${style.logo}`}>MHA</p>
                 <ul className={`${style.list}`}>
                     <li><NavLink className={`link`} to='/'>الرئيسية</NavLink></li>
-                    <li><a className={`link`} href='#ourSystem'>نظامنا</a></li>
-                    <li><a className={`link`} href='#contactUs'>تواصل معنا</a></li>
+                    <li><NavLink className={`link`} to='lecturers'>أعضاء هيئة التدريس</NavLink></li>
+                    <li><NavLink className={`link`} to='halls'>القاعات</NavLink></li>
+                    <li><NavLink className={`link`} to='requests'>مراجعة الطلبات</NavLink></li>
                 </ul>
             </section>
             <section className={`${style.iconsContainer}`}>
@@ -43,6 +47,7 @@ const Navbar = () => {
                     <p><FontAwesomeIcon icon={faUserCircle} size='xl' /></p>
                     <ul className={`${style.list} ${style.listProfile}`}>
                         <li>{user.name}</li>
+                        <li>{department && department.Department_Name}</li>
                         <li><FontAwesomeIcon icon={faGear} />الإعدادات</li>
                         <li><button className={`btn`} onClick={handelLogout}>تسجيل خروج</button></li>
                     </ul>
