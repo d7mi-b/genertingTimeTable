@@ -93,6 +93,7 @@
     margin: 7px;
     padding: 3px;
     box-shadow: 0px 1px 1px 1px rgba(0,0,0,0.16);
+    justify-content: center;
 }
 
 .table_Data p{
@@ -106,6 +107,7 @@
     text-align: center;
     padding: 3px;
 }
+
 
 .delete_icon:hover{
     color: #000;

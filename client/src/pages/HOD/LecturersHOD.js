@@ -93,9 +93,9 @@ const Lecturers = () => {
     }
     
     const handleDelete = async () => {
-        console.log(Lecturer_ID)
+        
         await fetchDelete('http://localhost:5000/lecturers/deleteLecturer',{
-            "Lecturer_ID":Lecturer_ID
+            Lecturer_ID
         })
 
         window.location.reload()

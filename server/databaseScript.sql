@@ -82,7 +82,7 @@ Create table day (
     Batch_ID int auto_increment not null,
     Batch_General_Count int,
     Batch_Payment_Count int,
-    Batch_Parallel_Count int;
+    Batch_Parallel_Count int,
     College_ID int,
     Level_ID int,
     Department_ID int,
@@ -115,9 +115,11 @@ Create table day (
     Credit_Tutorial int,
     Department_ID int,
     College_ID int,
+    Semester_ID int,
     primary key(Subject_ID),
 	foreign key(Department_ID) references department(Department_ID),
     foreign key(College_ID) references college(College_ID)
+    foreign key(Semester_ID) references semester(Semester_ID)
     );
     
     Create table lecturer(
@@ -132,7 +134,7 @@ Create table day (
     Monday BOOLEAN NULL,
     Tuesday BOOLEAN NULL,
     Wednesday BOOLEAN NULL,
-    Thursday BOOLEAN NULL;
+    Thursday BOOLEAN NULL,
     primary key(Lecturer_ID),
     foreign key(Department_ID) references department(Department_ID),
     foreign key(College_ID) references college(College_ID)
@@ -189,5 +191,5 @@ Create table day (
         foreign key(Sender_ID) references users(User_ID),
         foreign key(Reciver_ID) references users(User_ID),
         foreign key(Lecturer_ID) references lecturer(Lecturer_ID),
-        foreign key(Subject_ID) references subjects(Subject_ID),
-    )
+        foreign key(Subject_ID) references subjects(Subject_ID)
+    );

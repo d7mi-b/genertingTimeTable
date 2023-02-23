@@ -1,6 +1,6 @@
 import { faAngleDoubleLeft, faBuilding } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import style from '../styles/HOD/HallsHOD.module.css';
 import useFetch from '../../hooks/useFetch';
 import Loading from '../../components/Loading';
@@ -36,7 +36,7 @@ const Halls = () => {
                         return(
                             <div key={i.Hall_ID} className={style.box}>
                                 <div>
-                                    <h2>{i.Hall_Name}</h2>
+                                    <h3>{i.Hall_Name}</h3>
                                     <p>مبنى {i.Building_Name}</p>
                                     <p>{i.Hall_Capacity} مقعد</p>
                                     <p>{i.Type_Name}</p>

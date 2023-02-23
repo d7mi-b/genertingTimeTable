@@ -28,8 +28,8 @@ const HallType = lazy(() => import("./pages/admin/HallType"));
 const HomeHOD = lazy(() => import("./pages/HOD/HomeHOD"));
 const LecturersHOD = lazy(() => import("./pages/HOD/LecturersHOD"));
 const HallsHOD = lazy(() => import("./pages/HOD/HallsHOD"));
-const Review_Requests = lazy(() => import("./pages/HOD/ReviewRequestsHOD"));
-const Sudents_Groups = lazy(() => import("./pages/HOD/StudentsGroupsHOD"));
+const ReviewRequests = lazy(() => import("./pages/HOD/ReviewRequestsHOD"));
+const SudentsGroups = lazy(() => import("./pages/HOD/StudentsGroupsHOD"));
 const Courses = lazy(() => import("./pages/HOD/CoursesHOD"));
 const CreateTable = lazy(() => import("./pages/HOD/CreateTableHOD"));
 
@@ -89,8 +89,8 @@ const routerHOD = createBrowserRouter(
       <Route index element={<HomeHOD />} />
       <Route path='lecturers' element={<LecturersHOD/>} />
       <Route path='halls' element={<HallsHOD/>} />
-      <Route path='review_requests' element={<Review_Requests/>} />
-      <Route path='students_groups' element={<Sudents_Groups/>} />
+      <Route path='review_requests' element={<ReviewRequests/>} />
+      <Route path='students_groups' element={<SudentsGroups/>} />
       <Route path='courses' element={<Courses/>} />
       <Route path='create_table' element={<CreateTable/>} />
       <Route path='*' element={<NotFound />} />

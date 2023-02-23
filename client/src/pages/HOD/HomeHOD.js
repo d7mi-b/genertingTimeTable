@@ -1,4 +1,4 @@
-import { faAngleDoubleLeft, faUserGroup, faBookOpen, faBuilding, faFile } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDoubleLeft, faUserGroup, faBookOpen, faBuilding, faFile, faChalkboardTeacher } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { NavLink } from "react-router-dom";
 import style from '../styles/HOD/HomeHOD.module.css';
@@ -32,7 +32,7 @@ const services = [
     {
         id:5,
         name: 'أعضاء هيئة التدريس',
-        icon: faUserGroup,
+        icon: faChalkboardTeacher,
         route:'/lecturers'
     }
     
