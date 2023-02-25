@@ -47,8 +47,8 @@ const SecretaryCreateSchedule = () => {
             <p className={`${style.sectionDivider} ${style.title}`}>الحالة</p>
             <p className={`${style.iconDivider} ${style.title}`}>تنبيه</p>
           </div>
-          {departmentScheduleStatus.map((element) => (
-            <div className={`${style.section} ${style.status}`}>
+          {departmentScheduleStatus.map((element, index) => (
+            <div className={`${style.section} ${style.status}`} key={index}>
               <p className={style.sectionDivider}>{element.name}</p>
               <div className={`${style.sectionStatus} ${style.sectionDivider}`}>
                 <FontAwesomeIcon

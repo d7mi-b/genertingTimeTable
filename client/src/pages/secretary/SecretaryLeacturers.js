@@ -29,8 +29,8 @@ const SecretaryLecturers = () => {
         </div>
         <button className={style.navButton}>إضافة مدرس</button>
       </div>
-      {availabelLectureors.map((element) => (
-        <div className={style.lectureor}>
+      {availabelLectureors.map((element, index) => (
+        <div className={style.lectureor} key={index}>
           <div className={style.infoSection}>
             <p>الأستاذ/ة: {element.name}</p>
             <p>{element.department}</p>
@@ -39,7 +39,6 @@ const SecretaryLecturers = () => {
                 <input
                   type={"checkbox"}
                   className={style.checkBox}
-                  checked={element.availabel}
                 ></input>{" "}
                 غير متاح
               </label>
@@ -57,7 +56,7 @@ const SecretaryLecturers = () => {
               </div>
               <div className={style.checkboxDays}>
                 {days.map((element, index) => (
-                  <div className="days">
+                  <div className="days" key={index}>
                     <label className={style.labels}>
                       <input type="checkbox" className={style.checkBox}></input>{" "}
                       {element}
