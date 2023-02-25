@@ -28,8 +28,8 @@ const SecretaryRequestManager = () => {
         <option className={style.sectionOption}>الواردة</option>
         <option className={style.sectionOption}>الصادرة</option>
       </select>
-      {requests.map((element) => (
-        <div className={style.requests}>
+      {requests.map((element, index) => (
+        <div className={style.requests} key={index}>
           <div className={style.sectionInfo}>
             <p>القسم : {element.department}</p>
             <p>المادة : {element.subject}</p>
@@ -38,8 +38,8 @@ const SecretaryRequestManager = () => {
           <hr className={style.sectionHR} />
           <div className={style.sectionConfirm}>
             <select className={style.sectionSelect}>
-              {lecturers.map((element) => (
-                <option className={style.sectionOption}>{element}</option>
+              {lecturers.map((element, index) => (
+                <option key={index} className={style.sectionOption}>{element}</option>
               ))}
             </select>
             <button className={style.sectionButton}>تأكيد</button>
