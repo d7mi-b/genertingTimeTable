@@ -13,23 +13,6 @@ module.exports.getHalls = async (req, res) => {
     }
 }
 
-module.exports.getHallsInfo = async (req,res) => {
-    try {
-        const [ hallsInfo ] = await db.query(`
-            select Hall_ID, Hall_Name, Hall_Capacity, Department_Name,
-            Building_Name, Type_Name, Is_Available 
-            from halls h inner join building b on h.Building_ID = b.Building_ID
-            inner join department d on h.Department_ID = d.Department_ID
-            inner join hall_type ht on h.Hall_Type_ID = ht.Hall_Type_ID;
-        `);
-
-        return res.status(200).json(hallsInfo);
-    }
-    catch(err){
-        res.status(400).json({err: err.message});
-    }
-}
-
 module.exports.addHall = async (req, res) => {
     const { Hall_Name, Hall_Capacity, Department_ID, Building_ID, Hall_Type_ID } = req.body;
 
