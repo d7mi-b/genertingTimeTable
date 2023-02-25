@@ -4,16 +4,19 @@ import Loading from "../../components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding } from "@fortawesome/free-solid-svg-icons";
 import style from "../styles/secretary/secretaryLaps.module.css";
-import { useState } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const SecretaryLaps = () => {
+
+  const { user } = useAuthContext();
   const {
     data: hallsData,
     isPending: hallLoading,
     error: hallError,
-  } = useFetch("http://localhost:5000/halls/Info");
+  } = useFetch(`http://localhost:5000/halls/department/${user.Department_ID}`);
 
-
+  console.log(user.Department_ID);
+  console.log(hallsData);
   return (
     <div className="div">
       <div className={style.navLink}>
