@@ -51,12 +51,19 @@
 
     .notFound .content  {
         width: 90%;
+        height: 50%;
         margin: 35px auto;
     }
 
     .notFound .img {
         width: 90%;
+        height: 50%;
         margin: 15px auto;
         min-height: auto;
+    }
+
+    .notFound .img img {
+        width: 80%;
+        height: min-content;
     }
 }
