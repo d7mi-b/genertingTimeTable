@@ -7,6 +7,7 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.get('/', hallsController.getHalls);
+router.get('/Info', hallsController.getHallsInfo);
 router.post('/addHall', hallsController.addHall);
 router.put('/updateHall', hallsController.updateHall);
 router.delete('/deleteHall', hallsController.deleteHall);
