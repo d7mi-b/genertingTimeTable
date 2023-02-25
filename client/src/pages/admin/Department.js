@@ -39,33 +39,40 @@ const Department = () => {
             setDepartment_Name(department.Department_Name);
         }
 
-        const btnUpdateDepartment = document.getElementById('btnUpdateDepartment');
-        const updateDepartmentSec = document.getElementById('updateDepartmentSec');
-        const closeUpdateDepartmentSec = document.getElementById('closeUpdateDepartmentSec');
+        if (!loadingDepartment) {
+            const btnUpdateDepartment = document.getElementById('btnUpdateDepartment');
+            const updateDepartmentSec = document.getElementById('updateDepartmentSec');
+            const closeUpdateDepartmentSec = document.getElementById('closeUpdateDepartmentSec');
+    
+            btnUpdateDepartment.addEventListener('click', () => {
+                updateDepartmentSec.style.cssText = 'display: grid';
+            })
+    
+            closeUpdateDepartmentSec.addEventListener('click', () => {
+                updateDepartmentSec.style.cssText = 'display: none';
+            })
+    
+            const btnDeleteDepartment = document.getElementById('btnDeleteDepartment');
+            const deletComponent = document.querySelector('#deletComponent');
+    
+            btnDeleteDepartment.addEventListener('click', () => {
+                deletComponent.style.cssText = 'display: flex';
+            })
+        }
+        
 
-        btnUpdateDepartment.addEventListener('click', () => {
-            updateDepartmentSec.style.cssText = 'display: grid';
-        })
-
-        closeUpdateDepartmentSec.addEventListener('click', () => {
-            updateDepartmentSec.style.cssText = 'display: none';
-        })
-
-        const btnDeleteDepartment = document.getElementById('btnDeleteDepartment');
-        const deletComponent = document.querySelector('#deletComponent');
-
-        btnDeleteDepartment.addEventListener('click', () => {
-            deletComponent.style.cssText = 'display: flex';
-        })
-
-    }, [errorDepartment, department, College_ID]);
+    }, [errorDepartment, department, College_ID, loadingDepartment]);
 
     return (
         <div className={`containerPage ${style.container}`}>
 
             { (loadingDepartment || loadingBatches || loadingLeactures || loadingHalls) && <Loading />}
-
-            <header>
+            
+            { 
+                !loadingDepartment
+                &&
+                <div>
+                    <header>
                 <h1>
                     <FontAwesomeIcon icon={faBuildingColumns} />
                     {department && department.College_Name} قسم {department && department.Department_Name}
@@ -220,6 +227,8 @@ const Department = () => {
             <Falid error={errorUpdate} />
 
             <Delete url='http://localhost:5000/departements/deleteDepartment' body={{ Department_ID }} />
+                </div>
+            }
 
         </div>
     )
