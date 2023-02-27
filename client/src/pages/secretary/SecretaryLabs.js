@@ -15,8 +15,7 @@ const SecretaryLaps = () => {
     error: hallError,
   } = useFetch(`http://localhost:5000/halls/department/${user.Department_ID}`);
 
-  console.log(user.Department_ID);
-  console.log(hallsData);
+
   return (
     <div className="div">
       <div className={style.navLink}>

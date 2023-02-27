@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import  useFetch  from "../../hooks/useFetch";
 import style from "../styles/secretary/secretaryLecturers.module.css";
 
 const availabelLectureors = [
@@ -17,6 +19,18 @@ const availabelLectureors = [
 const days = ["الاحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
 
 const SecretaryLecturers = () => {
+  const { user } = useAuthContext();
+
+  const {
+    data: lectureorData,
+    isPending: lectureorLoading,
+    error: lectureorError,
+  } = useFetch(
+    `http://localhost:5000/lecturers/department/${user.Department_ID}`
+  );
+
+  console.log(lectureorData);
+
   return (
     <div className={style.lectureorsContainer}>
       <div className={style.navLink}>
@@ -36,11 +50,8 @@ const SecretaryLecturers = () => {
             <p>{element.department}</p>
             <div className={style.lecturerAvailabel}>
               <label className={style.labels}>
-                <input
-                  type={"checkbox"}
-                  className={style.checkBox}
-                ></input>{" "}
-                غير متاح
+                <input type={"checkbox"} className={style.checkBox}></input> غير
+                متاح
               </label>
             </div>
           </div>
