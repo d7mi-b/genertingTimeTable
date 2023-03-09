@@ -9,20 +9,38 @@ Create table day (
     Day_Name varchar(30) not null,
     primary key(Day_ID)
 );
+INSERT INTO day (Day_ID, Day_Name)
+VALUES (1, 'الأحد'),
+    (2, 'الإثنين'),
+    (3, 'الثلاثاء'),
+    (4, 'الأربعاء'),
+    (5, 'الخميس');
+
 
 Create table time (
     Time_ID int auto_increment not null,
-    Start_Time varchar(50) not null,
-    End_Time varchar(50) not null,
-    Duration varchar(50) not null,
+    Start_Time varchar(5) not null,
+    End_Time varchar(5) not null,
+    Duration varchar(3) not null,
     primary key(Time_ID)
 );
+
+INSERT INTO time (Time_ID, Start_Time, End_Time, Duration)
+VALUES (1, '8', '9', '1'),
+    (2, '9', '10', '1'),
+    (3, '10', '11', '1'),
+    (4, '11', '12', '1'),
+    (5, '12', '1', '1'),
+    (6, '1', '2', '1'),
+    (7, '2', '3', '1');
+
 
 Create table user_type (
     User_Type_ID int auto_increment not null,
     User_Type_Name varchar(50) not null,
     primary key(User_Type_ID)
 );
+
 INSERT INTO user_type (User_Type_ID, User_Type_Name)
 VALUES (1, 'ادمن'),
     (2, 'سكرتير'),
@@ -40,6 +58,7 @@ Create table level (
     Level_Name varchar(50) not null,
     primary key(Level_ID)
 );
+
 INSERT INTO level (Level_ID, Level_Name)
 VALUES (1, 'الأول'),
     (2, 'الثاني'),
@@ -190,35 +209,35 @@ VALUES (
 Create table batches (
     Batch_ID int auto_increment not null,
     College_ID int,
-    Level_ID int,
+    Semester_ID int,
     Department_ID int,
     Batch_General_Count int,
     Batch_Payment_Count int,
     Batch_Parallel_Count int,
     primary key(Batch_ID),
     foreign key(College_ID) references college(College_ID),
-    foreign key(Level_ID) references level(Level_ID),
+    foreign key(Semester_ID) references semester(Semester_ID),
     foreign key(Department_ID) references department(Department_ID)
 );
 
 INSERT INTO batches(
         College_ID,
-        Level_ID,
+        Semester_ID,
         Department_ID,
         Batch_General_Count,
         Batch_Payment_Count,
         Batch_Parallel_Count
     )
-VALUES (1, 5, 1, 33, 4, 4),
-    (1, 4, 1, 27, 7, 3),
-    (1, 3, 4, 35, 11, 5),
-    (1, 5, 2, 40, 9, 15),
-    (1, 2, 3, 46, 9, 7),
-    (1, 1, 5, 68, 9, 18),
-    (1, 3, 6, 46, 7, 28),
-    (1, 3, 1, 45, 4, 8),
-    (1, 2, 1, 38, 12, 6),
-    (1, 1, 1, 67, 8, 9);
+VALUES (1, 10, 1, 33, 4, 4),
+    (1, 8, 1, 27, 7, 3),
+    (1, 6, 4, 35, 11, 5),
+    (1, 10, 2, 40, 9, 15),
+    (1, 4, 3, 46, 9, 7),
+    (1, 2, 5, 68, 9, 18),
+    (1, 6, 6, 46, 7, 28),
+    (1, 6, 1, 45, 4, 8),
+    (1, 4, 1, 38, 12, 6),
+    (1, 2, 1, 67, 8, 9);
     
 
 Create table halls (
@@ -269,18 +288,18 @@ Create table subjects(
     foreign key(Department_ID) references department(Department_ID),
     foreign key(College_ID) references college(College_ID),
     foreign key(Semester_ID) references semester(Semester_ID)
-    );
+);
 
-    INSERT INTO subjects (
-     Subject_Name,
-     Subject_Code,
-     Credit_Theoretical,
-     Credit_Practical,
-     Credit_Tutorial,
-     Department_ID,
-     College_ID,
-     Semester_ID) 
-    VALUES
+INSERT INTO subjects (
+    Subject_Name,
+    Subject_Code,
+    Credit_Theoretical,
+    Credit_Practical,
+    Credit_Tutorial,
+    Department_ID,
+    College_ID,
+    Semester_ID ) 
+VALUES
     ('Defferential Calculus', 'MATH111', 2, 0, 2, 1, 1, 1),
     ( 'General Physics I', 'PHYS111', 2, 2, 0, 1, 1, 1),
     ( 'General Chemistry I', 'CHEM111', 1, 2, 0, 1, 1, 1),
@@ -296,8 +315,19 @@ Create table subjects(
     ( 'Arabic Language II', 'ARAB121', 2, 0, 0, 1, 1, 2),
     ( 'Computer Programming', 'COE121', 2, 2, 0, 1, 1, 2);
 
-    
-    Create table lecturer(
+
+Create table subject_type (
+    Subject_Type_ID int primary key auto_increment not null,
+    Subject_Type_Name varchar(100) not null
+);
+
+INSERT INTO subject_type (Subject_Type_ID, Subject_Type_Name)
+VALUES (1, 'نظري'),
+    (2, 'عملي'),
+    (3, 'تمارين');
+
+
+Create table lecturer (
     Lecturer_ID int auto_increment not null,
     Lecturer_Name varchar(100) not null,
     Department_ID int,
@@ -314,7 +344,6 @@ Create table subjects(
     foreign key(Department_ID) references department(Department_ID),
     foreign key(College_ID) references college(College_ID)
 );
-
 
 INSERT INTO lecturer (
         Lecturer_ID,
@@ -352,12 +381,14 @@ CREATE TABLE lecturer_requsets (
     Reciver_ID int DEFAULT NULL,
     Lecturer_ID int DEFAULT NULL,
     Subject_ID int DEFAULT NULL,
+    Subject_Type_ID int DEFAULT null,
     Reply varchar(300) DEFAULT NULL,
     PRIMARY KEY (Request_ID),
-    FOREIGN KEY (Sender_ID) REFERENCES users (User_ID),
-    FOREIGN KEY (Reciver_ID) REFERENCES users (User_ID),
+    FOREIGN KEY (Sender_ID) REFERENCES department (Department_ID),
+    FOREIGN KEY (Reciver_ID) REFERENCES department (Department_ID),
     FOREIGN KEY (Lecturer_ID) REFERENCES lecturer (Lecturer_ID),
-    FOREIGN KEY (Subject_ID) REFERENCES subjects (Subject_ID)
+    FOREIGN KEY (Subject_ID) REFERENCES subjects (Subject_ID),
+    FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID)
 );
 
 Create table batch_groups(
@@ -376,24 +407,39 @@ Create table module(
     Lecturer_ID int,
     Department_ID int,
     Hall_Type_ID int DEFAULT NULL,
+    Subject_Type_ID int,
     primary key(Module_ID),
     foreign key(Semester_ID) references semester(Semester_ID),
     foreign key(Subject_ID) references subjects(Subject_ID),
     foreign key(Lecturer_ID) references lecturer(Lecturer_ID),
     foreign key (Department_ID) references department(Department_ID),
-    foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID)
+    foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID),
+    FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID)
 );
+
 Create table E_T_T(
     ETT_ID int auto_increment not null,
     Module_ID int,
+    Lecturer_ID int,
     Hall_ID int,
     Time_ID int,
     Day_ID int,
     Group_ID int,
     primary key(ETT_ID),
     foreign key(Module_ID) references module(Module_ID),
+    foreign key(Lecturer_ID) references lecturer(Lecturer_ID),
     foreign key(Hall_ID) references halls(Hall_ID),
     foreign key(Time_ID) references time(Time_ID),
     foreign key(Day_ID) references day(Day_ID),
     foreign key(Group_ID) references batch_groups(Group_ID)
 );
+
+Create table system_state (
+    System_State_ID int primary key AUTO_INCREMENT NOT NULL,
+    System_Semester int not null ,
+    System_Year varchar(100) not null,
+    check (System_Semester in (1, 2))
+);
+
+INSERT INTO system_state (System_State_ID, System_Semester, System_Year)
+VALUES (1, 2, '2022/2023');
