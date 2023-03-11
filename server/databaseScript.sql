@@ -32,7 +32,8 @@ VALUES (1, '8', '9', '1'),
     (4, '11', '12', '1'),
     (5, '12', '1', '1'),
     (6, '1', '2', '1'),
-    (7, '2', '3', '1');
+    (7, '2', '3', '1'),
+    (8, '3', '4', '1');
 
 
 Create table user_type (
@@ -52,6 +53,12 @@ Create table batch_type (
     Batch_Type varchar(50) not null,
     primary key(Batch_Type_ID)
 );
+
+INSERT INTO batch_type (Batch_Type_ID, Batch_Type)
+VALUES (1, 'صباحي'),
+    (2, "موازي"),
+    (3, "نفقه خاصه");
+
 
 Create table level (
     Level_ID int auto_increment not null,
@@ -120,6 +127,7 @@ INSERT INTO semester (
     (8,'الترم الثامن'),
     (9,'الترم التاسع'),
     (10,'الترم العاشر');
+
 
 Create table college (
     College_ID int auto_increment not null,
@@ -262,16 +270,16 @@ INSERT INTO halls(
         Hall_Type_ID,
         Is_Available
     )
-VALUES ('C101', 70, 7, 1, 3, 1),
-    ('C1', 25, 1, 1, 1, 1),
-    ('Network Lab', 25, 1, 1, 2, 1),
-    ('C103', 50, 2, 1, 3, 1),
+VALUES ('C101', 70, 7, 3, 3, 1),
+    ('C1', 25, 1, 3, 1, 1),
+    ('Network Lab', 25, 1, 3, 2, 1),
+    ('C103', 50, 2, 3, 3, 1),
     ('A203', 40, 1, 1, 3, 1),
-    ('مرسم 1', 60, 3, 1, 1, 1),
+    ('مرسم 1', 60, 3, 2, 1, 1),
     ('مرسم 2', 60, 3, 2, 1, 0),
     ('Physic Lab', 35, 7, 1, 1, 1),
-    ('D209', 55, 5, 1, 1, 1),
-    ('C201', 64, 1, 1, 1, 1);
+    ('D209', 55, 5, 4, 1, 1),
+    ('C201', 64, 1, 3, 1, 1);
 
 
 Create table subjects(
@@ -395,10 +403,21 @@ Create table batch_groups(
     Group_ID int auto_increment not null,
     Group_ varchar(100) not null,
     Group_Count int not null,
+    Batch_ID int,
     Batch_Type_ID int,
     primary key(Group_ID),
+    foreign key(Batch_ID) references batches(Batch_ID),
     foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID)
 );
+
+INSERT INTO batch_groups(Group_ID, Group_, Group_Count, Batch_ID, Batch_Type_ID)
+VALUES (1, 'A', 33, 6, 1),
+    (1, 'A', 18, 6, 2),
+    (1, 'A', 40, 10, 1),
+    (1, 'B', 20, 10, 1),
+    (1, 'B', 30, 6, 1);
+
+
 
 Create table module(
     Module_ID int auto_increment not null,
@@ -416,6 +435,12 @@ Create table module(
     foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID),
     FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID)
 );
+
+INSERT INTO module (Module_ID, Semester_ID, Subject_ID, Lecturer_ID, Department_ID, Hall_Type_ID, Subject_Type_ID)
+VALUES (1, 2, 14, 3, 1, 3, 1)
+    (2, 2, 11, 4, 1, 3, 1),
+    (3, 2, 5, 7, 1, 3, 1),
+    (4, 2, 2, 2, 1, 4, 2);
 
 Create table E_T_T(
     ETT_ID int auto_increment not null,
