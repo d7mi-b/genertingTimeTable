@@ -1,5 +1,18 @@
 const db = require('../DB');
 
+module.exports.generatingTimetable = async (req, res) => {
+    try {
+        let bestTimetable = 0;
+        let candidateTimetable = await initialTimetable();
+        let tabuList = 0;
+
+        return res.status(200).json(candidateTimetable);
+    }
+    catch (err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
 function getRandomItem(arr) {
 
     // get random index value
@@ -11,7 +24,7 @@ function getRandomItem(arr) {
     return item;
 }
 
-const initialSolution = async () => {
+const initialTimetable = async () => {
     let timetable = [];
 
     const [ modules ] = await db.query(`
@@ -101,15 +114,4 @@ const initialSolution = async () => {
     })
 
     return timetable;
-}
-
-module.exports.generatingTimetable = async (req, res) => {
-    try {
-        let timetable = await initialSolution();
-
-        return res.status(200).json(timetable);
-    }
-    catch (err) {
-        res.status(400).json({err: err.message});
-    }
 }
