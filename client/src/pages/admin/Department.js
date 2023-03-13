@@ -100,7 +100,7 @@ const Department = () => {
                             return (
                                 <article className={`${style.batch}`} id={e.Batch_ID} key={e.Batch_ID}>
                                     <header>
-                                        <h3>المستوى {e.Level_Name}</h3>
+                                        <h3>{e.Semester_Name}</h3>
                                     </header>
                                     <section className={`${style.countBatch}`}>
                                         <section className={`${style.count}`}>

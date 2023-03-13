@@ -11,8 +11,10 @@ const lecturersRoutes = require('./routes/lecturerRoutes');
 const hallTypesRoutes = require('./routes/hallTypesRoutes');
 const hallsRoutes = require('./routes/hallsRoutes');
 const coursesRoutes = require('./routes/coursesRoutes');
+const systemStateRoutes = require('./routes/systemstateRoutes');
 
 const algorithmRoutes = require('./routes/algorithmRoutes');
+
 
 // express app
 const app = express();
@@ -39,6 +41,7 @@ app.use('/hallTypes', hallTypesRoutes);
 app.use('/halls', hallsRoutes);
 app.use('/courses',coursesRoutes)
 app.use('/generatingTimetable', algorithmRoutes);
+app.use('/systemState', systemStateRoutes);
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

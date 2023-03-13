@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faBars, faBuilding, faCalendarDay, faHome, faTableCellsLarge, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBars, faBuilding, faCalendarDay, faGear, faHome, faTableCellsLarge, faUser } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import style from './styles/sidebar.module.css';
@@ -34,6 +34,9 @@ const Sidebar = () => {
                 </li>
                 <li>
                     <NavLink to='timetables' className='link'><FontAwesomeIcon icon={faCalendarDay} /><span>الجداول</span></NavLink>
+                </li>
+                <li>
+                    <NavLink to='systemState' className='link'><FontAwesomeIcon icon={faGear} /><span>إعدادات النظام</span></NavLink>
                 </li>
             </ul>
 

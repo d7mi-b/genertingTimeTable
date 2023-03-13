@@ -117,16 +117,16 @@ INSERT INTO semester (
     Semester_ID,
     Semester_Name
 )
-    VALUES (1, 'الترم الأول'),
-    (2,'الترم الثاني'),
-    (3,'الترم الثالث'),
-    (4,'الترم الرابع'),
-    (5,'الترم الخامس'),
-    (6,'الترم السادس'),
-    (7,'الترم السابع'),
-    (8,'الترم الثامن'),
-    (9,'الترم التاسع'),
-    (10,'الترم العاشر');
+    VALUES (1, 'الفصل الدراسي الأول'),
+    (2,'الفصل الدراسي الثاني'),
+    (3,'الفصل الدراسي الثالث'),
+    (4,'الفصل الدراسي الرابع'),
+    (5,'الفصل الدراسي الخامس'),
+    (6,'الفصل الدراسي السادس'),
+    (7,'الفصل الدراسي السابع'),
+    (8,'الفصل الدراسي الثامن'),
+    (9,'الفصل الدراسي التاسع'),
+    (10,'الفصل الدراسي العاشر');
 
 
 Create table college (
@@ -412,10 +412,10 @@ Create table batch_groups(
 
 INSERT INTO batch_groups(Group_ID, Group_, Group_Count, Batch_ID, Batch_Type_ID)
 VALUES (1, 'A', 33, 6, 1),
-    (1, 'A', 18, 6, 2),
-    (1, 'A', 40, 10, 1),
-    (1, 'B', 20, 10, 1),
-    (1, 'B', 30, 6, 1);
+    (2, 'A', 18, 6, 2),
+    (3, 'A', 40, 10, 1),
+    (4, 'B', 20, 10, 1),
+    (5, 'B', 30, 6, 1);
 
 
 
@@ -437,7 +437,7 @@ Create table module(
 );
 
 INSERT INTO module (Module_ID, Semester_ID, Subject_ID, Lecturer_ID, Department_ID, Hall_Type_ID, Subject_Type_ID)
-VALUES (1, 2, 14, 3, 1, 3, 1)
+VALUES (1, 2, 14, 3, 1, 3, 1),
     (2, 2, 11, 4, 1, 3, 1),
     (3, 2, 5, 7, 1, 3, 1),
     (4, 2, 2, 2, 1, 4, 2);
@@ -461,10 +461,11 @@ Create table E_T_T(
 
 Create table system_state (
     System_State_ID int primary key AUTO_INCREMENT NOT NULL,
-    System_Semester int not null ,
+    System_Name varchar(300) not null,
     System_Year varchar(100) not null,
+    System_Semester int not null ,
     check (System_Semester in (1, 2))
 );
 
-INSERT INTO system_state (System_State_ID, System_Semester, System_Year)
-VALUES (1, 2, '2022/2023');
+INSERT INTO system_state (System_State_ID, System_Name, System_Semester, System_Year)
+VALUES (1, "جامعة حضرموت", 2, '2022/2023');

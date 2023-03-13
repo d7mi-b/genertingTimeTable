@@ -24,6 +24,7 @@ const Department = lazy(() => import("./pages/admin/Department"));
 const HomeAdmin = lazy(() => import("./pages/admin/HomeAdmin"));
 const Users = lazy(() => import("./pages/admin/Users"));
 const HallType = lazy(() => import("./pages/admin/HallType"));
+const SystemState = lazy(() => import("./pages/admin/SystemState"));
 
 const HomeHOD = lazy(() => import("./pages/HOD/HomeHOD"));
 const LecturersHOD = lazy(() => import("./pages/HOD/LecturersHOD"));
@@ -70,6 +71,7 @@ const routerAdmin = createBrowserRouter(
         <Route index element={<Departements />} />
         <Route path=":Department_ID" element={<Department />} />
       </Route>
+      <Route path="systemState" element={<SystemState />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
