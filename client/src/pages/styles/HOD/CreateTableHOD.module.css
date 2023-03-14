@@ -109,12 +109,18 @@
 .createTable_footer{
     text-align: center;
     margin-top: -20px;
+
 }
 
 .button{
     background-color: var(--main-color);
     color: white;
     width: 10%;
+}
+
+.button:active{
+    transform: rotate(180deg);
+    transition: all .5s;
 }
 
 .sendRequest{
@@ -134,4 +140,13 @@
 
 .sendRequestForm select{
     width: 100%;
+}
+
+.check{
+    display:none;
+    width: 50px;
+    height: 50px;
+    color: var(--main-color);
+    
+    transition: all .9s;
 }

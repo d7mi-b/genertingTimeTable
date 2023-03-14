@@ -9,7 +9,7 @@ const services = [
         id:1,
         name: 'مراجعة الطلبات',
         icon: faFile,
-        route:'/review_requests'
+        route:'/requests'
     },
     {
         id:2,

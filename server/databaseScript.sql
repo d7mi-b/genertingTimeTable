@@ -353,9 +353,10 @@ CREATE TABLE lecturer_requsets (
     Lecturer_ID int DEFAULT NULL,
     Subject_ID int DEFAULT NULL,
     Reply varchar(300) DEFAULT NULL,
+    Subject_Type INT NOT NULL,
     PRIMARY KEY (Request_ID),
-    FOREIGN KEY (Sender_ID) REFERENCES users (User_ID),
-    FOREIGN KEY (Reciver_ID) REFERENCES users (User_ID),
+    FOREIGN KEY (Sender_ID) REFERENCES department (Department_ID),
+    FOREIGN KEY (Reciver_ID) REFERENCES department (Department_ID),
     FOREIGN KEY (Lecturer_ID) REFERENCES lecturer (Lecturer_ID),
     FOREIGN KEY (Subject_ID) REFERENCES subjects (Subject_ID)
 );
@@ -369,10 +370,25 @@ Create table batch_groups(
     foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID)
 );
 
+Create table Subject_Types(
+    Subject_Type_ID int not null,
+    Subject_Type varchar(100),
+    primary key(Subject_Type_ID)
+);
+
+insert into Subject_Types(
+    Subject_Type_ID,
+    Subject_Type
+    )
+    VALUES (1,"نظري"),
+    (2,"عملي"),
+    (3,"تمارين");
+
 Create table module(
     Module_ID int auto_increment not null,
     Semester_ID int,
     Subject_ID int,
+    Subject_Type int,
     Lecturer_ID int,
     Department_ID int,
     Hall_Type_ID int DEFAULT NULL,
@@ -381,8 +397,10 @@ Create table module(
     foreign key(Subject_ID) references subjects(Subject_ID),
     foreign key(Lecturer_ID) references lecturer(Lecturer_ID),
     foreign key (Department_ID) references department(Department_ID),
-    foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID)
+    foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID),
+    foreign key (Subject_Type) references Subject_Types(Subject_Type_ID)
 );
+
 Create table E_T_T(
     ETT_ID int auto_increment not null,
     Module_ID int,
@@ -397,3 +415,34 @@ Create table E_T_T(
     foreign key(Day_ID) references day(Day_ID),
     foreign key(Group_ID) references batch_groups(Group_ID)
 );
+
+
+
+insert into module(
+    Semester_ID,
+    Subject_ID,
+    Subject_Type,
+    Department_ID
+)
+values (1,1,1,1),
+(1,1,3,1),
+(1,2,1,1),
+(1,2,2,1),
+(1,3,1,1),
+(1,4,1,1),
+(1,5,1,1),
+(1,6,1,1),
+(1,7,1,1),
+(1,7,2,1),
+(2,8,1,1),
+(2,8,3,1),
+(2,9,1,1),
+(2,9,2,1),
+(2,10,1,1),
+(2,11,1,1),
+(2,12,1,1),
+(2,13,1,1),
+(2,14,1,1),
+(2,14,2,1),
+(2,15,1,1),
+(2,15,2,1);
