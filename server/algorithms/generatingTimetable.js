@@ -30,13 +30,15 @@ module.exports.generatingTimetable = async (req, res) => {
         let candidateTimetable = await initialTimetable(modules, groups, halls, days, times);
         let tabuList = [];
 
-        let i = 0;
+        // let i = 0;
 
-        while (i < 2) {
-            const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
-            candidateTimetable = neighborhood[0];
-            i++;
-        }
+        // while (i < 10) {
+        //     const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
+        //     candidateTimetable = neighborhood[0];
+        //     i++;
+        // }
+
+        console.log('done from main function')
 
         return res.status(200).json(candidateTimetable);
     }
@@ -56,6 +58,7 @@ function getRandomItem(arr) {
     return item;
 }
 
+// initialTimetable function to generate initial timetable
 const initialTimetable = (modules, groups, halls, days, times,) => {
     let timetable = [];
 
@@ -107,15 +110,15 @@ const initialTimetable = (modules, groups, halls, days, times,) => {
                 e.Start_Time = time.Start_Time;
 
                 if (m.Subject_Type_ID === 1) {
-                    const endTime = (times[time.Start_Time, ((time.Time_ID - 1) + m.Credit_Theoretical) - 1] && times[time.Start_Time, ((time.Time_ID - 1) + m.Credit_Theoretical) - 1].End_Time);
+                    const endTime = (times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1] && times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1].End_Time);
                     e.End_Time = endTime;
                 }
                 else if (m.Subject_Type_ID === 2) {
-                    const endTime = (times[time.Start_Time, ((time.Time_ID - 1) + m.Credit_Practical) - 1] && times[time.Start_Time, ((time.Time_ID - 1) + m.Credit_Practical) - 1].End_Time);
+                    const endTime = (times[((time.Time_ID - 1) + m.Credit_Practical) - 1] && times[((time.Time_ID - 1) + m.Credit_Practical) - 1].End_Time);
                     e.End_Time = endTime;
                 }
                 else if (m.Subject_Type_ID === 3) {
-                    const endTime = (times[time.Start_Time, ((time.Time_ID - 1) + m.Credit_Tutorial) - 1] && times[time.Start_Time, ((time.Time_ID - 1) + m.Credit_Tutorial) - 1].End_Time);
+                    const endTime = (times[((time.Time_ID - 1) + m.Credit_Tutorial) - 1] && times[((time.Time_ID - 1) + m.Credit_Tutorial) - 1].End_Time);
                     e.End_Time = endTime;
                 }
 
@@ -129,11 +132,12 @@ const initialTimetable = (modules, groups, halls, days, times,) => {
     return timetable;
 }
 
+// getNeighbors function to create new timetable randomly
 const getNeighbors = (candidateTimetable, modules, groups, halls, days, times) => {
     let neighbors = [];
     var timetable = JSON.parse(JSON.stringify(candidateTimetable));
 
-    while (neighbors.length < 2) {
+    while (neighbors.length < 20) {
         timetable.forEach(e => {
             const newDay = getRandomItem(days);
             e.Day_ID = newDay.Day_ID;
@@ -156,15 +160,15 @@ const getNeighbors = (candidateTimetable, modules, groups, halls, days, times) =
                     }
 
                     if (m.Subject_Type_ID === 1) {
-                        const endTime = (times[newTime.Start_Time, ((newTime.Time_ID - 1) + m.Credit_Theoretical) - 1] && times[newTime.Start_Time, ((newTime.Time_ID - 1) + m.Credit_Theoretical) - 1].End_Time);
+                        const endTime = (times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1] && times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1].End_Time);
                         e.End_Time = endTime;
                     }
                     else if (m.Subject_Type_ID === 2) {
-                        const endTime = (times[newTime.Start_Time, ((newTime.Time_ID - 1) + m.Credit_Practical) - 1] && times[newTime.Start_Time, ((newTime.Time_ID - 1) + m.Credit_Practical) - 1].End_Time);
+                        const endTime = (times[((time.Time_ID - 1) + m.Credit_Practical) - 1] && times[((time.Time_ID - 1) + m.Credit_Practical) - 1].End_Time);
                         e.End_Time = endTime;
                     }
                     else if (m.Subject_Type_ID === 3) {
-                        const endTime = (times[newTime.Start_Time, ((newTime.Time_ID - 1) + m.Credit_Tutorial) - 1] && times[newTime.Start_Time, ((newTime.Time_ID - 1) + m.Credit_Tutorial) - 1].End_Time);
+                        const endTime = (times[((time.Time_ID - 1) + m.Credit_Tutorial) - 1] && times[((time.Time_ID - 1) + m.Credit_Tutorial) - 1].End_Time);
                         e.End_Time = endTime;
                     }
                     
@@ -176,33 +180,35 @@ const getNeighbors = (candidateTimetable, modules, groups, halls, days, times) =
             })
 
         })
+
         // don't add the neighbor if it has conflicts
         if(feasible(timetable)){
             neighbors.push(JSON.parse(JSON.stringify(timetable)));
         }            
     }
+    console.log('done from getNeighbors')
 
     return neighbors;
 }
 
 // feasible function check for hard constraints in generated timetable
 const feasible = (timetable) => {
-   
-    for(var i = 0 ;i< timetable.length; i++){
+
+    for(var i = 0; i< timetable.length; i++){
         
         for(var j = i+1 ; j< timetable.length; j++){
             
             // if the same lecturer is assigned to different subjects in same day at same time it's a conflect
             if(timetable[i].Lecturer_ID === timetable[j].Lecturer_ID && timetable[i].Start_Time === timetable[j].Start_Time && timetable[i].Day_ID === timetable[j].Day_ID)
-            return false
+                return false;
 
             // if the same group is assigned to two lecturs in same day at same time it's a conflect
             if(timetable[i].Group_ID === timetable[j].Group_ID && timetable[i].Start_Time === timetable[j].Start_Time && timetable[i].Day_ID === timetable[j].Day_ID)
-            return false
+                return false;
 
-             // if the same hall is assigned to two groups in same day at same time it's a conflect
-             if(timetable[i].Hall_ID === timetable[j].Hall_ID && timetable[i].Start_Time === timetable[j].Start_Time && timetable[i].Day_ID === timetable[j].Day_ID)
-             return false
+            // if the same hall is assigned to two groups in same day at same time it's a conflect
+            if(timetable[i].Hall_ID === timetable[j].Hall_ID && timetable[i].Start_Time === timetable[j].Start_Time && timetable[i].Day_ID === timetable[j].Day_ID)
+                return false;
         }
     }
     return true
