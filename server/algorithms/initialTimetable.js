@@ -64,8 +64,8 @@ module.exports.initialTimetable = (modules, groups, halls, days, times,) => {
                     e.End_Time = endTime;
                 }
 
-                if (e.Start_Time === '3') {
-                    e.End_Time = '5';
+                if (e.Start_Time === '15') {
+                    e.End_Time = '17';
                 }
             }
         })

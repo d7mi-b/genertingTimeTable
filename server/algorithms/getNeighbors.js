@@ -41,8 +41,8 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
                         e.End_Time = endTime;
                     }
                     
-                    if (e.Start_Time === '3') {
-                        e.End_Time = '5';
+                    if (e.Start_Time === '15') {
+                        e.End_Time = '17';
                     }
 
                 })
