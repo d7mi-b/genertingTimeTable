@@ -32,13 +32,13 @@ module.exports.generatingTimetable = async (req, res) => {
         let candidateTimetable = await initialTimetable(modules, groups, halls, days, times);
         let tabuList = [];
 
-        let i = 0;
+        // let i = 0;
 
-        while (i < 1) {
-            const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
-            candidateTimetable = neighborhood[0];
-            i++;
-        }
+        // while (i < 1) {
+        //     const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
+        //     candidateTimetable = neighborhood[0];
+        //     i++;
+        // }
 
         console.log('done from main function')
 
