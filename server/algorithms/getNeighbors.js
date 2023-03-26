@@ -55,7 +55,7 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         })
 
         // don't add the neighbor if it has conflicts
-        if(feasible(timetable)){
+       if(feasible(timetable)){
             neighbors.push(JSON.parse(JSON.stringify(timetable)));
         }         
     }
