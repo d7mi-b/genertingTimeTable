@@ -6,13 +6,35 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
     let neighbors = [];
     var timetable = JSON.parse(JSON.stringify(candidateTimetable));
 
-    while (neighbors.length < 2) {
+    while (neighbors.length < 1) {
         timetable.forEach(e => {
             const newDay = getRandomItem(days);
             e.Day_ID = newDay.Day_ID;
 
-            const newTime = getRandomItem(times);
-            e.Start_Time = newTime.Start_Time;
+            modules.forEach(m => {
+                if (e.Module_ID === m.Module_ID) {
+    
+                    const time = getRandomItem(times);
+                    e.Start_Time = time.Start_Time;
+    
+                    if (m.Subject_Type_ID === 1) {
+                        const endTime = (times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1] && times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1].End_Time);
+                        e.End_Time = endTime;
+                    }
+                    else if (m.Subject_Type_ID === 2) {
+                        const endTime = (times[((time.Time_ID - 1) + m.Credit_Practical) - 1] && times[((time.Time_ID - 1) + m.Credit_Practical) - 1].End_Time);
+                        e.End_Time = endTime;
+                    }
+                    else if (m.Subject_Type_ID === 3) {
+                        const endTime = (times[((time.Time_ID - 1) + m.Credit_Tutorial)] && times[((time.Time_ID - 1) + m.Credit_Tutorial)].End_Time);
+                        e.End_Time = endTime;
+                    }
+    
+                    if (e.Start_Time === '15:00:00') {
+                        e.End_Time = '17:00:00';
+                    }
+                }
+            })
 
             groups.forEach(g => {
                 modules.forEach(async m => {
@@ -27,24 +49,6 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
                             e.Hall_ID = hall.Hall_ID;
                         }
                     }
-
-                    if (m.Subject_Type_ID === 1) {
-                        const endTime = (times[((newTime.Time_ID - 1) + m.Credit_Theoretical) - 1] && times[((newTime.Time_ID - 1) + m.Credit_Theoretical) - 1].End_Time);
-                        e.End_Time = endTime;
-                    }
-                    else if (m.Subject_Type_ID === 2) {
-                        const endTime = (times[((newTime.Time_ID - 1) + m.Credit_Practical) - 1] && times[((newTime.Time_ID - 1) + m.Credit_Practical) - 1].End_Time);
-                        e.End_Time = endTime;
-                    }
-                    else if (m.Subject_Type_ID === 3) {
-                        const endTime = (times[((newTime.Time_ID - 1) + m.Credit_Tutorial) - 1] && times[((newTime.Time_ID - 1) + m.Credit_Tutorial) - 1].End_Time);
-                        e.End_Time = endTime;
-                    }
-                    
-                    if (e.Start_Time === '15') {
-                        e.End_Time = '17';
-                    }
-
                 })
             })
 
@@ -53,7 +57,7 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         // don't add the neighbor if it has conflicts
         if(feasible(timetable)){
             neighbors.push(JSON.parse(JSON.stringify(timetable)));
-        }            
+        }         
     }
     console.log('done from getNeighbors')
 
