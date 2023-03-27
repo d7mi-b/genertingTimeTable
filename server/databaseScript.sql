@@ -19,21 +19,21 @@ VALUES (1, 'الأحد'),
 
 Create table time (
     Time_ID int auto_increment not null,
-    Start_Time varchar(5) not null,
-    End_Time varchar(5) not null,
+    Start_Time time not null,
+    End_Time time not null,
     Duration varchar(3) not null,
     primary key(Time_ID)
 );
 
 INSERT INTO time (Time_ID, Start_Time, End_Time, Duration)
-VALUES (1, '8', '9', '1'),
-    (2, '9', '10', '1'),
-    (3, '10', '11', '1'),
-    (4, '11', '12', '1'),
-    (5, '12', '13', '1'),
-    (6, '13', '14', '1'),
-    (7, '14', '15', '1'),
-    (8, '15', '16', '1');
+VALUES (1, '08:00', '09:00', '1'),
+    (2, '09:00', '10:00', '1'),
+    (3, '10:00', '11:00', '1'),
+    (4, '11:00', '12:00', '1'),
+    (5, '12:00', '13:00', '1'),
+    (6, '13:00', '14:00', '1'),
+    (7, '14:00', '15:00', '1'),
+    (8, '15:00', '16:00', '1');
 
 
 Create table user_type (
@@ -332,7 +332,7 @@ VALUES
     (11, 'Islamic Culture II', 'ISLAM121', 2, 0, 0, 1, 1, 2),
     (12,'English Language II', 'ENG121', 2, 0, 0, 1, 1, 2),
     (13, 'Arabic Language II', 'ARAB121', 2, 0, 0, 1, 1, 2),
-    (14, 'Computer Programming', 'COE121', 2, 2, 0, 1, 1, 2),
+    (14, 'Computer Programming', 'COE121', 2, 2, 1, 1, 1, 2),
     (15, 'Electronic Devices', 'ED111', 2, 2, 0, 1, 1, 4),
     (16, 'Digital Logic Design', 'DLD121', 3, 2, 0, 1, 1, 4),
     (17, 'Signals and Systems', 'SYS11', 3, 2, 0, 1, 1, 4),

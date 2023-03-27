@@ -69,21 +69,21 @@ const generate = (modules, groups, halls, days, times) => {
                 e.Start_Time = time.Start_Time;
 
                 if (m.Subject_Type_ID === 1) {
-                    const endTime = (times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1] && times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1].End_Time);
+                    const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Theoretical}:00:00`;
                     e.End_Time = endTime;
                 }
                 else if (m.Subject_Type_ID === 2) {
-                    const endTime = (times[((time.Time_ID - 1) + m.Credit_Practical) - 1] && times[((time.Time_ID - 1) + m.Credit_Practical) - 1].End_Time);
+                    const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Practical}:00:00`;
                     e.End_Time = endTime;
                 }
                 else if (m.Subject_Type_ID === 3) {
-                    const endTime = (times[((time.Time_ID - 1) + m.Credit_Tutorial)] && times[((time.Time_ID - 1) + m.Credit_Tutorial)].End_Time);
+                    const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Tutorial}:00:00`;
                     e.End_Time = endTime;
                 }
 
-                if (e.Start_Time === '15:00:00') {
-                    e.End_Time = '17:00:00';
-                }
+                // if (e.Start_Time === '15:00:00') {
+                //     e.End_Time = '17:00:00';
+                // }
 
                 for (let j = 0; j < timetable.length; j++) {
                     if (i === j)
@@ -92,9 +92,6 @@ const generate = (modules, groups, halls, days, times) => {
                     if (timetable[i].Start_Time && timetable[j].Start_Time) {
                         if (isOverLapping(timetable[i], timetable[j]) && timetable[i].Day_ID === timetable[j].Day_ID) {
                             if (timetable[i].Hall_ID === timetable[j].Hall_ID || timetable[i].Lecturer_ID === timetable[j].Lecturer_ID ||  timetable[i].Group_ID === timetable[j].Group_ID) {
-                                console.log(`module: ${timetable[i].Module_ID}, module: ${timetable[j].Module_ID}`)
-                                console.log(`Day: ${timetable[i].Day_ID}, Day: ${timetable[j].Day_ID}`)
-                                console.log(`Start: ${timetable[i].Start_Time}, Start: ${timetable[j].Start_Time}`)
 
                                 const day = getRandomItem(days);
                                 e.Day_ID = day.Day_ID;
@@ -103,26 +100,23 @@ const generate = (modules, groups, halls, days, times) => {
                                 e.Start_Time = time.Start_Time;
 
                                 if (m.Subject_Type_ID === 1) {
-                                    const endTime = (times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1] && times[((time.Time_ID - 1) + m.Credit_Theoretical) - 1].End_Time);
+                                    const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Theoretical}:00:00`;
                                     e.End_Time = endTime;
                                 }
                                 else if (m.Subject_Type_ID === 2) {
-                                    const endTime = (times[((time.Time_ID - 1) + m.Credit_Practical) - 1] && times[((time.Time_ID - 1) + m.Credit_Practical) - 1].End_Time);
+                                    const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Practical}:00:00`;
                                     e.End_Time = endTime;
                                 }
                                 else if (m.Subject_Type_ID === 3) {
-                                    const endTime = (times[((time.Time_ID - 1) + m.Credit_Tutorial)] && times[((time.Time_ID - 1) + m.Credit_Tutorial)].End_Time);
+                                    const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Tutorial}:00:00`;
                                     e.End_Time = endTime;
                                 }
 
-                                if (e.Start_Time === '15:00:00') {
-                                    e.End_Time = '17:00:00';
-                                }
+                                // if (e.Start_Time === '15:00:00') {
+                                //     e.End_Time = '17:00:00';
+                                // }
                             }
                         }
-                        console.log(`module: ${timetable[i].Module_ID}, module: ${timetable[j].Module_ID}`)
-                        console.log(`Day: ${timetable[i].Day_ID}, Day: ${timetable[j].Day_ID}`)
-                        console.log(`Start: ${timetable[i].Start_Time}, Start: ${timetable[j].Start_Time}`)
                     }
                 }
                 

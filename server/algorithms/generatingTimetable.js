@@ -34,17 +34,21 @@ module.exports.generatingTimetable = async (req, res) => {
         let candidateTimetable = await initialTimetable(modules, groups, halls, days, times);
         let tabuList = [];
 
-        // let i = 0;
+        console.log('timetable from initialTimetable without hard constraints: ', feasible(candidateTimetable));
 
-        // while (i < 1) {
-        //     const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
-        //     candidateTimetable = neighborhood;
-        //     i++;
-        // }
+        let i = 0;
 
-        console.log('done from main function')
+        if (candidateTimetable) {
+          while (i < 1) {
+            const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
+            candidateTimetable = neighborhood[0];
+            i++;
+          }
+        }
 
-        console.log('timetable without hard constraints: ', feasible(candidateTimetable));
+        console.log('done from main function');
+
+        console.log('timetable from getNeighbors without hard constraints: ', feasible(candidateTimetable));
 
         return res.status(200).json(candidateTimetable);
     }
