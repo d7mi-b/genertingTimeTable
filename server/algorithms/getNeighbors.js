@@ -32,25 +32,27 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
                     if (timetable[i].Start_Time && timetable[j].Start_Time) {
                         if (isOverLapping(timetable[i], timetable[j]) && timetable[i].Day_ID === timetable[j].Day_ID) {
                             if (timetable[i].Hall_ID === timetable[j].Hall_ID || timetable[i].Lecturer_ID === timetable[j].Lecturer_ID ||  timetable[i].Group_ID === timetable[j].Group_ID) {
-    
-                                const day = getRandomItem(days);
-                                e.Day_ID = day.Day_ID;
-    
-                                const time = getRandomItem(times);
-                                e.Start_Time = time.Start_Time;
-    
-                                if (m.Subject_Type_ID === 1) {
-                                    const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Theoretical}:00:00`;
-                                    e.End_Time = endTime;
-                                }
-                                else if (m.Subject_Type_ID === 2) {
-                                    const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Practical}:00:00`;
-                                    e.End_Time = endTime;
-                                }
-                                else if (m.Subject_Type_ID === 3) {
-                                    const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Tutorial}:00:00`;
-                                    e.End_Time = endTime;
-                                }
+
+                                do {
+                                    const day = getRandomItem(days);
+                                    e.Day_ID = day.Day_ID;
+
+                                    const time = getRandomItem(times);
+                                    e.Start_Time = time.Start_Time;
+
+                                    if (m.Subject_Type_ID === 1) {
+                                        const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Theoretical < 10 ? `0${+e.Start_Time.slice(0,2) + m.Credit_Theoretical}` : +e.Start_Time.slice(0,2) + m.Credit_Theoretical}:00:00`;
+                                        e.End_Time = endTime;
+                                    }
+                                    else if (m.Subject_Type_ID === 2) {
+                                        const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Practical < 10 ? `0${+e.Start_Time.slice(0,2) + m.Credit_Practical}` : +e.Start_Time.slice(0,2) + m.Credit_Practical}:00:00`;
+                                        e.End_Time = endTime;
+                                    }
+                                    else if (m.Subject_Type_ID === 3) {
+                                        const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Tutorial < 10 ? `0${+e.Start_Time.slice(0,2) + m.Credit_Tutorial}` : +e.Start_Time.slice(0,2) + m.Credit_Tutorial}:00:00`;;
+                                        e.End_Time = endTime;
+                                    }
+                                } while (e.End_Time > '17:00:00' )
     
                                 // if (e.Start_Time === '15:00:00') {
                                 //     e.End_Time = '17:00:00';
