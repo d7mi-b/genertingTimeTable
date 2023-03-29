@@ -33,7 +33,6 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
                         if (isOverLapping(timetable[i], timetable[j]) && timetable[i].Day_ID === timetable[j].Day_ID) {
                             if (timetable[i].Hall_ID === timetable[j].Hall_ID || timetable[i].Lecturer_ID === timetable[j].Lecturer_ID ||  timetable[i].Group_ID === timetable[j].Group_ID) {
 
-                                do {
                                     const day = getRandomItem(days);
                                     e.Day_ID = day.Day_ID;
 
@@ -52,11 +51,6 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
                                         const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Tutorial < 10 ? `0${+e.Start_Time.slice(0,2) + m.Credit_Tutorial}` : +e.Start_Time.slice(0,2) + m.Credit_Tutorial}:00:00`;;
                                         e.End_Time = endTime;
                                     }
-                                } while (e.End_Time > '17:00:00' )
-    
-                                // if (e.Start_Time === '15:00:00') {
-                                //     e.End_Time = '17:00:00';
-                                // }
                             }
                         }
                     }

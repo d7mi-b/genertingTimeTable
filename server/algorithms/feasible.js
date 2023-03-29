@@ -5,6 +5,10 @@ module.exports.feasible = (neighborhood) => {
     const timetable = JSON.parse(JSON.stringify(neighborhood))
 
     for (let i = 0; i < timetable.length; i++) {
+        //if The end time is out of limit it's not acceptable
+        if(timetable[i].End_Time > "17:00:00"){
+            return false;
+        }
         for (let j = i + 1; j < timetable.length; j++) {
 
             // if the same lecturer is assigned to different subjects in same day at same time it's a conflect
