@@ -38,12 +38,10 @@ module.exports.generatingTimetable = async (req, res) => {
 
         let i = 0;
 
-        if (candidateTimetable) {
-          while (i < 1) {
-            const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
-            candidateTimetable = neighborhood[0];
-            i++;
-          }
+        while (i < 1) {
+          const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
+          candidateTimetable = neighborhood[0];
+          i++;
         }
 
         console.log('done from main function');

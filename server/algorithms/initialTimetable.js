@@ -4,7 +4,6 @@ const isOverLapping = require('./isOverLapping');
 
 // initialTimetable function to generate initial timetable
 module.exports.initialTimetable = (modules, groups, halls, days, times,) => {;
-    let i = 0;
 
     while (true) {
         let timetable = generate(modules, groups, halls, days, times);
@@ -12,11 +11,8 @@ module.exports.initialTimetable = (modules, groups, halls, days, times,) => {;
         if (feasible(timetable)) {
             return timetable;
         }
-
-        i++;
     }
-    
-    
+
 }
 
 const generate = (modules, groups, halls, days, times) => {
@@ -81,6 +77,8 @@ const generate = (modules, groups, halls, days, times) => {
                     e.End_Time = endTime;
                 }
 
+                // Loop for check if there is conflict 
+                // if there conflict assign new day and time
                 for (let j = 0; j < timetable.length; j++) {
                     if (i === j)
                         continue;
