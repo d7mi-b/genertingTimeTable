@@ -1,48 +1,21 @@
 import { Link } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
+import Loading from "../../components/Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBuilding } from "@fortawesome/free-solid-svg-icons";
 import style from "../styles/secretary/secretaryLaps.module.css";
-
-const ClassesAndLaps = [
-  {
-    name: "C301",
-    inBuilding: "C",
-    capacity: "80",
-    type: "قاعة محاضرات",
-  },
-  {
-    name: "A200",
-    inBuilding: "A",
-    capacity: "100",
-    type: "قاعة محاضرات",
-  },
-  {
-    name: "C301",
-    inBuilding: "C",
-    capacity: "80",
-    type: "قاعة محاضرات",
-  },
-  {
-    name: "A200",
-    inBuilding: "A",
-    capacity: "100",
-    type: "قاعة محاضرات",
-  },
-  {
-    name: "C301",
-    inBuilding: "C",
-    capacity: "80",
-    type: "قاعة محاضرات",
-  },
-  {
-    name: "A200",
-    inBuilding: "A",
-    capacity: "100",
-    type: "قاعة محاضرات",
-  },
-];
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const SecretaryLaps = () => {
+
+  const { user } = useAuthContext();
+  const {
+    data: hallsData,
+    isPending: hallLoading,
+    error: hallError,
+  } = useFetch(`http://localhost:5000/halls/department/${user.Department_ID}`);
+
+
   return (
     <div className="div">
       <div className={style.navLink}>
@@ -50,20 +23,24 @@ const SecretaryLaps = () => {
         <p>&gt;&gt;</p>
         <Link>الصفحة الرئيسي</Link>
       </div>
-      <div className={style.buildingContent}>
-        {ClassesAndLaps.map((element) => (
-          <div className={style.buildingSection}>
-            <div className={style.infoSection}>
-              <h4> {element.name} </h4>
-              <p>مبنى {element.inBuilding} </p>
-              <p> {element.capacity} مقعد </p>
-              <p> {element.type} </p>
+      {hallsData && (
+        <div className={style.buildingContent}>
+          {hallsData.map((hall) => (
+            <div className={style.buildingSection} key={hall.Hall_Name}>
+              <div className={style.infoSection}>
+                <h4> {hall.Hall_Name} </h4>
+                <p>مبنى {hall.Building_Name} </p>
+                <p> {hall.Hall_Capacity} مقعد </p>
+                <p> {hall.Type_Name} </p>
+              </div>
+              <hr />
+              <FontAwesomeIcon icon={faBuilding} className={style.icon} />
             </div>
-            <hr />
-            <FontAwesomeIcon icon={faBuilding} className={style.icon} />
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+      {hallLoading && <Loading />}
+      {hallError}
     </div>
   );
 };

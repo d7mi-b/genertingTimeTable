@@ -1,15 +1,18 @@
 import { Link } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
+import Loading from "../../components/Loading";
 import style from "../styles/secretary/secretaryStudents.module.css";
 
-const departments = [
-  "هندسة حاسوب",
-  "هندسة إلكترونية واتصالات",
-  "هندسة معمارية",
-  "هندسة مدنية",
-  "هندسة كيميائية",
-  "هندسة بترولية",
-];
 const SecretaryDepartments = () => {
+  const {
+    data: data,
+    isPending: isLoading,
+    error: isErorr,
+  } = useFetch("http://localhost:5000/departements");
+
+  console.log("loding is:" + isLoading);
+  console.log("data is:" + data);
+  console.log("error is:" + isErorr);
   return (
     <div className="ssscontainer">
       <div className={style.navLink}>
@@ -20,17 +23,24 @@ const SecretaryDepartments = () => {
         {/* </div> */}
         {/* <button className={style.navButton}>إضافة مدرس</button> */}
       </div>
+
       <div className={style.departmentsContent}>
-        {departments.map((element) => (
-          <div className={style.departmentSection}>
-            <img
-              src={"/images/Mask Group 37.png"}
-              alt="paint of a building"
-              className={style.departmentImage}
-            />
-            <p className={style.sectionParagraph}> {element} </p>
-          </div>
-        ))}
+        {data &&
+          data.map((element, index) => (
+            <div className={style.departmentSection} key={index}>
+              <img
+                src={"/images/Mask Group 37.png"}
+                alt="paint of a building"
+                className={style.departmentImage}
+              />
+              <p className={style.sectionParagraph}>
+                {" "}
+                {element["Department_Name"]}{" "}
+              </p>
+            </div>
+          ))}
+        {isLoading && <Loading />}
+        {isErorr}
       </div>
     </div>
   );

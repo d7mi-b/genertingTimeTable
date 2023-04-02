@@ -14,22 +14,22 @@ import { useFetchPost } from '../../hooks/useFetchPost';
 const CreateTable = () => {
     const { user } = useAuthContext();
     const [Department_ID] = useState(Number(user.Department_ID))
+    const [semesterSelected] = useState(Number(user.semester));
     const {data: lecturers} = useFetch(`http://localhost:5000/lecturers/department/${Department_ID}`)
     const {data:hall_types} = useFetch(`http://localhost:5000/hallTypes`)
     const {data:departments} = useFetch(`http://localhost:5000/departements`)
-    const {data:modules, isPending} = useFetch(`http://localhost:5000/module/${Department_ID}`)
+    const {data:modules, isPending} = useFetch(`http://localhost:5000/module/${Department_ID}/${semesterSelected}`)
+    const {data:systemState} = useFetch(`http://localhost:5000/systemState`);
     const { fetchPut } = useFetchPut();
     const { fetchPost } = useFetchPost();
     
     
-    const [semesterSelected] = useState('first_semester');
-    const [level_one, setlevel_one] = useState(1);
-    const [level_two, setlevel_two] = useState(3);
-    const [level_three, setlevel_three] = useState(5);
-    const [level_four, setlevel_four] = useState(7);
-    const [level_five, setlevel_five] = useState(9);
+    const [level_one] = useState(semesterSelected);
+    const [level_two] = useState(semesterSelected+2);
+    const [level_three] = useState(semesterSelected+4);
+    const [level_four] = useState(semesterSelected+6);
+    const [level_five] = useState(semesterSelected+8);
     const [semester, setSemester] = useState(level_one)
-    //const [hallTypeID, setHallTypeID] = useState('')
     const [Subject_ID, setSubject_ID] = useState('')
     const [Subject_Name, setSubject_Name] = useState('')
     const [Subject_Type, setSubject_Type] = useState("")
@@ -37,7 +37,7 @@ const CreateTable = () => {
     const [Reciver_ID, setReciver_ID] = useState('')
     const [lecturerArray] = useState([])
     const [hallArray] = useState([])
-
+    const [Module_ID,setModule_ID] = useState()
 
 
     const handleSubmit = async (e) => {
@@ -47,17 +47,18 @@ const CreateTable = () => {
                 Subject_ID,
                 "Sender_ID":Department_ID,
                 "Reciver_ID":Number(Reciver_ID),
-                "Subject_Type":Subject_Type_ID
+                Subject_Type_ID,
+                Module_ID
             })
-
+            
         const requestSection = document.getElementById('sendRequest')
         requestSection.style.cssText = 'display: none';
     }
 
     const handleSave = async () => {
-        if(hallArray.length != 0)
+        if(hallArray.length !== 0)
         {await fetchPut(`http://localhost:5000/module/updateHall`, hallArray)}
-        if(lecturerArray.length != 0)
+        if(lecturerArray.length !== 0)
         {await fetchPut(`http://localhost:5000/module/updateLecturer`, lecturerArray)}
 
         const btn = document.querySelector('#btn')
@@ -115,6 +116,7 @@ const CreateTable = () => {
             setSubject_Name(SubjectName)
             setSubject_Type(SubjectType)
             setSubject_TypeID(SubjectTypeID)
+            setModule_ID(Module_ID)
 
             lecturerArray.push({
                 'Lecturer_ID':null,
@@ -145,14 +147,6 @@ const CreateTable = () => {
     useEffect(() => {
         const list = document.querySelector(".list").querySelector("li");
         list.style.cssText="background-color: var(--card-color);";
-        
-        if(semesterSelected !== 'first_semester'){
-            setlevel_one(2);
-            setlevel_two(4);
-            setlevel_three(6);
-            setlevel_four(8);
-            setlevel_five(10)
-        }
 
         const closebtn = document.getElementById('colseLogin');
         const requestSection = document.getElementById('sendRequest')
@@ -161,10 +155,7 @@ const CreateTable = () => {
             requestSection.style.cssText = 'display: none';
         })
 
-        
-        
-
-    },[semesterSelected])
+    },[])
 
     return(
         <section className="container">
@@ -175,7 +166,14 @@ const CreateTable = () => {
                     <h3><NavLink className="link" to="/create_table">إنشاء جدول جديد</NavLink></h3>    
                 </div>
                 <div>
-                    <h3>السنة الدراسية 2022\2023 - الترم الأول</h3>
+                    {
+                        systemState && 
+                        <h3>السنة الدراسية - {systemState.System_Year} - {
+                            semesterSelected === 1 && <p>الترم الأول</p>
+                        }
+                        {semesterSelected === 2 && <p>الترم الثاني</p>
+                        }</h3>
+                    }
                 </div>
             </header>
             <article className={style.createTable_main}>
@@ -184,13 +182,13 @@ const CreateTable = () => {
                         isPending && <Loading />
                     }
                     {
-                        modules &&
+                        modules && 
                         modules.filter(e => e.Semester_ID === semester).map(i => {
                             return(
 
                                 <div key={i.Module_ID} className={style.courseDiv}>
                                 <select id={i.Module_ID}
-                                onChange={e => handleSelect(e.target.value,i.Module_ID,i.Subject_ID,i.Subject_Name,i.Subject_Type,i.Subject_Type_ID)}
+                                onChange={e => handleSelect(e.target.value,i.Module_ID,i.Subject_ID,i.Subject_Name,i.Subject_Type_Name,i.Subject_Type_ID)}
                                 defaultValue={i.Lecturer_ID}>
                                 <option>اختر المدرس : </option>
                                 {
@@ -216,7 +214,7 @@ const CreateTable = () => {
                                 }
                             </select>
                             <hr />
-                            <p>{i.Subject_Type}</p>
+                            <p>{i.Subject_Type_Name}</p>
                             <hr />
                             <h4>{i.Subject_Name}</h4>
                             </div>
@@ -224,9 +222,9 @@ const CreateTable = () => {
                             )
                         })
                     }
-                   
+                    
                     {
-                        modules &&
+                        modules && 
                         modules.filter(e => e.Semester_ID === semester).length === 0 &&
                         <div className={style.courseDiv}>لايوجد مواد لهذا المستوى</div>
                         

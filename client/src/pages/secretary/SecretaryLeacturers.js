@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import  useFetch  from "../../hooks/useFetch";
 import style from "../styles/secretary/secretaryLecturers.module.css";
 
 const availabelLectureors = [
@@ -17,6 +19,18 @@ const availabelLectureors = [
 const days = ["الاحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"];
 
 const SecretaryLecturers = () => {
+  const { user } = useAuthContext();
+
+  const {
+    data: lectureorData,
+    isPending: lectureorLoading,
+    error: lectureorError,
+  } = useFetch(
+    `http://localhost:5000/lecturers/department/${user.Department_ID}`
+  );
+
+  console.log(lectureorData);
+
   return (
     <div className={style.lectureorsContainer}>
       <div className={style.navLink}>
@@ -29,19 +43,15 @@ const SecretaryLecturers = () => {
         </div>
         <button className={style.navButton}>إضافة مدرس</button>
       </div>
-      {availabelLectureors.map((element) => (
-        <div className={style.lectureor}>
+      {availabelLectureors.map((element, index) => (
+        <div className={style.lectureor} key={index}>
           <div className={style.infoSection}>
             <p>الأستاذ/ة: {element.name}</p>
             <p>{element.department}</p>
             <div className={style.lecturerAvailabel}>
               <label className={style.labels}>
-                <input
-                  type={"checkbox"}
-                  className={style.checkBox}
-                  checked={element.availabel}
-                ></input>{" "}
-                غير متاح
+                <input type={"checkbox"} className={style.checkBox}></input> غير
+                متاح
               </label>
             </div>
           </div>
@@ -57,7 +67,7 @@ const SecretaryLecturers = () => {
               </div>
               <div className={style.checkboxDays}>
                 {days.map((element, index) => (
-                  <div className="days">
+                  <div className="days" key={index}>
                     <label className={style.labels}>
                       <input type="checkbox" className={style.checkBox}></input>{" "}
                       {element}

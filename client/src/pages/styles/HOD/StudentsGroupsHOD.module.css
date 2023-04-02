@@ -20,7 +20,7 @@
     
 }
 
-.students_main section{
+.tableSection{
     background-color: #f7f7f7;
     padding: 30px;
     width: fit-content;
@@ -30,6 +30,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    margin-bottom: 20px;
 }
 
 .students_main table{
@@ -41,7 +42,7 @@
     padding: 8px;
 }
 
-.students_main tr{
+.students_main tbody{
     border: 1px solid var(--border-color);
     background-color: var(--card-color);
     box-shadow: 1px 3px 3px 3px var(--card-color);
@@ -68,27 +69,22 @@
     display: flex;
     background-color: white;
     align-items: center;
-    width: 60%;
+    width: 50%;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding-right: 8px;
+    z-index: 0  ;
 }
 
 .div p{
-    border-left: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
     padding: 8px;
     width: 35%;
     text-align: center;
 }
 
-.div input{
-    width: 98px;
-    height: 20px;
-    text-align: center;  
-}
 
 .div h1{
-    border-left: 1px solid var(--border-color);
     padding: 5px; 
     padding-left: 10px;
     color: var(--font-color);  
@@ -96,7 +92,7 @@
 
 .editbtn{
     display: flex;
-    margin-right: 25px;
+    
 }
 
 .editbtn:hover{
@@ -106,42 +102,102 @@
     cursor: pointer;
 }
 
-.savebtn{
-    display: none;
-    margin-right: 25px;
-}
-
-.savebtn:hover{
+.btnClose:hover{
     transform: scale(1.05);
     transition: 0.1s;
     color: #000;
     cursor: pointer;
 }
 
-.a1{
-    background-color: #C9C9C9;
-    position: absolute;
-    width: 13px ;
-    height: 89px;
-    left: 770px;
-    top: 191px;
-}
-
 .a2{
     background-color: #C9C9C9;
     position: absolute;
-    width: 50px ;
+    width: 53px ;
     height: 10px;
-    left: 723px;
-    top: 215px;
+    left: 688px;
+    z-index: 0;
+    border-top: 1px solid #707070;
+    border-bottom: 1px solid #707070;
 }
 
 .a3{
     background-color: #C9C9C9;
     position: absolute;
-    width: 50px ;
-    height: 10px;
-    left: 723px;
-    top: 270px;
+    width: 17.9px ;
+    height: 51px;
+    left: 66.1%;
+    border-right: 1px solid #707070;
+    border-left: 1px solid #707070;
+    border-bottom: 1px solid #707070;
+
 }
 
+.editSection{
+    display: none;
+    right: 0;
+}
+
+.editSection article{
+    margin-right: -10%;
+}
+
+.addbtn{
+    padding: 7px 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.NoInput{
+    display: flex;
+    gap: 2%;
+    align-items: center;
+}
+
+.NoInput input[type='text']{
+    color: var(--font-color);
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid var(--card-color);
+    border-radius: 5px;
+    background-color: #f7f7f7;
+}
+
+.groupText{
+    display: flex;
+    gap: 2%;
+    align-items: center;
+}
+
+.groupText label{
+    font-weight: bolder;
+}
+
+.groupText input{
+    color: var(--font-color);
+    font-weight: bold;
+    text-align: center;
+    border: 1px solid var(--card-color);
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    width: 50%;
+    height: 28px;
+}
+
+.groupText select{
+    border: 1px solid var(--card-color);
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    width: 50%;
+    color: var(--font-color);
+    font-weight: normal;
+    height: 30px;
+    font-size: x-small;
+}
+
+.addGroup{
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: 0.1s;
+    color: #000;
+}

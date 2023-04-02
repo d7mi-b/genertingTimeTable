@@ -12,6 +12,10 @@
     display: flex;
 }
 
+.createTable_header h3{
+    display: flex;
+}
+
 .createTable_main{
     display: flex;
     padding: 60px;

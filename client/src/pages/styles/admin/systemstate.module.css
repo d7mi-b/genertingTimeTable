@@ -1,0 +1,77 @@
+.systemState header {
+    margin: 35px auto 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.systemState header h1 {
+    font-size: x-large;
+}
+
+.systemState header svg {
+    margin-left: 5px;
+}
+
+.systemState article {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.systemState .systemInfo {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    box-shadow: 0px 0px 3px 2px var(--card-color);
+    border-radius: 5px;
+}
+
+.systemState .systemInfo p {
+    font-size: 1.1rem;
+}
+
+.systemUpdateState {
+    margin: 30px auto;
+    padding: 20px;
+    box-shadow: 0px 0px 3px 2px var(--card-color);
+    border-radius: 5px;
+}
+
+.systemUpdateState h3 {
+    margin: 5px 0 20px;
+}
+
+.systemState .inputs {
+    display: flex;
+}
+
+.systemUpdateState form label {
+    margin: 0 5px;
+}
+
+.systemUpdateState form input {
+    border: 3px solid var(--card-color);
+    border-radius: 2.5px;
+    width: 200px;
+    color: var(--main-color);
+    font-family: Tajawal;
+}
+
+.systemUpdateState form .radio {
+    margin: 5px 10px;
+}
+
+.systemUpdateState form .radio input{
+    width: fit-content;
+    margin: 0 20px 0 5px;
+}
+
+.systemUpdateState .btnContaineer {
+    flex-direction: row;
+    margin: 15px 0 5px;
+}
+
+.systemUpdateState form .btn {
+    background-color: var(--main-color);
+    color: var(--card-color);
+    border: none;
+}

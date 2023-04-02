@@ -8,6 +8,6 @@ router.use(requireAuth);
 
 router.put('/updateLecturer',moduleController.updateLecturer);
 router.put('/updateHall',moduleController.updateHall);
-router.get('/:Department_ID',moduleController.getDepartmentModule);
+router.get('/:Department_ID/:Semester',moduleController.getDepartmentModule);
 
 module.exports = router;

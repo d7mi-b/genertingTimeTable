@@ -7,5 +7,10 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.get('/department/:Department_ID', batchesController.getBatchesOfDepartment);
+router.get('/batchType',batchesController.batchType)
+router.delete('/deleteGroup',batchesController.deleteGroup)
+router.put('/updateBatch',batchesController.updateBatch)
+router.put('/updateGroup',batchesController.updateGroup)
+router.post('/addGroup',batchesController.addGroup)
 
 module.exports = router;

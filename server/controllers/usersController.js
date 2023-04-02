@@ -18,6 +18,10 @@ module.exports.login = async (req, res) => {
             select * from users where User_Name = ?
         `, [User_Name]);
 
+        const [ system ] = await db.query(`
+            select System_Semester from system_state
+        `);
+
         if (user.length === 0) {
             throw Error('إسم المستخدم غير صحيح');
         }
@@ -30,7 +34,7 @@ module.exports.login = async (req, res) => {
 
         const token = createToken(user[0].User_ID);
 
-        return res.status(200).json({token, name: user[0].Name, type: user[0].User_Type_ID, Department_ID: user[0].Department_ID});
+        return res.status(200).json({token, name: user[0].Name, type: user[0].User_Type_ID, Department_ID: user[0].Department_ID, semester: system[0].System_Semester});
     }
     catch(err) {
         res.status(400).json({err: err.message})

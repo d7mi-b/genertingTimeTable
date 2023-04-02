@@ -52,18 +52,31 @@ module.exports.updateHall = async (req,res) => {
 }
 
 module.exports.getDepartmentModule = async (req,res) => {
-    const { Department_ID } = req.params;
+    const { Department_ID, Semester } = req.params;
 
-    
     try{
-        const [modules] = await db.query(`
+        let modules;
+        if(Semester == 1)
+      {
+        [modules] = await db.query(`
         
         select Module_ID, Hall_Type_ID, module.Semester_ID, module.Subject_ID, Subject_Name, Lecturer_ID,
-        subject_types.Subject_Type, Subject_Type_ID from module 
+        subject_type.Subject_Type_Name, subject_type.Subject_Type_ID from module 
         natural join subjects
-        join subject_types on module.Subject_Type = subject_types.Subject_Type_ID
-        where module.Department_ID = ? 
-        `,[Department_ID])
+        join subject_type on module.Subject_Type_ID = subject_type.Subject_Type_ID
+        where module.Department_ID = ? and (module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ?)
+        `,[Department_ID,1,3,5,7,9])
+    }
+    else{
+        [modules] = await db.query(`
+        
+        select Module_ID, Hall_Type_ID, module.Semester_ID, module.Subject_ID, Subject_Name, Lecturer_ID,
+        subject_type.Subject_Type_Name, subject_type.Subject_Type_ID from module 
+        natural join subjects
+        join subject_type on module.Subject_Type_ID = subject_type.Subject_Type_ID
+        where module.Department_ID = ? and (module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ?)
+        `,[Department_ID,2,4,6,8,10])
+    }
 
         return res.status(200).json(modules);
     }

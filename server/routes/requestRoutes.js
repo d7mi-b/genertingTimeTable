@@ -7,7 +7,7 @@ const router = express.Router();
 router.use(requireAuth);
 
 router.post('/',requestController.postRequest)
-router.get('/exportRequests/:Deparetment_ID',requestController.exportRequests)
-router.get('/importRequests/:Deparetment_ID',requestController.importRequests)
+router.get('/:Deparetment_ID',requestController.getRequests)
+router.put('/',requestController.updateRequest)
 
 module.exports = router;
