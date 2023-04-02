@@ -19,21 +19,21 @@ VALUES (1, 'الأحد'),
 
 Create table time (
     Time_ID int auto_increment not null,
-    Start_Time varchar(5) not null,
-    End_Time varchar(5) not null,
+    Start_Time time not null,
+    End_Time time not null,
     Duration varchar(3) not null,
     primary key(Time_ID)
 );
 
 INSERT INTO time (Time_ID, Start_Time, End_Time, Duration)
-VALUES (1, '8', '9', '1'),
-    (2, '9', '10', '1'),
-    (3, '10', '11', '1'),
-    (4, '11', '12', '1'),
-    (5, '12', '1', '1'),
-    (6, '1', '2', '1'),
-    (7, '2', '3', '1'),
-    (8, '3', '4', '1');
+VALUES (1, '08:00', '09:00', '1'),
+    (2, '09:00', '10:00', '1'),
+    (3, '10:00', '11:00', '1'),
+    (4, '11:00', '12:00', '1'),
+    (5, '12:00', '13:00', '1'),
+    (6, '13:00', '14:00', '1'),
+    (7, '14:00', '15:00', '1'),
+    (8, '15:00', '16:00', '1');
 
 
 Create table user_type (
@@ -273,15 +273,24 @@ INSERT INTO halls(
         Is_Available
     )
 VALUES ('C101', 70, 7, 3, 3, 1),
-    ('C1', 25, 1, 3, 1, 1),
-    ('Network Lab', 25, 1, 3, 2, 1),
+    ('C1', '80', 1, 3, 1, 1),
+    ('Network Lab', 65, 1, 3, 2, 1),
     ('C103', 50, 2, 3, 3, 1),
     ('A203', 40, 1, 1, 3, 1),
-    ('مرسم 1', 60, 3, 2, 1, 1),
-    ('مرسم 2', 60, 3, 2, 1, 0),
-    ('Physic Lab', 35, 7, 1, 1, 1),
-    ('D209', 55, 5, 4, 1, 1),
-    ('C201', 64, 1, 3, 1, 1);
+    ('مرسم 1', 80, 3, 2, 7, 1),
+    ('مرسم 2', 80, 3, 2, 7, 1),
+    ('Physic Lab', 75, 7, 1, 4, 1),
+    ('D209', 55, 5, 4, 3, 1),
+    ('C201', 60, 1, 3, 3, 1),
+    ('A204', 60, 6, 1, 3, 1),
+    ('D2', 80, 1, 4, 1, 1),
+    ('Logic Design LAB', 80, 1, 3, 10, 1),
+    ('C202', 40, 1, 3, 3, 1),
+    ('B1', 80, 1, 2, 1, 1),
+    ('B2', 80, 1, 2, 1, 1),
+    ('c2', 80, 1, 3, 1, 1),
+    ('PLC LAB', 80, 2, 3, 11, 1),
+    ('Electrical LAB', 80, 2, 3, 8, 1);
 
 
 Create table subjects(
@@ -301,6 +310,7 @@ Create table subjects(
 );
 
 INSERT INTO subjects (
+    Subject_ID,
     Subject_Name,
     Subject_Code,
     Credit_Theoretical,
@@ -310,20 +320,39 @@ INSERT INTO subjects (
     College_ID,
     Semester_ID ) 
 VALUES
-    ('Defferential Calculus', 'MATH111', 2, 0, 2, 1, 1, 1),
-    ( 'General Physics I', 'PHYS111', 2, 2, 0, 1, 1, 1),
-    ( 'General Chemistry I', 'CHEM111', 1, 2, 0, 1, 1, 1),
-    ( 'Islamic Culture I', 'ISLAM111', 2, 0, 0, 1, 1, 1),
-    ( 'English Language I', 'ENG111', 2, 0, 0, 1, 1, 1),
-    ( 'Arabic Language I', 'ARAB111', 2, 0, 0, 1, 1, 1),
-    ( 'Computer Skills', 'CSC117', 1, 2, 0, 1, 1, 1),
-    ( 'Integral Calculus', 'MATH121', 2, 0, 2, 1, 1, 2),
-    ( 'General Physics II', 'PHYS121', 2, 2, 0, 1, 1, 2),
-    ( 'Introduction to Computer Engineering', 'COE122', 2, 0, 0, 1, 1, 2),
-    ( 'Islamic Culture II', 'ISLAM121', 2, 0, 0, 1, 1, 2),
-    ( 'English Language II', 'ENG121', 2, 0, 0, 1, 1, 2),
-    ( 'Arabic Language II', 'ARAB121', 2, 0, 0, 1, 1, 2),
-    ( 'Computer Programming', 'COE121', 2, 2, 0, 1, 1, 2);
+    (1, 'Defferential Calculus', 'MATH111', 2, 0, 2, 1, 1, 1),
+    (2, 'General Physics I', 'PHYS111', 2, 2, 0, 1, 1, 1),
+    (3, 'General Chemistry I', 'CHEM111', 1, 2, 0, 1, 1, 1),
+    (4, 'Islamic Culture I', 'ISLAM111', 2, 0, 0, 1, 1, 1),
+    (5, 'English Language I', 'ENG111', 2, 0, 0, 1, 1, 1),
+    (6, 'Arabic Language I', 'ARAB111', 2, 0, 0, 1, 1, 1),
+    (7, 'Computer Skills', 'CSC117', 1, 2, 0, 1, 1, 1),
+    (8, 'Integral Calculus', 'MATH121', 2, 0, 2, 1, 1, 2),
+    (9, 'General Physics II', 'PHYS121', 2, 2, 0, 1, 1, 2),
+    (10, 'Introduction to Computer Engineering', 'COE122', 2, 0, 0, 1, 1, 2),
+    (11, 'Islamic Culture II', 'ISLAM121', 2, 0, 0, 1, 1, 2),
+    (12,'English Language II', 'ENG121', 2, 0, 0, 1, 1, 2),
+    (13, 'Arabic Language II', 'ARAB121', 2, 0, 0, 1, 1, 2),
+    (14, 'Computer Programming', 'COE121', 2, 2, 1, 1, 1, 2),
+    (15, 'Electronic Devices', 'ED111', 2, 2, 0, 1, 1, 4),
+    (16, 'Digital Logic Design', 'DLD121', 3, 2, 0, 1, 1, 4),
+    (17, 'Signals and Systems', 'SYS11', 3, 2, 0, 1, 1, 4),
+    (18, 'Technical Writing', 'TWENG', 2, 0, 0, 1, 1, 4),
+    (19, 'Differential Equations', 'DIFEQ', 2, 0, 2, 1, 1, 4),
+    (20, 'User Interface Development', 'UID', 2, 2, 0, 1, 1, 4),
+    (21, 'Microprocessor', 'MPU11', 2, 2, 0, 1, 1, 6),
+    (22, 'Numerical Method', 'NM121', 4, 0, 0, 1, 1, 6),
+    (23, 'Computer Archtrcture', 'COARC121', 2, 2, 0, 1, 1, 6),
+    (24, 'Digital Electornics', 'DELE131', 2, 2, 0, 1, 1, 6),
+    (25, 'Software Engineering', 'SWENG', 2, 2, 0, 1, 1, 6),
+    (26, 'Communication Skills', 'COSKL11', 2, 0, 0, 1, 1, 6),
+    (27, 'Computer Network II', 'CN131', 3, 2, 0, 1, 1, 8),
+    (28, 'Artificial Intelligence', 'CSAI', 2, 2, 0, 1, 1, 8),
+    (29, 'VLSI Cicuite Design', 'CEVLSI', 2, 2, 0, 1, 1, 8),
+    (30, 'Data Security', 'CSDSEC', 2, 2, 0, 1, 1, 8),
+    (31, 'Real-Time Computer Control & PLC', 'ECEPLC', 2, 2, 0, 1, 1, 8),
+    (32, 'Parrallel Processing Techniques', 'CEPPT', 2, 0, 0, 1, 1, 10),
+    (33, 'Neural Network', 'CSNN', 2, 2, 0, 1, 1, 10);
 
 
 Create table subject_type (
@@ -382,7 +411,62 @@ VALUES (1, 'خالد فوزي اشبير', 1, 1, 'doctor', 0, 0, 0, 0, 0, 0),
     (12, 'هشام البيتي', 3, 1, 'doctor', 0, 0, 0, 0, 0, 0),
     (13, 'عادل معلم بامعلم', 3, 1, 'doctor', 0, 0, 0, 0, 0, 0),
     (14, 'عامر بن مرضاح', 6, 1, 'doctor', 0, 0, 0, 0, 0, 0),
-    (15, 'سالم بامومن', 6, 1, 'doctor', 0, 0, 0, 0, 0, 0);
+    (15, 'سالم بامومن', 6, 1, 'doctor', 0, 0, 0, 0, 0, 0),
+    (16, 'عزت السعدي', 1, 1, 'doctor', 0, 0, 0, 0, 0, 0),
+    (17, 'فاطمة بابقي', 7, 1, '', 0, 0, 0, 0, 0, 0),
+    (18, 'أمين', 7, 1, '', 0, 0, 0, 0, 0, 0),
+    (19, 'إيمان', 7, 1, '', 0, 0, 0, 0, 0, 0),
+    (20, 'نايف بن همام', 7, 1, '', 0, 0, 0, 0, 0, 0),
+    (21, 'ناصر الغيثي', 1, 1, '', 0, 0, 0, 0, 0, 0),
+    (22, 'صالح بارفعه', 7, 1, '', 0, 0, 0, 0, 0, 0),
+    (23, 'عمرو عبدالرب', 7, 1, '', 0, 0, 0, 0, 0, 0),
+    (24, 'خالد بازهير', 7, 1, '', 0, 0, 0, 0, 0, 0),
+    (25, 'وضاح السبتي', 1, 1, '', 0, 0, 0, 0, 0, 0),
+    (26, 'خالد بن صديق', 2, 1, '', 0, 0, 0, 0, 0, 0),
+    (27, 'محمد بافقيه', 7, 1, '', 0, 0, 0, 0, 0, 0),
+    (28, 'وفاء ادريس', 1, 1, '', 0, 0, 0, 0, 0, 0),
+    (29, 'عصمت', 1, 1, '', 0, 0, 0, 0, 0, 0),
+    (30, 'عبدالله باحسن', 2, 1, 'doctor', 0, 0, 0, 0, 0, 0),
+    (31, 'امل بن عيدان', 2, 1, '', 0, 0, 0, 0, 0, 0),
+    (32, 'فاطمة بافرج', 1, 1, '', 0, 0, 0, 0, 0, 0),
+    (33, 'علاء باسواقي', 2, 1, '', 0, 0, 0, 0, 0, 0),
+    (34, 'صفاء جوهر', 1, 1, '', 0, 0, 0, 0, 0, 0);
+
+
+CREATE TABLE lecturer_requsets (
+    Request_ID int NOT NULL AUTO_INCREMENT,
+    Sender_ID int DEFAULT NULL,
+    Reciver_ID int DEFAULT NULL,
+    Lecturer_ID int DEFAULT NULL,
+    Subject_ID int DEFAULT NULL,
+    Subject_Type_ID int DEFAULT null,
+    Reply varchar(300) DEFAULT NULL,
+    PRIMARY KEY (Request_ID),
+    FOREIGN KEY (Sender_ID) REFERENCES department (Department_ID),
+    FOREIGN KEY (Reciver_ID) REFERENCES department (Department_ID),
+    FOREIGN KEY (Lecturer_ID) REFERENCES lecturer (Lecturer_ID),
+    FOREIGN KEY (Subject_ID) REFERENCES subjects (Subject_ID),
+    FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID)
+);
+
+Create table batch_groups(
+    Group_ID int auto_increment not null,
+    Group_ varchar(100) not null,
+    Group_Count int not null,
+    Batch_ID int,
+    Batch_Type_ID int,
+    primary key(Group_ID),
+    foreign key(Batch_ID) references batches(Batch_ID),
+    foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID)
+);
+
+INSERT INTO batch_groups(Group_ID, Group_, Group_Count, Batch_ID, Batch_Type_ID)
+VALUES (1, 'A', 70, 10, 1),
+    (2, 'A', 56, 9, 1),
+    (3, 'A', 50, 8, 1),
+    (4, 'A', 35, 2, 1),
+    (5, 'A', 40, 1, 1);
+
 
 
 Create table module(
@@ -403,57 +487,49 @@ Create table module(
 );
 
 INSERT INTO module (Module_ID, Semester_ID, Subject_ID, Lecturer_ID, Department_ID, Hall_Type_ID, Subject_Type_ID)
-VALUES (1, 2, 14, null, 1, 3, 1),
-    (2, 2, 11, 2, 1, 3, 1),
-    (3, 1, 5, null, 1, 3, 1),
-    (4, 1, 2, 2, 1, 4, 2);
-
-
-CREATE TABLE lecturer_requsets (
-    Request_ID int NOT NULL AUTO_INCREMENT,
-    Sender_ID int DEFAULT NULL,
-    Reciver_ID int DEFAULT NULL,
-    Lecturer_ID int DEFAULT NULL,
-    Subject_ID int DEFAULT NULL,
-    Subject_Type_ID int NOT null,
-    Module_ID int NOT NULL,
-    Reply boolean DEFAULT NULL,
-    PRIMARY KEY (Request_ID),
-    FOREIGN KEY (Sender_ID) REFERENCES department (Department_ID),
-    FOREIGN KEY (Reciver_ID) REFERENCES department (Department_ID),
-    FOREIGN KEY (Lecturer_ID) REFERENCES lecturer (Lecturer_ID),
-    FOREIGN KEY (Subject_ID) REFERENCES subjects (Subject_ID),
-    FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID),
-    FOREIGN KEY (Module_ID) REFERENCES module (Module_ID)
-);
-
-INSERT INTO lecturer_requsets(Request_ID,Sender_ID,Reciver_ID,Subject_ID,Subject_Type_ID,Module_ID,Reply)
-VALUES (1,1,3,14,1,1,0),
-(2,1,5,11,1,2,0),
-(3,2,1,5,2,3,0),
-(4,5,1,2,3,4,0);
-
-Create table batch_groups(
-    Group_ID int auto_increment not null,
-    Group_ varchar(100) not null,
-    Group_Count int not null,
-    Batch_ID int,
-    Batch_Type_ID int,
-    primary key(Group_ID),
-    foreign key(Batch_ID) references batches(Batch_ID),
-    foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID)
-);
-
-
-    
-INSERT INTO batch_groups(Group_ID, Group_, Group_Count, Batch_ID, Batch_Type_ID)
-VALUES (1, 'A', 33, 6, 1),
-    (2, 'A', 18, 6, 2),
-    (3, 'A', 40, 10, 1),
-    (4, 'B', 20, 10, 1),
-    (5, 'B', 30, 6, 1);
-
-
+VALUES (5, 2, 10, 16, 1, 3, 1),
+    (6, 2, 8, 17, 1, 3, 1),
+    (7, 2, 13, 18, 1, 3, 1),
+    (8, 2, 14, 3, 1, 3, 1),
+    (9, 2, 9, 19, 1, 3, 1),
+    (10, 2, 12, 20, 1, 3, 1),
+    (11, 2, 14, 21, 1, 1, 2),
+    (12, 2, 9, 22, 1, 4, 2),
+    (13, 2, 14, 21, 1, 3, 3),
+    (14, 2, 11, 23, 1, 3, 1),
+    (15, 2, 8, 17, 1, 3, 1),
+    (16, 4, 15, 9, 1, 3, 1),
+    (17, 4, 16, 5, 1, 3, 1),
+    (18, 4, 17, 6, 1, 3, 1),
+    (19, 4, 18, 20, 1, 3, 1),
+    (20, 4, 19, 24, 1, 3, 1),
+    (21, 4, 20, 25, 1, 3, 1),
+    (22, 4, 20, 25, 1, 1, 2),
+    (23, 4, 15, 26, 1, 8, 2),
+    (24, 4, 16, 21, 1, 10, 2),
+    (25, 6, 21, 5, 1, 3, 1),
+    (26, 6, 22, 27, 1, 3, 1),
+    (27, 6, 23, 28, 1, 1, 2),
+    (28, 6, 21, 29, 1, 1, 2),
+    (29, 6, 23, 1, 1, 3, 1),
+    (30, 6, 24, 30, 1, 3, 1),
+    (31, 6, 25, 2, 1, 3, 1),
+    (32, 6, 26, 19, 1, 3, 1),
+    (33, 6, 25, 29, 1, 1, 2),
+    (34, 6, 24, 31, 1, 8, 2),
+    (35, 8, 30, 32, 1, 2, 2),
+    (36, 8, 27, 4, 1, 3, 1),
+    (37, 8, 28, 2, 1, 3, 1),
+    (38, 8, 28, 29, 1, 1, 2),
+    (39, 8, 29, 28, 1, 8, 2),
+    (40, 8, 27, 32, 1, 2, 2),
+    (41, 8, 29, 1, 1, 3, 1),
+    (42, 8, 30, 4, 1, 3, 1),
+    (43, 8, 31, 33, 1, 3, 1),
+    (44, 8, 31, 33, 1, 11, 2),
+    (45, 10, 32, 1, 1, 3, 1),
+    (46, 10, 33, 16, 1, 3, 1),
+    (47, 10, 33, 34, 1, 1, 2);
 
 Create table E_T_T(
     ETT_ID int auto_increment not null,

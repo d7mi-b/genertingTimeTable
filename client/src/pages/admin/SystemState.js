@@ -59,24 +59,30 @@ const SystemState = () => {
                                         onChange={e => setYear(e.target.value)}
                                     />
                                 </section>
-                                <section className={`input ${style.radio}`}>
+                                <section className={`input ${style.radios}`}>
                                     <label htmlFor="systemSemester">الفصل الدراسي:  </label>
-                                    <input 
-                                        type='radio' 
-                                        name="systemSemester" 
-                                        required 
-                                        value='1' 
-                                        checked={ semester === '1'}
-                                        onChange={e => setSemester(e.target.value)}
-                                    /> الفصل الدراسي الأول
-                                    <input 
-                                        type='radio' 
-                                        name="systemSemester" 
-                                        required 
-                                        value='2' 
-                                        checked={ semester === '2'}
-                                        onChange={e => setSemester(e.target.value)}
-                                    /> الفصل الدراسي الثاني
+                                    <section className={style.radio}>
+                                        <input 
+                                            type='radio' 
+                                            name="systemSemester" 
+                                            required 
+                                            value='1' 
+                                            checked={ semester === '1'}
+                                            onChange={e => setSemester(e.target.value)}
+                                        />
+                                        الفصل الدراسي الأول
+                                    </section>
+                                    <section className={style.radio}>
+                                        <input 
+                                            type='radio' 
+                                            name="systemSemester" 
+                                            required 
+                                            value='2' 
+                                            checked={ semester === '2'}
+                                            onChange={e => setSemester(e.target.value)}
+                                        />
+                                        الفصل الدراسي الثاني
+                                    </section>
                                 </section>
                             </section>
                             <section className={`btnContainer ${style.btnContaineer}`}>

@@ -42,6 +42,7 @@
 
 .systemState .inputs {
     display: flex;
+    place-items: center;
 }
 
 .systemUpdateState form label {
@@ -56,11 +57,17 @@
     font-family: Tajawal;
 }
 
-.systemUpdateState form .radio {
-    margin: 5px 10px;
+.systemUpdateState form .input {
+    width: 45%;
 }
 
-.systemUpdateState form .radio input{
+.systemUpdateState form .radios {
+    margin: 5px 15px 5px 0;
+    display: flex;
+    width: 60%;
+}
+
+.systemUpdateState form .radios input{
     width: fit-content;
     margin: 0 20px 0 5px;
 }
@@ -74,4 +81,30 @@
     background-color: var(--main-color);
     color: var(--card-color);
     border: none;
+}
+
+@media (min-width: 283px) and (max-width: 767px) {
+    .systemState header {
+        margin: 50px 0 20px;
+    }
+
+    .systemInfo,
+    .systemUpdateState .inputs,
+    .systemUpdateState .inputs .radios {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .systemInfo p {
+        margin: 5px 0;
+    }
+
+    .systemUpdateState .inputs,
+    .systemUpdateState .inputs .radios {
+        margin: 15px 0;
+    }
+
+    .systemUpdateState .inputs .radio {
+        margin: 5px auto;
+    }
 }
