@@ -2,6 +2,7 @@ const db = require('../DB');
 const { initialTimetable } = require('./initialTimetable');
 const { getNeighbors } = require('./getNeighbors');
 const { feasible } = require('./feasible');
+const { fitness } = require('./fitness');
 
 
 module.exports.generatingTimetable = async (req, res) => {
@@ -41,7 +42,19 @@ module.exports.generatingTimetable = async (req, res) => {
         while (i < 1) {
           const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
           candidateTimetable = neighborhood[0];
-          i++;
+          
+          neighborhood.forEach(candidate => {
+            if (!tabuList.includes(candidate) && fitness(candidate) > fitness(candidateTimetable))
+              candidateTimetable = candidate;
+          })
+
+          if (fitness(candidateTimetable) > fitness(bestTimetable))
+            bestTimetable = candidateTimetable;
+
+          tabuList.push(candidateTimetable);
+
+          if (tabuList.length > 100)
+            tabuList.shift();
         }
 
         console.log('done from main function');
