@@ -4,12 +4,12 @@ const requireAuth = require('../middleware/requireAuth');
 
 const router = express.Router();
 
-router.post('/addUsers', usersControllers.addUser);
 router.post('/login', usersControllers.login);
+
 router.use(requireAuth);
 
 router.get('/', usersControllers.getUsers);
-
+router.post('/addUsers', usersControllers.addUser);
 router.get('/getUsersType', usersControllers.getUsersTypes);
 router.get('/getUserInfo',usersControllers.getUserInfo)
 router.delete('/deleteUser', usersControllers.deleteUser);

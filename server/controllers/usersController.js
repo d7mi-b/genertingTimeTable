@@ -1,7 +1,6 @@
 const db = require('../DB');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { use } = require('../routes/usersRoutes');
 
 const createToken = (id) => {
     return jwt.sign({id}, process.env.SECRET, {expiresIn: "3d"})
