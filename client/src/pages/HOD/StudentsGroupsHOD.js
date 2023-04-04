@@ -1,6 +1,6 @@
 import { faAngleDoubleLeft, faPenToSquare,faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import style from '../styles/HOD/StudentsGroupsHOD.module.css';
 import useFetch from '../../hooks/useFetch';
@@ -29,6 +29,7 @@ const Students = () => {
     const { fetchPut } = useFetchPut()
     const { fetchPost } = useFetchPost()
     const [error,setError] = useState()
+    const [deletedGroup, setDeletedGroup] = useState(0)
 
     const handleOpenSection = id => {
         const editSection = document.getElementById(`b${id}`)
@@ -85,11 +86,15 @@ const Students = () => {
 
     const handleDeleteGroup = async (Group_ID) => {
 
+        const groupSection = document.getElementById(`Group${Group_ID}`)
+        groupSection.style.cssText = 'display:none;'
+        
+        const deletedGroup = groupSection.querySelector('input').value
+        setDeletedGroup(deletedGroup)
+        
         await fetchDelete('http://localhost:5000/batches/deleteGroup',{
             Group_ID
         })
-
-        window.location.reload()
         
     }
 
@@ -101,7 +106,7 @@ const Students = () => {
 
         if(groups) {
 
-            groups.map(i => {
+            groups.forEach(i => {
                 let group = document.getElementById(`input${i.Group_ID}`)
                 
                 console.log(group)
@@ -113,6 +118,7 @@ const Students = () => {
         if(Newgroup)
         groupCount+=Number(Newgroup.value)
 
+        groupCount-=deletedGroup
         console.log(Batch_General_Count+Batch_Parallel_Count+Batch_Payment_Count,groupCount)
 
         if(Batch_General_Count+Batch_Parallel_Count+Batch_Payment_Count === groupCount ){
@@ -253,8 +259,8 @@ const Students = () => {
                                             <label htmlFor="groups">المجموعات:</label>
                                             <div id={`groups${i.Batch_ID}`}>
                                             {
-                                                groups &&
-                                                groups.map(j => {
+                                                i.Groups &&
+                                                i.Groups.map(j => {
                                                     return(
                                                     <section key={j.Group_ID} id={`Group${j.Group_ID}`} 
                                                     className={style.groupText}>
