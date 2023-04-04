@@ -75,7 +75,6 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         }   
         
     }
-    console.log('done from getNeighbors')
-    console.log('Neighbors size: ', neighbors.length);
+    
     return neighbors;
 }
