@@ -4,6 +4,8 @@ const collegeController = require('../controllers/collegeController');
 
 const router = express.Router();
 
+router.use(requireAuth);
+
 router.get('/', collegeController.getCollege);
 
 module.exports = router;

@@ -4,6 +4,8 @@ const systemStateController = require('../controllers/systemStateController');
 
 const router = express.Router();
 
+router.use(requireAuth);
+
 router.get('/', systemStateController.getSystemState);
 router.put('/update', systemStateController.updateSystemstate);
 
