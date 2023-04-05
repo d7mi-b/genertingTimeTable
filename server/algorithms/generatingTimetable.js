@@ -14,10 +14,14 @@ module.exports.generatingTimetable = async (req, res) => {
             from module join subjects on subjects.Subject_ID = module.Subject_ID;
         `);
 
+        const [ lecturers ] = await db.query(`
+            select Lecturer_ID, Sunday, Monday, Tuesday, Wednesday, Thursday from lecturer
+        `);
+
         const [ groups ] = await db.query(`
             select Group_ID, Group_Count, batches.Semester_ID, batches.Department_ID from batch_groups 
             join batches on batch_groups.Batch_ID = batches.Batch_ID;
-        `)
+        `);
 
         const [ halls ] = await db.query(`
             select Hall_ID, Hall_Type_ID, Hall_Capacity from halls
@@ -35,21 +39,21 @@ module.exports.generatingTimetable = async (req, res) => {
         let candidateTimetable = await initialTimetable(modules, groups, halls, days, times);
         let tabuList = [];
 
-        console.log('timetable from initialTimetable without hard constraints: ', feasible(candidateTimetable));
+        console.log('timetable from initial timetable without hard constraints: ', feasible(candidateTimetable));
+        console.log('the fitness of initial timetable: ', fitness(candidateTimetable, modules, lecturers, groups, days));
 
         let i = 0;
-        //console.log(fitness(candidateTimetable, modules, groups, halls, days, times))
-        
-        while (i < 50) {
+
+        while (i < 100) {
           const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
           candidateTimetable = neighborhood[0];
           
           neighborhood.forEach(candidate => {
-            if (!tabuList.includes(candidate) && fitness(candidate, modules, groups, halls, days, times) > fitness(candidateTimetable, modules, groups, halls, days, times))
+            if (!tabuList.includes(candidate) && fitness(candidate, modules, lecturers, groups, days) > fitness(candidateTimetable, modules, lecturers, groups, days))
               candidateTimetable = candidate;
           })
-
-          if (fitness(candidateTimetable, modules, groups, halls, days, times) > fitness(bestTimetable, modules, groups, halls, days, times))
+          
+          if (fitness(candidateTimetable, modules, lecturers, groups, days) > fitness(bestTimetable, modules, lecturers, groups, days))
             bestTimetable = candidateTimetable;
           
           tabuList.push(candidateTimetable);
@@ -61,11 +65,10 @@ module.exports.generatingTimetable = async (req, res) => {
         }
 
         console.log('done from main function');
+        console.log('the best timetable without hard constraints: ', feasible(bestTimetable));
+        console.log('the fitness of best timetable: ', fitness(bestTimetable, modules, lecturers, groups, days));
 
-        console.log('timetable from getNeighbors without hard constraints: ', feasible(candidateTimetable));
-        console.log('fitness of best timetable ',fitness(bestTimetable,modules, groups, halls, days, times))
-
-        return res.status(200).json(candidateTimetable);
+        return res.status(200).json(bestTimetable);
     }
     catch (err) {
         res.status(400).json({err: err.message});
