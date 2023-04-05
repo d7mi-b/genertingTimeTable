@@ -38,28 +38,32 @@ module.exports.generatingTimetable = async (req, res) => {
         console.log('timetable from initialTimetable without hard constraints: ', feasible(candidateTimetable));
 
         let i = 0;
-
-        while (i < 1) {
+        //console.log(fitness(candidateTimetable, modules, groups, halls, days, times))
+        
+        while (i < 50) {
           const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
           candidateTimetable = neighborhood[0];
           
           neighborhood.forEach(candidate => {
-            if (!tabuList.includes(candidate) && fitness(candidate) > fitness(candidateTimetable))
+            if (!tabuList.includes(candidate) && fitness(candidate, modules, groups, halls, days, times) > fitness(candidateTimetable, modules, groups, halls, days, times))
               candidateTimetable = candidate;
           })
 
-          if (fitness(candidateTimetable) > fitness(bestTimetable))
+          if (fitness(candidateTimetable, modules, groups, halls, days, times) > fitness(bestTimetable, modules, groups, halls, days, times))
             bestTimetable = candidateTimetable;
-
+          
           tabuList.push(candidateTimetable);
 
           if (tabuList.length > 100)
             tabuList.shift();
+
+          i++;
         }
 
         console.log('done from main function');
 
         console.log('timetable from getNeighbors without hard constraints: ', feasible(candidateTimetable));
+        console.log('fitness of best timetable ',fitness(bestTimetable,modules, groups, halls, days, times))
 
         return res.status(200).json(candidateTimetable);
     }

@@ -15,7 +15,7 @@ const CreateTable = () => {
     const { user } = useAuthContext();
     const [Department_ID] = useState(Number(user.Department_ID))
     const [semesterSelected] = useState(Number(user.semester));
-    const {data:lecturers} = useFetch(`http://localhost:5000/lecturers/department/${Department_ID}`)
+    const {data:lecturers} = useFetch(`http://localhost:5000/lecturers/department_short/${Department_ID}`)
     const {data:hall_types} = useFetch(`http://localhost:5000/hallTypes`)
     const {data:departments} = useFetch(`http://localhost:5000/departements`)
     const {data:modules, isPending} = useFetch(`http://localhost:5000/module/${Department_ID}/${semesterSelected}`)

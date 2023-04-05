@@ -13,7 +13,7 @@ const Review_Requests = () => {
     const [state, setState] = useState('import');
     const { user } = useAuthContext();
     const {data:requests} = useFetch(`http://localhost:5000/requests/${user.Department_ID}`)
-    const { data:lecturers } = useFetch(`http://localhost:5000/lecturers/department/${user.Department_ID}`)
+    const { data:lecturers } = useFetch(`http://localhost:5000/lecturers/department_short/${user.Department_ID}`)
     const { fetchPut } = useFetchPut();
     
 
