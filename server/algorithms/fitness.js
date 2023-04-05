@@ -1,9 +1,13 @@
 const { lecturerAvailabilty } = require('./fitness functions/lecturerAvailabilty');
+const { timeGap } = require('./fitness functions/timeGap')
 
-module.exports.fitness = (timetable, modules, lecturers, groups) => {
+module.exports.fitness = (timeTable, modules, lecturers, groups, days) => {
     let fitness = 0;
 
-    fitness += lecturerAvailabilty(timetable, lecturers);
+    fitness += lecturerAvailabilty(timeTable, lecturers);
+    fitness += timeGap(timeTable, groups, days)
+    
+    return fitness
 
-    return fitness;
+
 }

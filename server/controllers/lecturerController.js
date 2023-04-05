@@ -17,6 +17,22 @@ module.exports.getLecturersOfDepartment = async (req, res) => {
     }
 }
 
+module.exports.getLecturersOfDepartment_short = async (req, res) => {
+    const { Department_ID } = req.params;
+
+    try {
+        const [ lecturers ] = await db.query(`
+            select Lecturer_ID, Lecturer_Name, Department_ID, Department_Name from lecturer natural join department
+            where department.Department_ID = ? and Not_Available = 0;
+        `, [Department_ID]);
+
+        return res.status(200).json(lecturers);
+    }
+    catch (err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
 module.exports.postLecturersOfDepartment = async (req,res) => {
     const { Lecturer_Name, Department_ID, College_ID, Rank_, Not_Available, NO_Available_Days,
         Sunday, Monday, Tuesday, Wednesday, Thursday } = req.body;
