@@ -35,6 +35,5 @@ module.exports.timeGap = (timeTable, groups, days) => {
         return (1/timeGap).toFixed(6);
     }
     else return 0
-     
 
 }

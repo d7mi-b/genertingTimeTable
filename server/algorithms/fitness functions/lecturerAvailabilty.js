@@ -19,7 +19,7 @@ module.exports.lecturerAvailabilty = (timetable, lecturers) => {
                 if (!numberDays.includes(ele.Day_ID))
                     numberDays.push(ele.Day_ID);
             })
-            if (l.NO_Available_Days !== null) {
+            if (l.NO_Available_Days !== null && l.Not_Available === 0) {
                 if (l.NO_Available_Days >= numberDays.length) {
                     scores += 20;
                 }

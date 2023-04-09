@@ -15,7 +15,7 @@ module.exports.generatingTimetable = async (req, res) => {
         `);
 
         const [ lecturers ] = await db.query(`
-            select Lecturer_ID, NO_Available_Days, Sunday, Monday, Tuesday, Wednesday, Thursday from lecturer
+            select Lecturer_ID, Not_Available, NO_Available_Days, Sunday, Monday, Tuesday, Wednesday, Thursday from lecturer
         `);
 
         const [ groups ] = await db.query(`
@@ -44,7 +44,7 @@ module.exports.generatingTimetable = async (req, res) => {
 
         let i = 0;
 
-        while (i < 50) {
+        while (i < 10) {
           const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
           candidateTimetable = neighborhood[0];
           
