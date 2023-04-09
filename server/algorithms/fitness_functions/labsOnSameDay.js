@@ -17,17 +17,17 @@ module.exports.labsOnSameDay = (timetable, modules, groups) => {
             })
             });
     
-           
+
             // Check if two lab subjects in the same day And give score if true
             if(groupModule.length > 1){
-                 for (let i=0; i < groupModule.length; i++){
-                     for(let j = i; j< groupModule.length; j++){
-                          if(groupModule[i].Day_ID === groupModule[j].Day_ID){
-                        score+=10;
+                for (let i=0; i < groupModule.length; i++){
+                    for(let j = i + 1; j< groupModule.length; j++){
+                        if(groupModule[i].Day_ID === groupModule[j].Day_ID){
+                        score+=20;
                     }
                 }
                 }
-             }
+            }
     
         });
     }

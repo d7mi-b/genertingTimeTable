@@ -44,7 +44,7 @@ module.exports.generatingTimetable = async (req, res) => {
 
         let i = 0;
 
-        while (i < 10) {
+        while (i < 100) {
           const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
           candidateTimetable = neighborhood[0];
           
