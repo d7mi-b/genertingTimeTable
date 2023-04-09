@@ -32,7 +32,7 @@ module.exports.timeGap = (timeTable, groups, days) => {
         })
 
         //console.log(1/timeGap)
-        return (1/timeGap).toFixed(6);
+        return +(1/timeGap).toFixed(6);
     }
     else return 0
 
