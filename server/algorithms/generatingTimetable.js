@@ -15,9 +15,9 @@ module.exports.generatingTimetable = async (req, res) => {
         `);
 
         const [ lecturers ] = await db.query(`
-            select Lecturer_ID, Sunday, Monday, Tuesday, Wednesday, Thursday from lecturer
+            select Lecturer_ID, Not_Available, NO_Available_Days, Sunday, Monday, Tuesday, Wednesday, Thursday from lecturer
         `);
-
+ 
         const [ groups ] = await db.query(`
             select Group_ID, Group_Count, batches.Semester_ID, batches.Department_ID from batch_groups 
             join batches on batch_groups.Batch_ID = batches.Batch_ID;
