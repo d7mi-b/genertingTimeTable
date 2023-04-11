@@ -7,6 +7,7 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
     let neighbors = [];
     var timetable = JSON.parse(JSON.stringify(candidateTimetable));
 
+    
     while (neighbors.length < 10) {
 
         timetable.forEach((e, i) => {
@@ -46,7 +47,10 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
                                     const day = getRandomItem(days);
                                     e.Day_ID = day.Day_ID;
 
-                                    const time = getRandomItem(times);
+                                for(let k=0;k<times.length;k++){    
+
+
+                                    const time = times[k];
                                     e.Start_Time = time.Start_Time;
 
                                     if (m.Subject_Type_ID === 1) {
@@ -61,6 +65,13 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
                                         const endTime = `${+e.Start_Time.slice(0,2) + m.Credit_Tutorial < 10 ? `0${+e.Start_Time.slice(0,2) + m.Credit_Tutorial}` : +e.Start_Time.slice(0,2) + m.Credit_Tutorial}:00:00`;;
                                         e.End_Time = endTime;
                                     }
+
+                                    if(!isOverLapping(timetable[i], timetable[j])) {
+                                        
+                                        break;
+                                    }
+
+                                }
                                 }
                             }
                         }

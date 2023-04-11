@@ -1,5 +1,5 @@
 const db = require('../DB');
-const { initialTimetable } = require('./initialTimetable');
+const { initialTimetable } = require('./initialTimetable1');
 const { getNeighbors } = require('./getNeighbors');
 const { feasible } = require('./feasible');
 const { fitness } = require('./fitness');
@@ -44,7 +44,7 @@ module.exports.generatingTimetable = async (req, res) => {
 
         let i = 0;
 
-        while (i < 100) {
+        while (i < 1) {
           const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times);
           candidateTimetable = neighborhood[0];
           
@@ -63,6 +63,7 @@ module.exports.generatingTimetable = async (req, res) => {
 
           i++;
         }
+        
 
         console.log('done from main function');
         console.log('the best timetable without hard constraints: ', feasible(bestTimetable));

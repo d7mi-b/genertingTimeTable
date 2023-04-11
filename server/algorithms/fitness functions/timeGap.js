@@ -1,7 +1,7 @@
 module.exports.timeGap = (timeTable, groups, days) => {
 
     let times = []
-    var timeGap = 0;
+    var timeGap = 1;
 
     if(timeTable){
         groups.map(g => {
@@ -32,7 +32,7 @@ module.exports.timeGap = (timeTable, groups, days) => {
         })
 
         //console.log(1/timeGap)
-        return (1/timeGap).toFixed(6);
+        return (1/timeGap);
     }
     else return 0
      
