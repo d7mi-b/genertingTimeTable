@@ -19,7 +19,7 @@ module.exports.generatingTimetable = async (req, res) => {
         `);
  
         const [ groups ] = await db.query(`
-            select Group_ID, Group_Count, batches.Semester_ID, batches.Department_ID from batch_groups 
+            select Group_ID, Group_Count, Batch_Type_ID, batches.Semester_ID, batches.Department_ID from batch_groups 
             join batches on batch_groups.Batch_ID = batches.Batch_ID;
         `);
 
