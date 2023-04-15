@@ -1,4 +1,4 @@
-module.exports.groupTime1 = (timetable, modules, groups) => {
+module.exports.groupsTime = (timetable, modules, groups) => {
   // This function check if the morning groups is taking their lectures ing the morning and the evening groups is taking their lectures in the evening
 
   let score = 0;
