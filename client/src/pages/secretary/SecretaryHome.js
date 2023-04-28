@@ -45,7 +45,6 @@ const sections = [
   },
 ];
 
-const semesters = ["الأول", "الثاني"];
 
 const SecretaryHome = () => {
   return (
@@ -54,14 +53,7 @@ const SecretaryHome = () => {
         <p>
           السنة الدراسية {date.getFullYear() - 1}/{date.getFullYear()}
         </p>
-        <div className={style.semester}>
-          <p>الترم:</p>
-          <select>
-            {semesters.map((element, index) => (
-              <option key={index}> {element} </option>
-            ))}
-          </select>
-        </div>
+
         <button className={style.button}>تحديث</button>
       </div>
       <div className={style.navLink}>

@@ -7,14 +7,12 @@ import style from "../styles/secretary/secretaryLaps.module.css";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 const SecretaryLaps = () => {
-
   const { user } = useAuthContext();
   const {
     data: hallsData,
     isPending: hallLoading,
     error: hallError,
   } = useFetch(`http://localhost:5000/halls/department/${user.Department_ID}`);
-
 
   return (
     <div className="div">
