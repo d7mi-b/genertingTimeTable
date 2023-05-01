@@ -27,7 +27,7 @@ const Delete = (props) => {
 
         if (result)
             setTimeout(() => {
-                window.history.back();
+                window.location.reload();
             }, 2000)
 
     }, [result, error])
