@@ -66,9 +66,8 @@ const SecretaryLecturers = () => {
                   <input
                     className={style.daysInput}
                     type="number"
-                    max={7}
-                    value={0}
-                    onChange={() => {}}
+                    value={lecturer.NO_Available_Days || 0}
+                    readOnly={true}
                   ></input>
                 </div>
                 <div className="daysCheckBoxes">
