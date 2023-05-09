@@ -367,7 +367,7 @@ const Users = () => {
 
       <Faild error={errorAddUsers || errorUpdate} />
 
-      <Delete url='http://localhost:5000/users/deleteUser' body={{ User_ID }} />
+      <Delete url='http://localhost:5000/users/deleteUser' body={{ User_ID }} element={`user-${User_ID}`} />
 
     </section>
   );
