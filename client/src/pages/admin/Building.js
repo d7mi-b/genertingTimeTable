@@ -77,6 +77,12 @@ const Building = () => {
             throw Error('لم يتم العثور القسم الذي تبحث عنه');
         }
 
+        if (departements && !Department_ID)
+            setDepartment_ID(departements[0].Department_ID);
+        
+        if (hall_types && !Hall_Type_ID)
+            setHall_Type_ID(hall_types[0].Hall_Type_ID);
+
         if (building) {
             setBuilding_Name(building.Building_Name)
 
@@ -133,7 +139,7 @@ const Building = () => {
             }
         }
 
-    }, [errorBuilding, building, Hall_ID])
+    }, [errorBuilding, building, Hall_ID, Department_ID, departements, hall_types, Hall_Type_ID])
 
     return (
         <section className={`containerPage ${style.container}`}>
@@ -379,7 +385,7 @@ const Building = () => {
 
                     <Falid error={updateError || postError} />
 
-                    <Delete url={deleteAPI} body={deleteBody} />
+                    <Delete url={deleteAPI} body={deleteBody} element={Hall_ID} />
                 </article>
             }
         </section>

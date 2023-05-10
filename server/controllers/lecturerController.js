@@ -5,7 +5,7 @@ module.exports.getLecturersOfDepartment = async (req, res) => {
 
     try {
         const [ lecturers ] = await db.query(`
-            select Lecturer_ID, Lecturer_Name, Department_ID, Department_Name, College_ID, Rank_,Not_Available,
+            select Lecturer_ID, Lecturer_Name, Department_ID, Department_Name, Rank_,Not_Available,
             NO_Available_Days, Sunday, Monday, Tuesday, Wednesday, Thursday from lecturer natural join department
             where department.Department_ID = ?;
         `, [Department_ID]);
@@ -34,15 +34,15 @@ module.exports.getLecturersOfDepartment_short = async (req, res) => {
 }
 
 module.exports.postLecturersOfDepartment = async (req,res) => {
-    const { Lecturer_Name, Department_ID, College_ID, Rank_, Not_Available, NO_Available_Days,
+    const { Lecturer_Name, Department_ID, Rank_, Not_Available, NO_Available_Days,
         Sunday, Monday, Tuesday, Wednesday, Thursday } = req.body;
 
     try{
         const [Lecturer] = await db.query(`
-        insert into lecturer ( Lecturer_Name ,Department_ID ,College_ID, Rank_, Not_Available, NO_Available_Days,
+        insert into lecturer ( Lecturer_Name ,Department_ID, Rank_, Not_Available, NO_Available_Days,
             Sunday, Monday, Tuesday, Wednesday, Thursday )
         values (?,?,?,?,?,?,?,?,?,?,?)`
-        ,[ Lecturer_Name, Department_ID, College_ID, Rank_, Not_Available, NO_Available_Days,
+        ,[ Lecturer_Name, Department_ID, Rank_, Not_Available, NO_Available_Days,
             Sunday, Monday, Tuesday, Wednesday, Thursday ]);
         
         return res.status(201).json(Lecturer)

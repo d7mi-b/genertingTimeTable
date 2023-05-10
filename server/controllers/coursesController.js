@@ -19,15 +19,15 @@ module.exports.getDepartmentCourses = async (req,res) => {
 
 module.exports.addCourse = async (req,res) => {
     const { Department_ID, Subject_Name, Subject_Code, Credit_Theoretical, 
-        Credit_Practical, Credit_Tutorial, Semester_ID, College_ID } = req.body;
+        Credit_Practical, Credit_Tutorial, Semester_ID } = req.body;
 
         try{
             const [Course] = await db.query(`
             insert into subjects (Subject_Name, Subject_Code, Credit_Theoretical, 
-            Credit_Practical, Credit_Tutorial, Department_ID, Semester_ID, College_ID)
+            Credit_Practical, Credit_Tutorial, Department_ID, Semester_ID)
             values (?,?,?,?,?,?,?,?)
             `,[Subject_Name,Subject_Code,Credit_Theoretical,Credit_Practical,
-            Credit_Tutorial,Department_ID,Semester_ID,College_ID]);
+            Credit_Tutorial,Department_ID,Semester_ID]);
 
             
             if(Course.insertId)

@@ -5,15 +5,14 @@ import Done from '../../components/Done';
 import Faild from '../../components/Faild';
 import Loading from '../../components/Loading';
 import useFetch from '../../hooks/useFetch';
-import { useFetchDelete } from '../../hooks/useFetchDelete';
 import { useFetchPost } from '../../hooks/useFetchPost';
 import { useFetchPut } from '../../hooks/useFetchPut';
 import style from '../styles/admin/hallType.module.css';
+import Delete from '../../components/Delete';
 
 const HallType = () => {
     const { data: types, isPending: loadingTypes, error: errorTypes } = useFetch('http://localhost:5000/hallTypes');
     const { fetchPost, result, isLoading: loadingAddHallType, error: errorAddHallType} = useFetchPost();
-    const { fetchDelete, result: deleteResult, isLoading: loadingDelete, error: errorDelete } = useFetchDelete();
     const { fetchPut, result: updateResult, isLoading: loadingUpdate, error: errorUpdate } = useFetchPut();
     const [Type_Name, setType_Name] = useState('');
     const [Hall_Type_ID, setHall_Type_ID] = useState('');
@@ -23,14 +22,6 @@ const HallType = () => {
 
         await fetchPost('http://localhost:5000/hallTypes/addHallType', {
             Type_Name
-        });
-    }
-
-    const handelDelete = async (e) => {
-        const Hall_Type_ID = +e.target.parentElement.parentElement.parentElement.id;
-
-        await fetchDelete('http://localhost:5000/hallTypes/deleteHallType', {
-            Hall_Type_ID
         });
     }
 
@@ -57,6 +48,13 @@ const HallType = () => {
         });
 
         if (Hall_Type_ID) {
+            const deleteIconHallType = document.getElementById(`hall-type-delete-icon-${Hall_Type_ID}`);
+            const deletComponent = document.querySelector('#deletComponent');
+
+            deleteIconHallType.addEventListener('click', () => {
+                deletComponent.style.cssText = 'display: flex';
+            })
+
             const editIconHallType = document.querySelector(`#edit-icon-${Hall_Type_ID}`);
             const updateHallTypeSection = document.querySelector('#udateHallTypeSec');
             const btnCloseUpdateHallTypeSec = document.querySelector('#closeUpdateHallTypeSec');
@@ -104,9 +102,11 @@ const HallType = () => {
                                         onMouseOver={() => setHall_Type_ID(e.Hall_Type_ID)}
                                         onClick={() => setType_Name(e.Type_Name)}
                                     />
-                                    {
-                                        !loadingDelete && <FontAwesomeIcon icon={faTrash} onClick={handelDelete} />
-                                    }
+                                    <FontAwesomeIcon 
+                                        icon={faTrash}  
+                                        id={`hall-type-delete-icon-${Hall_Type_ID}`}
+                                        onMouseOver={() => setHall_Type_ID(e.Hall_Type_ID)}
+                                    />
                                 </section>
                             </article>
                         )
@@ -170,9 +170,11 @@ const HallType = () => {
                 </article>
             </section>
 
-            <Done result={result || deleteResult || updateResult} error={errorAddHallType || errorDelete || errorUpdate} />
+            <Done result={result || updateResult} />
 
-            <Faild error={errorAddHallType || errorDelete || errorUpdate} />
+            <Faild error={errorAddHallType || errorUpdate} />
+
+            <Delete url='http://localhost:5000/hallTypes/deleteHallType' body={{ Hall_Type_ID }} element={`hall-type-delete-icon-${Hall_Type_ID}`} />
 
         </section>
     )

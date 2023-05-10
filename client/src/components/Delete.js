@@ -25,12 +25,11 @@ const Delete = (props) => {
             deleteComponent.style.cssText = 'display: none';
         }
 
-        if (result)
-            setTimeout(() => {
-                window.location.reload();
-            }, 2000)
+        if (props.element && result) {
+            document.getElementById(props.element).remove();
+        }
 
-    }, [result, error])
+    }, [result, error, props.element])
 
     return (
         <section className={`container-section ${style.container}`} id='deletComponent'>
