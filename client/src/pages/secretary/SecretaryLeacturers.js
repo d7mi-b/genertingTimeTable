@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import useFetch from "../../hooks/useFetch";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import style from "../styles/secretary/secretaryLecturers.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useFetchPost } from "../../hooks/useFetchPost";
 
 const days = [
   { day: "الاحد", value: "Sunday" },
@@ -16,7 +17,7 @@ const days = [
 
 const SecretaryLecturers = () => {
   const { user } = useAuthContext();
-
+  const { fetchPost, result, isLoading, error } = useFetchPost();
   const {
     data: lectureorData,
     isPending: lectureorLoading,
@@ -25,9 +26,31 @@ const SecretaryLecturers = () => {
     `http://localhost:5000/lecturers/department/${user.Department_ID}`
   );
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await fetchPost(`http://localhost:5000/lecturers/addLecturer`, {
+      Lecturer_Name: "مها",
+      Department_ID: "1",
+      Rank_: "doctoer",
+      Not_Available: "0",
+      NO_Available_Days: "0",
+      Sunday: "0",
+      Monday: "0",
+      Tuesday: "0",
+      Wednesday: "0",
+      Thursday: "0"
+    });
+    console.log(result);
+    console.log(isLoading);
+    console.log(error);
+  };
+
   console.log(lectureorData);
   console.log(lectureorLoading);
   console.log(lectureorError);
+
+  const [lecturerName, setName] = useState("");
+  const [lecturerRefrence, setRefrence] = useState("");
 
   useEffect(() => {
     const btnAddLecturer = document.querySelector("#addLecturer");
@@ -35,6 +58,7 @@ const SecretaryLecturers = () => {
       "#addLecturerContainer"
     );
     const closeAddLecturer = document.querySelector("#closeIcon");
+    const btnSubmitLecturer = document.querySelector("#submitLecturer");
 
     btnAddLecturer.addEventListener("click", () => {
       addLecturerContainer.style.cssText = "display: flex";
@@ -43,10 +67,11 @@ const SecretaryLecturers = () => {
     closeAddLecturer.addEventListener("click", () => {
       addLecturerContainer.style.cssText = "display: none";
     });
-  });
 
-  let lecturerName = '';
-  
+    btnSubmitLecturer.addEventListener("click", () => {
+      console.log({ lecturerName, lecturerRefrence });
+    });
+  });
 
   return (
     <div className={style.lectureorsContainer}>
@@ -127,7 +152,7 @@ const SecretaryLecturers = () => {
 
       <section className={style.addLecturerContainer} id="addLecturerContainer">
         <div className={style.inputCard}>
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="card">
               <div className={style.cardHeader}>
                 <p className={style.title}> إضافة عضو هيئة تدرس</p>
@@ -145,8 +170,8 @@ const SecretaryLecturers = () => {
                     type="text"
                     name="name"
                     required
-                    value={null}
-                    onChange={null}
+                    value={lecturerName}
+                    onChange={(e) => setName(e.target.value)}
                     className={style.inputFeild}
                   />
                 </section>
@@ -159,6 +184,7 @@ const SecretaryLecturers = () => {
                       className={style.radio}
                       type="radio"
                       value={"teacher"}
+                      onClick={() => setRefrence("teacher")}
                       name="academicReference"
                     ></input>
                   </section>
@@ -168,12 +194,15 @@ const SecretaryLecturers = () => {
                       required
                       className={style.radio}
                       type="radio"
-                      value={"doctore"}
+                      value={"doctor"}
+                      onClick={() => setRefrence("doctor")}
                       name="academicReference"
                     ></input>
                   </section>
                 </section>
-                <button className={style.addButton}>إضافة</button>
+                <button className={style.addButton} id="submitLecturer">
+                  إضافة
+                </button>
               </div>
             </div>
           </form>
