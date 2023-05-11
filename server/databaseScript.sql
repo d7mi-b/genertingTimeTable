@@ -321,11 +321,11 @@ VALUES (1, 'Defferential Calculus', 'MATH111', 2, 0, 2, 1, 1),
     (8, 'Integral Calculus', 'MATH121', 2, 0, 2, 1, 2),
     (9, 'General Physics II', 'PHYS121', 2, 2, 0, 1, 2),
     (10, 'Introduction to Computer Engineering', 'COE122', 2, 0, 0, 1, 2),
-    (11, 'Islamic Culture II', 'ISLAM121', 2, 0, 0, 1, 1, 2),
-    (12, 'English Language II', 'ENG121', 2, 0, 0, 1, 1, 2),
+    (11, 'Islamic Culture II', 'ISLAM121', 2, 0, 0, 1, 1),
+    (12, 'English Language II', 'ENG121', 2, 0, 0, 1, 1),
     (13, 'Arabic Language II', 'ARAB121', 2, 0, 0, 1, 2),
     (14, 'Computer Programming', 'COE121', 2, 2, 1, 1, 2),
-    (15, 'Electronic Devices', 'ED111', 2, 2, 0, 1, 1, 4),
+    (15, 'Electronic Devices', 'ED111', 2, 2, 0, 1, 1),
     (16, 'Digital Logic Design', 'DLD121', 3, 2, 0, 1, 4),
     (17, 'Signals and Systems', 'SYS11',3, 2, 0, 1, 4),
     (18, 'Technical Writing', 'TWENG', 2, 0, 0, 1, 4),
@@ -370,7 +370,7 @@ Create table lecturer (
     Wednesday boolean,
     Thursday boolean,
     primary key(Lecturer_ID),
-    foreign key(Department_ID) references department(Department_ID) on DELETE SET NULL,
+    foreign key(Department_ID) references department(Department_ID) on DELETE SET NULL
 );
 
 INSERT INTO lecturer (
