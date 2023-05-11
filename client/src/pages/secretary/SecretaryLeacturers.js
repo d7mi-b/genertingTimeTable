@@ -29,16 +29,17 @@ const SecretaryLecturers = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await fetchPost(`http://localhost:5000/lecturers/addLecturer`, {
-      Lecturer_Name: "مها",
+      Lecturer_Name: lecturerName,
       Department_ID: "1",
-      Rank_: "doctoer",
+      College_ID: "1",
+      Rank_: lecturerRefrence,
       Not_Available: "0",
       NO_Available_Days: "0",
       Sunday: "0",
       Monday: "0",
       Tuesday: "0",
       Wednesday: "0",
-      Thursday: "0"
+      Thursday: "0",
     });
     console.log(result);
     console.log(isLoading);
