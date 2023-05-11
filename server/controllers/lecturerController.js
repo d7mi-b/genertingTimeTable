@@ -41,7 +41,7 @@ module.exports.postLecturersOfDepartment = async (req,res) => {
         const [Lecturer] = await db.query(`
         insert into lecturer ( Lecturer_Name ,Department_ID, Rank_, Not_Available, NO_Available_Days,
             Sunday, Monday, Tuesday, Wednesday, Thursday )
-        values (?,?,?,?,?,?,?,?,?,?,?)`
+        values (?,?,?,?,?,?,?,?,?,?)`
         ,[ Lecturer_Name, Department_ID, Rank_, Not_Available, NO_Available_Days,
             Sunday, Monday, Tuesday, Wednesday, Thursday ]);
         

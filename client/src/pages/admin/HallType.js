@@ -48,12 +48,12 @@ const HallType = () => {
         });
 
         if (Hall_Type_ID) {
-            const deleteIconHallType = document.getElementById(`hall-type-delete-icon-${Hall_Type_ID}`);
-            const deletComponent = document.querySelector('#deletComponent');
+            const deleteIconHallType = document.querySelector(`#hall-type-delete-icon-${Hall_Type_ID}`);
+            const deletComponent = document.getElementById('deletComponent');
 
             deleteIconHallType.addEventListener('click', () => {
                 deletComponent.style.cssText = 'display: flex';
-            })
+            });
 
             const editIconHallType = document.querySelector(`#edit-icon-${Hall_Type_ID}`);
             const updateHallTypeSection = document.querySelector('#udateHallTypeSec');
@@ -70,7 +70,7 @@ const HallType = () => {
             });
         }
 
-    }, [Hall_Type_ID])
+    }, [Hall_Type_ID, result])
 
     return (
         <section className={`containerPage ${style.hallTypesPage}`}>
@@ -85,7 +85,7 @@ const HallType = () => {
 
             { types && types.length === 0 && <p className='emptyElement'>لا يوجد انواع للقاعات</p>}
 
-            <section className={`${style.typesContainer}`}>
+            <section className={`${style.typesContainer}`} id='hall-types-container'>
                 {
                     types &&
                     types.map(e => {
@@ -104,7 +104,7 @@ const HallType = () => {
                                     />
                                     <FontAwesomeIcon 
                                         icon={faTrash}  
-                                        id={`hall-type-delete-icon-${Hall_Type_ID}`}
+                                        id={`hall-type-delete-icon-${e.Hall_Type_ID}`}
                                         onMouseOver={() => setHall_Type_ID(e.Hall_Type_ID)}
                                     />
                                 </section>
@@ -174,7 +174,7 @@ const HallType = () => {
 
             <Faild error={errorAddHallType || errorUpdate} />
 
-            <Delete url='http://localhost:5000/hallTypes/deleteHallType' body={{ Hall_Type_ID }} element={`hall-type-delete-icon-${Hall_Type_ID}`} />
+            <Delete url='http://localhost:5000/hallTypes/deleteHallType' body={{ Hall_Type_ID }} element={ Hall_Type_ID } />
 
         </section>
     )
