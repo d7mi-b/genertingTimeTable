@@ -1,7 +1,8 @@
 const isOverLapping = require("./isOverLapping");
+const { lecturerDays } = require("./lecturerDays");
 
 // feasible function check for hard constraints in generated timetable
-module.exports.feasible = (neighborhood) => {
+module.exports.feasible = (neighborhood, lecturers) => {
     const timetable = JSON.parse(JSON.stringify(neighborhood))
 
     for (let i = 0; i < timetable.length; i++) {
@@ -36,6 +37,9 @@ module.exports.feasible = (neighborhood) => {
                 return false;
         }
     }
+
+    if (lecturerDays(timetable, lecturers))
+        return true;
     
-    return true;
+    return false;
 }

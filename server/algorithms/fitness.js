@@ -1,6 +1,4 @@
-const {
-  lecturerAvailabilty,
-} = require("./fitness_functions/lecturerAvailabilty");
+const { lecturerAvailabilty } = require("./fitness_functions/lecturerAvailabilty");
 const { timeGap } = require("./fitness_functions/timeGap");
 const { labsOnSameDay } = require("./fitness_functions/labsOnSameDay");
 const { dayOFF } = require("./fitness_functions/dayOFF");
