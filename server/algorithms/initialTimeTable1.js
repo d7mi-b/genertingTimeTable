@@ -3,11 +3,18 @@ const { getRandomItem } = require("./getRandomItem");
 const isOverLapping = require("./isOverLapping");
 
 // initialTimetable function to generate initial timetable
-module.exports.initialTimetable = (modules, groups, halls, days, times) => {
+module.exports.initialTimetable = (
+  modules,
+  groups,
+  halls,
+  days,
+  times,
+  lecturer
+) => {
   while (true) {
     let timetable = generate(modules, groups, halls, days, times);
 
-    if (feasible(timetable)) {
+    if (feasible(timetable, lecturer)) {
       return timetable;
     }
   }
