@@ -1,7 +1,8 @@
 const { getRandomItem } = require("./getRandomItem");
 const { feasible } = require("./feasible");
 const isOverLapping = require("./isOverLapping");
-module.exports.getNeighbors = (candidateTimetable) => {
+
+module.exports.getNeighbors = (candidateTimetable, lecturers) => {
   const MAX_ITERATIONS = 10; // maximum number of iterations
   let neighbors = [];
 
@@ -26,7 +27,7 @@ module.exports.getNeighbors = (candidateTimetable) => {
     newTimetable[classIndex2].End_Time = tempEndTime;
 
     // check if the new timetable is feasible
-    if (feasible(newTimetable)) {
+    if (feasible(newTimetable, lecturers)) {
       neighbors.push(newTimetable);
     }
   }

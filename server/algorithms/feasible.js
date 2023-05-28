@@ -6,10 +6,17 @@ module.exports.feasible = (neighborhood, lecturers) => {
     const timetable = JSON.parse(JSON.stringify(neighborhood))
 
     for (let i = 0; i < timetable.length; i++) {
+
+        // To check if the day its available to lecturer or not
+        const lecturerDay = lecturers.filter(l => l.Lecturer_ID === timetable[i].Lecturer_ID);
+        if (!lecturerDays(lecturerDay, timetable[i].Day_ID))
+            return false;
+
         //if The end time is out of limit it's not acceptable
         if(timetable[i].End_Time > "17:00:00"){
             return false;
         }
+
         for (let j = i + 1; j < timetable.length; j++) {
 
             // if the same lecturer is assigned to different subjects in same day at same time it's a conflect
@@ -37,9 +44,6 @@ module.exports.feasible = (neighborhood, lecturers) => {
                 return false;
         }
     }
-
-    if (lecturerDays(timetable, lecturers))
-        return true;
     
-    return false;
+    return true;
 }

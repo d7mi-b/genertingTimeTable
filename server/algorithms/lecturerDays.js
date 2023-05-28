@@ -1,20 +1,21 @@
-module.exports.lecturerDays = (timetable, lecturers) => {
-    let status = true;
+module.exports.lecturerDays = (lecturerDays, day) => {
+    
     // Check the day of module if it's ok with the available days of lecturer
-    lecturers.forEach(l => {
-        timetable.filter(e => e.Lecturer_ID === l.Lecturer_ID).forEach(ele => {
-            if (l.Sunday === 0 && ele.Day_ID === 1)
-                status = false;
-            else if (l.Monday === 0 && ele.Day_ID === 2)
-                status = false;
-            else if (l.Tuesday === 0 && ele.Day_ID === 3)
-                status = false;
-            else if (l.Wednesday === 0 && ele.Day_ID === 4)
-                status = false;
-            else if (l.Thursday === 0 && ele.Day_ID === 5)
-                status = false;
-        })
-    })
-
-    return status;
+    if (lecturerDays[0].Sunday === 1 && day === 1) {
+        return true;
+    }
+    else if (lecturerDays[0].Monday === 1 && day === 2) {
+        return true;
+    }
+    else if (lecturerDays[0].Tuesday === 1 && day === 3) {
+        return true;
+    }
+    else if (lecturerDays[0].Wednesday === 1 && day === 4) {
+        return true;
+    }
+    else if (lecturerDays[0].Thursday === 1 && day === 5) {
+        return true;
+    }
+    
+    return false;
 }
