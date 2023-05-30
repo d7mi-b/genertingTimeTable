@@ -6,6 +6,8 @@ import style from "../styles/secretary/secretaryLecturers.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faUser } from "@fortawesome/free-solid-svg-icons";
 import { useFetchPost } from "../../hooks/useFetchPost";
+import Done from "../../components/Done";
+import Failed from "../../components/Done";
 
 const days = [
   { day: "الاحد", value: "Sunday" },
@@ -30,8 +32,7 @@ const SecretaryLecturers = () => {
     e.preventDefault();
     await fetchPost(`http://localhost:5000/lecturers/addLecturer`, {
       Lecturer_Name: lecturerName,
-      Department_ID: "1",
-      College_ID: "1",
+      Department_ID: "7",
       Rank_: lecturerRefrence,
       Not_Available: "0",
       NO_Available_Days: "0",
@@ -209,6 +210,8 @@ const SecretaryLecturers = () => {
           </form>
         </div>
       </section>
+      <Done result={result} />
+      <Failed error={error} />
     </div>
   );
 };
