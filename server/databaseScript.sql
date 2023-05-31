@@ -580,6 +580,7 @@ Create table system_state (
     System_Name varchar(300) not null,
     System_Year varchar(100) not null,
     System_Semester int not null,
+    Default_Weights boolean not null,
     check (System_Semester in (1, 2))
 );
 
@@ -587,9 +588,10 @@ INSERT INTO system_state (
         System_State_ID,
         System_Name,
         System_Semester,
-        System_Year
+        System_Year,
+        Default_Weights
     )
-VALUES (1, "جامعة حضرموت", 1, '2023/2024');
+VALUES (1, "جامعة حضرموت", 1, '2023/2024', 1);
 
 Create table fitnes_weight (
     Weight_ID int primary key auto_increment,
@@ -598,9 +600,9 @@ Create table fitnes_weight (
 );
 
 INSERT INTO fitnes_weight (Weight_Name, Weight)
-VALUES ('Lecturer availabilty', 2000),
-    ('Time gap', 100),
-    ('Labs on same day', 1000),
-    ('Day off', 100),
-    ('Lectures on day', 1000),
-    ('Groups times', '1000');
+VALUES ('lecturerAvailabilty', 1000),
+    ('timeGap', 1000),
+    ('labsOnSameDay', 10000),
+    ('dayOFF', 100),
+    ('lecturesOnDay', 100),
+    ('groupsTimes', 10);

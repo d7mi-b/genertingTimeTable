@@ -34,6 +34,20 @@ module.exports.generatingTimetable = async (req, res) => {
         select * from time
     `);
 
+    const [ weights ] = await db.query(`
+      select * from 
+      (select Weight as lecturerAvailabilty from fitnes_weight where Weight_Name = 'lecturerAvailabilty') as lecturerAvailabilty join
+      (select Weight as timeGap from fitnes_weight where Weight_Name = 'timeGap') as timeGap join
+      (select Weight as labsOnSameDay from fitnes_weight where Weight_Name = 'labsOnSameDay') as labsOnSameDay join 
+      (select Weight as dayOFF from fitnes_weight where Weight_Name = 'dayOFF') as dayOFF join 
+      (select Weight as lecturesOnDay from fitnes_weight where Weight_Name = 'lecturesOnDay') as lecturesOnDay join 
+      (select Weight as groupsTimes from fitnes_weight where Weight_Name = 'groupsTimes') as groupsTimes
+    `);
+
+    const [ stateWeights ] = await db.query(`
+      select Default_Weights from system_state
+    `)
+
     // Initialize variables
     let bestTimetable = 0;
     let candidateTimetable = await initialTimetable(modules, groups, halls, days, times, lecturers);
@@ -46,13 +60,13 @@ module.exports.generatingTimetable = async (req, res) => {
     );
     console.log(
       "the fitness of initial timetable: ",
-      fitness(candidateTimetable, modules, lecturers, groups, days)
+      fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
     );
 
     // Start the search loop
     let i = 0;
 
-    while (i < 100) {
+    while (i < 1) {
       // Generate the neighborhood of the current candidate timetable
       const neighborhood = getNeighbors(candidateTimetable, lecturers);
 
@@ -65,14 +79,14 @@ module.exports.generatingTimetable = async (req, res) => {
         if (
           !tabuList.some(([t1, t2]) => t1 === move[1] && t2 === move[0]) &&
           // If the move is not in the tabu list and the resulting timetable is better than the current candidate timetable,
-          fitness(candidate, modules, lecturers, groups, days) >
-            fitness(candidateTimetable, modules, lecturers, groups, days)
+          fitness(candidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
+            fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
         ) {
           // Update the best candidate found so far
           if (
             !bestCandidate ||
-            fitness(candidate, modules, lecturers, groups, days) >
-              fitness(bestCandidate, modules, lecturers, groups, days)
+            fitness(candidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
+              fitness(bestCandidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
           ) {
             bestCandidate = candidate;
           }
@@ -95,8 +109,8 @@ module.exports.generatingTimetable = async (req, res) => {
 
       // Update the best timetable found so far
       if (
-        fitness(candidateTimetable, modules, lecturers, groups, days) >
-        fitness(bestTimetable, modules, lecturers, groups, days)
+        fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
+        fitness(bestTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
       )
         bestTimetable = candidateTimetable;
 
@@ -112,7 +126,7 @@ module.exports.generatingTimetable = async (req, res) => {
     );
     console.log(
       "the fitness of best timetable: ",
-      fitness(bestTimetable, modules, lecturers, groups, days)
+      fitness(bestTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
     );
 
     // Return the best timetable found

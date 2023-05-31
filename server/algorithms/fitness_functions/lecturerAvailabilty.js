@@ -12,7 +12,7 @@ module.exports.lecturerAvailabilty = (timetable, lecturers) => {
             // Check the number of days in timetable if it's ok with the number of available days of lecturer
             if (l.NO_Available_Days !== null && l.Not_Available === 0) {
                 if (l.NO_Available_Days >= days.length) {
-                    scores += 10;
+                    scores += 1;
                 }
             }
         })

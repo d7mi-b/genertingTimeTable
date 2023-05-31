@@ -43,7 +43,7 @@ function checkTime(table, startT, endT) {
     table.Start_Time <= endT &&
     table.End_Time <= endT
   ) {
-    return 10;
+    return 1;
   } else {
     return 0;
   }

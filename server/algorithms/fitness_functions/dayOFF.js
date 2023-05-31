@@ -11,7 +11,7 @@ module.exports.dayOFF = (timetable, groups) => {
             })
 
             if (days.length < 5)
-                score += 10;
+                score += 1;
 
         })
     }

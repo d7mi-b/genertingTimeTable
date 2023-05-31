@@ -23,7 +23,7 @@ module.exports.labsOnSameDay = (timetable, modules, groups) => {
                 for (let i=0; i < groupModule.length; i++){
                     for(let j = i + 1; j< groupModule.length; j++){
                         if(groupModule[i].Day_ID === groupModule[j].Day_ID){
-                        score+=20;
+                        score+=1;
                     }
                 }
                 }
