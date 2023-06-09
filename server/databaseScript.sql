@@ -513,7 +513,7 @@ VALUES (1, 1, 1, 17, 1, 3, 1),
     (4, 1, 4, 23, 1, 3, 1),
     (5, 1, 5, 20, 1, 3, 1),
     (6, 1, 6, 18, 1, 3, 1),
-    (7, 1, 7, 21, 1, 3, 3),
+    (7, 1, 7, 21, 1, 3, 1),
     (8, 1, 1, 17, 1, 3, 3),
     (9, 1, 2, 22, 1, 4, 2),
     (10, 1, 3, 22, 1, 5, 2),
@@ -524,7 +524,7 @@ VALUES (1, 1, 1, 17, 1, 3, 1),
     (15, 3, 18, 25, 1, 3, 2),
     (16, 3, 16, 34, 1, 3, 2),
     (17, 3, 15, 24, 1, 3, 1),
-    (18, 3, 15, 24, 1, 3, 2),
+    (18, 3, 15, 24, 1, 3, 3),
     (19, 3, 19, 17, 1, 3, 1),
     (20, 3, 18, 16, 1, 3, 1),
     (21, 3, 17, 20, 1, 3, 1),
@@ -596,13 +596,13 @@ VALUES (1, "جامعة حضرموت", 1, '2023/2024', 1);
 Create table fitnes_weight (
     Weight_ID int primary key auto_increment,
     Weight_Name varchar(300) not null,
-    Weight int not null
+    Weight double not null
 );
 
 INSERT INTO fitnes_weight (Weight_Name, Weight)
-VALUES ('lecturerAvailabilty', 1000),
-    ('timeGap', 1000),
-    ('labsOnSameDay', 10000),
-    ('dayOFF', 100),
-    ('lecturesOnDay', 100),
-    ('groupsTimes', 10);
+VALUES ('lecturerAvailabilty', 0.75),
+    ('timeGap', 0.75),
+    ('labsOnSameDay', 1),
+    ('dayOFF', 0.5),
+    ('lecturesOnDay', 0.5),
+    ('groupsTimes', 0.25);

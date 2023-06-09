@@ -14,20 +14,38 @@ module.exports.getSystemState = async (req, res) => {
 }
 
 module.exports.updateSystemstate = async (req, res) => {
-    const { System_State_ID, System_Year, System_Semester, Default_Weights } = req.body;
+    const { System_State_ID, System_Year, System_Semester } = req.body;
 
     try {
         const [ system ] = await db.query(`
-            update system_state set System_Year = ?, System_Semester = ?, Default_Weights = ?
+            update system_state set System_Year = ?, System_Semester = ?
             where System_State_ID = ?
-        `, [System_Year, System_Semester, Default_Weights, System_State_ID]);
+        `, [System_Year, System_Semester, System_State_ID]);
 
-        const [semester] = await db.query(`
-        update batches set Semester_ID = Semester_ID+1
-        where Semester_ID<10
+        const [updateSemester] = await db.query(`
+            update batches set Semester_ID = Semester_ID+1
+            where Semester_ID<11
         `)
 
-        return res.status(200).json(semester)
+        const [deleteBatches] = await db.query(`
+            delete from batches where Semester_ID = 11;
+        `)
+
+        return res.status(200).json(updateSemester)
+    }
+    catch (err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
+module.exports.changeDefaultWeights = async (req, res) => {
+    const { System_State_ID, Default_Weights } = req.body;
+
+    try {
+        const [ system ] = await db.query(`
+            update system_state set Default_Weights = ?
+            where System_State_ID = ?
+        `, [Default_Weights, System_State_ID]);
     }
     catch (err) {
         res.status(400).json({err: err.message});
@@ -55,20 +73,15 @@ module.exports.weights = async (req, res) => {
 
 module,exports.updateWeights = async (req, res) => {
     const { lecturerAvailabilty, timeGap, labsOnSameDay, dayOFF, lecturesOnDay, groupsTimes } = req.body;
-
     try {
-        const [ weights ] = await db.query(`
-            update fitnes_weight set Weight = case
-                when Weight_Name = "lecturerAvailabilty" then Weight = ?
-                when Weight_Name = "timeGap" then Weight = ?
-                when Weight_Name = "labsOnSameDay" then Weight = ?
-                when Weight_Name = "dayOFF" then Weight = ?
-                when Weight_Name = "lecturesOnDay" then Weight = ?
-                when Weight_Name = "groupsTimes" then Weight = ?
-            end
-        `, [lecturerAvailabilty, timeGap, labsOnSameDay, dayOFF, lecturesOnDay, groupsTimes]);
+        
+        for (const weight in req.body) {
+            const [ weights ] = await db.query(`
+                update fitnes_weight set Weight = ? where Weight_Name = "${weight}"
+            `, [req.body[weight]]);
+        };
 
-        return res.status(200).json(weights);
+        return res.status(200).json({});
     }
     catch (err) {
         res.status(400).json({err: err.message});

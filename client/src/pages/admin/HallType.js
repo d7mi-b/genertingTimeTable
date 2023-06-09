@@ -23,6 +23,30 @@ const HallType = () => {
         await fetchPost('http://localhost:5000/hallTypes/addHallType', {
             Type_Name
         });
+
+        const hallTypesContainer = document.getElementById('hall-types-container');
+
+        const hallType = document.createElement('article');
+        hallType.classList.add(style.type);
+
+        hallType.innerHTML = `
+            <header>
+                <FontAwesomeIcon icon=faFlaskVial />
+                <h3>${Type_Name}</h3>
+            </header>
+            <section class=${style.icon}>
+                <FontAwesomeIcon 
+                    icon=faEdit 
+                    id='edit-icon-0000'
+                />
+                <FontAwesomeIcon 
+                    icon=${faTrash}  
+                    id='hall-type-delete-icon-0000'
+                />
+            </section>
+        `;
+        
+        hallTypesContainer.appendChild(hallType);
     }
 
     const handelUpdate = useCallback( async (e) => {

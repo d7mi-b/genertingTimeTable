@@ -22,6 +22,20 @@ const Departements = () => {
         await fetchPost('http://localhost:5000/departements/addDepartment', {
             Department_Name, College_ID
         });
+
+        const departemntsContainer = document.getElementById('departemntsContainer');
+
+        const departemnt = document.createElement('a');
+        departemnt.classList.add(style.departemnt);
+
+        departemnt.innerHTML = `
+            <section class=${style.img}>
+                <img src='/images/Mask Group 36.png' alt='departemnt' />
+            </section>
+            <h1>${Department_Name}</h1>
+        `;
+        
+        departemntsContainer.appendChild(departemnt);
     }
 
     useEffect(() => {
@@ -102,13 +116,13 @@ const Departements = () => {
 
             { error && <p className='emptyElement'>{error}</p> }
 
-            <section className={`${style.departemntsContainer}`}>
+            <section className={`${style.departemntsContainer}`} id='departemntsContainer'>
                 {   data &&
                     data.map(e => {
                         return (
                             <Link to={`${e.Department_ID}`} className={`${style.departemnt}`} key={e.Department_ID}>
                                 <section className={`${style.img}`}>
-                                    <img src='/images/Mask Group 36.png' alt='bulding' />
+                                    <img src='/images/Mask Group 36.png' alt='departemnt' />
                                 </section>
                                 <h1>{e.Department_Name}</h1>
                             </Link>

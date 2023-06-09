@@ -20,6 +20,20 @@ const Bulding = () => {
         await fetchPost('http://localhost:5000/building/addBuilding', {
             Building_Name
         });
+
+        const buldingsContainer = document.getElementById('buldingsContainer');
+
+        const bulding = document.createElement('a');
+        bulding.classList.add(style.bulding);
+
+        bulding.innerHTML = `
+            <section class=${style.img}>
+                <img src='/images/Mask Group 10.png' alt='bulding' />
+            </section>
+            <h1>${Building_Name}</h1>
+        `;
+        
+        buldingsContainer.appendChild(bulding);
     }
 
     useEffect(() => {
@@ -84,7 +98,7 @@ const Bulding = () => {
 
             { error && <p className='emptyElement'>{error}</p> }
 
-            <section className={`${style.buldingsContainer}`}>
+            <section className={`${style.buldingsContainer}`} id='buldingsContainer'>
                 {
                     buildings &&
                     buildings.map(e => {
