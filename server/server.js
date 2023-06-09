@@ -1,6 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const cros = require('cors');
+const cluster = require('cluster')
 
 const usersRoutes = require('./routes/usersRoutes');
 const departementsRoutes = require('./routes/departementsRoutes');
@@ -17,36 +18,54 @@ const systemStateRoutes = require('./routes/systemstateRoutes');
 
 const algorithmRoutes = require('./routes/algorithmRoutes');
 
-
-// express app
-const app = express();
-app.use(express.json());
-app.use(express.urlencoded({extended: true }));
-
-app.use(cros())
-
 // port of server
 const PORT = process.env.PORT;
 
+const totalCPUs = require("os").cpus().length;
 
-app.get('/', (req, res) => {
-    res.status(200).json({msg: 'Welcom to the server'});
-})
+if (cluster.isMaster) {
+    console.log(`Number of CPUs is ${totalCPUs}`);
+    console.log(`Master ${process.pid} is running`);
 
-app.use('/users', usersRoutes)
-app.use('/departements', departementsRoutes);
-app.use('/building', buildingRoutes);
-app.use('/colleges', collegeRoutes);
-app.use('/batches', batchesRoutes);
-app.use('/lecturers', lecturersRoutes);
-app.use('/hallTypes', hallTypesRoutes);
-app.use('/halls', hallsRoutes);
-app.use('/courses',coursesRoutes);
-app.use('/module',moduleRoutes);
-app.use('/requests',requestRoutes)
-app.use('/generatingTimetable', algorithmRoutes);
-app.use('/systemState', systemStateRoutes);
+    // Fork workers.
+    for (let i = 0; i < totalCPUs; i++) {
+        cluster.fork();
+    }
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
-})
+    cluster.on("exit", (worker, code, signal) => {
+        console.log(`worker ${worker.process.pid} died`);
+        console.log("Let's fork another worker!");
+        cluster.fork();
+    });
+
+} else {
+    // express app
+    const app = express();
+    app.use(express.json());
+    app.use(express.urlencoded({extended: true }));
+
+    app.use(cros())
+    console.log(`Worker ${process.pid} started`);
+
+    app.get('/', (req, res) => {
+        res.status(200).json({msg: 'Welcom to the server'});
+    })
+    
+    app.use('/users', usersRoutes)
+    app.use('/departements', departementsRoutes);
+    app.use('/building', buildingRoutes);
+    app.use('/colleges', collegeRoutes);
+    app.use('/batches', batchesRoutes);
+    app.use('/lecturers', lecturersRoutes);
+    app.use('/hallTypes', hallTypesRoutes);
+    app.use('/halls', hallsRoutes);
+    app.use('/courses',coursesRoutes);
+    app.use('/module',moduleRoutes);
+    app.use('/requests',requestRoutes)
+    app.use('/generatingTimetable', algorithmRoutes);
+    app.use('/systemState', systemStateRoutes);
+    
+    app.listen(PORT, () => {
+        console.log(`Listening on port ${PORT}`);
+    })
+}

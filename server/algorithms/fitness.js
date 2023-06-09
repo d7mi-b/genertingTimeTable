@@ -15,7 +15,7 @@ module.exports.fitness = (timetable, modules, lecturers, groups, days, weights, 
   let fitness = 0;
 
   fitness += lecturerAvailabilty(timetable, lecturers) * weights.lecturerAvailabilty;
-  fitness += timeGap(timetable, groups, days) * weights.timeGap;
+  fitness += timeGap(timetable, groups, days) * 1000 * weights.timeGap;
   fitness += labsOnSameDay(timetable, modules, groups) * weights.labsOnSameDay;
   fitness += dayOFF(timetable, groups) * weights.dayOFF;
   fitness += lecturesOnDay(timetable, groups, days) * weights.lecturesOnDay;
@@ -25,10 +25,10 @@ module.exports.fitness = (timetable, modules, lecturers, groups, days, weights, 
 };
 
 const defaultWeights = {
-  lecturerAvailabilty: 1000,
-  timeGap: 1000,
-  labsOnSameDay: 10000,
-  dayOFF: 100,
-  lecturesOnDay: 100,
-  groupsTimes: 10
+  lecturerAvailabilty: 0.75,
+  timeGap: 0.75,
+  labsOnSameDay: 1,
+  dayOFF: 0.5,
+  lecturesOnDay: 0.5,
+  groupsTimes: 0.25
 }

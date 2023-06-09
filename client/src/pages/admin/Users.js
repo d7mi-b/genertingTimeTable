@@ -42,6 +42,29 @@ const Users = () => {
       await fetchPost('http://localhost:5000/users/addUsers', {
         Name, User_Name, Password, Department_ID: departement, User_Type_ID: userType
       })
+
+      const usersContainer = document.getElementById('userContainer');
+
+      const user = document.createElement('article');
+      user.classList.add('users_user__vV4fl');
+
+      user.innerHTML = `
+      <p>${Name}</p>
+      <p>${userTypes.filter(type => userType === type.User_Type_ID).map(type => type.User_Type_Name)}</p>
+      <p>${departements.filter(d => departement === d.Department_ID).map(d => d.Department_Name)}</p>
+      <p>${User_Name}</p>
+      <section class=\`${style.userIcons}\`>
+        <FontAwesomeIcon
+          id='user-edit-icon-00000'
+          icon=faEdit
+        />
+        <FontAwesomeIcon 
+          icon=faTrash
+        />
+      </section>
+      `;
+      
+      usersContainer.appendChild(user);
     }
   };
 
@@ -124,7 +147,7 @@ const Users = () => {
 
       { errorUsers && <p className='emptyElement'>{errorUsers}</p> }
 
-      <section className={`${style.usersContainer}`}>
+      <section className={`${style.usersContainer}`} id='userContainer'>
         { 
           users &&
           users.map((e) => {

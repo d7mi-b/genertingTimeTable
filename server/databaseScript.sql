@@ -596,13 +596,13 @@ VALUES (1, "جامعة حضرموت", 1, '2023/2024', 1);
 Create table fitnes_weight (
     Weight_ID int primary key auto_increment,
     Weight_Name varchar(300) not null,
-    Weight int not null
+    Weight double not null
 );
 
 INSERT INTO fitnes_weight (Weight_Name, Weight)
-VALUES ('lecturerAvailabilty', 1000),
-    ('timeGap', 1000),
-    ('labsOnSameDay', 10000),
-    ('dayOFF', 100),
-    ('lecturesOnDay', 100),
-    ('groupsTimes', 10);
+VALUES ('lecturerAvailabilty', 0.75),
+    ('timeGap', 0.75),
+    ('labsOnSameDay', 1),
+    ('dayOFF', 0.5),
+    ('lecturesOnDay', 0.5),
+    ('groupsTimes', 0.25);
