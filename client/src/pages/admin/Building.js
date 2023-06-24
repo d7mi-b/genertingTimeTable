@@ -21,7 +21,6 @@ const Building = () => {
     const { fetchPut, result: updateResult, isLoading: loadingUpdate, error: updateError } = useFetchPut();
     const { fetchPost, result: postResult, isLoading: loadingPost, error: postError } = useFetchPost();
 
-    const [Building_Name, setBuilding_Name] = useState('');
     const [deleteAPI, setDeleteAPI] = useState(null);
     const [deleteBody, setDeleteBody] = useState(null);
 
@@ -30,19 +29,6 @@ const Building = () => {
     const [Hall_Capacity, setHall_Capacity] = useState('');
     const [Department_ID, setDepartment_ID] = useState('');
     const [Hall_Type_ID, setHall_Type_ID] = useState('');
-
-    const handelUpdate = async e => {
-        e.preventDefault();
-
-        await fetchPut('http://localhost:5000/building/updateBuilding', {
-            Building_ID, Building_Name
-        });
-    }
-
-    const handelDeleteBuilding = () => {
-        setDeleteAPI('http://localhost:5000/building/deleteBuilding');
-        setDeleteBody({ Building_ID });
-    }
 
     const handelAddHall = async (e) => {
         e.preventDefault();
@@ -74,7 +60,7 @@ const Building = () => {
 
     useEffect(() => {
         if (errorBuilding) {
-            throw Error('لم يتم العثور القسم الذي تبحث عنه');
+            throw Error('لم يتم العثور على المبنى الذي تبحث عنه');
         }
 
         if (departements && !Department_ID)
@@ -84,26 +70,6 @@ const Building = () => {
             setHall_Type_ID(hall_types[0].Hall_Type_ID);
 
         if (building) {
-            setBuilding_Name(building.Building_Name)
-
-            const btnUpdateBuilding = document.getElementById('btnUpdateBuilding');
-            const updateBuildingSection = document.getElementById('updateBuildingSection');
-            const closeUpdateBuildingtSec = document.getElementById('closeUpdateBuildingtSec');
-
-            btnUpdateBuilding.addEventListener('click', () => {
-                updateBuildingSection.style.cssText = 'display: grid';
-            })
-
-            closeUpdateBuildingtSec.addEventListener('click', () => {
-                updateBuildingSection.style.cssText = 'display: none';
-            })
-
-            const btnDeleteBuilding = document.getElementById('btnDeleteBuilding');
-            const deletComponent = document.querySelector('#deletComponent');
-
-            btnDeleteBuilding.addEventListener('click', () => {
-                deletComponent.style.cssText = 'display: flex';
-            });
 
             const btnAddHall = document.getElementById('btnAddHall');
             const addHallSection = document.getElementById('addHallSection');
@@ -206,44 +172,7 @@ const Building = () => {
                         </section>
                     </article>
 
-                    <section className={style.buttons}>
-                        <button className={`btn`} id="btnUpdateBuilding">تعديل بيانات المبنى</button>
-                        <button 
-                            className={`btn`} 
-                            id='btnDeleteBuilding'
-                            onClick={handelDeleteBuilding}
-                        >
-                            حذف المبنى
-                        </button>
-                    </section>
-
-                    <section className={`container-section ${style.updateBuldingSection}`} id='updateBuildingSection'>
-                        <article className={`center-section`}>
-                            <FontAwesomeIcon className={`close-btn ${style.btnClose}`} id='closeUpdateBuildingtSec' icon={faXmark} size='xl' />
-                            <header>
-                                <h1>تعديل بيانات مبنى</h1>
-                            </header>
-                            <form className={`addForm`} onSubmit={handelUpdate}>
-                                <label htmlFor='name'>إسم المبنى:</label>
-                                <section className={`input`}>
-                                    <FontAwesomeIcon icon={faBuilding} />
-                                    <input 
-                                        type='text' 
-                                        name='name' 
-                                        required
-                                        value={Building_Name}
-                                        onChange={e => setBuilding_Name(e.target.value)}
-                                    />
-                                </section>
-                                {
-                                    !loadingUpdate &&
-                                    <section className='btnContainer'>
-                                        <input className={`btn ${style.btn}`} type='submit' name='submit' value='تعديل بيانات المبنى' />
-                                    </section>
-                                }
-                            </form>
-                        </article>
-                    </section>
+                    
 
                     <section className={`container-section ${style.addHallSection}`} id="addHallSection">
                         <article className={`center-section`}>

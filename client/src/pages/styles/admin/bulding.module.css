@@ -39,6 +39,7 @@
     padding: 25px;
     box-shadow: 3px 3px 3px 1px var(--border-color);
     cursor: pointer;
+    text-decoration: none;
 }
 
 .bulding:hover {
@@ -49,7 +50,7 @@
 
 .addBuldingSection {
     display: none;
-    width: calc(100% - 300px);
+    width: 100%;
 }
 
 .bulding .img {
@@ -63,6 +64,18 @@
 
 .bulding h1 {
     font-size: 1.5rem;
+}
+
+.buttons {
+    text-align: center;
+    margin: 25px auto 40px;
+}
+
+.buttons button {
+    width: 150px;
+    background-color: var(--main-color);
+    color: var(--card-color);
+    margin: 0 15px;
 }
 
 @media (min-width: 283px) and (max-width: 767px) {

@@ -8,6 +8,7 @@ import {
 import Loading from "./components/Loading";
 import { useAuthContext } from "./hooks/useAuthContext";
 
+
 const Home = lazy(() => import("./pages/Home"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ErrorElement = lazy(() => import("./components/ErrorElement"));
@@ -15,8 +16,10 @@ const ErrorElement = lazy(() => import("./components/ErrorElement"));
 const AdminLayout = lazy(() => import("./Layouts/AdminLayout"));
 const HodLayout = lazy(() => import("./Layouts/hodLayout"));
 const SecretaryLayout = lazy(() => import("./Layouts/SecretaryLayout"));
-const DepartmentLayout = lazy(() => import("./Layouts/DepartmentLayout"));
+const PageLayout = lazy(() => import("./Layouts/PageLayout"));
 
+const Colleges = lazy(() => import("./pages/admin/Colleges"));
+const College = lazy(() => import('./pages/admin/College'));
 const Buldings = lazy(() => import("./pages/admin/Buldings"));
 const Building = lazy(() => import("./pages/admin/Building"));
 const Departements = lazy(() => import("./pages/admin/Departements"));
@@ -54,23 +57,38 @@ const routerAdmin = createBrowserRouter(
     <Route path="/" element={<AdminLayout />}>
       <Route index element={<HomeAdmin />} />
       <Route path="users" element={<Users />} />
+
+      <Route 
+        path="colleges"
+        element={<PageLayout />}
+        errorElement={<ErrorElement />}
+      >
+        <Route index element={<Colleges />} />
+        <Route path=":College_ID" element={<PageLayout />}>
+          <Route index element={<College />} />
+          <Route path="department/:Department_ID" element={<Department />} />
+        </Route>
+      </Route>
+
       <Route
         path="bulding"
-        element={<DepartmentLayout />}
+        element={<PageLayout />}
         errorElement={<ErrorElement />}
       >
         <Route index element={<Buldings />} />
         <Route path=":Building_ID" element={<Building />} />
         <Route path="hallType" element={<HallType />} />
       </Route>
+
       <Route
         path="departements"
-        element={<DepartmentLayout />}
+        element={<PageLayout />}
         errorElement={<ErrorElement />}
       >
         <Route index element={<Departements />} />
-        <Route path=":Department_ID" element={<Department />} />
+        {/* <Route path=":Department_ID" element={<Department />} /> */}
       </Route>
+
       <Route path="systemState" element={<SystemState />} />
       <Route path="*" element={<NotFound />} />
     </Route>

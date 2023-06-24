@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faBars, faBuilding, faCalendarDay, faGear, faHome, faTableCellsLarge, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBars, faBuilding, faBuildingColumns, faCalendarDay, faGear, faHome, faTableCellsLarge, faUser } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import style from './styles/sidebar.module.css';
@@ -27,10 +27,10 @@ const Sidebar = () => {
                     <NavLink to='users' className='link'><FontAwesomeIcon icon={faUser} /><span>المستخدمين</span></NavLink>
                 </li>
                 <li>
-                    <NavLink to='bulding' className='link'><FontAwesomeIcon icon={faBuilding} /><span>المباني والقاعات</span></NavLink>
+                    <NavLink to='colleges' className='link'><FontAwesomeIcon icon={faBuildingColumns} /><span>الكليات</span></NavLink>
                 </li>
                 <li>
-                    <NavLink to='departements' className='link'><FontAwesomeIcon icon={faTableCellsLarge} /><span>الأقسام</span></NavLink>
+                    <NavLink to='bulding' className='link'><FontAwesomeIcon icon={faBuilding} /><span>المباني والقاعات</span></NavLink>
                 </li>
                 <li>
                     <NavLink to='timetables' className='link'><FontAwesomeIcon icon={faCalendarDay} /><span>الجداول</span></NavLink>

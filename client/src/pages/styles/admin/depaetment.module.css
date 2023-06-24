@@ -58,7 +58,7 @@ header p {
 }
 
 .hall {
-    margin: 5px;
+    margin: 5px 5px 20px;
     border: 2px solid var(--card-color);
     display: flex;
     padding: 10px;
@@ -72,6 +72,10 @@ header p {
     margin-left: 10px;
     padding: 10px;
     border-left: 1px solid var(--card-color);
+}
+
+.hall div p {
+    margin: 3px 0;
 }
 
 .hall .buildingIcon {

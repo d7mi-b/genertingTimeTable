@@ -76,8 +76,7 @@ const SystemState = () => {
     return (
         <section className={`containerPage ${style.systemState}`}>
             { 
-                isPending ? <Loading />
-                :
+                !isPending && data &&
                 <article className={style.contnent}>
                     <header>
                         <h1> <FontAwesomeIcon icon={faGear} /> إعدادات النظام</h1>
@@ -239,6 +238,9 @@ const SystemState = () => {
             }
             {
                 error &&<p className="emptyElement">{error}</p>
+            }
+            {
+                isPending && <Loading />
             }
             <Done result={result} error={errorUpdate} />
 
