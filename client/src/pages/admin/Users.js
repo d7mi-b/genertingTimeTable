@@ -143,7 +143,7 @@ const Users = () => {
         </button>
       </header>
 
-      { !users && !usersLoading && <p className='emptyElement'>لا يوجد مستخدمين</p> }
+      { users && users.length === 0 && !usersLoading && <p className='emptyElement'>لا يوجد مستخدمين</p> }
 
       { errorUsers && <p className='emptyElement'>{errorUsers}</p> }
 
