@@ -17,7 +17,7 @@ const days = [
   { day: "الخميس", value: "Thursday" },
 ];
 
-const SecretaryLecturers = () => {
+const LecturersSecretary = () => {
   const { user } = useAuthContext();
   const { fetchPost, result, isLoading, error } = useFetchPost();
   const {
@@ -71,6 +71,9 @@ const SecretaryLecturers = () => {
     });
 
     btnSubmitLecturer.addEventListener("click", () => {
+      addLecturerContainer.style.cssText = "display: none";
+      setName("");
+      setRefrence("");
       console.log({ lecturerName, lecturerRefrence });
     });
   });
@@ -216,4 +219,4 @@ const SecretaryLecturers = () => {
   );
 };
 
-export default SecretaryLecturers;
+export default LecturersSecretary;

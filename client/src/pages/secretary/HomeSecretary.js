@@ -8,7 +8,8 @@ import {
   faUserGroup,
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
-import style from "../styles/secretary/secretary.module.css";
+import style from "../styles/secretary/home_secretary.module.css";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 let date = new Date();
 
@@ -45,26 +46,32 @@ const sections = [
   },
 ];
 
+const HomeSecretary = () => {
+  const { user } = useAuthContext();
 
-const SecretaryHome = () => {
+  console.log(user);
+
   return (
-    <div className={style.secretaryPage}>
-      <div className={style.header}>
+    <>
+      <div className={style.topBar}>
         <p>
-          السنة الدراسية {date.getFullYear() - 1}/{date.getFullYear()}
+          <span>مرحباً</span> {user.name}
         </p>
-
-        <button className={style.button}>تحديث</button>
+        <div className={style.semester}>
+          <p>
+            الفصل
+            <span>{user.semester === 1 ? "الأول" : "الثاني"}</span>
+          </p>
+          <p>
+            للسنة{" "}
+            <span>
+              {date.getFullYear() - 1}/{date.getFullYear()}
+            </span>
+            م
+          </p>
+        </div>
       </div>
-      <div className={style.navLink}>
-        {/* <div className={style.navSection}> */}
-        <Link>السكرتير</Link>
-        <p>&gt;&gt;</p>
-        <Link>الصفحة الرئيسي</Link>
-        {/* </div> */}
-        {/* <button className={style.navButton}>إضافة مدرس</button> */}
-      </div>
-      <div className={style.content}>
+      <div className={style.page}>
         <div className={style.sectionHolder}>
           {sections.map((element, index) => (
             <Link
@@ -83,8 +90,8 @@ const SecretaryHome = () => {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
-export default SecretaryHome;
+export default HomeSecretary;
