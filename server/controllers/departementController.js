@@ -79,3 +79,18 @@ module.exports.deleteDepartment = async (req, res) => {
         res.status(400).json({err: err.message});
     }
 }
+
+module.exports.getDepartementsCollege = async (req, res) => {
+    const { College_ID } = req.params;
+    try { 
+        const [ departments ] = await db.query(`
+            select Department_ID, Department_Name from department join college on department.College_ID = college.College_ID
+            where department.College_ID = ?
+        `, [College_ID]);
+
+        return res.status(200).json(departments)
+    }
+    catch(err) {
+        return res.status(400).json({err: err.message})
+    }
+}
