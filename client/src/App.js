@@ -40,10 +40,10 @@ const HomeSecretary = lazy(() => import("./pages/secretary/HomeSecretary"));
 const SecretaryCreateSchedule = lazy(() =>
   import("./pages/secretary/SecretaryCreateSchedule")
 );
-const SecretaryDepartments = lazy(() =>
-  import("./pages/secretary/SecretaryStudents")
+const DepartmentsSecretary = lazy(() =>
+  import("./pages/secretary/DepartmentsSecretary")
 );
-const SecretaryLaps = lazy(() => import("./pages/secretary/SecretaryLabs"));
+const LapsSecretary = lazy(() => import("./pages/secretary/LabsSecretary"));
 const LecturersSecretary = lazy(() =>
   import("./pages/secretary/LecturersSecretary")
 );
@@ -122,8 +122,8 @@ const routerSecretary = createBrowserRouter(
     <Route path="/" element={<SecretaryLayout />}>
       <Route index element={<HomeSecretary />} />
       <Route path="createTable" element={<SecretaryCreateSchedule />} />
-      <Route path="halls" element={<SecretaryLaps />} />
-      <Route path="departments" element={<SecretaryDepartments />} />
+      <Route path="halls" element={<LapsSecretary />} />
+      <Route path="departments" element={<DepartmentsSecretary />} />
       <Route path="requests" element={<SecretaryRequestManager />} />
       <Route path="lecturers" element={<LecturersSecretary />} />
       <Route path="*" element={<NotFound />} />
