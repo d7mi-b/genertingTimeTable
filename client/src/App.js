@@ -37,8 +37,8 @@ const Courses = lazy(() => import("./pages/HOD/CoursesHOD"));
 const CreateTable = lazy(() => import("./pages/HOD/CreateTableHOD"));
 
 const HomeSecretary = lazy(() => import("./pages/secretary/HomeSecretary"));
-const SecretaryCreateSchedule = lazy(() =>
-  import("./pages/secretary/SecretaryCreateSchedule")
+const CreateScheduleSecretary = lazy(() =>
+  import("./pages/secretary/CreateScheduleSecretary")
 );
 const DepartmentsSecretary = lazy(() =>
   import("./pages/secretary/DepartmentsSecretary")
@@ -47,8 +47,8 @@ const LapsSecretary = lazy(() => import("./pages/secretary/LabsSecretary"));
 const LecturersSecretary = lazy(() =>
   import("./pages/secretary/LecturersSecretary")
 );
-const SecretaryRequestManager = lazy(() =>
-  import("./pages/secretary/SecretaryRequestManager")
+const RequestManagementSecretary = lazy(() =>
+  import("./pages/secretary/RequestManagementSecretary")
 );
 
 const routerHome = createBrowserRouter(
@@ -121,10 +121,10 @@ const routerSecretary = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<SecretaryLayout />}>
       <Route index element={<HomeSecretary />} />
-      <Route path="createTable" element={<SecretaryCreateSchedule />} />
+      <Route path="createTable" element={<CreateScheduleSecretary />} />
       <Route path="halls" element={<LapsSecretary />} />
       <Route path="departments" element={<DepartmentsSecretary />} />
-      <Route path="requests" element={<SecretaryRequestManager />} />
+      <Route path="requests" element={<RequestManagementSecretary />} />
       <Route path="lecturers" element={<LecturersSecretary />} />
       <Route path="*" element={<NotFound />} />
     </Route>
