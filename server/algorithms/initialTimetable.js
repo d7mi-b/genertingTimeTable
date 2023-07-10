@@ -1,210 +1,190 @@
 const { feasible } = require("./feasible");
 const { getRandomItem } = require("./getRandomItem");
-const isOverLapping = require("./isOverLapping");
-const { lecturerDays } = require("./lecturerDays");
+const isNotOccupied = require("./isNotOccupied");
 
-// initialTimetable function to generate initial timetable
-module.exports.initialTimetable = (modules, groups, halls, days, times, lecturers) => {
+module.exports.initialTimetable = (
+  modules,
+  groups,
+  halls,
+  days,
+  times,
+  lecturers
+) => {
+  let timetable;
   let i = 0;
-  while (i < 500000) {
-    let timetable = generate(modules, groups, halls, days, times, lecturers);
-
+  while (i < 100) {
+    timetable = generate(modules, groups, halls, days, times, lecturers);
     if (feasible(timetable, lecturers, modules)) {
-      console.log("number of iteration to get initial timetable:", i)
       return timetable;
     }
     i++;
   }
-
-  console.log('Not found timetable')
 };
-
+// this function get the suitable time credit for each module
+function getCredit(module) {
+  if (module.Subject_Type_ID === 1) {
+    const credit = module.Credit_Theoretical;
+    return credit;
+  } else if (module.Subject_Type_ID === 2) {
+    const credit = module.Credit_Practical;
+    return credit;
+  } else if (module.Subject_Type_ID === 3) {
+    const credit = module.Credit_Tutorial;
+    return credit;
+  }
+}
+// this function calculate the end time for a module
+function calculateEndTime(startTime, credit) {
+  let endTime;
+  const endHour = parseInt(startTime.slice(0, 2)) + credit;
+  endTime = `${endHour}${startTime.slice(2)}`;
+  return endTime;
+}
 const generate = (modules, groups, halls, days, times, lecturers) => {
   let timetable = [];
-  // Assign modules, lecturer and groubs to timetable.
-  groups.forEach((g) => {
-    modules.forEach((m) => {
-      if (
-        g.Semester_ID === m.Semester_ID &&
-        g.Department_ID === m.Department_ID
-      ) {
-        if (m.Subject_Type_ID === 2) {
-          for (let i = 0; i < 2; i++) {
-            timetable.push({
-              Module_ID: m.Module_ID,
-              Lecturer_ID: m.Lecturer_ID,
-              Group_ID: g.Group_ID,
-            });
-          }
-        } else {
-          timetable.push({
-            Module_ID: m.Module_ID,
-            Lecturer_ID: m.Lecturer_ID,
-            Group_ID: g.Group_ID,
-          });
-        }
-      }
-    });
+  //* initiate timetable = groups + module + lecturers
+
+  // Sort the arrays by Semester_ID and Department_ID
+  groups.sort((a, b) => {
+    if (a.Semester_ID !== b.Semester_ID) {
+      return a.Semester_ID - b.Semester_ID;
+    } else {
+      return a.Department_ID - b.Department_ID;
+    }
   });
 
-  // Assign Hall to timetable
-  for (let i = 0; i < timetable.length; i++) {
-    if (i !== 0 && timetable[i].Module_ID === timetable[i - 1].Module_ID) {
-      timetable[i].Hall_ID = timetable[i - 1].Hall_ID;
-      continue;
+  modules.sort((a, b) => {
+    if (a.Semester_ID !== b.Semester_ID) {
+      return a.Semester_ID - b.Semester_ID;
+    } else {
+      return a.Department_ID - b.Department_ID;
     }
-    
-    groups.forEach((g) => {
-      modules.forEach((m) => {
-        if (timetable[i].Group_ID === g.Group_ID && timetable[i].Module_ID === m.Module_ID) {
-          const hallsAvailable = halls.filter((h) => {
-            return (
-              h.Hall_Capacity >= g.Group_Count &&
-              h.Hall_Type_ID === m.Hall_Type_ID
-            );
+  });
+
+  // Initialize the pointers
+  let i = 0;
+  let j = 0;
+
+  // Iterate over the arrays using the two-pointer approach
+  while (i < groups.length && j < modules.length) {
+    if (
+      groups[i].Semester_ID === modules[j].Semester_ID &&
+      groups[i].Department_ID === modules[j].Department_ID
+    ) {
+      if (modules[j].Subject_Type_ID === 2) {
+        const subGroupsName = ["a", "b", "c"];
+        for (let k = 0; k < groups[i].Group_Count / 25; k++) {
+          timetable.push({
+            Module_ID: modules[j].Module_ID,
+            Lecturer_ID: modules[j].Lecturer_ID,
+            Group_ID: groups[i].Group_ID.toString() + subGroupsName[k],
+            Subject_Type_ID: modules[j].Subject_Type_ID,
           });
-
-          const hall = getRandomItem(hallsAvailable);
-
-          if (hall) {
-            timetable[i].Hall_ID = hall.Hall_ID;
-          }
         }
-      });
-    });
+        j++;
+      } else {
+        timetable.push({
+          Module_ID: modules[j].Module_ID,
+          Lecturer_ID: modules[j].Lecturer_ID,
+          Group_ID: groups[i].Group_ID.toString(),
+          Subject_Type_ID: modules[j].Subject_Type_ID,
+        });
+        j++;
+      }
+    } else if (
+      groups[i].Semester_ID < modules[j].Semester_ID ||
+      (groups[i].Semester_ID === modules[j].Semester_ID &&
+        groups[i].Department_ID < modules[j].Department_ID)
+    ) {
+      i++;
+    } else {
+      j++;
+    }
   }
 
-  // Assign Days to timeTable
-  for (let i = 0; i < timetable.length; i++) {
-    if (i !== 0 && timetable[i].Module_ID === timetable[i - 1].Module_ID) {
-      timetable[i].Day_ID = timetable[i - 1].Day_ID;
-      continue;
+  //* assign halls to each module in timetable
+  // Create a map to store the group objects by ID
+  const groupMap = new Map(groups.map((g) => [g.Group_ID, g]));
+
+  // Create a map to store the module objects by ID
+  const moduleMap = new Map(modules.map((m) => [m.Module_ID, m]));
+
+  // Iterate over the timetable and assign halls to each element
+  timetable.forEach((e) => {
+    const group = groupMap.get(parseInt(e.Group_ID));
+    const module = moduleMap.get(e.Module_ID);
+    if (group && module) {
+      const hallsAvailable = halls.filter((h) => {
+        return (
+          h.Hall_Capacity >= group.Group_Count &&
+          h.Hall_Type_ID === module.Hall_Type_ID
+        );
+      });
+      const hall = getRandomItem(hallsAvailable);
+      if (hall) {
+        e.Hall_ID = hall.Hall_ID;
+      }
     }
+  });
+
+  //* assign days to each module in timetable
+  // Pre-process the availability of each lecturer for each day of the week
+  const lecturerAvailability = lecturers.reduce((acc, l) => {
+    acc[l.Lecturer_ID] = {
+      1: l.Sunday,
+      2: l.Monday,
+      3: l.Tuesday,
+      4: l.Wednesday,
+      5: l.Thursday,
+    };
+    return acc;
+  }, {});
+
+  // Iterate over the timetable and assign days to each element
+  timetable.forEach((e) => {
     let day = getRandomItem(days);
-    const lecturerDay = lecturers.filter(l => l.Lecturer_ID === timetable[i].Lecturer_ID);
 
     // If the day not available to lecturer then change the day
-    while (!lecturerDays(lecturerDay, day.Day_ID)) {
-      if (lecturerDay[0].Sunday === 0 && day.Day_ID === 1) {
-        day = getRandomItem(days)
-      }
-      else if (lecturerDay[0].Monday === 0 && day.Day_ID === 2) {
-        day = getRandomItem(days)
-      }
-      else if (lecturerDay[0].Tuesday === 0 && day.Day_ID === 3) {
-        day = getRandomItem(days)
-      }
-      else if (lecturerDay[0].Wednesday === 0 && day.Day_ID === 4) {
-        day = getRandomItem(days)
-      }
-      else if (lecturerDay[0].Thursday === 0 && day.Day_ID === 5) {
-        day = getRandomItem(days)
-      }
+    while (!lecturerAvailability[e.Lecturer_ID][day.Day_ID]) {
+      day = getRandomItem(days);
     }
 
-    timetable[i].Day_ID = day.Day_ID;
-  }
+    e.Day_ID = day.Day_ID;
+  });
 
-  // Assign Times to timetable
-  for (let i = 0; i < timetable.length; i++) {
-    if (i !== 0 && timetable[i].Module_ID === timetable[i - 1].Module_ID) {
-      timetable[i].Start_Time =`${
-        +timetable[i - 1].Start_Time.slice(0, 2) + 2 < 10
-          ? `0${+timetable[i - 1].Start_Time.slice(0, 2) + 2}`
-          : +timetable[i - 1].Start_Time.slice(0, 2) + 2
-      }:00:00`;
+  //* assign times to each module in timetable
+  //  Initialize Map of unavailable times for each day of the week
+  const unavailableTimes = new Map(days.map((d) => [d.Day_ID, new Map()]));
 
-      timetable[i].End_Time = `${
-        +timetable[i - 1].End_Time.slice(0, 2) + 2 < 10
-          ? `0${+timetable[i - 1].End_Time.slice(0, 2) + 2}`
-          : +timetable[i - 1].End_Time.slice(0, 2) + 2
-      }:00:00`;
-
-      continue;
-    }
-
+  timetable.forEach((e) => {
     modules.forEach((m) => {
-      if (timetable[i].Module_ID === m.Module_ID) {
-        let time = times[0];
-        timetable[i].Start_Time = time.Start_Time;
-
-        if (m.Subject_Type_ID === 1) {
-          const endTime = `${
-            +timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical < 10
-              ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical}`
-              : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical
-          }:00:00`;
-          timetable[i].End_Time = endTime;
-        } else if (m.Subject_Type_ID === 2) {
-          const endTime = `${
-            +timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical < 10
-              ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical}`
-              : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical
-          }:00:00`;
-          timetable[i].End_Time = endTime;
-        } else if (m.Subject_Type_ID === 3) {
-          const endTime = `${
-            +timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial < 10
-              ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial}`
-              : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial
-          }:00:00`;
-          timetable[i].End_Time = endTime;
-        }
-
-        // Loop for check if there is conflict
-        // if there conflict assign new day and time
-        for (let j = 0; j < timetable.length; j++) {
-          if (i === j) continue;
-
-          if (timetable[i].Start_Time && timetable[j].Start_Time) {
-            if (
-              isOverLapping(timetable[i], timetable[j]) &&
-              timetable[i].Day_ID === timetable[j].Day_ID
-            ) {
-              if (
-                timetable[i].Hall_ID === timetable[j].Hall_ID ||
-                timetable[i].Lecturer_ID === timetable[j].Lecturer_ID ||
-                timetable[i].Group_ID === timetable[j].Group_ID
-              ) {
-                for (let k = 1; k < times.length; k++) {
-                  time = times[k];
-
-                  timetable[i].Start_Time = time.Start_Time;
-
-                  if (m.Subject_Type_ID === 1) {
-                    const endTime = `${
-                      +timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical < 10
-                        ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical}`
-                        : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical
-                    }:00:00`;
-                    timetable[i].End_Time = endTime;
-                  } else if (m.Subject_Type_ID === 2) {
-                    const endTime = `${
-                      +timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical < 10
-                        ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical}`
-                        : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical
-                    }:00:00`;
-                    timetable[i].End_Time = endTime;
-                  } else if (m.Subject_Type_ID === 3) {
-                    const endTime = `${
-                      +timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial < 10
-                        ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial}`
-                        : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial
-                    }:00:00`;
-                    timetable[i].End_Time = endTime;
-                  }
-
-                  if (!isOverLapping(timetable[i], timetable[j])) {
-                    break;
-                  }
-                }
-              }
+      if (e.Module_ID === m.Module_ID) {
+        for (let time of times) {
+          let occupy = {
+            module: e.Module_ID,
+            group: parseInt(e.Group_ID),
+            hall: e.Hall_ID,
+            SubjectType: e.Subject_Type_ID,
+            day: e.Day_ID,
+            start: time.Start_Time,
+            end: calculateEndTime(time.Start_Time, getCredit(m)),
+          };
+          //? check if the new time slot is already taken or it is overlapping with another time slot
+          if (!unavailableTimes.get(e.Day_ID).has(JSON.stringify(occupy))) {
+            //* when there is not time conflicts assign the start time and the end time to the module
+            if (isNotOccupied(timetable, occupy)) {
+              e.Start_Time = occupy.start;
+              e.End_Time = occupy.end;
+              unavailableTimes
+                .get(e.Day_ID)
+                .set(JSON.stringify(occupy), occupy);
+              break;
             }
           }
         }
       }
     });
-  }
+  });
 
   return timetable;
 };

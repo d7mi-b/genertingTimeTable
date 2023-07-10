@@ -1,72 +1,129 @@
-const isOverLapping = require("./isOverLapping");
-const { lecturerDays } = require("./lecturerDays");
+const isOverlapping = require("./isOverLapping");
+const getSeconds = require("./getSeconds");
 
-// feasible function check for hard constraints in generated timetable
-module.exports.feasible = (neighborhood, lecturers, modules) => {
-    const timetable = JSON.parse(JSON.stringify(neighborhood))
-
-    for (let i = 0; i < timetable.length; i++) {
-        const moduleOne = modules.filter(m => m.Module_ID === timetable[i].Module_ID)
-
-        // To check if the day its available to lecturer or not
-        const lecturerDay = lecturers.filter(l => l.Lecturer_ID === timetable[i].Lecturer_ID);
-        if (!lecturerDays(lecturerDay, timetable[i].Day_ID))
-            return false;
-
-        //if The end time is out of limit it's not acceptable
-        if(timetable[i].End_Time > "17:00:00"){
-            return false;
-        }
-
-        for (let j = i + 1; j < timetable.length; j++) {
-            const moduleTwo = modules.filter(m => m.Module_ID === timetable[j].Module_ID)
-
-            // if the same group is assigned to two lecturs in same day at same time it's a conflect
-            // if (
-            //     (moduleOne[0].Subject_Type_ID === 2 && moduleTwo[0].Subject_Type_ID === 2)
-            //     && timetable[i].Group_ID === timetable[j].Group_ID 
-            //     && timetable[i].Day_ID === timetable[j].Day_ID
-            //     && timetable[i].Lecturer_ID !== timetable[j].Lecturer_ID
-            //     && timetable[i].Hall_ID !== timetable[j].Hall_ID 
-            //     && isOverLapping(timetable[i], timetable[j])
-            // ) {
-            //     // console.log(moduleOne[0].Module_ID, ": ", moduleTwo[0].Module_ID)
-            //     // console.log(timetable[i].Module_ID, ": ", timetable[j].Module_ID)
-            //     continue;
-            // }
-            
-            
-            // if the same lecturer is assigned to different subjects in same day at same time it's a conflect
-            if (
-                timetable[i].Lecturer_ID === timetable[j].Lecturer_ID 
-                && timetable[i].Day_ID === timetable[j].Day_ID 
-                && isOverLapping(timetable[i], timetable[j])
-            )
-                return false;
-
-            // if the same group is assigned to two lecturs in same day at same time it's a conflect
-            if (
-                //(moduleOne[0].Subject_Type_ID !== 2 || moduleTwo[0].Subject_Type_ID !== 2)
-                timetable[i].Group_ID === timetable[j].Group_ID 
-                && timetable[i].Day_ID === timetable[j].Day_ID 
-                && isOverLapping(timetable[i], timetable[j])
-            ) {
-                // if (moduleOne[0].Subject_Type_ID === 2 && moduleTwo[0].Subject_Type_ID === 2)
-                //     console.log(moduleOne[0].Module_ID, ": ", moduleTwo[0].Module_ID)
-                // console.log(timetable[i].Module_ID, ": ", timetable[j].Module_ID)
-                return false;
-            }
-
-            // if the same hall is assigned to two groups in same day at same time it's a conflect
-            if (
-                timetable[i].Hall_ID === timetable[j].Hall_ID 
-                && timetable[i].Day_ID === timetable[j].Day_ID
-                && isOverLapping(timetable[i], timetable[j])
-            ) {
-                return false;
-            }
-        }
-    }
-    
-    return true;
+// Check if a subject is passed the end time limit
+function hasInvalidEndTime(schedule) {
+  const endTimeLimit = getSeconds("17:00:00");
+  return schedule.some((slot) => getSeconds(slot.End_Time) > endTimeLimit);
 }
+//Check if the lecturer is teaching more than one subject a the same time
+function hasLecturerConflict(schedule) {
+  const slotsByLecturer = {};
+
+  for (const slot of schedule) {
+    const { Lecturer_ID, Day_ID } = slot;
+    if (!slotsByLecturer[Lecturer_ID]) {
+      slotsByLecturer[Lecturer_ID] = {};
+    }
+
+    if (!slotsByLecturer[Lecturer_ID][Day_ID]) {
+      slotsByLecturer[Lecturer_ID][Day_ID] = [];
+    }
+
+    slotsByLecturer[Lecturer_ID][Day_ID].push(slot);
+  }
+
+  for (const [lecturer, slotsByDay] of Object.entries(slotsByLecturer)) {
+    for (const [day, slots] of Object.entries(slotsByDay)) {
+      for (let i = 0; i < slots.length; i++) {
+        for (let j = i + 1; j < slots.length; j++) {
+          if (isOverlapping(slots[i], slots[j])) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+}
+// Check if the group has more than one subject scheduled at the same time
+function hasGroupConflict(schedule) {
+  const slotsByGroup = {};
+
+  for (const slot of schedule) {
+    const { Day_ID } = slot;
+    const Group_ID = parseInt(slot.Group_ID); // convert Group_ID to an integer
+    if (!slotsByGroup[Group_ID]) {
+      slotsByGroup[Group_ID] = {};
+    }
+
+    if (!slotsByGroup[Group_ID][Day_ID]) {
+      slotsByGroup[Group_ID][Day_ID] = [];
+    }
+
+    slotsByGroup[Group_ID][Day_ID].push(slot);
+  }
+  for (const [group, slotsByDay] of Object.entries(slotsByGroup)) {
+    for (const [day, slots] of Object.entries(slotsByDay)) {
+      for (let i = 0; i < slots.length; i++) {
+        for (let j = i + 1; j < slots.length; j++) {
+          if (
+            !(slots[i].Subject_Type_ID === 2 && slots[j].Subject_Type_ID === 2)
+          ) {
+            if (isOverlapping(slots[i], slots[j])) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
+function hasHallConflict(schedule) {
+  const slotsByHall = {};
+
+  for (const slot of schedule) {
+    const { Hall_ID, Day_ID } = slot;
+    if (!slotsByHall[Hall_ID]) {
+      slotsByHall[Hall_ID] = {};
+    }
+
+    if (!slotsByHall[Hall_ID][Day_ID]) {
+      slotsByHall[Hall_ID][Day_ID] = [];
+    }
+
+    slotsByHall[Hall_ID][Day_ID].push(slot);
+  }
+
+  for (const [hall, slotsByDay] of Object.entries(slotsByHall)) {
+    for (const [day, slots] of Object.entries(slotsByDay)) {
+      for (let i = 0; i < slots.length; i++) {
+        for (let j = i + 1; j < slots.length; j++) {
+          if (isOverlapping(slots[i], slots[j])) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
+module.exports.feasible = (schedule) => {
+  if (!schedule || schedule.length === 0) {
+    return false;
+  }
+
+  if (hasInvalidEndTime(schedule)) {
+    return false;
+  }
+
+  if (hasLecturerConflict(schedule)) {
+    return false;
+  }
+
+  if (hasGroupConflict(schedule)) {
+    return false;
+  }
+
+  if (hasHallConflict(schedule)) {
+    return false;
+  }
+
+  return true;
+};
