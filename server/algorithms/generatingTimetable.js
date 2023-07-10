@@ -56,7 +56,7 @@ module.exports.generatingTimetable = async (req, res) => {
     // Print some initial information for debugging
     console.log(
       "timetable from initial timetable without hard constraints: ",
-      feasible(candidateTimetable, lecturers)
+      feasible(candidateTimetable, lecturers, modules)
     );
     console.log(
       "the fitness of initial timetable: ",
@@ -66,63 +66,63 @@ module.exports.generatingTimetable = async (req, res) => {
     // Start the search loop
     let i = 0;
 
-    while (i < 1000) {
-      // Generate the neighborhood of the current candidate timetable
-      const neighborhood = getNeighbors(candidateTimetable, lecturers);
+    // while (i < 1000) {
+    //   // Generate the neighborhood of the current candidate timetable
+    //   const neighborhood = getNeighbors(candidateTimetable, lecturers, modules);
 
-      let bestCandidate = null;
+    //   let bestCandidate = null;
 
-      // Evaluate each candidate in the neighborhood
-      neighborhood.forEach((candidate) => {
-        // Check if the move is in the tabu list
-        const move = [candidateTimetable, candidate];
-        if (
-          !tabuList.some(([t1, t2]) => t1 === move[1] && t2 === move[0]) &&
-          // If the move is not in the tabu list and the resulting timetable is better than the current candidate timetable,
-          fitness(candidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
-            fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
-        ) {
-          // Update the best candidate found so far
-          if (
-            !bestCandidate ||
-            fitness(candidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
-              fitness(bestCandidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
-          ) {
-            bestCandidate = candidate;
-          }
-        }
-      });
+    //   // Evaluate each candidate in the neighborhood
+    //   neighborhood.forEach((candidate) => {
+    //     // Check if the move is in the tabu list
+    //     const move = [candidateTimetable, candidate];
+    //     if (
+    //       !tabuList.some(([t1, t2]) => t1 === move[1] && t2 === move[0]) &&
+    //       // If the move is not in the tabu list and the resulting timetable is better than the current candidate timetable,
+    //       fitness(candidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
+    //         fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
+    //     ) {
+    //       // Update the best candidate found so far
+    //       if (
+    //         !bestCandidate ||
+    //         fitness(candidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
+    //           fitness(bestCandidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
+    //       ) {
+    //         bestCandidate = candidate;
+    //       }
+    //     }
+    //   });
 
-      // Update the candidate timetable and the tabu list
-      if (bestCandidate) {
-        candidateTimetable = bestCandidate;
-        tabuList.push([
-          candidateTimetable,
-          neighborhood.find((t) => t === bestCandidate),
-        ]);
-      } else {
-        tabuList.push([candidateTimetable, candidateTimetable]);
-      }
+    //   // Update the candidate timetable and the tabu list
+    //   if (bestCandidate) {
+    //     candidateTimetable = bestCandidate;
+    //     tabuList.push([
+    //       candidateTimetable,
+    //       neighborhood.find((t) => t === bestCandidate),
+    //     ]);
+    //   } else {
+    //     tabuList.push([candidateTimetable, candidateTimetable]);
+    //   }
 
-      // Keep the tabu list within a certain length limit
-      if (tabuList.length > 50) tabuList.shift();
+    //   // Keep the tabu list within a certain length limit
+    //   if (tabuList.length > 50) tabuList.shift();
 
-      // Update the best timetable found so far
-      if (
-        fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
-        fitness(bestTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
-      )
-        bestTimetable = candidateTimetable;
+    //   // Update the best timetable found so far
+    //   if (
+    //     fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
+    //     fitness(bestTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights)
+    //   )
+    //     bestTimetable = candidateTimetable;
 
-      i++;
-    }
+    //   i++;
+    // }
     bestTimetable = candidateTimetable;
 
     // Print information about the best timetable found
     console.log("done from main function");
     console.log(
       "the best timetable without hard constraints: ",
-      feasible(bestTimetable, lecturers)
+      feasible(bestTimetable, lecturers, modules)
     );
     console.log(
       "the fitness of best timetable: ",

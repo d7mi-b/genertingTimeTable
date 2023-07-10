@@ -6,6 +6,10 @@ const router = express.Router();
 
 router.use(requireAuth);
 
-router.get('/', collegeController.getCollege);
+router.get('/', collegeController.getColleges);
+router.get('/:College_ID', collegeController.getCollege);
+router.post('/add', collegeController.addCollege);
+router.put('/update', collegeController.updateCollege);
+router.delete('/delete', collegeController.deleteCollege);
 
 module.exports = router;

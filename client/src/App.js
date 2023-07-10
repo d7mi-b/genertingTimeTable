@@ -8,7 +8,6 @@ import {
 import Loading from "./components/Loading";
 import { useAuthContext } from "./hooks/useAuthContext";
 
-
 const Home = lazy(() => import("./pages/Home"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ErrorElement = lazy(() => import("./components/ErrorElement"));
@@ -19,7 +18,7 @@ const SecretaryLayout = lazy(() => import("./Layouts/SecretaryLayout"));
 const PageLayout = lazy(() => import("./Layouts/PageLayout"));
 
 const Colleges = lazy(() => import("./pages/admin/Colleges"));
-const College = lazy(() => import('./pages/admin/College'));
+const College = lazy(() => import("./pages/admin/College"));
 const Buldings = lazy(() => import("./pages/admin/Buldings"));
 const Building = lazy(() => import("./pages/admin/Building"));
 const Departements = lazy(() => import("./pages/admin/Departements"));
@@ -37,12 +36,20 @@ const SudentsGroups = lazy(() => import("./pages/HOD/StudentsGroupsHOD"));
 const Courses = lazy(() => import("./pages/HOD/CoursesHOD"));
 const CreateTable = lazy(() => import("./pages/HOD/CreateTableHOD"));
 
-const SecretaryHome = lazy(() => import("./pages/secretary/SecretaryHome"));
-const SecretaryCreateSchedule = lazy(() => import("./pages/secretary/SecretaryCreateSchedule"));
-const SecretaryDepartments = lazy(() => import("./pages/secretary/SecretaryStudents"));
-const SecretaryLaps = lazy(() => import("./pages/secretary/SecretaryLabs"));
-const SecretaryLecturers = lazy(() => import("./pages/secretary/SecretaryLeacturers"));
-const SecretaryRequestManager = lazy(() => import("./pages/secretary/SecretaryRequestManager"));
+const HomeSecretary = lazy(() => import("./pages/secretary/HomeSecretary"));
+const CreateScheduleSecretary = lazy(() =>
+  import("./pages/secretary/CreateScheduleSecretary")
+);
+const DepartmentsSecretary = lazy(() =>
+  import("./pages/secretary/DepartmentsSecretary")
+);
+const LapsSecretary = lazy(() => import("./pages/secretary/LabsSecretary"));
+const LecturersSecretary = lazy(() =>
+  import("./pages/secretary/LecturersSecretary")
+);
+const RequestManagementSecretary = lazy(() =>
+  import("./pages/secretary/RequestManagementSecretary")
+);
 
 const routerHome = createBrowserRouter(
   createRoutesFromElements(
@@ -58,7 +65,7 @@ const routerAdmin = createBrowserRouter(
       <Route index element={<HomeAdmin />} />
       <Route path="users" element={<Users />} />
 
-      <Route 
+      <Route
         path="colleges"
         element={<PageLayout />}
         errorElement={<ErrorElement />}
@@ -99,13 +106,13 @@ const routerHOD = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<HodLayout />}>
       <Route index element={<HomeHOD />} />
-      <Route path='lecturers' element={<LecturersHOD/>} />
-      <Route path='halls' element={<HallsHOD/>} />
-      <Route path='requests' element={<ReviewRequests/>} />
-      <Route path='students_groups' element={<SudentsGroups/>} />
-      <Route path='courses' element={<Courses/>} />
-      <Route path='create_table' element={<CreateTable/>} />
-      <Route path='*' element={<NotFound />} />
+      <Route path="lecturers" element={<LecturersHOD />} />
+      <Route path="halls" element={<HallsHOD />} />
+      <Route path="requests" element={<ReviewRequests />} />
+      <Route path="students_groups" element={<SudentsGroups />} />
+      <Route path="courses" element={<Courses />} />
+      <Route path="create_table" element={<CreateTable />} />
+      <Route path="*" element={<NotFound />} />
     </Route>
   )
 );
@@ -113,12 +120,12 @@ const routerHOD = createBrowserRouter(
 const routerSecretary = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<SecretaryLayout />}>
-      <Route index element={<SecretaryHome />} />
-      <Route path="createTable" element={<SecretaryCreateSchedule />} />
-      <Route path="halls" element={<SecretaryLaps />} />
-      <Route path="departments" element={<SecretaryDepartments />} />
-      <Route path="requests" element={<SecretaryRequestManager />} />
-      <Route path="lecturers" element={<SecretaryLecturers />} />
+      <Route index element={<HomeSecretary />} />
+      <Route path="createTable" element={<CreateScheduleSecretary />} />
+      <Route path="halls" element={<LapsSecretary />} />
+      <Route path="departments" element={<DepartmentsSecretary />} />
+      <Route path="requests" element={<RequestManagementSecretary />} />
+      <Route path="lecturers" element={<LecturersSecretary />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
