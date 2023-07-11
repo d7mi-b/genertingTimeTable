@@ -1,4 +1,3 @@
-const db = require("../DB");
 const { lecturerAvailabilty } = require("./fitness_functions/lecturerAvailabilty");
 const { timeGap } = require("./fitness_functions/timeGap");
 const { labsOnSameDay } = require("./fitness_functions/labsOnSameDay");
