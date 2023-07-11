@@ -29,16 +29,7 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
         g.Department_ID === m.Department_ID
         // && ( g.Group_ID === 3 || g.Group_ID === 4  || g.Group_ID === 5)
       ) {
-        if (m.Subject_Type_ID === 2 && g.Group_ID !== 5) {
-          for (let i = 0; i < 3; i++) {
-            timetable.push({
-              Module_ID: m.Module_ID,
-              Lecturer_ID: m.Lecturer_ID,
-              Group_ID: g.Group_ID,
-              Subject_Type_ID: m.Subject_Type_ID
-            });
-          }
-        } else if (m.Subject_Type_ID === 2 && g.Group_ID === 5) {
+        if (m.Subject_Type_ID === 2) {
           for (let i = 0; i < 2; i++) {
             timetable.push({
               Module_ID: m.Module_ID,

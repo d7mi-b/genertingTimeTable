@@ -14,8 +14,7 @@ module.exports.feasible = (neighborhood, lecturers, modules) => {
             return false;
 
         //if The end time is out of limit it's not acceptable
-        if(timetable[i].End_Time > "18:00:00"){
-            // console.log('Module 1: ', timetable[i].Module_ID, ' - ', timetable[i].End_Time)
+        if(timetable[i].End_Time > "17:00:00"){
             return false;
         }
 
