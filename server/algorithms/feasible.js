@@ -14,7 +14,8 @@ module.exports.feasible = (neighborhood, lecturers, modules) => {
             return false;
 
         //if The end time is out of limit it's not acceptable
-        if(timetable[i].End_Time > "17:00:00"){
+        if(timetable[i].End_Time > "18:00:00"){
+            // console.log('Module 1: ', timetable[i].Module_ID, ' - ', timetable[i].End_Time)
             return false;
         }
 
@@ -27,9 +28,8 @@ module.exports.feasible = (neighborhood, lecturers, modules) => {
                 && timetable[i].Day_ID === timetable[j].Day_ID 
                 && isOverLapping(timetable[i], timetable[j])
             ){
-                // if(timetable[i].Group_ID === 3 || timetable[j].Group_ID === 3) {
-                    
-                // console.log('Module 1: ', timetable[i].Module_ID, ' - ', timetable[i].Lecturer_ID, ", Module 2:", timetable[j].Module_ID, ' - ', timetable[j].Lecturer_ID)
+                // if((timetable[i].Subject_Type_ID === 2 || timetable[j].Subject_Type_ID === 2)) {
+                //     console.log('Module 1: ', timetable[i].Module_ID, ' - ', timetable[i].Lecturer_ID, ", Module 2:", timetable[j].Module_ID, ' - ', timetable[j].Lecturer_ID)
                 // }
                 return false;
             }
@@ -52,8 +52,8 @@ module.exports.feasible = (neighborhood, lecturers, modules) => {
                 && timetable[i].Day_ID === timetable[j].Day_ID
                 && isOverLapping(timetable[i], timetable[j])
             ){
-                if (timetable[i].Subject_Type_ID === 2 && timetable[j].Subject_Type_ID === 2)
-                // console.log('Group: ', timetable[i].Group_ID, ' - Hall: ', timetable[i].Hall_ID, ', Group: ', timetable[j].Group_ID, ' - Hall: ', timetable[j].Hall_ID)
+                // if (timetable[i].Subject_Type_ID === 2 && timetable[j].Subject_Type_ID === 2)
+                //     console.log('Group: ', timetable[i].Group_ID, ' - Hall: ', timetable[i].Hall_ID, ', Group: ', timetable[j].Group_ID, ' - Hall: ', timetable[j].Hall_ID)
                 return false;
             }
 

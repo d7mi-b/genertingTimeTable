@@ -9,4 +9,4 @@ function getDuration(obj) {
 
   return endTimeSeconds - startTimeSeconds;
 }
-module.exports = getDuration;
+module.exports = { getDuration };
