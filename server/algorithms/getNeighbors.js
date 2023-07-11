@@ -1,36 +1,42 @@
-const { getRandomItem } = require("./getRandomItem");
+const { getDuration } = require("./getDuration");
 const { feasible } = require("./feasible");
-const isOverLapping = require("./isOverLapping");
 
 module.exports.getNeighbors = (candidateTimetable, lecturers) => {
   const MAX_ITERATIONS = 100; // maximum number of iterations
   let neighbors = [];
-
-  for (let i = 0; i < MAX_ITERATIONS; i++) {
+  let i = 0;
+  while (i < MAX_ITERATIONS) {
     let newTimetable = JSON.parse(JSON.stringify(candidateTimetable));
 
     // randomly select two classes from the timetable
-    const classIndex1 = Math.floor(Math.random() * newTimetable.length);
-    const classIndex2 = Math.floor(Math.random() * newTimetable.length);
-
-    if ((newTimetable[classIndex1].Subject_Type_ID !== 2) && (newTimetable[classIndex2].Subject_Type_ID !== 2)) {
+    const moduleIndex1 = Math.floor(Math.random() * newTimetable.length);
+    const moduleIndex2 = Math.floor(Math.random() * newTimetable.length);
+    const module1Duration = getDuration(newTimetable[moduleIndex1]);
+    const module2Duration = getDuration(newTimetable[moduleIndex2]);
+    if (
+      newTimetable[moduleIndex1].Subject_Type_ID ===
+        newTimetable[moduleIndex2].Subject_Type_ID &&
+      module1Duration === module2Duration
+    ) {
       // swap their day and time
-      const tempDay = newTimetable[classIndex1].Day_ID;
-      newTimetable[classIndex1].Day_ID = newTimetable[classIndex2].Day_ID;
-      newTimetable[classIndex2].Day_ID = tempDay;
+      const tempDay = newTimetable[moduleIndex1].Day_ID;
+      newTimetable[moduleIndex1].Day_ID = newTimetable[moduleIndex2].Day_ID;
+      newTimetable[moduleIndex2].Day_ID = tempDay;
 
-      const tempStartTime = newTimetable[classIndex1].Start_Time;
-      newTimetable[classIndex1].Start_Time = newTimetable[classIndex2].Start_Time;
-      newTimetable[classIndex2].Start_Time = tempStartTime;
+      const tempStartTime = newTimetable[moduleIndex1].Start_Time;
+      newTimetable[moduleIndex1].Start_Time =
+        newTimetable[moduleIndex2].Start_Time;
+      newTimetable[moduleIndex2].Start_Time = tempStartTime;
 
-      const tempEndTime = newTimetable[classIndex1].End_Time;
-      newTimetable[classIndex1].End_Time = newTimetable[classIndex2].End_Time;
-      newTimetable[classIndex2].End_Time = tempEndTime;
+      const tempEndTime = newTimetable[moduleIndex1].End_Time;
+      newTimetable[moduleIndex1].End_Time = newTimetable[moduleIndex2].End_Time;
+      newTimetable[moduleIndex2].End_Time = tempEndTime;
 
       // check if the new timetable is feasible
       if (feasible(newTimetable, lecturers)) {
         neighbors.push(newTimetable);
       }
+      i++;
     }
   }
 
