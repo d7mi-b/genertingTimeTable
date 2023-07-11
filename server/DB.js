@@ -1,4 +1,4 @@
-const { createPool }= require('mysql2');
+const { createPool } = require('mysql2');
 
 //database Connection 
 const pool = createPool({
