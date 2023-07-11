@@ -9,13 +9,14 @@ import {
   faUserTie,
 } from "@fortawesome/free-solid-svg-icons";
 import style from "../styles/secretary/home_secretary.module.css";
+import "../styles/secretary/home_secretary.module.css";
 import { useAuthContext } from "../../hooks/useAuthContext";
 
 let date = new Date();
 
 const sections = [
   {
-    name: "الطلاب",
+    name: "أقسام الطلاب",
     icon: faUserGroup,
     link: "departments",
   },
