@@ -147,20 +147,23 @@ const College = () => {
                         </header>
                     </article>
 
-                    <section className={`${styleDep.departemntsContainer}`} id='departemntsContainer'>
-                        {   departments &&
-                            departments.map(e => {
-                                return (
-                                    <Link to={`department/${e.Department_ID}`} className={`${styleDep.departemnt}`} key={e.Department_ID} id={e.Department_ID}>
-                                        <section className={`${styleDep.img}`}>
-                                            <img src='/images/Mask Group 36.png' alt='departemnt' />
-                                        </section>
-                                        <h1>{e.Department_Name}</h1>
-                                    </Link>
-                                )
-                            })
-                        }
-                    </section>
+                    {
+                        departments && departments.length > 0 && 
+                        <section className={`${styleDep.departemntsContainer}`} id='departemntsContainer'>
+                            {   departments &&
+                                departments.map(e => {
+                                    return (
+                                        <Link to={`department/${e.Department_ID}`} className={`${styleDep.departemnt}`} key={e.Department_ID} id={e.Department_ID}>
+                                            <section className={`${styleDep.img}`}>
+                                                <img src='/images/Mask Group 36.png' alt='departemnt' />
+                                            </section>
+                                            <h1>{e.Department_Name}</h1>
+                                        </Link>
+                                    )
+                                })
+                            }
+                        </section>
+                    }
 
                     {
                         departments && departments.length === 0 && <p className='emptyElement'>لا يوجد أقسام</p>
