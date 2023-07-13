@@ -137,9 +137,9 @@ const Users = () => {
   return (
     <section className={`containerPage ${style.users}`}>
       <header>
-        <h1>المستخدمين</h1>
+        <h1>المستخدمون</h1>
         <button className={`btn ${style.btn}`} id='btnAddUsersSection'>
-          إضافة مستخدمين
+          إضافة مستخدم
         </button>
       </header>
 

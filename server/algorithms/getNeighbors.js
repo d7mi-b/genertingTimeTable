@@ -5,6 +5,7 @@ module.exports.getNeighbors = (candidateTimetable, lecturers) => {
   const MAX_ITERATIONS = 100; // maximum number of iterations
   let neighbors = [];
   let i = 0;
+
   while (i < MAX_ITERATIONS) {
     let newTimetable = JSON.parse(JSON.stringify(candidateTimetable));
 
@@ -33,7 +34,7 @@ module.exports.getNeighbors = (candidateTimetable, lecturers) => {
       newTimetable[moduleIndex2].End_Time = tempEndTime;
 
       // check if the new timetable is feasible
-      if (feasible(newTimetable, lecturers)) {
+      if (feasible(newTimetable, lecturers) < feasible(candidateTimetable, lecturers)) {
         neighbors.push(newTimetable);
       }
       i++;

@@ -38,8 +38,9 @@
 }
 
 .user {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    text-align: center;
     padding: 15px;
     border: 1px solid var(--border-color);
     border-radius: 5px;
