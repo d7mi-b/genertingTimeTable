@@ -1,3 +1,6 @@
+const { getRandomItem } = require("./getRandomItem");
+const { lecturerDays } = require("./lecturerDays");
+
 module.exports.getDay = (days, lecturers, module) => {
     let day = getRandomItem(days);
     const lecturerDay = lecturers.filter(l => l.Lecturer_ID === module.Lecturer_ID);
