@@ -174,8 +174,15 @@ const SystemState = () => {
                                             className={style.weightsRange}
                                             type='range' value={lecturerAvailabilty} 
                                             min='0.25' max='1' step='0.25' 
+                                            list="rangelabel"
                                             onChange={(e) => setLecturerAvailabilty(+e.target.value)}
                                         />
+                                        <datalist id="rangelabel">
+                                            <option value="0.25" label="25%" />
+                                            <option value="0.50" label="50%"/>
+                                            <option value="0.75" label="75%" />
+                                            <option value="1" label="100%"/>                                            
+                                        </datalist>
                                     </section>
 
                                     <section>
@@ -184,8 +191,15 @@ const SystemState = () => {
                                             className={style.weightsRange}
                                             type='range' value={timeGap} 
                                             min='0.25' max='1' step='0.25' 
+                                            list="rangelabel"
                                             onChange={(e) => setTimeGap(+e.target.value)}
                                         />
+                                        <datalist id="rangelabel">
+                                            <option value="0.25" label="25%" />
+                                            <option value="0.50" label="50%"/>
+                                            <option value="0.75" label="75%" />
+                                            <option value="1" label="100%"/>                                            
+                                        </datalist>
                                     </section>
 
                                     <section>
@@ -194,8 +208,15 @@ const SystemState = () => {
                                             className={style.weightsRange}
                                             type='range' value={labsOnSameDay} 
                                             min='0.25' max='1' step='0.25' 
+                                            list="rangelabel"
                                             onChange={(e) => setLabsOnSameDay(+e.target.value)}
                                         />
+                                        <datalist id="rangelabel">
+                                            <option value="0.25" label="25%" />
+                                            <option value="0.50" label="50%"/>
+                                            <option value="0.75" label="75%" />
+                                            <option value="1" label="100%"/>                                            
+                                        </datalist>
                                     </section>
 
                                     <section>
@@ -204,8 +225,15 @@ const SystemState = () => {
                                             className={style.weightsRange}
                                             type='range' value={dayOFF} 
                                             min='0.25' max='1' step='0.25' 
+                                            list="rangelabel"
                                             onChange={(e) => setdayOFF(+e.target.value)}
                                         />
+                                        <datalist id="rangelabel">
+                                            <option value="0.25" label="25%" />
+                                            <option value="0.50" label="50%"/>
+                                            <option value="0.75" label="75%" />
+                                            <option value="1" label="100%"/>                                            
+                                        </datalist>
                                     </section>
 
                                     <section>
@@ -214,8 +242,15 @@ const SystemState = () => {
                                             className={style.weightsRange}
                                             type='range' value={lecturesOnDay} 
                                             min='0.25' max='1' step='0.25' 
+                                            list="rangelabel"
                                             onChange={(e) => setLecturesOnDay(+e.target.value)}
                                         />
+                                        <datalist id="rangelabel">
+                                            <option value="0.25" label="25%" />
+                                            <option value="0.50" label="50%"/>
+                                            <option value="0.75" label="75%" />
+                                            <option value="1" label="100%"/>                                            
+                                        </datalist>
                                     </section>
 
                                     <section>
@@ -224,8 +259,15 @@ const SystemState = () => {
                                             className={style.weightsRange}
                                             type='range' value={groupsTimes} 
                                             min='0.25' max='1' step='0.25' 
+                                            list="rangelabel"
                                             onChange={(e) => setGroupsTimes(+e.target.value)}
                                         />
+                                        <datalist id="rangelabel">
+                                            <option value="0.25" label="25%" />
+                                            <option value="0.50" label="50%"/>
+                                            <option value="0.75" label="75%" />
+                                            <option value="1" label="100%"/>                                            
+                                        </datalist>
                                     </section>
                                 </section>
                                 <section className={`btnContainer ${style.btnContaineer}`}>

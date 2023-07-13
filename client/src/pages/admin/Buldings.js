@@ -120,24 +120,28 @@ const Bulding = () => {
 
             { error && <p className='emptyElement'>{error}</p> }
 
-            <section className={`${style.buldingsContainer}`} id='buldingsContainer'>
-                {
-                    buildings &&
-                    buildings.map(e => {
-                        return (
-                            <Link to={`${e.Building_ID}`} className={`${style.bulding}`} id={e.Building_ID} key={e.Building_ID}>
-                                <section className={`${style.img}`}>
-                                    <img src='/images/Mask Group 10.png' alt='bulding' />
-                                </section>
-                                <h1>{e.Building_Name}</h1>
-                            </Link>
-                        )
-                    })
-                }
-                {
-                    isPending && <Loading />
-                }
-            </section>
+            {
+                buildings && buildings.length > 0 && 
+                <section className={`${style.buldingsContainer}`} id='buldingsContainer'>
+                    {
+                        buildings &&
+                        buildings.map(e => {
+                            return (
+                                <Link to={`${e.Building_ID}`} className={`${style.bulding}`} id={e.Building_ID} key={e.Building_ID}>
+                                    <section className={`${style.img}`}>
+                                        <img src='/images/Mask Group 10.png' alt='bulding' />
+                                    </section>
+                                    <h1>{e.Building_Name}</h1>
+                                </Link>
+                            )
+                        })
+                    }
+                </section>
+            }
+
+            {
+                isPending && <Loading />
+            }
 
             <section className={style.buttons}>
                 <button className={`btn`} id='btnAddBuilding'>إضافة مبنى</button>

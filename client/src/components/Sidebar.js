@@ -24,7 +24,7 @@ const Sidebar = () => {
                     <NavLink to='/' className='link'><FontAwesomeIcon icon={faHome} /><span>الرئيسية</span></NavLink>
                 </li>
                 <li>
-                    <NavLink to='users' className='link'><FontAwesomeIcon icon={faUser} /><span>المستخدمين</span></NavLink>
+                    <NavLink to='users' className='link'><FontAwesomeIcon icon={faUser} /><span>المستخدمون</span></NavLink>
                 </li>
                 <li>
                     <NavLink to='colleges' className='link'><FontAwesomeIcon icon={faBuildingColumns} /><span>الكليات</span></NavLink>

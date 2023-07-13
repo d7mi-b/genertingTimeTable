@@ -32,6 +32,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 30px;
     text-align: center;
+    min-height: 70dvb;
 }
 
 .bulding {
@@ -40,6 +41,7 @@
     box-shadow: 3px 3px 3px 1px var(--border-color);
     cursor: pointer;
     text-decoration: none;
+    height: fit-content;
 }
 
 .bulding:hover {

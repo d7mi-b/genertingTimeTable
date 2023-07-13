@@ -106,6 +106,19 @@
     accent-color: var(--main-color);
 }
 
+datalist {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 200px;
+}
+
+option {
+    text-align: center;
+    width: 1rem; /* ~width of label '200' */
+    font-size: 0.7rem;
+}
+
 @media (min-width: 283px) and (max-width: 767px) {
     .systemState header {
         margin: 50px 0 20px;

@@ -1,4 +1,6 @@
 const { feasible } = require("./feasible");
+const { getDay } = require("./getDay");
+const { getHall } = require("./getHall");
 const { getRandomItem } = require("./getRandomItem");
 const isOverLapping = require("./isOverLapping");
 const { lecturerDays } = require("./lecturerDays");
@@ -9,7 +11,7 @@ module.exports.initialTimetable = (modules, groups, halls, days, times, lecturer
   while (true) {
     let timetable = generate(modules, groups, halls, days, times, lecturers);
 
-    if (feasible(timetable, lecturers, modules)) {
+    if (feasible(timetable, lecturers, modules) < 10) {
       console.log("number of iteration to get initial timetable:", i)
       return timetable;
     }
@@ -27,10 +29,10 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
       if (
         g.Semester_ID === m.Semester_ID &&
         g.Department_ID === m.Department_ID
-        // && ( g.Group_ID === 3 || g.Group_ID === 4  || g.Group_ID === 5)
+        // && ( g.Group_ID === 2 || g.Group_ID === 3  || g.Group_ID === 4 || g.Group_ID === 5)
       ) {
         if (m.Subject_Type_ID === 2) {
-          for (let i = 0; i < 2; i++) {
+          for (let i = 0; i < g.Group_Count / 25; i++) {
             timetable.push({
               Module_ID: m.Module_ID,
               Lecturer_ID: m.Lecturer_ID,
@@ -67,18 +69,7 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
     groups.forEach((g) => {
       modules.forEach((m) => {
         if (timetable[i].Group_ID === g.Group_ID && timetable[i].Module_ID === m.Module_ID) {
-          const hallsAvailable = halls.filter((h) => {
-            return (
-              h.Hall_Capacity >= g.Group_Count &&
-              h.Hall_Type_ID === m.Hall_Type_ID
-            );
-          });
-
-          const hall = getRandomItem(hallsAvailable);
-
-          if (hall) {
-            timetable[i].Hall_ID = hall.Hall_ID;
-          }
+          timetable[i].Hall_ID = getHall(halls, g.Group_Count, m.Hall_Type_ID)
         }
       });
     });
@@ -91,132 +82,106 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
       continue;
     }
 
-    let day = getRandomItem(days);
-    const lecturerDay = lecturers.filter(l => l.Lecturer_ID === timetable[i].Lecturer_ID);
-
-    // If the day not available to lecturer then change the day
-    while (!lecturerDays(lecturerDay, day.Day_ID)) {
-      if (lecturerDay[0].Sunday === 0 && day.Day_ID === 1) {
-        day = getRandomItem(days)
-      }
-      else if (lecturerDay[0].Monday === 0 && day.Day_ID === 2) {
-        day = getRandomItem(days)
-      }
-      else if (lecturerDay[0].Tuesday === 0 && day.Day_ID === 3) {
-        day = getRandomItem(days)
-      }
-      else if (lecturerDay[0].Wednesday === 0 && day.Day_ID === 4) {
-        day = getRandomItem(days)
-      }
-      else if (lecturerDay[0].Thursday === 0 && day.Day_ID === 5) {
-        day = getRandomItem(days)
-      }
-    }
-
-    timetable[i].Day_ID = day.Day_ID;
+    timetable[i].Day_ID = getDay(days, lecturers, timetable[i]);
   }
 
   // Assign Times to timetable
   for (let i = 0; i < timetable.length; i++) {
     if (i !== 0 && timetable[i].Module_ID === timetable[i - 1].Module_ID) {
       timetable[i].Start_Time =`${
-        +timetable[i - 1].Start_Time.slice(0, 2) + 2 < 10
-          ? `0${+timetable[i - 1].Start_Time.slice(0, 2) + 2}`
-          : +timetable[i - 1].Start_Time.slice(0, 2) + 2
+        +timetable[i - 1].Start_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical < 10
+          ? `0${+timetable[i - 1].Start_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical}`
+          : +timetable[i - 1].Start_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical
       }:00:00`;
 
       timetable[i].End_Time = `${
-        +timetable[i - 1].End_Time.slice(0, 2) + 2 < 10
-          ? `0${+timetable[i - 1].End_Time.slice(0, 2) + 2}`
-          : +timetable[i - 1].End_Time.slice(0, 2) + 2
+        +timetable[i - 1].End_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical < 10
+          ? `0${+timetable[i - 1].End_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical}`
+          : +timetable[i - 1].End_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical
       }:00:00`;
 
       continue;
     }
 
-    modules.forEach((m) => {
-      if (timetable[i].Module_ID === m.Module_ID) {
+    for (let m = 0; m < modules.length; m++) {
+      if (timetable[i].Module_ID === modules[m].Module_ID) {
         let time = times[0];
+
         timetable[i].Start_Time = time.Start_Time;
 
-        if (m.Subject_Type_ID === 1) {
-          const endTime = `${
-            +timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical < 10
-              ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical}`
-              : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical
-          }:00:00`;
-          timetable[i].End_Time = endTime;
-        } else if (m.Subject_Type_ID === 2) {
-          const endTime = `${
-            +timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical < 10
-              ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical}`
-              : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical
-          }:00:00`;
-          timetable[i].End_Time = endTime;
-        } else if (m.Subject_Type_ID === 3) {
-          const endTime = `${
-            +timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial < 10
-              ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial}`
-              : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial
-          }:00:00`;
-          timetable[i].End_Time = endTime;
-        }
+        timetable[i].End_Time = getEndTime(time.Start_Time, modules[m])
+      }
 
-        // Loop for check if there is conflict
-        // if there conflict assign new day and time
-        for (let j = 0; j < timetable.length; j++) {
-          if (i === j) continue;
-
-          if (
-            (timetable[i].Start_Time && timetable[j].Start_Time) &&
+      for (let j = 0; j < i; j++) {
+        if (i === j) continue;
+        
+        if (
+          (
+            timetable[i].Hall_ID === timetable[j].Hall_ID ||
+            timetable[i].Lecturer_ID === timetable[j].Lecturer_ID ||
             (
-              timetable[i].Hall_ID === timetable[j].Hall_ID ||
-              timetable[i].Lecturer_ID === timetable[j].Lecturer_ID ||
-              (
-                timetable[i].Group_ID === timetable[j].Group_ID && 
-                (timetable[i].Subject_Type_ID !== 2 || timetable[j].Subject_Type_ID !== 2)
-              )
-            ) && 
-            timetable[i].Day_ID === timetable[j].Day_ID &&
-            isOverLapping(timetable[i], timetable[j])
-        ) {
+              timetable[i].Group_ID === timetable[j].Group_ID && 
+              (timetable[i].Subject_Type_ID !== 2 || timetable[j].Subject_Type_ID !== 2)
+            )
+          ) && 
+          timetable[i].Day_ID === timetable[j].Day_ID &&
+          isOverLapping(timetable[i], timetable[j])
+      ) {
+          while (isOverLapping(timetable[i], timetable[j])) {
             for (let k = 1; k < times.length; k++) {
-              time = times[k];
-
+              let time = times[k];
+  
               timetable[i].Start_Time = time.Start_Time;
-
-              if (m.Subject_Type_ID === 1) {
-                const endTime = `${
-                  +timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical < 10
-                    ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical}`
-                    : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Theoretical
-                }:00:00`;
-                timetable[i].End_Time = endTime;
-              } else if (m.Subject_Type_ID === 2) {
-                const endTime = `${
-                  +timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical < 10
-                    ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical}`
-                    : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Practical
-                }:00:00`;
-                timetable[i].End_Time = endTime;
-              } else if (m.Subject_Type_ID === 3) {
-                const endTime = `${
-                  +timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial < 10
-                    ? `0${+timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial}`
-                    : +timetable[i].Start_Time.slice(0, 2) + m.Credit_Tutorial
-                }:00:00`;
-                timetable[i].End_Time = endTime;
-              }
-
-              if (!isOverLapping(timetable[i], timetable[j])) {
+  
+              timetable[i].End_Time = getEndTime(time.Start_Time, modules[m])
+  
+              if (!isOverLapping(timetable[i], timetable[j]))
                 break;
-              }
             }
+
+            if (!isOverLapping(timetable[i], timetable[j]))
+              break;
+
+            timetable[i].Day_ID = getDay(days, lecturers, timetable[i])
           }
         }
       }
-    });
+    }
   }
 
   return timetable;
 };
+
+const getEndTime = (startTime, module) => {
+  if (module.Subject_Type_ID === 1) {
+
+    const endTime = `${
+      +startTime.slice(0, 2) + module.Credit_Theoretical < 10
+        ? `0${+startTime.slice(0, 2) + module.Credit_Theoretical}`
+        : +startTime.slice(0, 2) + module.Credit_Theoretical
+    }:00:00`;
+
+    return endTime;
+
+  } else if (module.Subject_Type_ID === 2) {
+
+    const endTime = `${
+      +startTime.slice(0, 2) + module.Credit_Practical < 10
+        ? `0${+startTime.slice(0, 2) + module.Credit_Practical}`
+        : +startTime.slice(0, 2) + module.Credit_Practical
+    }:00:00`;
+
+    return endTime;
+
+  } else if (module.Subject_Type_ID === 3) {
+
+    const endTime = `${
+      +startTime.slice(0, 2) + module.Credit_Tutorial < 10
+        ? `0${+startTime.slice(0, 2) + module.Credit_Tutorial}`
+        : +startTime.slice(0, 2) + module.Credit_Tutorial
+    }:00:00`;
+
+    return endTime;
+
+  }
+}

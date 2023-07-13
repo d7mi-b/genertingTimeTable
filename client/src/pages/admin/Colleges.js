@@ -113,28 +113,32 @@ const Colleges = () => {
                 <h1> <FontAwesomeIcon icon={faBuildingColumns} /> الكليات</h1>
             </header>
 
-            <section className={`${style.buldingsContainer}`} id='collegesContainer'>
-                {
-                    colleges &&
-                    colleges.map(e => {
-                        return (
-                            <Link to={`${e.College_ID}`} className={`${style.bulding}`} id={e.College_ID} key={e.College_ID}>
-                                <section className={`${style.img}`}>
-                                    <img src='/images/Mask Group 10.png' alt='bulding' />
-                                </section>
-                                <h1>{e.College_Name}</h1>
-                            </Link>
-                        )
-                    })
-                }
-                {
-                    isPending && <Loading />
-                }
-            </section>
+            {
+                colleges && colleges.length > 0 &&
+                <section className={`${style.buldingsContainer}`} id='collegesContainer'>
+                    {
+                        colleges &&
+                        colleges.map(e => {
+                            return (
+                                <Link to={`${e.College_ID}`} className={`${style.bulding}`} id={e.College_ID} key={e.College_ID}>
+                                    <section className={`${style.img}`}>
+                                        <img src='/images/Mask Group 10.png' alt='bulding' />
+                                    </section>
+                                    <h1>{e.College_Name}</h1>
+                                </Link>
+                            )
+                        })
+                    }
+                </section>
+            }
 
             { colleges && colleges.length === 0 && !isPending && <p className='emptyElement'>لا يوجد كليات</p> }
 
             { error &&  <p className='emptyElement'>{error}</p> }
+
+            {
+                isPending && <Loading />
+            }
 
             {
                 colleges && colleges.length > 0 &&
