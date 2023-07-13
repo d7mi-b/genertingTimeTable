@@ -1,4 +1,6 @@
 const { feasible } = require("./feasible");
+const { getDay } = require("./getDay");
+const { getHall } = require("./getHall");
 const { getRandomItem } = require("./getRandomItem");
 const isOverLapping = require("./isOverLapping");
 const { lecturerDays } = require("./lecturerDays");
@@ -149,45 +151,6 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
 
   return timetable;
 };
-
-const getHall = (halls, groupCount, hallTypeID) => {
-  const hallsAvailable = halls.filter((h) => {
-    return (
-      h.Hall_Capacity >= groupCount &&
-      h.Hall_Type_ID === hallTypeID
-    );
-  });
-
-  const hall = getRandomItem(hallsAvailable);
-
-  return hall.Hall_ID;
-}
-
-const getDay = (days, lecturers, module) => {
-  let day = getRandomItem(days);
-  const lecturerDay = lecturers.filter(l => l.Lecturer_ID === module.Lecturer_ID);
-
-  // If the day not available to lecturer then change the day
-  while (!lecturerDays(lecturerDay, day.Day_ID)) {
-    if (lecturerDay[0].Sunday === 0 && day.Day_ID === 1) {
-      day = getRandomItem(days)
-    }
-    else if (lecturerDay[0].Monday === 0 && day.Day_ID === 2) {
-      day = getRandomItem(days)
-    }
-    else if (lecturerDay[0].Tuesday === 0 && day.Day_ID === 3) {
-      day = getRandomItem(days)
-    }
-    else if (lecturerDay[0].Wednesday === 0 && day.Day_ID === 4) {
-      day = getRandomItem(days)
-    }
-    else if (lecturerDay[0].Thursday === 0 && day.Day_ID === 5) {
-      day = getRandomItem(days)
-    }
-  }
-
-  return day.Day_ID
-}
 
 const getEndTime = (startTime, module) => {
   if (module.Subject_Type_ID === 1) {

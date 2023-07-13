@@ -66,9 +66,9 @@ module.exports.generatingTimetable = async (req, res) => {
     // Start the search loop
     let i = 0;
 
-    do {
+    while (i < 10000) {
       // Generate the neighborhood of the current candidate timetable
-      const neighborhood = getNeighbors(candidateTimetable, lecturers, modules);
+      const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times, lecturers);
 
       let bestCandidate = null;
 
@@ -116,9 +116,10 @@ module.exports.generatingTimetable = async (req, res) => {
         feasible(candidateTimetable, lecturers) < feasible(bestTimetable, lecturers)
       )
         bestTimetable = candidateTimetable;
-
+        if (feasible(candidateTimetable, lecturers) === 0)
+          break;
       i++;
-    } while (feasible(bestTimetable, lecturers) === 0)
+    }
     bestTimetable = candidateTimetable;
 
     // Print information about the best timetable found
