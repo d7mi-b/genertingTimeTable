@@ -1,10 +1,14 @@
-import { Link } from "react-router-dom";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import useFetch from "../../hooks/useFetch";
 import { useEffect, useState } from "react";
 import style from "../styles/secretary/lecturers_secretary.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faXmark,
+  faUser,
+  faTrashCan,
+  faSave,
+} from "@fortawesome/free-solid-svg-icons";
 import { useFetchPost } from "../../hooks/useFetchPost";
 import Done from "../../components/Done";
 import Failed from "../../components/Done";
@@ -89,17 +93,18 @@ const LecturersSecretary = () => {
         </button>
       </div>
       <div className={style.searchBar}>
-        <p>عدد المدرسين</p>
+        <p>
+          عدد المدرسين
+          <span>{lectureorData && lectureorData.length}</span>
+        </p>
         <div className={style.sort}>
           <p>الترتيب حسب</p>
           <select>
-            <option value="ddd">ddd</option>
-            <option value="ddd">ddd</option>
-            <option value="ddd">ddd</option>
-            <option value="ddd">ddd</option>
+            <option value="new">الأحدث</option>
+            <option value="old">الأقدم</option>
           </select>
         </div>
-        <input type="text" />
+        <input type="text" placeholder="البحث بالإسم" />
       </div>
       <div className={style.page}>
         <section className={style.lectureorsContainer}>
@@ -159,6 +164,14 @@ const LecturersSecretary = () => {
                         ))}
                       </div>
                     </div>
+                  </div>
+                  <div className={style.saveAndDelete}>
+                    <button className={style.save}>
+                      حفظ <FontAwesomeIcon icon={faSave} size="1x" />
+                    </button>
+                    <button>
+                      حذف <FontAwesomeIcon icon={faTrashCan} size="1x" />
+                    </button>
                   </div>
                 </div>
               ))}
