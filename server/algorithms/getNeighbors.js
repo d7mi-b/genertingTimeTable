@@ -3,11 +3,12 @@ const { feasible } = require("./feasible");
 const { getRandomItem } = require("./getRandomItem");
 const { getHall } = require("./getHall");
 const { getDay } = require("./getDay");
+const { getEndTime } = require("./getEndTime");
 
 module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days, times, lecturers) => {
-  const MAX_ITERATIONS = 100; // maximum number of iterations
+  const MAX_ITERATIONS = 1000; // maximum number of iterations
   let neighbors = [];
-  let type = getRandomItem([1, 2, 3, 4])
+  let type = getRandomItem([1, 2, 3, 4, 5])
   let i = 0;
 
   while (i < MAX_ITERATIONS) {
@@ -42,7 +43,7 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         break;
       };
 
-      case 2: { // get new hall
+      case 2: { // assaign new hall
         // randomly select two classes from the timetable
         const moduleIndex1 = Math.floor(Math.random() * newTimetable.length);
         
@@ -53,7 +54,7 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
           });
         });
         break;
-      }
+      };
 
       case 3: { // swap hall
         const moduleIndex1 = Math.floor(Math.random() * newTimetable.length);
@@ -68,15 +69,29 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         break;
       };
       
-      case 4: {
+      case 4: { // assaign new day
         const moduleIndex1 = Math.floor(Math.random() * newTimetable.length);
 
         newTimetable[moduleIndex1].Day_ID = getDay(days, lecturers, newTimetable[moduleIndex1]);
       };
 
+      case 5: { // assaign new time
+        const moduleIndex1 = Math.floor(Math.random() * newTimetable.length);
+
+        const time = getRandomItem(times);
+
+        newTimetable[moduleIndex1].Start_Time = time.Start_Time;
+
+        newTimetable[moduleIndex1].End_Time = getEndTime(time.Start_Time, newTimetable[moduleIndex1]);
+
+      };
+
       default:
         break;
     }
+
+    if (feasible(newTimetable, lecturers) === 0)
+      console.log('there is timetable with 0 conflicts wooow!')
     // check if the new timetable is feasible
     if (feasible(newTimetable, lecturers) < feasible(candidateTimetable, lecturers)) {
       neighbors.push(newTimetable);

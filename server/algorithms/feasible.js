@@ -5,9 +5,15 @@ const { lecturerDays } = require("./lecturerDays");
 module.exports.feasible = (neighborhood, lecturers) => {
     const timetable = JSON.parse(JSON.stringify(neighborhood))
 
+    if (timetable.length === 0 || !timetable)
+        return 10000000;
+
     let conflicts = 0;
 
     for (let i = 0; i < timetable.length; i++) {
+
+        if (conflicts >= 10)
+            return conflicts;
 
         // To check if the day its available to lecturer or not
         const lecturerDay = lecturers.filter(l => l.Lecturer_ID === timetable[i].Lecturer_ID);
@@ -20,7 +26,9 @@ module.exports.feasible = (neighborhood, lecturers) => {
         }
 
         for (let j = i + 1; j < timetable.length; j++) {
-            
+            if (conflicts >= 10)
+                return conflicts;
+
             // if the same lecturer is assigned to different subjects in same day at same time it's a conflect
             if (
                 timetable[i].Lecturer_ID === timetable[j].Lecturer_ID 

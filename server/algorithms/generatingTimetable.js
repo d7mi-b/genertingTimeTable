@@ -49,14 +49,14 @@ module.exports.generatingTimetable = async (req, res) => {
     `)
 
     // Initialize variables
-    let bestTimetable = 0;
+    let bestTimetable = [];
     let candidateTimetable = initialTimetable(modules, groups, halls, days, times, lecturers);
     let tabuList = [];
 
     // Print some initial information for debugging
     console.log(
       "the number of confilcts in initial timetable: ",
-      feasible(candidateTimetable, lecturers, modules)
+      feasible(candidateTimetable, lecturers)
     );
     console.log(
       "the fitness of initial timetable: ",
@@ -66,7 +66,8 @@ module.exports.generatingTimetable = async (req, res) => {
     // Start the search loop
     let i = 0;
 
-    while (i < 10000) {
+    while (i < 10) {
+      
       // Generate the neighborhood of the current candidate timetable
       const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times, lecturers);
 
@@ -116,8 +117,6 @@ module.exports.generatingTimetable = async (req, res) => {
         feasible(candidateTimetable, lecturers) < feasible(bestTimetable, lecturers)
       )
         bestTimetable = candidateTimetable;
-        if (feasible(candidateTimetable, lecturers) === 0)
-          break;
       i++;
     }
     bestTimetable = candidateTimetable;

@@ -1,5 +1,6 @@
 const { feasible } = require("./feasible");
 const { getDay } = require("./getDay");
+const { getEndTime } = require("./getEndTime");
 const { getHall } = require("./getHall");
 const { getRandomItem } = require("./getRandomItem");
 const isOverLapping = require("./isOverLapping");
@@ -11,7 +12,7 @@ module.exports.initialTimetable = (modules, groups, halls, days, times, lecturer
   while (true) {
     let timetable = generate(modules, groups, halls, days, times, lecturers);
 
-    if (feasible(timetable, lecturers, modules) < 10) {
+    if (feasible(timetable, lecturers, modules) < 11) {
       console.log("number of iteration to get initial timetable:", i)
       return timetable;
     }
@@ -24,40 +25,40 @@ module.exports.initialTimetable = (modules, groups, halls, days, times, lecturer
 const generate = (modules, groups, halls, days, times, lecturers) => {
   let timetable = [];
   // Assign modules, lecturer and groubs to timetable.
-  groups.forEach((g) => {
-    modules.forEach((m) => {
+  for (let g = 0; g < groups.length; g++) {
+    for (let m = 0; m < modules.length; m++) {
       if (
-        g.Semester_ID === m.Semester_ID &&
-        g.Department_ID === m.Department_ID
-        // && ( g.Group_ID === 2 || g.Group_ID === 3  || g.Group_ID === 4 || g.Group_ID === 5)
+        groups[g].Semester_ID === modules[m].Semester_ID &&
+        groups[g].Department_ID === modules[m].Department_ID
+        // && ( groups[g].Group_ID === 2 || groups[g].Group_ID === 3  || groups[g].Group_ID === 4 || groups[g].Group_ID === 5)
       ) {
-        if (m.Subject_Type_ID === 2) {
-          for (let i = 0; i < g.Group_Count / 25; i++) {
+        if (modules[m].Subject_Type_ID === 2) {
+          for (let i = 0; i < 3; i++) {
             timetable.push({
-              Module_ID: m.Module_ID,
-              Lecturer_ID: m.Lecturer_ID,
-              Group_ID: g.Group_ID,
-              Subject_Type_ID: m.Subject_Type_ID
+              Module_ID: modules[m].Module_ID,
+              Lecturer_ID: modules[m].Lecturer_ID,
+              Group_ID: groups[g].Group_ID,
+              Subject_Type_ID: modules[m].Subject_Type_ID
             });
           }
         } else {
           timetable.push({
-            Module_ID: m.Module_ID,
-            Lecturer_ID: m.Lecturer_ID,
-            Group_ID: g.Group_ID,
-            Subject_Type_ID: m.Subject_Type_ID
+            Module_ID: modules[m].Module_ID,
+            Lecturer_ID: modules[m].Lecturer_ID,
+            Group_ID: groups[g].Group_ID,
+            Subject_Type_ID: modules[m].Subject_Type_ID
           });
         }
 
         // timetable.push({
-        //   Module_ID: m.Module_ID,
-        //   Lecturer_ID: m.Lecturer_ID,
-        //   Group_ID: g.Group_ID,
-        //   Subject_Type_ID: m.Subject_Type_ID
+        //   Module_ID: modules[m].Module_ID,
+        //   Lecturer_ID: modules[m].Lecturer_ID,
+        //   Group_ID: groups[g].Group_ID,
+        //   Subject_Type_ID: modules[m].Subject_Type_ID
         // });
       }
-    });
-  });
+    }
+  }
 
   // Assign Hall to timetable
   for (let i = 0; i < timetable.length; i++) {
@@ -65,14 +66,14 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
       timetable[i].Hall_ID = timetable[i - 1].Hall_ID;
       continue;
     }
-    
-    groups.forEach((g) => {
-      modules.forEach((m) => {
-        if (timetable[i].Group_ID === g.Group_ID && timetable[i].Module_ID === m.Module_ID) {
-          timetable[i].Hall_ID = getHall(halls, g.Group_Count, m.Hall_Type_ID)
+
+    for (let g = 0; g < groups.length; g++) {
+      for (let m = 0; m < modules.length; m++) {
+        if (timetable[i].Group_ID === groups[g].Group_ID && timetable[i].Module_ID === modules[m].Module_ID) {
+          timetable[i].Hall_ID = getHall(halls, groups[g].Group_Count, modules[m].Hall_Type_ID)
         }
-      });
-    });
+      }
+    }
   }
 
   // Assign Days to timeTable
@@ -151,37 +152,3 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
 
   return timetable;
 };
-
-const getEndTime = (startTime, module) => {
-  if (module.Subject_Type_ID === 1) {
-
-    const endTime = `${
-      +startTime.slice(0, 2) + module.Credit_Theoretical < 10
-        ? `0${+startTime.slice(0, 2) + module.Credit_Theoretical}`
-        : +startTime.slice(0, 2) + module.Credit_Theoretical
-    }:00:00`;
-
-    return endTime;
-
-  } else if (module.Subject_Type_ID === 2) {
-
-    const endTime = `${
-      +startTime.slice(0, 2) + module.Credit_Practical < 10
-        ? `0${+startTime.slice(0, 2) + module.Credit_Practical}`
-        : +startTime.slice(0, 2) + module.Credit_Practical
-    }:00:00`;
-
-    return endTime;
-
-  } else if (module.Subject_Type_ID === 3) {
-
-    const endTime = `${
-      +startTime.slice(0, 2) + module.Credit_Tutorial < 10
-        ? `0${+startTime.slice(0, 2) + module.Credit_Tutorial}`
-        : +startTime.slice(0, 2) + module.Credit_Tutorial
-    }:00:00`;
-
-    return endTime;
-
-  }
-}
