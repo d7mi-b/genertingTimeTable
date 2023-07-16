@@ -78,11 +78,13 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
       case 5: { // assaign new time
         const moduleIndex1 = Math.floor(Math.random() * newTimetable.length);
 
+        const moduleData = modules.filter(m => m.Module_ID === newTimetable[moduleIndex1].Module_ID)[0]
+
         const time = getRandomItem(times);
 
         newTimetable[moduleIndex1].Start_Time = time.Start_Time;
 
-        newTimetable[moduleIndex1].End_Time = getEndTime(time.Start_Time, newTimetable[moduleIndex1]);
+        newTimetable[moduleIndex1].End_Time = getEndTime(+time.Start_Time.slice(0, 2), moduleData);
 
       };
 
@@ -90,8 +92,8 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         break;
     }
 
-    if (feasible(newTimetable, lecturers) === 0)
-      console.log('there is timetable with 0 conflicts wooow!')
+    // if (feasible(newTimetable, lecturers) === 0)
+      // console.log('there is timetable with 0 conflicts wooow!')
     // check if the new timetable is feasible
     if (feasible(newTimetable, lecturers) < feasible(candidateTimetable, lecturers)) {
       neighbors.push(newTimetable);

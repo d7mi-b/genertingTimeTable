@@ -12,7 +12,7 @@ module.exports.feasible = (neighborhood, lecturers) => {
 
     for (let i = 0; i < timetable.length; i++) {
 
-        if (conflicts >= 10)
+        if (conflicts >= timetable.length -  0.85 * timetable.length)
             return conflicts;
 
         // To check if the day its available to lecturer or not
@@ -21,12 +21,12 @@ module.exports.feasible = (neighborhood, lecturers) => {
             conflicts = conflicts + 1;
 
         //if The end time is out of limit it's not acceptable
-        if(timetable[i].End_Time > "18:00:00"){
+        if(timetable[i].End_Time > "17:00:00"){
             conflicts = conflicts + 1;
         }
 
         for (let j = i + 1; j < timetable.length; j++) {
-            if (conflicts >= 10)
+            if (conflicts >= timetable.length -  0.85 * timetable.length)
                 return conflicts;
 
             // if the same lecturer is assigned to different subjects in same day at same time it's a conflect

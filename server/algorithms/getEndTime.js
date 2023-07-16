@@ -1,33 +1,32 @@
-module.exports.getEndTime = (startTime, module) => {
-    if (module.Subject_Type_ID === 1) {
+module.exports.getEndTime = (startTime, modules) => {
 
-        const endTime = `${
-            +startTime.slice(0, 2) + module.Credit_Theoretical < 10
-            ? `0${+startTime.slice(0, 2) + module.Credit_Theoretical}`
-            : +startTime.slice(0, 2) + module.Credit_Theoretical
-        }:00:00`;
+    if (!modules.Credit_Theoretical)
+        console.log(modules)
+
+    if (modules.Subject_Type_ID === 1 && modules.Credit_Theoretical) {
+        
+        if (startTime + modules.Credit_Theoretical < 10)
+            return `0${startTime + modules.Credit_Theoretical}:00:00`;
+
+        return `${startTime + modules.Credit_Theoretical}:00:00`;
+
+    } 
     
-        return endTime;
+    if (modules.Subject_Type_ID === 2 && modules.Credit_Practical) {
 
-    } else if (module.Subject_Type_ID === 2) {
+        if (startTime + modules.Credit_Practical < 10)
+            return `0${startTime + modules.Credit_Practical}:00:00`;
 
-        const endTime = `${
-            +startTime.slice(0, 2) + module.Credit_Practical < 10
-            ? `0${+startTime.slice(0, 2) + module.Credit_Practical}`
-            : +startTime.slice(0, 2) + module.Credit_Practical
-        }:00:00`;
+        return `${startTime + modules.Credit_Practical}:00:00`;
+
+    } 
     
-        return endTime;
+    if (modules.Subject_Type_ID === 3 && modules.Credit_Tutorial) {
 
-    } else if (module.Subject_Type_ID === 3) {
-
-        const endTime = `${
-            +startTime.slice(0, 2) + module.Credit_Tutorial < 10
-            ? `0${+startTime.slice(0, 2) + module.Credit_Tutorial}`
-            : +startTime.slice(0, 2) + module.Credit_Tutorial
-        }:00:00`;
-    
-        return endTime;
+        if (startTime + modules.Credit_Tutorial < 10)
+            return `0${startTime + modules.Credit_Tutorial}:00:00`;
+        
+        return `${startTime + modules.Credit_Tutorial}:00:00`;
 
     }
 }

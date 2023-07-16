@@ -12,7 +12,7 @@ module.exports.initialTimetable = (modules, groups, halls, days, times, lecturer
   while (true) {
     let timetable = generate(modules, groups, halls, days, times, lecturers);
 
-    if (feasible(timetable, lecturers, modules) < 11) {
+    if (feasible(timetable, lecturers, modules) < timetable.length -  0.85 * timetable.length) {
       console.log("number of iteration to get initial timetable:", i)
       return timetable;
     }
@@ -30,7 +30,6 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
       if (
         groups[g].Semester_ID === modules[m].Semester_ID &&
         groups[g].Department_ID === modules[m].Department_ID
-        // && ( groups[g].Group_ID === 2 || groups[g].Group_ID === 3  || groups[g].Group_ID === 4 || groups[g].Group_ID === 5)
       ) {
         if (modules[m].Subject_Type_ID === 2) {
           for (let i = 0; i < 3; i++) {
@@ -49,13 +48,6 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
             Subject_Type_ID: modules[m].Subject_Type_ID
           });
         }
-
-        // timetable.push({
-        //   Module_ID: modules[m].Module_ID,
-        //   Lecturer_ID: modules[m].Lecturer_ID,
-        //   Group_ID: groups[g].Group_ID,
-        //   Subject_Type_ID: modules[m].Subject_Type_ID
-        // });
       }
     }
   }
@@ -110,40 +102,40 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
 
         timetable[i].Start_Time = time.Start_Time;
 
-        timetable[i].End_Time = getEndTime(time.Start_Time, modules[m])
-      }
+        timetable[i].End_Time = getEndTime(+time.Start_Time.slice(0, 2), modules[m]);
 
-      for (let j = 0; j < i; j++) {
-        if (i === j) continue;
-        
-        if (
-          (
-            timetable[i].Hall_ID === timetable[j].Hall_ID ||
-            timetable[i].Lecturer_ID === timetable[j].Lecturer_ID ||
+        for (let j = 0; j < i; j++) {
+          if (i === j) continue;
+          
+          if (
             (
-              timetable[i].Group_ID === timetable[j].Group_ID && 
-              (timetable[i].Subject_Type_ID !== 2 || timetable[j].Subject_Type_ID !== 2)
-            )
-          ) && 
-          timetable[i].Day_ID === timetable[j].Day_ID &&
-          isOverLapping(timetable[i], timetable[j])
-      ) {
-          while (isOverLapping(timetable[i], timetable[j])) {
-            for (let k = 1; k < times.length; k++) {
-              let time = times[k];
-  
-              timetable[i].Start_Time = time.Start_Time;
-  
-              timetable[i].End_Time = getEndTime(time.Start_Time, modules[m])
+              timetable[i].Hall_ID === timetable[j].Hall_ID ||
+              timetable[i].Lecturer_ID === timetable[j].Lecturer_ID ||
+              (
+                timetable[i].Group_ID === timetable[j].Group_ID && 
+                (timetable[i].Subject_Type_ID !== 2 || timetable[j].Subject_Type_ID !== 2)
+              )
+            ) && 
+            timetable[i].Day_ID === timetable[j].Day_ID &&
+            isOverLapping(timetable[i], timetable[j])
+        ) {
+            while (isOverLapping(timetable[i], timetable[j])) {
+              for (let k = 1; k < times.length; k++) {
+                let time = times[k];
+    
+                timetable[i].Start_Time = time.Start_Time;
+    
+                timetable[i].End_Time = getEndTime(+time.Start_Time.slice(0, 2), modules[m])
+    
+                if (!isOverLapping(timetable[i], timetable[j]))
+                  break;
+              }
   
               if (!isOverLapping(timetable[i], timetable[j]))
                 break;
+  
+              timetable[i].Day_ID = getDay(days, lecturers, timetable[i])
             }
-
-            if (!isOverLapping(timetable[i], timetable[j]))
-              break;
-
-            timetable[i].Day_ID = getDay(days, lecturers, timetable[i])
           }
         }
       }
