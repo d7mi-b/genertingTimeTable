@@ -15,7 +15,7 @@ module.exports.fitness = (timetable, modules, lecturers, groups, days, weights, 
 
   fitness += lecturerAvailabilty(timetable, lecturers) * weights.lecturerAvailabilty;
   fitness += timeGap(timetable, groups, days) * 1000 * weights.timeGap;
-  fitness += labsOnSameDay(timetable, modules, groups) * 10 * weights.labsOnSameDay;
+  fitness += labsOnSameDay(timetable, modules, groups, days) * 10 * weights.labsOnSameDay;
   fitness += dayOFF(timetable, groups) * weights.dayOFF;
   fitness += lecturesOnDay(timetable, groups, days) * weights.lecturesOnDay;
   fitness += groupsTime(timetable, modules, groups) * weights.groupsTimes;

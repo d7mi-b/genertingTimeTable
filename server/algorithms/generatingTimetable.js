@@ -67,7 +67,7 @@ module.exports.generatingTimetable = async (req, res) => {
     // Start the search loop
     let i = 0;
 
-    while (i < 500) {
+    while (feasible(bestTimetable, lecturers) !== 0) {
       
       // Generate the neighborhood of the current candidate timetable
       const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times, lecturers);
@@ -149,8 +149,8 @@ const timetableForTest = [
     "Lecturer_ID": 17,
     "Group_ID": 1,
     "Subject_Type_ID": 1,
-    "Hall_ID": 10,
-    "Day_ID": 2,
+    "Hall_ID": 6,
+    "Day_ID": 1,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
   },
@@ -159,28 +159,28 @@ const timetableForTest = [
     "Lecturer_ID": 19,
     "Group_ID": 1,
     "Subject_Type_ID": 1,
-    "Hall_ID": 5,
-    "Day_ID": 2,
-    "Start_Time": "10:00:00",
-    "End_Time": "12:00:00"
+    "Hall_ID": 6,
+    "Day_ID": 3,
+    "Start_Time": "08:00:00",
+    "End_Time": "10:00:00"
   },
   {
     "Module_ID": 3,
     "Lecturer_ID": 35,
     "Group_ID": 1,
     "Subject_Type_ID": 1,
-    "Hall_ID": 6,
-    "Day_ID": 4,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
+    "Hall_ID": 10,
+    "Day_ID": 3,
+    "Start_Time": "10:00:00",
+    "End_Time": "12:00:00"
   },
   {
     "Module_ID": 4,
     "Lecturer_ID": 23,
     "Group_ID": 1,
     "Subject_Type_ID": 1,
-    "Hall_ID": 6,
-    "Day_ID": 1,
+    "Hall_ID": 10,
+    "Day_ID": 2,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
   },
@@ -189,8 +189,8 @@ const timetableForTest = [
     "Lecturer_ID": 20,
     "Group_ID": 1,
     "Subject_Type_ID": 1,
-    "Hall_ID": 10,
-    "Day_ID": 3,
+    "Hall_ID": 5,
+    "Day_ID": 5,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
   },
@@ -201,8 +201,8 @@ const timetableForTest = [
     "Subject_Type_ID": 1,
     "Hall_ID": 6,
     "Day_ID": 3,
-    "Start_Time": "10:00:00",
-    "End_Time": "12:00:00"
+    "Start_Time": "12:00:00",
+    "End_Time": "14:00:00"
   },
   {
     "Module_ID": 7,
@@ -210,19 +210,19 @@ const timetableForTest = [
     "Group_ID": 1,
     "Subject_Type_ID": 1,
     "Hall_ID": 6,
-    "Day_ID": 1,
-    "Start_Time": "10:00:00",
-    "End_Time": "11:00:00"
+    "Day_ID": 4,
+    "Start_Time": "08:00:00",
+    "End_Time": "09:00:00"
   },
   {
     "Module_ID": 8,
     "Lecturer_ID": 17,
     "Group_ID": 1,
     "Subject_Type_ID": 3,
-    "Hall_ID": 5,
-    "Day_ID": 5,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
+    "Hall_ID": 10,
+    "Day_ID": 2,
+    "Start_Time": "10:00:00",
+    "End_Time": "12:00:00"
   },
   {
     "Module_ID": 9,
@@ -230,9 +230,9 @@ const timetableForTest = [
     "Group_ID": 1,
     "Subject_Type_ID": 2,
     "Hall_ID": 4,
-    "Day_ID": 2,
-    "Start_Time": "12:00:00",
-    "End_Time": "14:00:00"
+    "Day_ID": 4,
+    "Start_Time": "09:00:00",
+    "End_Time": "11:00:00"
   },
   {
     "Module_ID": 9,
@@ -240,37 +240,17 @@ const timetableForTest = [
     "Group_ID": 1,
     "Subject_Type_ID": 2,
     "Hall_ID": 4,
-    "Day_ID": 2,
-    "Start_Time": "14:00:00",
-    "End_Time": "16:00:00"
-  },
-  {
-    "Module_ID": 9,
-    "Lecturer_ID": 22,
-    "Group_ID": 1,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 4,
-    "Day_ID": 2,
-    "Start_Time": "16:00:00",
-    "End_Time": "18:00:00"
-  },
-  {
-    "Module_ID": 10,
-    "Lecturer_ID": 37,
-    "Group_ID": 1,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 16,
-    "Day_ID": 1,
+    "Day_ID": 4,
     "Start_Time": "11:00:00",
     "End_Time": "13:00:00"
   },
   {
-    "Module_ID": 10,
-    "Lecturer_ID": 37,
+    "Module_ID": 9,
+    "Lecturer_ID": 22,
     "Group_ID": 1,
     "Subject_Type_ID": 2,
-    "Hall_ID": 16,
-    "Day_ID": 1,
+    "Hall_ID": 4,
+    "Day_ID": 4,
     "Start_Time": "13:00:00",
     "End_Time": "15:00:00"
   },
@@ -280,9 +260,29 @@ const timetableForTest = [
     "Group_ID": 1,
     "Subject_Type_ID": 2,
     "Hall_ID": 16,
-    "Day_ID": 1,
-    "Start_Time": "15:00:00",
-    "End_Time": "17:00:00"
+    "Day_ID": 4,
+    "Start_Time": "09:00:00",
+    "End_Time": "11:00:00"
+  },
+  {
+    "Module_ID": 10,
+    "Lecturer_ID": 37,
+    "Group_ID": 1,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 16,
+    "Day_ID": 4,
+    "Start_Time": "11:00:00",
+    "End_Time": "13:00:00"
+  },
+  {
+    "Module_ID": 10,
+    "Lecturer_ID": 37,
+    "Group_ID": 1,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 16,
+    "Day_ID": 4,
+    "Start_Time": "13:00:00",
+    "End_Time": "15:00:00"
   },
   {
     "Module_ID": 11,
@@ -309,7 +309,7 @@ const timetableForTest = [
     "Lecturer_ID": 21,
     "Group_ID": 1,
     "Subject_Type_ID": 2,
-    "Hall_ID": 1,
+    "Hall_ID": 7,
     "Day_ID": 5,
     "Start_Time": "14:00:00",
     "End_Time": "16:00:00"
@@ -320,17 +320,17 @@ const timetableForTest = [
     "Group_ID": 2,
     "Subject_Type_ID": 1,
     "Hall_ID": 10,
-    "Day_ID": 4,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
+    "Day_ID": 2,
+    "Start_Time": "12:00:00",
+    "End_Time": "14:00:00"
   },
   {
     "Module_ID": 13,
     "Lecturer_ID": 1,
     "Group_ID": 2,
     "Subject_Type_ID": 1,
-    "Hall_ID": 5,
-    "Day_ID": 1,
+    "Hall_ID": 6,
+    "Day_ID": 5,
     "Start_Time": "08:00:00",
     "End_Time": "11:00:00"
   },
@@ -341,6 +341,16 @@ const timetableForTest = [
     "Subject_Type_ID": 2,
     "Hall_ID": 15,
     "Day_ID": 4,
+    "Start_Time": "08:00:00",
+    "End_Time": "10:00:00"
+  },
+  {
+    "Module_ID": 14,
+    "Lecturer_ID": 26,
+    "Group_ID": 2,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 15,
+    "Day_ID": 4,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
   },
@@ -355,81 +365,71 @@ const timetableForTest = [
     "End_Time": "14:00:00"
   },
   {
-    "Module_ID": 14,
-    "Lecturer_ID": 26,
+    "Module_ID": 15,
+    "Lecturer_ID": 25,
     "Group_ID": 2,
     "Subject_Type_ID": 2,
-    "Hall_ID": 15,
-    "Day_ID": 4,
-    "Start_Time": "14:00:00",
-    "End_Time": "16:00:00"
+    "Hall_ID": 13,
+    "Day_ID": 5,
+    "Start_Time": "11:00:00",
+    "End_Time": "13:00:00"
   },
   {
     "Module_ID": 15,
     "Lecturer_ID": 25,
     "Group_ID": 2,
     "Subject_Type_ID": 2,
-    "Hall_ID": 1,
+    "Hall_ID": 13,
+    "Day_ID": 5,
+    "Start_Time": "13:00:00",
+    "End_Time": "15:00:00"
+  },
+  {
+    "Module_ID": 15,
+    "Lecturer_ID": 25,
+    "Group_ID": 2,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 13,
+    "Day_ID": 5,
+    "Start_Time": "15:00:00",
+    "End_Time": "17:00:00"
+  },
+  {
+    "Module_ID": 16,
+    "Lecturer_ID": 34,
+    "Group_ID": 2,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 11,
+    "Day_ID": 4,
+    "Start_Time": "08:00:00",
+    "End_Time": "10:00:00"
+  },
+  {
+    "Module_ID": 16,
+    "Lecturer_ID": 34,
+    "Group_ID": 2,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 11,
     "Day_ID": 4,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
   },
   {
-    "Module_ID": 15,
-    "Lecturer_ID": 25,
+    "Module_ID": 16,
+    "Lecturer_ID": 34,
     "Group_ID": 2,
     "Subject_Type_ID": 2,
-    "Hall_ID": 1,
+    "Hall_ID": 11,
     "Day_ID": 4,
     "Start_Time": "12:00:00",
     "End_Time": "14:00:00"
-  },
-  {
-    "Module_ID": 15,
-    "Lecturer_ID": 25,
-    "Group_ID": 2,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 1,
-    "Day_ID": 4,
-    "Start_Time": "14:00:00",
-    "End_Time": "16:00:00"
-  },
-  {
-    "Module_ID": 16,
-    "Lecturer_ID": 34,
-    "Group_ID": 2,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 7,
-    "Day_ID": 4,
-    "Start_Time": "10:00:00",
-    "End_Time": "12:00:00"
-  },
-  {
-    "Module_ID": 16,
-    "Lecturer_ID": 34,
-    "Group_ID": 2,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 7,
-    "Day_ID": 4,
-    "Start_Time": "12:00:00",
-    "End_Time": "14:00:00"
-  },
-  {
-    "Module_ID": 16,
-    "Lecturer_ID": 34,
-    "Group_ID": 2,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 7,
-    "Day_ID": 4,
-    "Start_Time": "14:00:00",
-    "End_Time": "16:00:00"
   },
   {
     "Module_ID": 17,
     "Lecturer_ID": 24,
     "Group_ID": 2,
     "Subject_Type_ID": 1,
-    "Hall_ID": 6,
+    "Hall_ID": 5,
     "Day_ID": 2,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
@@ -439,7 +439,7 @@ const timetableForTest = [
     "Lecturer_ID": 24,
     "Group_ID": 2,
     "Subject_Type_ID": 1,
-    "Hall_ID": 10,
+    "Hall_ID": 6,
     "Day_ID": 2,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
@@ -449,20 +449,20 @@ const timetableForTest = [
     "Lecturer_ID": 17,
     "Group_ID": 2,
     "Subject_Type_ID": 1,
-    "Hall_ID": 10,
-    "Day_ID": 1,
-    "Start_Time": "11:00:00",
-    "End_Time": "14:00:00"
+    "Hall_ID": 5,
+    "Day_ID": 3,
+    "Start_Time": "08:00:00",
+    "End_Time": "11:00:00"
   },
   {
     "Module_ID": 20,
     "Lecturer_ID": 16,
     "Group_ID": 2,
     "Subject_Type_ID": 1,
-    "Hall_ID": 6,
+    "Hall_ID": 10,
     "Day_ID": 1,
-    "Start_Time": "14:00:00",
-    "End_Time": "17:00:00"
+    "Start_Time": "09:00:00",
+    "End_Time": "11:00:00"
   },
   {
     "Module_ID": 21,
@@ -470,17 +470,17 @@ const timetableForTest = [
     "Group_ID": 2,
     "Subject_Type_ID": 1,
     "Hall_ID": 10,
-    "Day_ID": 5,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
+    "Day_ID": 3,
+    "Start_Time": "13:00:00",
+    "End_Time": "15:00:00"
   },
   {
     "Module_ID": 22,
     "Lecturer_ID": 8,
     "Group_ID": 3,
     "Subject_Type_ID": 1,
-    "Hall_ID": 10,
-    "Day_ID": 1,
+    "Hall_ID": 9,
+    "Day_ID": 2,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
   },
@@ -490,7 +490,7 @@ const timetableForTest = [
     "Group_ID": 3,
     "Subject_Type_ID": 2,
     "Hall_ID": 15,
-    "Day_ID": 5,
+    "Day_ID": 3,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
   },
@@ -500,7 +500,7 @@ const timetableForTest = [
     "Group_ID": 3,
     "Subject_Type_ID": 2,
     "Hall_ID": 15,
-    "Day_ID": 5,
+    "Day_ID": 3,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
   },
@@ -510,7 +510,7 @@ const timetableForTest = [
     "Group_ID": 3,
     "Subject_Type_ID": 2,
     "Hall_ID": 15,
-    "Day_ID": 5,
+    "Day_ID": 3,
     "Start_Time": "12:00:00",
     "End_Time": "14:00:00"
   },
@@ -519,7 +519,7 @@ const timetableForTest = [
     "Lecturer_ID": 5,
     "Group_ID": 3,
     "Subject_Type_ID": 1,
-    "Hall_ID": 3,
+    "Hall_ID": 6,
     "Day_ID": 1,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
@@ -529,17 +529,27 @@ const timetableForTest = [
     "Lecturer_ID": 2,
     "Group_ID": 3,
     "Subject_Type_ID": 1,
-    "Hall_ID": 5,
-    "Day_ID": 4,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
+    "Hall_ID": 3,
+    "Day_ID": 2,
+    "Start_Time": "10:00:00",
+    "End_Time": "12:00:00"
   },
   {
     "Module_ID": 26,
     "Lecturer_ID": 1,
     "Group_ID": 3,
     "Subject_Type_ID": 1,
-    "Hall_ID": 5,
+    "Hall_ID": 9,
+    "Day_ID": 4,
+    "Start_Time": "08:00:00",
+    "End_Time": "10:00:00"
+  },
+  {
+    "Module_ID": 27,
+    "Lecturer_ID": 28,
+    "Group_ID": 3,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 8,
     "Day_ID": 3,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
@@ -550,17 +560,7 @@ const timetableForTest = [
     "Group_ID": 3,
     "Subject_Type_ID": 2,
     "Hall_ID": 8,
-    "Day_ID": 5,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
-  },
-  {
-    "Module_ID": 27,
-    "Lecturer_ID": 28,
-    "Group_ID": 3,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 8,
-    "Day_ID": 2,
+    "Day_ID": 3,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
   },
@@ -570,7 +570,7 @@ const timetableForTest = [
     "Group_ID": 3,
     "Subject_Type_ID": 2,
     "Hall_ID": 8,
-    "Day_ID": 2,
+    "Day_ID": 3,
     "Start_Time": "12:00:00",
     "End_Time": "14:00:00"
   },
@@ -590,9 +590,9 @@ const timetableForTest = [
     "Group_ID": 3,
     "Subject_Type_ID": 2,
     "Hall_ID": 14,
-    "Day_ID": 5,
-    "Start_Time": "10:00:00",
-    "End_Time": "12:00:00"
+    "Day_ID": 4,
+    "Start_Time": "12:00:00",
+    "End_Time": "14:00:00"
   },
   {
     "Module_ID": 28,
@@ -600,9 +600,9 @@ const timetableForTest = [
     "Group_ID": 3,
     "Subject_Type_ID": 2,
     "Hall_ID": 14,
-    "Day_ID": 5,
-    "Start_Time": "12:00:00",
-    "End_Time": "14:00:00"
+    "Day_ID": 4,
+    "Start_Time": "14:00:00",
+    "End_Time": "16:00:00"
   },
   {
     "Module_ID": 29,
@@ -611,15 +611,35 @@ const timetableForTest = [
     "Subject_Type_ID": 1,
     "Hall_ID": 10,
     "Day_ID": 1,
-    "Start_Time": "14:00:00",
-    "End_Time": "17:00:00"
+    "Start_Time": "12:00:00",
+    "End_Time": "14:00:00"
   },
   {
     "Module_ID": 30,
     "Lecturer_ID": 36,
     "Group_ID": 3,
     "Subject_Type_ID": 1,
-    "Hall_ID": 10,
+    "Hall_ID": 5,
+    "Day_ID": 5,
+    "Start_Time": "15:00:00",
+    "End_Time": "17:00:00"
+  },
+  {
+    "Module_ID": 31,
+    "Lecturer_ID": 29,
+    "Group_ID": 3,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 1,
+    "Day_ID": 3,
+    "Start_Time": "08:00:00",
+    "End_Time": "10:00:00"
+  },
+  {
+    "Module_ID": 31,
+    "Lecturer_ID": 29,
+    "Group_ID": 3,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 1,
     "Day_ID": 3,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
@@ -629,28 +649,8 @@ const timetableForTest = [
     "Lecturer_ID": 29,
     "Group_ID": 3,
     "Subject_Type_ID": 2,
-    "Hall_ID": 13,
-    "Day_ID": 2,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
-  },
-  {
-    "Module_ID": 31,
-    "Lecturer_ID": 29,
-    "Group_ID": 3,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 13,
-    "Day_ID": 2,
-    "Start_Time": "10:00:00",
-    "End_Time": "12:00:00"
-  },
-  {
-    "Module_ID": 31,
-    "Lecturer_ID": 29,
-    "Group_ID": 3,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 13,
-    "Day_ID": 2,
+    "Hall_ID": 1,
+    "Day_ID": 3,
     "Start_Time": "12:00:00",
     "End_Time": "14:00:00"
   },
@@ -689,10 +689,10 @@ const timetableForTest = [
     "Lecturer_ID": 36,
     "Group_ID": 3,
     "Subject_Type_ID": 3,
-    "Hall_ID": 9,
-    "Day_ID": 5,
+    "Hall_ID": 3,
+    "Day_ID": 3,
     "Start_Time": "15:00:00",
-    "End_Time": "NaN:00:00"
+    "End_Time": "17:00:00"
   },
   {
     "Module_ID": 34,
@@ -709,17 +709,17 @@ const timetableForTest = [
     "Lecturer_ID": 2,
     "Group_ID": 4,
     "Subject_Type_ID": 1,
-    "Hall_ID": 6,
-    "Day_ID": 2,
-    "Start_Time": "10:00:00",
-    "End_Time": "12:00:00"
+    "Hall_ID": 3,
+    "Day_ID": 4,
+    "Start_Time": "08:00:00",
+    "End_Time": "10:00:00"
   },
   {
     "Module_ID": 36,
     "Lecturer_ID": 2,
     "Group_ID": 4,
     "Subject_Type_ID": 1,
-    "Hall_ID": 6,
+    "Hall_ID": 9,
     "Day_ID": 4,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
@@ -730,77 +730,77 @@ const timetableForTest = [
     "Group_ID": 4,
     "Subject_Type_ID": 2,
     "Hall_ID": 2,
-    "Day_ID": 5,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
-  },
-  {
-    "Module_ID": 37,
-    "Lecturer_ID": 32,
-    "Group_ID": 4,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 2,
-    "Day_ID": 5,
-    "Start_Time": "10:00:00",
-    "End_Time": "12:00:00"
-  },
-  {
-    "Module_ID": 37,
-    "Lecturer_ID": 32,
-    "Group_ID": 4,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 2,
-    "Day_ID": 5,
-    "Start_Time": "12:00:00",
-    "End_Time": "14:00:00"
-  },
-  {
-    "Module_ID": 38,
-    "Lecturer_ID": 29,
-    "Group_ID": 4,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 11,
-    "Day_ID": 5,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
-  },
-  {
-    "Module_ID": 38,
-    "Lecturer_ID": 29,
-    "Group_ID": 4,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 11,
-    "Day_ID": 5,
-    "Start_Time": "10:00:00",
-    "End_Time": "12:00:00"
-  },
-  {
-    "Module_ID": 38,
-    "Lecturer_ID": 29,
-    "Group_ID": 4,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 11,
-    "Day_ID": 5,
-    "Start_Time": "12:00:00",
-    "End_Time": "14:00:00"
-  },
-  {
-    "Module_ID": 39,
-    "Lecturer_ID": 34,
-    "Group_ID": 4,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 11,
     "Day_ID": 1,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
   },
   {
+    "Module_ID": 37,
+    "Lecturer_ID": 32,
+    "Group_ID": 4,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 2,
+    "Day_ID": 1,
+    "Start_Time": "12:00:00",
+    "End_Time": "14:00:00"
+  },
+  {
+    "Module_ID": 37,
+    "Lecturer_ID": 32,
+    "Group_ID": 4,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 2,
+    "Day_ID": 1,
+    "Start_Time": "14:00:00",
+    "End_Time": "16:00:00"
+  },
+  {
+    "Module_ID": 38,
+    "Lecturer_ID": 29,
+    "Group_ID": 4,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 13,
+    "Day_ID": 2,
+    "Start_Time": "08:00:00",
+    "End_Time": "10:00:00"
+  },
+  {
+    "Module_ID": 38,
+    "Lecturer_ID": 29,
+    "Group_ID": 4,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 13,
+    "Day_ID": 2,
+    "Start_Time": "10:00:00",
+    "End_Time": "12:00:00"
+  },
+  {
+    "Module_ID": 38,
+    "Lecturer_ID": 29,
+    "Group_ID": 4,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 13,
+    "Day_ID": 2,
+    "Start_Time": "12:00:00",
+    "End_Time": "14:00:00"
+  },
+  {
     "Module_ID": 39,
     "Lecturer_ID": 34,
     "Group_ID": 4,
     "Subject_Type_ID": 2,
-    "Hall_ID": 11,
-    "Day_ID": 3,
+    "Hall_ID": 7,
+    "Day_ID": 2,
+    "Start_Time": "08:00:00",
+    "End_Time": "10:00:00"
+  },
+  {
+    "Module_ID": 39,
+    "Lecturer_ID": 34,
+    "Group_ID": 4,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 7,
+    "Day_ID": 2,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
   },
@@ -809,8 +809,8 @@ const timetableForTest = [
     "Lecturer_ID": 34,
     "Group_ID": 4,
     "Subject_Type_ID": 2,
-    "Hall_ID": 11,
-    "Day_ID": 3,
+    "Hall_ID": 7,
+    "Day_ID": 2,
     "Start_Time": "12:00:00",
     "End_Time": "14:00:00"
   },
@@ -820,19 +820,19 @@ const timetableForTest = [
     "Group_ID": 4,
     "Subject_Type_ID": 1,
     "Hall_ID": 9,
-    "Day_ID": 4,
-    "Start_Time": "12:00:00",
-    "End_Time": "15:00:00"
+    "Day_ID": 3,
+    "Start_Time": "08:00:00",
+    "End_Time": "11:00:00"
   },
   {
     "Module_ID": 41,
     "Lecturer_ID": 25,
     "Group_ID": 4,
     "Subject_Type_ID": 1,
-    "Hall_ID": 10,
-    "Day_ID": 2,
-    "Start_Time": "12:00:00",
-    "End_Time": "14:00:00"
+    "Hall_ID": 9,
+    "Day_ID": 3,
+    "Start_Time": "11:00:00",
+    "End_Time": "13:00:00"
   },
   {
     "Module_ID": 42,
@@ -840,7 +840,7 @@ const timetableForTest = [
     "Group_ID": 4,
     "Subject_Type_ID": 2,
     "Hall_ID": 1,
-    "Day_ID": 5,
+    "Day_ID": 2,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
   },
@@ -850,7 +850,7 @@ const timetableForTest = [
     "Group_ID": 4,
     "Subject_Type_ID": 2,
     "Hall_ID": 1,
-    "Day_ID": 5,
+    "Day_ID": 2,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
   },
@@ -860,7 +860,7 @@ const timetableForTest = [
     "Group_ID": 4,
     "Subject_Type_ID": 2,
     "Hall_ID": 1,
-    "Day_ID": 5,
+    "Day_ID": 2,
     "Start_Time": "12:00:00",
     "End_Time": "14:00:00"
   },
@@ -870,7 +870,7 @@ const timetableForTest = [
     "Group_ID": 4,
     "Subject_Type_ID": 1,
     "Hall_ID": 3,
-    "Day_ID": 1,
+    "Day_ID": 4,
     "Start_Time": "12:00:00",
     "End_Time": "14:00:00"
   },
@@ -879,17 +879,17 @@ const timetableForTest = [
     "Lecturer_ID": 1,
     "Group_ID": 5,
     "Subject_Type_ID": 1,
-    "Hall_ID": 6,
-    "Day_ID": 3,
-    "Start_Time": "12:00:00",
-    "End_Time": "14:00:00"
+    "Hall_ID": 9,
+    "Day_ID": 5,
+    "Start_Time": "11:00:00",
+    "End_Time": "13:00:00"
   },
   {
     "Module_ID": 45,
     "Lecturer_ID": 4,
     "Group_ID": 5,
     "Subject_Type_ID": 1,
-    "Hall_ID": 3,
+    "Hall_ID": 6,
     "Day_ID": 2,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
@@ -899,20 +899,10 @@ const timetableForTest = [
     "Lecturer_ID": 16,
     "Group_ID": 5,
     "Subject_Type_ID": 1,
-    "Hall_ID": 9,
+    "Hall_ID": 6,
     "Day_ID": 1,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
-  },
-  {
-    "Module_ID": 47,
-    "Lecturer_ID": 21,
-    "Group_ID": 5,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 13,
-    "Day_ID": 5,
-    "Start_Time": "08:00:00",
-    "End_Time": "10:00:00"
+    "Start_Time": "15:00:00",
+    "End_Time": "17:00:00"
   },
   {
     "Module_ID": 47,
@@ -921,8 +911,8 @@ const timetableForTest = [
     "Subject_Type_ID": 2,
     "Hall_ID": 13,
     "Day_ID": 4,
-    "Start_Time": "12:00:00",
-    "End_Time": "14:00:00"
+    "Start_Time": "09:00:00",
+    "End_Time": "11:00:00"
   },
   {
     "Module_ID": 47,
@@ -931,16 +921,36 @@ const timetableForTest = [
     "Subject_Type_ID": 2,
     "Hall_ID": 13,
     "Day_ID": 4,
-    "Start_Time": "14:00:00",
-    "End_Time": "16:00:00"
+    "Start_Time": "11:00:00",
+    "End_Time": "13:00:00"
+  },
+  {
+    "Module_ID": 47,
+    "Lecturer_ID": 21,
+    "Group_ID": 5,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 13,
+    "Day_ID": 4,
+    "Start_Time": "13:00:00",
+    "End_Time": "15:00:00"
   },
   {
     "Module_ID": 48,
     "Lecturer_ID": 32,
     "Group_ID": 5,
     "Subject_Type_ID": 2,
-    "Hall_ID": 1,
-    "Day_ID": 1,
+    "Hall_ID": 7,
+    "Day_ID": 3,
+    "Start_Time": "08:00:00",
+    "End_Time": "10:00:00"
+  },
+  {
+    "Module_ID": 48,
+    "Lecturer_ID": 32,
+    "Group_ID": 5,
+    "Subject_Type_ID": 2,
+    "Hall_ID": 7,
+    "Day_ID": 3,
     "Start_Time": "10:00:00",
     "End_Time": "12:00:00"
   },
@@ -949,28 +959,18 @@ const timetableForTest = [
     "Lecturer_ID": 32,
     "Group_ID": 5,
     "Subject_Type_ID": 2,
-    "Hall_ID": 1,
-    "Day_ID": 1,
+    "Hall_ID": 7,
+    "Day_ID": 3,
     "Start_Time": "12:00:00",
     "End_Time": "14:00:00"
-  },
-  {
-    "Module_ID": 48,
-    "Lecturer_ID": 32,
-    "Group_ID": 5,
-    "Subject_Type_ID": 2,
-    "Hall_ID": 7,
-    "Day_ID": 1,
-    "Start_Time": "14:00:00",
-    "End_Time": "16:00:00"
   },
   {
     "Module_ID": 49,
     "Lecturer_ID": 21,
     "Group_ID": 5,
     "Subject_Type_ID": 2,
-    "Hall_ID": 11,
-    "Day_ID": 3,
+    "Hall_ID": 13,
+    "Day_ID": 1,
     "Start_Time": "08:00:00",
     "End_Time": "10:00:00"
   },
@@ -979,19 +979,19 @@ const timetableForTest = [
     "Lecturer_ID": 21,
     "Group_ID": 5,
     "Subject_Type_ID": 2,
-    "Hall_ID": 11,
+    "Hall_ID": 13,
     "Day_ID": 1,
-    "Start_Time": "12:00:00",
-    "End_Time": "14:00:00"
+    "Start_Time": "10:00:00",
+    "End_Time": "12:00:00"
   },
   {
     "Module_ID": 49,
     "Lecturer_ID": 21,
     "Group_ID": 5,
     "Subject_Type_ID": 2,
-    "Hall_ID": 11,
+    "Hall_ID": 13,
     "Day_ID": 1,
-    "Start_Time": "14:00:00",
-    "End_Time": "16:00:00"
+    "Start_Time": "12:00:00",
+    "End_Time": "14:00:00"
   }
 ]

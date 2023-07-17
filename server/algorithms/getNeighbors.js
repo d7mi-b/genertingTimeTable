@@ -19,8 +19,13 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         // randomly select two classes from the timetable
         const moduleIndex1 = Math.floor(Math.random() * newTimetable.length);
         const moduleIndex2 = Math.floor(Math.random() * newTimetable.length);
+
+        const moduleData1 = modules.filter(m => m.Module_ID === newTimetable[moduleIndex1].Module_ID)[0]
+        const moduleData2 = modules.filter(m => m.Module_ID === newTimetable[moduleIndex2].Module_ID)[0]
+
         const module1Duration = getDuration(newTimetable[moduleIndex1]);
         const module2Duration = getDuration(newTimetable[moduleIndex2]);
+
         if (
           newTimetable[moduleIndex1].Subject_Type_ID ===
             newTimetable[moduleIndex2].Subject_Type_ID &&
@@ -40,6 +45,43 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
           newTimetable[moduleIndex1].End_Time = newTimetable[moduleIndex2].End_Time;
           newTimetable[moduleIndex2].End_Time = tempEndTime;
         }
+
+        if (newTimetable[moduleIndex1].Subject_Type_ID === 2) {
+          newTimetable.filter(m => m.Module_ID === newTimetable[moduleIndex1].Module_ID)
+            .forEach(m => {
+              m.Day_ID = newTimetable[moduleIndex1].Day_ID;
+
+              m.Start_Time = `${
+                +newTimetable[moduleIndex1].Start_Time.slice(0, 2) + moduleData1.Credit_Practical < 10
+                  ? `0${+newTimetable[moduleIndex1].Start_Time.slice(0, 2) + moduleData1.Credit_Practical}`
+                  : +newTimetable[moduleIndex1].Start_Time.slice(0, 2) + moduleData1.Credit_Practical
+              }:00:00`;
+
+              m.End_Time = `${
+                +newTimetable[moduleIndex1].End_Time.slice(0, 2) + moduleData1.Credit_Practical < 10
+                  ? `0${+newTimetable[moduleIndex1].End_Time.slice(0, 2) + moduleData1.Credit_Practical}`
+                  : +newTimetable[moduleIndex1].End_Time.slice(0, 2) + moduleData1.Credit_Practical
+              }:00:00`;
+            })
+
+            newTimetable.filter(m => m.Module_ID === newTimetable[moduleIndex2].Module_ID)
+            .forEach(m => {
+              m.Day_ID = newTimetable[moduleIndex2].Day_ID;
+
+              m.Start_Time = `${
+                +newTimetable[moduleIndex2].Start_Time.slice(0, 2) + moduleData2.Credit_Practical < 10
+                  ? `0${+newTimetable[moduleIndex2].Start_Time.slice(0, 2) + moduleData2.Credit_Practical}`
+                  : +newTimetable[moduleIndex2].Start_Time.slice(0, 2) + moduleData2.Credit_Practical
+              }:00:00`;
+
+              m.End_Time = `${
+                +newTimetable[moduleIndex2].End_Time.slice(0, 2) + moduleData2.Credit_Practical < 10
+                  ? `0${+newTimetable[moduleIndex2].End_Time.slice(0, 2) + moduleData2.Credit_Practical}`
+                  : +newTimetable[moduleIndex2].End_Time.slice(0, 2) + moduleData2.Credit_Practical
+              }:00:00`;
+            })
+        }
+
         break;
       };
 
@@ -73,6 +115,11 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         const moduleIndex1 = Math.floor(Math.random() * newTimetable.length);
 
         newTimetable[moduleIndex1].Day_ID = getDay(days, lecturers, newTimetable[moduleIndex1]);
+
+        if (newTimetable[moduleIndex1].Subject_Type_ID === 2) {
+          newTimetable.filter(m => m.Module_ID === newTimetable[moduleIndex1].Module_ID)
+            .forEach(m => m.Day_ID = newTimetable[moduleIndex1].Day_ID);
+        }
       };
 
       case 5: { // assaign new time
@@ -85,6 +132,24 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         newTimetable[moduleIndex1].Start_Time = time.Start_Time;
 
         newTimetable[moduleIndex1].End_Time = getEndTime(+time.Start_Time.slice(0, 2), moduleData);
+
+        if (newTimetable[moduleIndex1].Subject_Type_ID === 2) {
+          newTimetable.filter(m => m.Module_ID === newTimetable[moduleIndex1].Module_ID)
+            .forEach((m, i) => {
+
+              m.Start_Time = `${
+                +newTimetable[moduleIndex1].Start_Time.slice(0, 2) + moduleData.Credit_Practical < 10
+                  ? `0${+newTimetable[moduleIndex1].Start_Time.slice(0, 2) + moduleData.Credit_Practical}`
+                  : +newTimetable[moduleIndex1].Start_Time.slice(0, 2) + moduleData.Credit_Practical
+              }:00:00`;
+
+              m.End_Time = `${
+                +newTimetable[moduleIndex1].End_Time.slice(0, 2) + moduleData.Credit_Practical < 10
+                  ? `0${+newTimetable[moduleIndex1].End_Time.slice(0, 2) + moduleData.Credit_Practical}`
+                  : +newTimetable[moduleIndex1].End_Time.slice(0, 2) + moduleData.Credit_Practical
+              }:00:00`;
+            })
+        }
 
       };
 
