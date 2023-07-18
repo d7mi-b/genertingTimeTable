@@ -37,10 +37,7 @@ const Delete = (props) => {
                 <FontAwesomeIcon className={`close-btn ${style.btnClose}`} id='colseDeleteComponente' icon={faXmark} size='xl' />
                 <FontAwesomeIcon className={`${style.icon}`} icon={faTrash} size="xl" />
                 <p>هل أنت متأكد من الحذف؟</p>
-                {
-                    !isLoading && 
-                    <button className={`btn ${style.btnDelete}`} onClick={handelDelete}>حذف</button>
-                }
+                <button className={`btn ${style.btnDelete}`} onClick={handelDelete} disabled={isLoading}>حذف</button>
             </article>
 
             <Done result={result} error={error} />

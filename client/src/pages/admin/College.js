@@ -119,7 +119,7 @@ const College = () => {
 
         setCollege_ID(College_ID)
 
-    }, [errorDepartments, departments, loadingDepartment, Department_ID, College_ID]);
+    }, [errorDepartments, departments, loadingDepartment, Department_ID, College_ID, errorCollege]);
 
     return (
         <section className={`containerPage ${style.container}`}>

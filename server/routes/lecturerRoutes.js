@@ -11,5 +11,7 @@ router.get('/department_short/:Department_ID', lecturerController.getLecturersOf
 router.post('/addLecturer',lecturerController.postLecturersOfDepartment)
 router.put('/updateLecturer',lecturerController.updateLecturer)
 router.delete('/deleteLecturer',lecturerController.deleteLecturer)
+router.get('/totalHours/:Lecturer_ID', lecturerController.totalHores);
+router.get('/checkLecturersNumber', lecturerController.checkLecturersNumber);
 
 module.exports = router;

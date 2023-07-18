@@ -125,3 +125,38 @@ module.exports.deleteLecturer = async (req,res) => {
         res.status(400).json({err: err.message});
     }
 }
+
+module.exports.totalHores = async (req, res) => {
+    const { Lecturer_ID } = req.params;
+
+    try {
+        const lecturer = await db.query(`
+            select Lecturer_ID, 
+            sum(if(Subject_Type_ID = 1, Credit_Theoretical, 0) + if(Subject_Type_ID = 2, Credit_Practical * 3, 0) + if(Subject_Type_ID = 3, Credit_Tutorial, 0)) as Total_Hours
+            from module natural join subjects
+            where module.Lecturer_ID = ?
+            group by module.Lecturer_ID
+        `, [Lecturer_ID])
+
+        return res.status(200).json(lecturer[0]);
+    }
+    catch(err){
+        res.status(400).json({err: err.message});
+    }
+}
+
+
+module.exports.checkLecturersNumber = async (req, res) => {
+    try {
+        const lecturers = await db.query(`
+            SELECT count(distinct  ifnull(e_t_t.Lecturer_ID, null)) as lecturer, 
+            count(*) - count(ifnull(e_t_t.Lecturer_ID, null)) as lecturerNull 
+            FROM lecturer left outer join e_t_t on e_t_t.Lecturer_ID = lecturer.Lecturer_ID;
+        `)
+
+        return res.status(200).json(lecturers[0][0]);
+    }
+    catch(err){
+        res.status(400).json({err: err.message});
+    }
+}

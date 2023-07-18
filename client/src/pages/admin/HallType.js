@@ -156,12 +156,10 @@ const HallType = () => {
                                 onChange={e => setType_Name(e.target.value)}
                             />
                         </section>
-                        {
-                            !loadingAddHallType &&
-                            <section className='btnContainer'>
-                                <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة نوع قاعة' />
-                            </section>
-                        }
+
+                        <section className='btnContainer'>
+                            <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة نوع قاعة' disabled={loadingAddHallType} />
+                        </section>
                     </form>
                 </article>
             </section>
@@ -184,12 +182,10 @@ const HallType = () => {
                                 onChange={e => setType_Name(e.target.value)}
                             />
                         </section>
-                        {
-                            !loadingUpdate &&
-                            <section className='btnContainer'>
-                                <input className={`btn ${style.btn}`} type='submit' name='submit' value='تعديل نوع قاعة' />
-                            </section>
-                        }
+                        
+                        <section className='btnContainer'>
+                            <input className={`btn ${style.btn}`} type='submit' name='submit' value='تعديل نوع قاعة' disabled={loadingUpdate} />
+                        </section>
                     </form>
                 </article>
             </section>

@@ -167,12 +167,10 @@ const Bulding = () => {
                                 onChange={e => setBuilding_Name(e.target.value)}
                             />
                         </section>
-                        {
-                            !isLoading &&
-                            <section className='btnContainer'>
-                                <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة مبنى' />
-                            </section>
-                        }
+
+                        <section className='btnContainer'>
+                            <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة مبنى' disabled={isLoading} />
+                        </section>
                     </form>
                 </article>
             </section>

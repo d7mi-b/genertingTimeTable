@@ -67,7 +67,7 @@ module.exports.generatingTimetable = async (req, res) => {
     // Start the search loop
     let i = 0;
 
-    while (feasible(bestTimetable, lecturers) !== 0) {
+    while (i < 5000) {
       
       // Generate the neighborhood of the current candidate timetable
       const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times, lecturers);
@@ -83,14 +83,14 @@ module.exports.generatingTimetable = async (req, res) => {
           // If the move is not in the tabu list and the resulting timetable is better than the current candidate timetable,
           fitness(candidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
           fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) &&
-          feasible(candidate, lecturers) < feasible(candidateTimetable, lecturers)
+          feasible(candidate, lecturers) <= feasible(candidateTimetable, lecturers)
         ) {
           // Update the best candidate found so far
           if (
             !bestCandidate ||
             fitness(candidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
             fitness(bestCandidate, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) &&
-            feasible(candidate, lecturers) < feasible(bestCandidate, lecturers)
+            feasible(candidate, lecturers) <= feasible(bestCandidate, lecturers)
           ) {
             bestCandidate = candidate;
           }
@@ -115,7 +115,7 @@ module.exports.generatingTimetable = async (req, res) => {
       if (
         fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
         fitness(bestTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) &&
-        feasible(candidateTimetable, lecturers) < feasible(bestTimetable, lecturers)
+        feasible(candidateTimetable, lecturers) <= feasible(bestTimetable, lecturers)
       )
         bestTimetable = candidateTimetable;
       i++;

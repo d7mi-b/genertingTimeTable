@@ -157,10 +157,10 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
         break;
     }
 
-    // if (feasible(newTimetable, lecturers) === 0)
-      // console.log('there is timetable with 0 conflicts wooow!')
-    // check if the new timetable is feasible
-    if (feasible(newTimetable, lecturers) < feasible(candidateTimetable, lecturers)) {
+
+    if (feasible(newTimetable, lecturers) === 0) {
+      neighbors.push(newTimetable);
+    } else if (feasible(newTimetable, lecturers) < feasible(candidateTimetable, lecturers)) {
       neighbors.push(newTimetable);
     }
     i++;

@@ -172,8 +172,6 @@ const Building = () => {
                         </section>
                     </article>
 
-                    
-
                     <section className={`container-section ${style.addHallSection}`} id="addHallSection">
                         <article className={`center-section`}>
                             <FontAwesomeIcon className={`close-btn ${style.btnClose}`} id='closeAddHallSection' icon={faXmark} size='xl' />
@@ -232,12 +230,9 @@ const Building = () => {
                                         }
                                     </select>
                                 </section>
-                                {
-                                    !loadingPost &&
-                                    <section className='btnContainer'>
-                                        <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة قاعة' />
-                                    </section>
-                                }
+                                <section className='btnContainer'>
+                                    <input className={`btn ${style.btn}`} type='submit' name='submit' value='إضافة قاعة' disabled={loadingPost} />
+                                </section>
                             </form>
                         </article>
                     </section>
@@ -300,12 +295,9 @@ const Building = () => {
                                         }
                                     </select>
                                 </section>
-                                {
-                                    !loadingUpdate &&
-                                    <section className='btnContainer'>
-                                        <input className={`btn ${style.btn}`} type='submit' name='submit' value='تعديل بيانات القاعة' />
-                                    </section>
-                                }
+                                <section className='btnContainer'>
+                                    <input className={`btn ${style.btn}`} type='submit' name='submit' value='تعديل بيانات القاعة' disabled={loadingUpdate} />
+                                </section>
                             </form>
                         </article>
                     </section>

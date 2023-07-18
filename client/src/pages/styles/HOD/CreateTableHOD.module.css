@@ -110,6 +110,15 @@
     width: 50%;
 }
 
+.errorHours {
+    display: block;
+    font-style: 1.2rem;
+    text-align: center;
+    margin: 0 auto 40px;
+    font-weight: 700;
+    color: red;
+}
+
 .createTable_footer{
     text-align: center;
     margin-top: -20px;

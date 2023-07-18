@@ -37,6 +37,12 @@
     font-size: 1.2rem;
 }
 
+.homeAdmin .containerNumbers .numbers .numberTable {
+    font-weight: 600;
+    margin-top: 3px;
+    font-size: .9rem;
+}
+
 @media (min-width: 282px) and (max-width: 767px) {
     .homeAdmin .containerNumbers {
         grid-template-columns: repeat(1, 1fr);

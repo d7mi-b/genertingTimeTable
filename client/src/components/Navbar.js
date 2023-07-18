@@ -1,5 +1,5 @@
 
-import { faBars, faBell, faGear, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faBell, faCalendarDay, faGear, faUserCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { NavLink } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
@@ -23,7 +23,11 @@ const Navbar = () => {
         <nav className={`${style.navbar}`}>
             <section className={style.listContainer}>
                 <p className={`${style.bar}`}><FontAwesomeIcon icon={faBars} size='xl'/></p>
-                <p className={`${style.logo}`}>MHA</p>
+                <p className={`${style.logo}`}>
+                    <section>
+                        ULTS <FontAwesomeIcon icon={faCalendarDay} />
+                    </section>
+                </p>
                 <ul className={`${style.list}`}>
                     <li><NavLink className={`link`} to='/'>الرئيسية</NavLink></li>
                     <li><NavLink className={`link`} to='lecturers'>أعضاء هيئة التدريس</NavLink></li>

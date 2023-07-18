@@ -31,8 +31,8 @@ const Users = () => {
   const [User_Name, setUser_Name] = useState('');
   const [Password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
-  const [departement, setDepartement] = useState(() => departements ? departements[0].Department_ID : '');
-  const [userType, setUserType] = useState(() => userTypes ? userTypes[0].User_Type_ID : '');
+  const [departement, setDepartement] = useState(null);
+  const [userType, setUserType] = useState(null);
   const [errPassword, setErrPassword] = useState('');
 
   const handelSubmitUser = async (e) => {
@@ -91,6 +91,14 @@ const Users = () => {
   }
 
   useEffect(() => {
+
+    if (departements && !departement) {
+      setDepartement(departements[0].Department_ID)
+    }
+
+    if (userTypes && !userType) {
+      setUserType(userTypes[0].User_Type_ID)
+    }
 
     const btnAddUsers = document.querySelector("#btnAddUsersSection");
     const addUsersSection = document.querySelector("#addUserSection");
@@ -282,17 +290,15 @@ const Users = () => {
               errPassword && <p className="errorMessage">{errPassword}</p>
             }
 
-            {
-              !isLoading &&
-              <section className="btnContainer">
-                <input
-                  className={`btn ${style.btn}`}
-                  type="submit"
-                  name="submit"
-                  value="إضافة مستخدم"
-                />
-              </section>
-            }
+            <section className="btnContainer">
+              <input
+                className={`btn ${style.btn}`}
+                type="submit"
+                name="submit"
+                value="إضافة مستخدم"
+                disabled={isLoading}
+              />
+            </section>
 
           </form>
         </article>
@@ -369,18 +375,16 @@ const Users = () => {
                 }
               </select>
             </section>
-
-            {
-              !loadingUpdate &&
-              <section className="btnContainer">
-                <input
-                  className={`btn ${style.btn}`}
-                  type="submit"
-                  name="submit"
-                  value="تعديل بيانات المستخدم"
-                />
-              </section>
-            }
+            
+            <section className="btnContainer">
+              <input
+                className={`btn ${style.btn}`}
+                type="submit"
+                name="submit"
+                value="تعديل بيانات المستخدم"
+                disabled={loadingUpdate}
+              />
+            </section>
 
           </form>
         </article>

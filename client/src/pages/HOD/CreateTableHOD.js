@@ -39,6 +39,8 @@ const CreateTable = () => {
     const [hallArray] = useState([])
     const [Module_ID,setModule_ID] = useState()
 
+    const [errorHours, setErrorHours] = useState([]);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -106,9 +108,21 @@ const CreateTable = () => {
         }
     }
 
-    const handleSelect = (LecturerID,Module_ID,SubjectID,SubjectName,SubjectType,SubjectTypeID) => {
+    const totalHours = async (Lecturer_ID) => {
+        const res = await fetch(`http://localhost:5000/lecturers/totalHours/${Lecturer_ID}`, {
+            headers: { "Authorization": `Bearer ${user.token}`}
+        });
+        
+        const lecturer = await res.json();
+
+        return +lecturer[0].Total_Hours
+    }
+
+    const handleSelect = async (element,Module_ID,SubjectID,SubjectName,SubjectType,SubjectTypeID) => {
         
         const requestSection = document.getElementById('sendRequest')
+
+        const LecturerID = element.value;
 
         if(LecturerID === 'else'){
             requestSection.style.cssText = 'display: flex';
@@ -125,12 +139,19 @@ const CreateTable = () => {
 
         }
         else{
-            
-            lecturerArray.push({
-                'Lecturer_ID':Number(LecturerID),
-                Module_ID
-            })
+            const hours = await totalHours(LecturerID);
 
+            if (hours < 19) {
+                lecturerArray.push({
+                    'Lecturer_ID':Number(LecturerID),
+                    Module_ID
+                })
+                setErrorHours(() => errorHours.filter(l => l.Module_ID !== Module_ID))
+                element.style.color = '#554148'
+            } else {
+                element.style.color = 'red'
+                setErrorHours(() => [...errorHours, {Module_ID, LecturerID}])
+            }
         }
 
     }
@@ -187,24 +208,25 @@ const CreateTable = () => {
                             return(
 
                                 <div key={i.Module_ID} className={style.courseDiv}>
-                                <select id={i.Module_ID}
-                                onChange={e => handleSelect(e.target.value,i.Module_ID,i.Subject_ID,i.Subject_Name,i.Subject_Type_Name,i.Subject_Type_ID)}
-                                defaultValue={i.Lecturer_ID}>
-                                <option>اختر المدرس : </option>
-                                {
-                                    lecturers && 
-                                    lecturers.map(i => {
-                                        
-                                        return(
-                                                   
-                                            <option key={i.Lecturer_ID} value={i.Lecturer_ID}>{i.Lecturer_Name}</option>
-                                        )
-                                    })
-                                }
-                                {i.Lecturer_ID && <option key={i.Lecturer_ID} value={i.Lecturer_ID}>{i.Lecturer_Name}</option>}
-                               
-                                <option value='else'>غير ذلك ..</option>
-                            </select>
+                                <select 
+                                    id={i.Module_ID}
+                                    onChange={e => handleSelect(e.target,i.Module_ID,i.Subject_ID,i.Subject_Name,i.Subject_Type_Name,i.Subject_Type_ID)}
+                                    defaultValue={i.Lecturer_ID}
+                                >
+                                    <option>اختر المدرس : </option>
+                                    {
+                                        lecturers && 
+                                        lecturers.map(i => {
+                                            
+                                            return(
+                                                <option key={i.Lecturer_ID} value={i.Lecturer_ID}>{i.Lecturer_Name}</option>
+                                            )
+                                        })
+                                    }
+                                    {i.Lecturer_ID && <option key={i.Lecturer_ID} value={i.Lecturer_ID}>{i.Lecturer_Name}</option>}
+
+                                    <option value='else'>غير ذلك ..</option>
+                                </select>
                             <hr />
                             <select defaultValue={i.Hall_Type_ID} required onChange={e => handleSetHall(e.target.value,i.Module_ID)}>
                                 <option>اختر نوع القاعة :</option>
@@ -259,6 +281,7 @@ const CreateTable = () => {
                             <input className={`btn ${style.btn}`} type="submit" name="submit" value="إرسال" />
                         </section>
                         </form>
+                        
                     </article>
                 </section>
                 <div className={`${style.link} DivLink`}/>
@@ -274,6 +297,7 @@ const CreateTable = () => {
                     <li value='5' onClick={handleChange}>5</li>
                 </ul>
             </article>
+            { errorHours.length > 0 && <p className={`${style.errorHours}`}>هناك محاضرين لا يمكن اختيارهم تجاوزوا نصاب التدريس</p> }
             <footer className={style.createTable_footer}>
                 <button className={`btn ${style.button}`} id='btn' onClick={handleSave}>حفظ</button>
                 <FontAwesomeIcon icon={faCheckCircle} id='check' className={style.check} />

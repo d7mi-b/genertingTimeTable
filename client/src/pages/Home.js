@@ -6,7 +6,8 @@ import {
     faEnvelope,
     faLock,
     faXmark,
-    faBars
+    faBars,
+    faCalendarDay
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquareTwitter, faSquareFacebook, faSquareInstagram } from '@fortawesome/free-brands-svg-icons';
 import style from './styles/home.module.css';
@@ -83,7 +84,11 @@ const Home = () => {
                 <nav className={`${style.navbar}`}>
                     <section className={style.listContainer}>
                         <p className={`${style.bar}`}><FontAwesomeIcon icon={faBars} size='xl'/></p>
-                        <p className={`${style.logo}`}>MHA</p>
+                        <p className={`${style.logo}`}>
+                            <section>
+                                ULTS <FontAwesomeIcon icon={faCalendarDay} />
+                            </section>
+                        </p>
                         <ul className={`${style.list}`}>
                             <li><a className={`link`} href='#home'>الرئيسية</a></li>
                             <li><a className={`link`} href='#ourSystem'>نظامنا</a></li>

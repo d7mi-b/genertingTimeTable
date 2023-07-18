@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faBars, faBuilding, faBuildingColumns, faCalendarDay, faGear, faHome, faTableCellsLarge, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBars, faBuilding, faBuildingColumns, faCalendarDay, faGear, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import style from './styles/sidebar.module.css';
@@ -17,7 +17,7 @@ const Sidebar = () => {
         <aside className={`sidebar ${style.sidebar}`}>
             <FontAwesomeIcon className={`${style.bars}`} icon={faBars} size='xl' />
             <section className={`${style.logo}`}>
-                MHA
+                ULTS  <FontAwesomeIcon icon={faCalendarDay} />
             </section>
             <ul className={`${style.list}`}>
                 <li>

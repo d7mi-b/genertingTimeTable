@@ -235,7 +235,7 @@ const Colleges = () => {
                             </select>
                         </section>
                         <section className='btnContainer'>
-                            <input className={`btn ${style.btn}`} id='openDeleteComponent' type='submit' name='submit' value='حذف الكلية' disabled={loadingUpdate} />
+                            <input className={`btn ${style.btn}`} id='openDeleteComponent' type='submit' name='submit' value='حذف الكلية' />
                         </section>
                     </form>
                 </article>
