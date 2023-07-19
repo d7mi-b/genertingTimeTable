@@ -1,3 +1,7 @@
+import { useEffect } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import useFetch from "../../hooks/useFetch";
+import { useFetchPost } from "../../hooks/useFetchPost";
 import style from "../styles/secretary/request_management_secretary.module.css";
 
 const requests = [
@@ -16,6 +20,15 @@ const requests = [
 const lecturers = ["أحمد", "حسن", "سالم"];
 
 const SecretaryRequestManager = () => {
+  const { user } = useAuthContext();
+  const { data: datax } = useFetch(
+    `http://localhost:5000/requests/${user.Department_ID}`
+  );
+
+  useEffect(() => {
+    console.log(datax);
+  }, [datax]);
+
   return (
     <>
       <div className={style.topBar}>
