@@ -10,6 +10,7 @@ const HomeAdmin = () => {
     const { data: departmrnts } = useFetch("http://localhost:5000/departements");
     const { data: lecturersNumber } = useFetch("http://localhost:5000/lecturers/checkLecturersNumber");
     const { data: hallsNumber } = useFetch("http://localhost:5000/halls/checkHallsNumber");
+    const { data: groupsNumber } = useFetch("http://localhost:5000/timetable/groupsNumber");
 
     return (
         <section className={`containerPage ${style.homeAdmin}`}>
@@ -61,7 +62,7 @@ const HomeAdmin = () => {
                             <FontAwesomeIcon icon={faCalendarDay} />
                         </header>
                         <p>عدد الجداول في النظام</p>
-                        <p className={style.numberTable}>{users && users.length} جدول</p>
+                        <p className={style.numberTable}>{groupsNumber && groupsNumber.groupsNumber} جدول</p>
                     </article>
 
                     <article className={style.numbers}>

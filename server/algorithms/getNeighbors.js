@@ -160,9 +160,12 @@ module.exports.getNeighbors = (candidateTimetable, modules, groups, halls, days,
 
     if (feasible(newTimetable, lecturers) === 0) {
       neighbors.push(newTimetable);
-    } else if (feasible(newTimetable, lecturers) < feasible(candidateTimetable, lecturers)) {
+    }
+    
+    if (feasible(newTimetable, lecturers) < feasible(candidateTimetable, lecturers)) {
       neighbors.push(newTimetable);
     }
+    
     i++;
   }
 
