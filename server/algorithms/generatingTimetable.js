@@ -3,6 +3,7 @@ const { initialTimetable } = require("./initialTimetable");
 const { getNeighbors } = require("./getNeighbors");
 const { feasible } = require("./feasible");
 const { fitness } = require("./fitness");
+const { saveTimeTable } = require("./saveBestTimeTable");
 const { getDuration } = require("./getDuration");
 
 module.exports.generatingTimetable = async (req, res) => {
@@ -214,6 +215,8 @@ module.exports.generatingTimetable = async (req, res) => {
         stateWeights[0].Default_Weights
       )
     );
+
+   saveTimeTable(bestTimetable)
 
     // Return the best timetable found
     return res.status(200).json(bestTimetable);

@@ -12,6 +12,7 @@ const Home = lazy(() => import("./pages/Home"));
 const SearchTimetable = lazy(() => import('./pages/SearchTimetable'));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ErrorElement = lazy(() => import("./components/ErrorElement"));
+const TimeTableView = lazy(() => import("./pages/timeTableView"))
 
 const HomeLayout = lazy(() => import("./Layouts/HomeLayout"));
 const AdminLayout = lazy(() => import("./Layouts/AdminLayout"));
@@ -118,6 +119,7 @@ const routerHOD = createBrowserRouter(
       <Route path="students_groups" element={<SudentsGroups />} />
       <Route path="courses" element={<Courses />} />
       <Route path="create_table" element={<CreateTable />} />
+      <Route path="timeTableView" element={<TimeTableView />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

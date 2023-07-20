@@ -48,7 +48,7 @@ const HomeHOD = () => {
                     <FontAwesomeIcon className='arrows' icon={faAngleDoubleLeft} />
                     <h3><NavLink className="link" to="/">الصفحة الرئيسية</NavLink></h3>
                 </div>
-                <button className="btn">الجداول</button>
+                <NavLink to="/timeTableView"><button className="btn">الجداول</button></NavLink>
             </header>
             <main className={style.Home_main}>
             {
