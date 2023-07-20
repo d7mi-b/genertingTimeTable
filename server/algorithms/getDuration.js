@@ -1,9 +1,17 @@
-//this function convert the time string into seconds to help checking for overlaps
-function getDuration(obj) {
-  const startTime = +obj.Start_Time.slice(0, 2);
-  const endTime = +obj.Start_Time.slice(0, 2);
+//this function calculate the duration of a module in seconds
+function getDuration(module) {
+  if (!module) {
+    return 0;
+  }
+  const [starHours, startMinutes, startSeconds] =
+    module.Start_Time.split(":").map(Number);
 
-  return endTime - startTime;
+  const [endHours, endMinutes, endSeconds] =
+    module.End_Time.split(":").map(Number);
+
+  const startInSecond = starHours * 3600 + startMinutes * 60 + startSeconds;
+  const endInsSecond = endHours * 3600 + endMinutes * 60 + endSeconds;
+  return endInsSecond - startInSecond;
 }
 
 module.exports = { getDuration };
