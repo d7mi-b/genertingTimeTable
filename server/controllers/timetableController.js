@@ -80,8 +80,8 @@ module.exports.timetableSearch = async (req, res) => {
             Day_Name like ? or
             Semester_Name like ? or
             Department_Name like ? or 
-            Subject_Type_Name like ?;
-        `, [`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`]);
+            Subject_Type_Name like ?
+        `, [`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`]);
 
         return res.status(200).json(timetable[0]);
     } catch (err) {
