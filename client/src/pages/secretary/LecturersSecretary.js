@@ -24,33 +24,6 @@ const days = [
 ];
 
 const LecturersSecretary = () => {
-  let lecturerHOlder = {
-    Lecturer_Name: "undefined",
-    Department_ID: "undefined",
-    Rank_: "undefined",
-    Not_Available: "0",
-    NO_Available_Days: "0",
-    Sunday: "0",
-    Monday: "0",
-    Tuesday: "0",
-    Wednesday: "0",
-    Thursday: "0",
-  };
-
-  function setLecturer() {
-    lecturerHOlder = {
-      Lecturer_Name: lecturerName,
-      Department_ID: user.Department_ID,
-      Rank_: lecturerRefrence,
-      Not_Available: "0",
-      NO_Available_Days: "0",
-      Sunday: "0",
-      Monday: "0",
-      Tuesday: "0",
-      Wednesday: "0",
-      Thursday: "0",
-    };
-  }
   const { user } = useAuthContext();
   const { fetchPost, error, result } = useFetchPost();
   const { fetchDelete } = useFetchDelete();
@@ -101,6 +74,34 @@ const LecturersSecretary = () => {
     }
 
     window.location.reload();
+  };
+
+  const handleUpdate = async (lecturer) => {
+    let counter = 0;
+    if (lecturer.Sunday) {
+      counter += 1;
+    }
+    if (lecturer.Monday) {
+      counter += 1;
+    }
+    if (lecturer.Tuesday) {
+      counter += 1;
+    }
+    if (lecturer.Wednesday) {
+      counter += 1;
+    }
+    if (lecturer.Thursday) {
+      counter += 1;
+    }
+    await fetchPut(`http://localhost:5000/lecturers/updateLecturer`, {
+      Lecturer_ID: lecturer.Lecturer_ID,
+      NO_Available_Days: `${counter}`,
+      Sunday: `${lecturer.Sunday}`,
+      Monday: `${lecturer.Monday}`,
+      Tuesday: `${lecturer.Tuesday}`,
+      Wednesday: `${lecturer.Wednesday}`,
+      Thursday: `${lecturer.Thursday}`,
+    });
   };
 
   useEffect(() => {
@@ -156,6 +157,19 @@ const LecturersSecretary = () => {
             <div>
               {lectureorData.map((lecturer, index) => {
                 if (lecturer.Not_Available === 0) {
+                  let lecturerHolder = {
+                    Lecturer_ID: lecturer.Lecturer_ID,
+                    Lecturer_Name: lecturer.Lecturer_Name,
+                    Department_ID: lecturer.Department_ID,
+                    Rank_: lecturer.Rank_,
+                    Not_Available: "0",
+                    NO_Available_Days: "0",
+                    Sunday: lecturer.Sunday,
+                    Monday: lecturer.Monday,
+                    Tuesday: lecturer.Tuesday,
+                    Wednesday: lecturer.Wednesday,
+                    Thursday: lecturer.Thursday,
+                  };
                   return (
                     <div className={`${style.lectureor}`} key={index}>
                       <div className={style.infoSection}>
@@ -207,22 +221,19 @@ const LecturersSecretary = () => {
                                   <input
                                     type="checkbox"
                                     className={style.checkBox}
-                                    checked={
-                                      lecturer[`${element.value}`] > 0
+                                    defaultChecked={
+                                      lecturer[`${element.value}`] === 1
                                         ? true
                                         : false
                                     }
                                     onChange={() => {
-                                      if (lecturer[`${element.value}`] === 0) {
-                                        lecturer[`${element.value}`] = 1;
+                                      if (
+                                        lecturerHolder[`${element.value}`] === 0
+                                      ) {
+                                        lecturerHolder[`${element.value}`] = 1;
                                       } else {
-                                        lecturer[`${element.value}`] = 0;
+                                        lecturerHolder[`${element.value}`] = 0;
                                       }
-                                      console.log(
-                                        "new is this  " +
-                                          lecturer[`${element.value}`]
-                                      );
-                                      console.log(lectureorData);
                                     }}
                                   ></input>{" "}
                                   {element.day}
@@ -233,11 +244,14 @@ const LecturersSecretary = () => {
                         </div>
                       </div>
                       <div className={style.saveAndDelete}>
-                        <button className={style.save}>
+                        <button
+                          className={style.save}
+                          onClick={() => handleUpdate(lecturerHolder)}
+                        >
                           حفظ <FontAwesomeIcon icon={faSave} size="1x" />
                         </button>
                         <button
-                          onChange={() => handleDelete(lecturer.Lecturer_ID)}
+                          onClick={() => handleDelete(lecturer.Lecturer_ID)}
                         >
                           حذف <FontAwesomeIcon icon={faTrashCan} size="1x" />
                         </button>
