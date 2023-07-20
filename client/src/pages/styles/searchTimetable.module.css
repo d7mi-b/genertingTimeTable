@@ -1,0 +1,56 @@
+.timetablePage header {
+    width: 90%;
+    margin: 35px auto 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.timetablePage header svg {
+    margin: 0 5px;
+}
+
+.timetablePage .searchBar {
+    border: 1px solid var(--card-color);
+    background-color: var(--card-color);
+    width: 90%;
+    margin: 20px auto;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.timetablePage .searchBar input {
+    width: calc(100% - 25px);
+    background-color: transparent;
+}
+
+.timetablePage .timetableContainer {
+    width: 90%;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+}
+
+.timetablePage .timetableContainer .timetable {
+    text-align: center;
+    background-image: linear-gradient(45deg, var(--card-color), #fefefe);
+    border-radius: 5px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px 5px;
+}
+
+.timetablePage .timetableContainer .timetable header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 50px;
+}
+
+.timetablePage .timetableContainer .timetable header, 
+.timetablePage .timetableContainer .timetable header h1 {
+    width: 100%;
+    margin: 0;
+}

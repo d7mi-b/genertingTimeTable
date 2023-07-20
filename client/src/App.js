@@ -9,9 +9,11 @@ import Loading from "./components/Loading";
 import { useAuthContext } from "./hooks/useAuthContext";
 
 const Home = lazy(() => import("./pages/Home"));
+const SearchTimetable = lazy(() => import('./pages/SearchTimetable'));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ErrorElement = lazy(() => import("./components/ErrorElement"));
 
+const HomeLayout = lazy(() => import("./Layouts/HomeLayout"));
 const AdminLayout = lazy(() => import("./Layouts/AdminLayout"));
 const HodLayout = lazy(() => import("./Layouts/hodLayout"));
 const SecretaryLayout = lazy(() => import("./Layouts/SecretaryLayout"));
@@ -53,7 +55,9 @@ const RequestManagementSecretary = lazy(() =>
 
 const routerHome = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Home />}>
+    <Route path="/" element={<HomeLayout />}>
+      <Route index element={<Home />} />
+      <Route path="timetables" element={<SearchTimetable />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
@@ -86,6 +90,8 @@ const routerAdmin = createBrowserRouter(
         <Route path=":Building_ID" element={<Building />} />
         <Route path="hallType" element={<HallType />} />
       </Route>
+
+      <Route path="timetables" element={<SearchTimetable />} />
 
       <Route
         path="departements"
