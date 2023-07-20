@@ -242,7 +242,7 @@ input:focus-visible {
 /* container page for admin */
 .containerPage {
     width: calc(100% - 300px);
-    min-height: 100vh;
+    min-height: calc(100vh - 100px);
     position: relative;
     right: 300px;
 }
@@ -285,7 +285,7 @@ input:focus-visible {
 /* container page for HOD */
 .container {
     width: calc(100% - 400px);
-    height: 100vh;
+    min-height: calc(100vh - 100px);
     position: relative;
     right: 200px;
     

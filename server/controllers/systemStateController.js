@@ -22,16 +22,16 @@ module.exports.updateSystemstate = async (req, res) => {
             where System_State_ID = ?
         `, [System_Year, System_Semester, System_State_ID]);
 
-        const [updateSemester] = await db.query(`
+        await db.query(`
             update batches set Semester_ID = Semester_ID+1
             where Semester_ID<11
         `)
 
-        const [deleteBatches] = await db.query(`
+        await db.query(`
             delete from batches where Semester_ID = 11;
         `)
 
-        return res.status(200).json(updateSemester)
+        return res.status(202).json(system)
     }
     catch (err) {
         res.status(400).json({err: err.message});
@@ -46,6 +46,8 @@ module.exports.changeDefaultWeights = async (req, res) => {
             update system_state set Default_Weights = ?
             where System_State_ID = ?
         `, [Default_Weights, System_State_ID]);
+
+        return res.status(202).json(system)
     }
     catch (err) {
         res.status(400).json({err: err.message});
@@ -81,7 +83,7 @@ module,exports.updateWeights = async (req, res) => {
             `, [req.body[weight]]);
         };
 
-        return res.status(200).json({});
+        return res.status(202).json({});
     }
     catch (err) {
         res.status(400).json({err: err.message});

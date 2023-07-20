@@ -31,14 +31,14 @@
 
 .notFound .img {
     width: 50%;
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .notFound .img img {
-    width: 80%;
+    width: 70%;
     margin: 0 auto;
 }
 

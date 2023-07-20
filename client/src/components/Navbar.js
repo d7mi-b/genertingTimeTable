@@ -30,6 +30,7 @@ const Navbar = () => {
                 </p>
                 <ul className={`${style.list}`}>
                     <li><NavLink className={`link`} to='/'>الرئيسية</NavLink></li>
+                    <li><NavLink className={`link`} to='/timetables'>الجداول</NavLink></li>
                     <li><NavLink className={`link`} to='lecturers'>أعضاء هيئة التدريس</NavLink></li>
                     <li><NavLink className={`link`} to='halls'>القاعات</NavLink></li>
                     <li><NavLink className={`link`} to='requests'>مراجعة الطلبات</NavLink></li>

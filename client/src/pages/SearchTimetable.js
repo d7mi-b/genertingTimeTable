@@ -4,6 +4,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDay, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 
+const handelTime = (startTime, endTime) => {
+    startTime = startTime > 12 ? `${startTime - 12}PM` : `${startTime}AM`;
+    endTime = endTime > 12 ? `${endTime - 12}PM` : `${endTime}AM`;
+
+    return `${endTime} - ${startTime}`;
+}
+
 const SearchTimetable = () => {
     const { user } = useAuthContext();
 
@@ -57,13 +64,14 @@ const SearchTimetable = () => {
                             <article id={t.ETT_ID} key={t.ETT_ID} className={style.timetable}>
                                 <header>
                                     <h1>{t.Subject_Name}</h1>
+                                    <h3>{t.Subject_Type_Name}</h3>
                                 </header>
-                                <p>{t.Lecturer_Name}</p>
+                                <p>{t.Rank_ === 'doctor' ? `د. ${t.Lecturer_Name}` : t.Lecturer_Name}</p>
                                 <p>{t.Department_Name}</p>
                                 <p>{t.Semester_Name}</p>
                                 <p>{t.Hall_Name}</p>
                                 <p>{t.Day_Name}</p>
-                                <p>{t.Start_Time.slice(0, 2)} - {t.End_Time.slice(0, 2)}</p>
+                                <p>{handelTime(t.Start_Time.slice(0, 2), t.End_Time.slice(0, 2))}</p>
                             </article>
                         )
                     })

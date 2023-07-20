@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquareTwitter, faSquareFacebook, faSquareInstagram } from '@fortawesome/free-brands-svg-icons';
 import style from './styles/home.module.css';
+import { Link } from 'react-router-dom';
 
 const features = [
     {
@@ -51,7 +52,7 @@ const Home = () => {
                         <p>توفر لك خدمة الاستعلام عن الجداول إمكانية الاطلاع على جدول قسم معين او أعضاء هيئة التدريس.</p>
                     </article>
                     <section className={`btnContainer`}>
-                        <button className={`btn ${style.btn}`}>ابدأ الخدمة </button>
+                        <Link to='/timetables' className={`link ${style.btn}`}>ابدأ الخدمة </Link>
                     </section>
                 </section>
             </div>

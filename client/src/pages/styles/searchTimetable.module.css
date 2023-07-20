@@ -54,3 +54,8 @@
     width: 100%;
     margin: 0;
 }
+
+.timetablePage .timetableContainer .timetable header h3 {
+    font-size: .9rem;
+    margin: 2px auto;
+}

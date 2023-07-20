@@ -22,7 +22,7 @@ module.exports.addHall = async (req, res) => {
             values (?, ?, ?, ?, ?)
         `, [Hall_Name, Hall_Capacity, Department_ID, Building_ID, Hall_Type_ID]);
 
-        return res.status(200).json(hall);
+        return res.status(201).json(hall);
     }
     catch (err) {
         res.status(400).json({err: err.message});
@@ -38,7 +38,7 @@ module.exports.updateHall = async (req, res) => {
             where Hall_ID = ?
         `, [Hall_Name, Hall_Capacity, Department_ID, Hall_Type_ID, Hall_ID]);
 
-        return res.status(200).json(hall);
+        return res.status(202).json(hall);
     }
     catch(err) {
         res.status(400).json({err: err.message});
@@ -53,7 +53,7 @@ module.exports.deleteHall = async (req, res) => {
             delete from halls where Hall_ID = ?
         `, [Hall_ID]);
 
-        return res.status(200).json(hall);
+        return res.status(202).json(hall);
     }
     catch (err) {
         res.status(400).json({err: err.message});

@@ -72,7 +72,7 @@ module.exports.deleteCourse = async (req,res) => {
         DELETE FROM subjects WHERE Subject_ID = ?
         `,[Subject_ID]);
 
-        return res.status(200).json(Course)
+        return res.status(202).json(Course)
     }
     catch(err){
         res.status(400).json({err:err.message})

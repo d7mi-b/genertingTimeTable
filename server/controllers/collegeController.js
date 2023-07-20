@@ -29,7 +29,7 @@ module.exports.addCollege = async (req, res) => {
     try {
         const [ college ] = await db.query('insert into college (College_Name) values (?) ', [College_Name])
 
-        return res.status(200).json(college)
+        return res.status(201).json(college)
     }
     catch(err) {
         return res.status(400).json({err: err.message})
@@ -44,7 +44,7 @@ module.exports.updateCollege = async (req, res) => {
             update college set College_Name = ? where College_ID = ? 
         `, [College_Name, College_ID])
 
-        return res.status(200).json(college)
+        return res.status(202).json(college)
     }
     catch(err) {
         return res.status(400).json({err: err.message})
@@ -59,7 +59,7 @@ module.exports.deleteCollege = async (req, res) => {
             delete from college where College_ID = ? 
         `, [College_ID])
 
-        return res.status(200).json(college)
+        return res.status(202).json(college)
     }
     catch(err) {
         return res.status(400).json({err: err.message})

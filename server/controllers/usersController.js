@@ -33,7 +33,7 @@ module.exports.login = async (req, res) => {
 
         const token = createToken(user[0].User_ID);
 
-        return res.status(200).json({token, name: user[0].Name, type: user[0].User_Type_ID, Department_ID: user[0].Department_ID, semester: system[0].System_Semester});
+        return res.status(202).json({token, name: user[0].Name, type: user[0].User_Type_ID, Department_ID: user[0].Department_ID, semester: system[0].System_Semester});
     }
     catch(err) {
         res.status(400).json({err: err.message})
@@ -82,7 +82,7 @@ module.exports.addUser = async (req, res) => {
             values(?, ?, ?, ?, ?)
         `, [ Name, User_Name, hash, Department_ID, User_Type_ID]);
         
-        return res.status(200).json(result);
+        return res.status(201).json(result);
     }
     catch(err) {
         res.status(400).json({err: err.message});
@@ -97,7 +97,7 @@ module.exports.deleteUser = async (req, res) => {
             delete from users where User_ID = ?
         `, [User_ID]);
 
-        return res.status(200).json(result);
+        return res.status(202).json(result);
     }
     catch (err) {
         res.status(400).json({err: err.message});
@@ -112,7 +112,7 @@ module.exports.updateUser = async (req, res) => {
             update users set User_Name = ?, Name = ?, Department_ID = ?, User_Type_ID = ? where User_ID = ?
         `, [User_Name, Name, Department_ID, User_Type_ID, User_ID]);
 
-        return res.status(200).json(user);
+        return res.status(202).json(user);
     }
     catch (err) {
         res.status(400).json({err: err.message});
@@ -122,7 +122,7 @@ module.exports.updateUser = async (req, res) => {
 module.exports.getUserInfo = async (req,res) => {
     
     const id  = req.user.user_id;
-   
+
 
     try {
 

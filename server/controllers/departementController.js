@@ -21,7 +21,7 @@ module.exports.addDepartment = async (req, res) => {
             insert into department (Department_Name, College_ID) values (?, ?)
         `, [Department_Name, College_ID]);
 
-        return res.status(200).json(department);
+        return res.status(201).json(department);
     }
     catch (err) {
         res.status(400).json({err: err.message});
@@ -58,7 +58,7 @@ module.exports.updateDepartment = async (req, res) => {
             update department set Department_Name = ?, College_ID = ? where Department_ID = ?
         `, [Department_Name, College_ID, Department_ID]);
 
-        return res.status(200).json(department);
+        return res.status(202).json(department);
     }
     catch(err) {
         res.status(400).json({err: err.message});
@@ -73,7 +73,7 @@ module.exports.deleteDepartment = async (req, res) => {
             delete from department where Department_ID = ?;
         `, [Department_ID]);
 
-        return res.status(200).json(department);
+        return res.status(202).json(department);
     }
     catch(err) {
         res.status(400).json({err: err.message});
