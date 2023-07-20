@@ -65,9 +65,10 @@ module.exports.timetableSearch = async (req, res) => {
     const { search } = req.params;
     try {
         const timetable = await db.query(`
-            SELECT ETT_ID, Subject_Name, Lecturer_Name, Hall_Name, Day_Name, Start_Time, End_Time, Semester_Name, Department_Name FROM e_t_t 
+            SELECT ETT_ID, Subject_Name, Subject_Type_Name, Lecturer_Name, Hall_Name, Day_Name, Start_Time, End_Time, Semester_Name, Department_Name FROM e_t_t 
             join module on e_t_t.Module_ID = module.Module_ID
             join subjects on module.Subject_ID = subjects.Subject_ID
+            join subject_type on module.Subject_Type_ID = subject_type.Subject_Type_ID
             join lecturer on e_t_t.Lecturer_ID = lecturer.Lecturer_Id
             join halls on e_t_t.Hall_ID = halls.Hall_ID
             join day on e_t_t.Day_ID = day.Day_ID
@@ -78,7 +79,8 @@ module.exports.timetableSearch = async (req, res) => {
             Hall_Name like ? or
             Day_Name like ? or
             Semester_Name like ? or
-            Department_Name like ?;
+            Department_Name like ? or 
+            Subject_Type_Name like ?;
         `, [`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`]);
 
         return res.status(200).json(timetable[0]);
