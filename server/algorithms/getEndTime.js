@@ -1,8 +1,5 @@
 module.exports.getEndTime = (startTime, modules) => {
 
-    if (!modules.Credit_Theoretical)
-        console.log(modules)
-
     if (modules.Subject_Type_ID === 1 && modules.Credit_Theoretical) {
         
         if (startTime + modules.Credit_Theoretical < 10)

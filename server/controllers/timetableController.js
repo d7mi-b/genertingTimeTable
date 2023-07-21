@@ -47,25 +47,27 @@ module.exports.getDepSchedules = async (req,res) => {
     }
 }
 
-
+// To get the number of timetables
 module.exports.groupsNumberInTimetable = async (req, res) => {
     try {
-        const groups = await db.query(`
+        const [groups] = await db.query(`
             SELECT count(distinct Group_ID) as groupsNumber FROM timetable.e_t_t;
         `);
 
-        return res.status(200).json(groups[0][0]);
+        return res.status(200).json(groups[0]);
     } catch (err) {
         return res.status(400).json(err)
     }
 
 }
 
+// handel search in timetable
 module.exports.timetableSearch = async (req, res) => {
     const { search } = req.params;
+
     try {
-        const timetable = await db.query(`
-            SELECT ETT_ID, Subject_Name, Subject_Type_Name, Lecturer_Name, Hall_Name, Day_Name, Start_Time, End_Time, Semester_Name, Department_Name FROM e_t_t 
+        const [timetable] = await db.query(`
+            SELECT ETT_ID, e_t_t.Module_ID, Subject_Name, Subject_Type_Name, Lecturer_Name, Hall_Name, Day_Name, Start_Time, End_Time, Semester_Name, Department_Name FROM e_t_t 
             join module on e_t_t.Module_ID = module.Module_ID
             join subjects on module.Subject_ID = subjects.Subject_ID
             join subject_type on module.Subject_Type_ID = subject_type.Subject_Type_ID
@@ -83,7 +85,25 @@ module.exports.timetableSearch = async (req, res) => {
             Subject_Type_Name like ?
         `, [`%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`, `%${search}%`]);
 
-        return res.status(200).json(timetable[0]);
+        return res.status(200).json(timetable);
+    } catch (err) {
+        return res.status(400).json(err)
+    }
+}
+
+// Check if all modules of departments has lecturer and hall type for start generating timetable
+module.exports.checkModulesForGenerating = async (req, res) => {
+    const { College_ID } = req.params;
+
+    try {
+        const [modules] = await db.query(`
+            select department.Department_ID, count(*) as modules, count(Lecturer_ID) as lecturers, count(Hall_Type_ID) as Hall_Type from module
+            right outer join department on module.Department_ID = department.Department_ID
+            where department.College_ID = ?
+            group by department.Department_ID;
+        `, [College_ID]);
+
+        return res.status(200).json(modules);
     } catch (err) {
         return res.status(400).json(err)
     }

@@ -1,4 +1,4 @@
-import { faAngleDoubleLeft, faXmark, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import { faAngleDoubleLeft, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -36,7 +36,6 @@ const CreateTable = () => {
     const [Subject_Type_ID, setSubject_TypeID] = useState("")
     const [Reciver_ID, setReciver_ID] = useState('')
     const [lecturerArray] = useState([])
-    const [hallArray] = useState([])
     const [Module_ID,setModule_ID] = useState()
 
     const [errorHours, setErrorHours] = useState([]);

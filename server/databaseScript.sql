@@ -1030,14 +1030,12 @@ Create table module(
     primary key(Module_ID),
     foreign key(Semester_ID) references semester(Semester_ID) ON DELETE RESTRICT,
     foreign key(Subject_ID) references subjects(Subject_ID) ON DELETE CASCADE,
-    foreign key(Lecturer_ID) references lecturer(Lecturer_ID) ON DELETE
-    SET NULL,
-        foreign key (Department_ID) references department(Department_ID) ON DELETE CASCADE,
-        foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID) ON DELETE
-    SET NULL,
-        FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID) ON DELETE
-    SET NULL
+    foreign key(Lecturer_ID) references lecturer(Lecturer_ID) ON DELETE SET NULL,
+    foreign key (Department_ID) references department(Department_ID) ON DELETE CASCADE,
+    foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID) ON DELETE SET NULL
 );
+
 INSERT INTO module (
         Module_ID,
         Semester_ID,

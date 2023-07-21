@@ -7,6 +7,7 @@ import {
 import { faSquareTwitter, faSquareFacebook, faSquareInstagram } from '@fortawesome/free-brands-svg-icons';
 import style from './styles/home.module.css';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const features = [
     {
@@ -30,6 +31,26 @@ const features = [
 ]
 
 const Home = () => {
+
+    useEffect(() => {
+        const featuresSection = document.getElementById('features');
+        const featuresList = document.querySelectorAll('.feature');
+        
+        window.onscroll = () => {
+            if (featuresSection.offsetTop <= window.scrollY + 500) {
+                featuresList.forEach(e => {
+                    e.classList.add('translateAnimation');
+                })
+            }
+            else if (featuresSection.offsetTop >= window.scrollY + 500) {
+                featuresList.forEach(e => {
+                    e.classList.remove('translateAnimation');
+                })
+            }
+        }
+    }, [])
+
+
     return (
         <div className='homePage'>
             {/* START HERO SECTHION */}
