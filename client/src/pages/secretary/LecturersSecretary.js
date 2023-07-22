@@ -27,7 +27,7 @@ const LecturersSecretary = () => {
   const { user } = useAuthContext();
   const { fetchPost, error, result } = useFetchPost();
   const { fetchDelete } = useFetchDelete();
-  const { fetchPut } = useFetchPut();
+  const { fetchPut, result: updateResult } = useFetchPut();
 
   const [lecturerName, setName] = useState("");
   const [lecturerRefrence, setRefrence] = useState("");
@@ -37,6 +37,7 @@ const LecturersSecretary = () => {
   );
 
   const handleSubmit = async (e) => {
+    console.log(result);
     e.preventDefault();
     await fetchPost(`http://localhost:5000/lecturers/addLecturer`, {
       Lecturer_Name: lecturerName,
@@ -77,25 +78,10 @@ const LecturersSecretary = () => {
   };
 
   const handleUpdate = async (lecturer) => {
-    let counter = 0;
-    if (lecturer.Sunday) {
-      counter += 1;
-    }
-    if (lecturer.Monday) {
-      counter += 1;
-    }
-    if (lecturer.Tuesday) {
-      counter += 1;
-    }
-    if (lecturer.Wednesday) {
-      counter += 1;
-    }
-    if (lecturer.Thursday) {
-      counter += 1;
-    }
+    console.log(updateResult);
     await fetchPut(`http://localhost:5000/lecturers/updateLecturer`, {
       Lecturer_ID: lecturer.Lecturer_ID,
-      NO_Available_Days: `${counter}`,
+      NO_Available_Days: lecturer.NO_Available_Days,
       Sunday: `${lecturer.Sunday}`,
       Monday: `${lecturer.Monday}`,
       Tuesday: `${lecturer.Tuesday}`,
@@ -407,7 +393,7 @@ const LecturersSecretary = () => {
             </form>
           </div>
         </section>
-        <Done result={result} />
+        <Done result={result || updateResult} />
         <Failed error={error} />
       </div>
     </>
