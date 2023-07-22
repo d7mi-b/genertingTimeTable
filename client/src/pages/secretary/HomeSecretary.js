@@ -15,11 +15,11 @@ import { useAuthContext } from "../../hooks/useAuthContext";
 let date = new Date();
 
 const sections = [
-  {
-    name: "أقسام الطلاب",
-    icon: faUserGroup,
-    link: "departments",
-  },
+  // {
+  //   name: "أقسام الطلاب",
+  //   icon: faUserGroup,
+  //   link: "departments",
+  // },
   {
     name: "القاعات والمعامل الدراسية",
     icon: faBuilding,
