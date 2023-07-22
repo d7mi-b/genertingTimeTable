@@ -1,17 +1,22 @@
 Drop database if exists timetable;
 Create database timetable;
 Use timetable;
+
+
 Create table day (
     Day_ID int auto_increment not null,
     Day_Name varchar(30) not null,
     primary key(Day_ID)
 );
+
 INSERT INTO day (Day_ID, Day_Name)
 VALUES (1, 'الأحد'),
     (2, 'الإثنين'),
     (3, 'الثلاثاء'),
     (4, 'الأربعاء'),
     (5, 'الخميس');
+
+
 Create table time (
     Time_ID int auto_increment not null,
     Start_Time time not null,
@@ -19,6 +24,7 @@ Create table time (
     Duration varchar(3) not null,
     primary key(Time_ID)
 );
+
 INSERT INTO time (Time_ID, Start_Time, End_Time, Duration)
 VALUES (1, '08:00', '09:00', '1'),
     (2, '09:00', '10:00', '1'),
@@ -28,40 +34,52 @@ VALUES (1, '08:00', '09:00', '1'),
     (6, '13:00', '14:00', '1'),
     (7, '14:00', '15:00', '1'),
     (8, '15:00', '16:00', '1');
+
+
 Create table user_type (
     User_Type_ID int auto_increment not null,
     User_Type_Name varchar(50) not null,
     primary key(User_Type_ID)
 );
+
 INSERT INTO user_type (User_Type_ID, User_Type_Name)
 VALUES (1, 'ادمن'),
     (2, 'سكرتير'),
     (3, 'رئيس قسم');
+
+
 Create table batch_type (
     Batch_Type_ID int auto_increment not null,
     Batch_Type varchar(50) not null,
     primary key(Batch_Type_ID)
 );
+
 INSERT INTO batch_type (Batch_Type_ID, Batch_Type)
 VALUES (1, 'صباحي'),
     (2, "موازي"),
     (3, "نفقه خاصه");
+
+
 Create table level (
     Level_ID int auto_increment not null,
     Level_Name varchar(50) not null,
     primary key(Level_ID)
 );
+
 INSERT INTO level (Level_ID, Level_Name)
 VALUES (1, 'الأول'),
     (2, 'الثاني'),
     (3, 'الثالث'),
     (4, 'الرابع'),
     (5, 'الخامس');
+
+
 Create table hall_type (
     Hall_Type_ID int auto_increment not null,
     Type_Name varchar(50) not null,
     primary key(Hall_Type_ID)
 );
+
 INSERT INTO hall_type (Hall_Type_ID, Type_Name)
 VALUES (1, 'مختبر حاسوب'),
     (2, 'مختبر شبكات'),
@@ -74,21 +92,27 @@ VALUES (1, 'مختبر حاسوب'),
     (9, 'مختبر جيولوجيا'),
     (10, 'مختبر منطق رقمي'),
     (11, 'مختبر أنظمة تحكم');
+
+
 Create table building (
     Building_ID int auto_increment not null,
     Building_Name varchar(50) not null UNIQUE,
     primary key(Building_ID)
 );
+
 INSERT INTO building (Building_ID, Building_Name)
 VALUES (1, 'A'),
     (2, 'B'),
     (3, 'C'),
     (4, 'D');
+
+
 Create table semester (
     Semester_ID int auto_increment not null,
     Semester_Name varchar(50) not null,
     primary key(Semester_ID)
 );
+
 INSERT INTO semester (Semester_ID, Semester_Name)
 VALUES (1, 'المستوى الدراسي الأول'),
     (2, 'المستوى الدراسي الثاني'),
@@ -100,14 +124,19 @@ VALUES (1, 'المستوى الدراسي الأول'),
     (8, 'المستوى الدراسي الثامن'),
     (9, 'المستوى الدراسي التاسع'),
     (10, 'المستوى الدراسي العاشر');
+
+
 Create table college (
     College_ID int auto_increment not null,
     College_Name varchar(150) not null UNIQUE,
     primary key(College_ID)
 );
+
 INSERT INTO college(College_ID, College_Name)
 VALUES (1, 'كلية الهندسة والبترول'),
     (2, 'كلية الطب');
+
+
 Create table department (
     Department_ID int auto_increment not null,
     Department_Name varchar(150) not null UNIQUE,
@@ -115,6 +144,7 @@ Create table department (
     primary key(Department_ID),
     foreign key(College_ID) references college(College_ID) on DELETE CASCADE
 );
+
 INSERT INTO department(Department_ID, Department_Name, College_ID)
 VALUES (1, 'هندسة حاسوب', 1),
     (2, 'هندسة الكترونية واتصالات', 1),
@@ -125,6 +155,8 @@ VALUES (1, 'هندسة حاسوب', 1),
     (7, 'العمادة', 1),
     (8, 'هندسة ميكانيكية', 1),
     (9, 'هندسة كهربائية', 1);
+
+
 Create table users (
     User_ID int auto_increment not null,
     Name varchar(150) not null,
@@ -138,6 +170,7 @@ Create table users (
         foreign key(User_Type_ID) references user_type(User_Type_ID) on DELETE
     set null
 );
+
 INSERT INTO users(
         User_ID,
         Name,
@@ -178,6 +211,8 @@ VALUES (
         7,
         2
     );
+
+
 Create table batches (
     Batch_ID int auto_increment not null,
     Batch_NO int not null,
@@ -190,6 +225,7 @@ Create table batches (
     foreign key(Semester_ID) references semester(Semester_ID) on DELETE RESTRICT,
     foreign key(Department_ID) references department(Department_ID) on DELETE CASCADE
 );
+
 INSERT INTO batches(
         Batch_NO,
         Semester_ID,
@@ -203,6 +239,8 @@ VALUES (1, 1, 1, 50, 10, 3),
     (3, 5, 1, 45, 5, 5),
     (4, 7, 1, 40, 5, 3),
     (5, 9, 1, 30, 4, 2);
+
+
 Create table halls (
     Hall_ID int auto_increment not null,
     Hall_Name varchar(100) not null UNIQUE,
@@ -218,6 +256,7 @@ Create table halls (
         foreign key(Hall_Type_ID) references hall_type(Hall_Type_ID) on DELETE
     set null
 );
+
 INSERT INTO halls(
         Hall_Name,
         Hall_Capacity,
@@ -243,6 +282,7 @@ VALUES ('C1', '90', 1, 3, 1, 1),
     ('Electronic Circuits LAB', 90, 2, 3, 8, 1),
     ('Chemistry Lab', 90, 5, 4, 5, 1),
     ('Principle of Communication Lab', 90, 2, 3, 6, 1);
+
 Create table subjects(
     Subject_ID int auto_increment not null,
     Subject_Name varchar(100) not null,
@@ -266,61 +306,16 @@ INSERT INTO subjects (
         Department_ID,
         Semester_ID
     )
-VALUES (
-        1,
-        'Defferential Calculus',
-        'MATH111',
-        2,
-        0,
-        2,
-        1,
-        1
-    ),
+VALUES (1, 'Defferential Calculus', 'MATH111', 2, 0, 2, 1, 1),
     (2, 'General Physics I', 'PHYS111', 2, 2, 0, 1, 1),
-    (
-        3,
-        'General Chemistry I',
-        'CHEM111',
-        2,
-        2,
-        0,
-        1,
-        1
-    ),
-    (
-        4,
-        'Islamic Culture I',
-        'ISLAM111',
-        2,
-        0,
-        0,
-        1,
-        1
-    ),
+    ( 3, 'General Chemistry I', 'CHEM111', 2, 2, 0, 1, 1),
+    (4, 'Islamic Culture I', 'ISLAM111', 2, 0, 0, 1, 1),
     (5, 'English Language I', 'ENG111', 2, 0, 0, 1, 1),
     (6, 'Arabic Language I', 'ARAB111', 2, 0, 0, 1, 1),
     (7, 'Computer Skills', 'CSC117', 1, 2, 0, 1, 1),
     (8, 'Integral Calculus', 'MATH121', 2, 0, 2, 1, 2),
-    (
-        9,
-        'General Physics II',
-        'PHYS121',
-        2,
-        2,
-        0,
-        1,
-        2
-    ),
-    (
-        10,
-        'Introduction to Computer Engineering',
-        'COE122',
-        2,
-        0,
-        0,
-        1,
-        2
-    ),
+    (9, 'General Physics II', 'PHYS121', 2, 2, 0, 1, 2),
+    (10, 'Introduction to Computer Engineering', 'COE122', 2, 0, 0, 1, 2),
     (
         11,
         'Islamic Culture II',
@@ -700,14 +695,19 @@ VALUES (
         10
     ),
     (56, 'Elective Course 2', 'CE522', 2, 2, 0, 1, 10);
+
+
 Create table subject_type (
     Subject_Type_ID int primary key auto_increment not null,
     Subject_Type_Name varchar(100) not null
 );
+
 INSERT INTO subject_type (Subject_Type_ID, Subject_Type_Name)
 VALUES (1, 'نظري'),
     (2, 'عملي'),
     (3, 'تمارين');
+
+
 Create table lecturer (
     Lecturer_ID int auto_increment not null,
     Lecturer_Name varchar(100) not null,
@@ -724,6 +724,7 @@ Create table lecturer (
     foreign key(Department_ID) references department(Department_ID) on DELETE
     SET NULL
 );
+
 INSERT INTO lecturer (
         Lecturer_ID,
         Lecturer_Name,
@@ -990,6 +991,8 @@ VALUES (
         1,
         1
     );
+
+
 Create table batch_groups(
     Group_ID int auto_increment not null,
     Group_ varchar(100) not null,
@@ -1001,6 +1004,7 @@ Create table batch_groups(
     foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID) ON DELETE
     SET DEFAULT
 );
+
 INSERT INTO batch_groups(
         Group_ID,
         Group_,
@@ -1013,6 +1017,8 @@ VALUES (1, 'A', 63, 1, 1),
     (3, 'A', 55, 3, 1),
     (4, 'A', 48, 4, 1),
     (5, 'A', 36, 5, 1);
+
+
 Create table module(
     Module_ID int auto_increment not null,
     Semester_ID int,
@@ -1024,14 +1030,12 @@ Create table module(
     primary key(Module_ID),
     foreign key(Semester_ID) references semester(Semester_ID) ON DELETE RESTRICT,
     foreign key(Subject_ID) references subjects(Subject_ID) ON DELETE CASCADE,
-    foreign key(Lecturer_ID) references lecturer(Lecturer_ID) ON DELETE
-    SET NULL,
-        foreign key (Department_ID) references department(Department_ID) ON DELETE CASCADE,
-        foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID) ON DELETE
-    SET NULL,
-        FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID) ON DELETE
-    SET NULL
+    foreign key(Lecturer_ID) references lecturer(Lecturer_ID) ON DELETE SET NULL,
+    foreign key (Department_ID) references department(Department_ID) ON DELETE CASCADE,
+    foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID) ON DELETE SET NULL
 );
+
 INSERT INTO module (
         Module_ID,
         Semester_ID,
@@ -1090,6 +1094,8 @@ VALUES (1, 1, 1, 17, 1, 3, 1),
     (47, 9, 52, 21, 1, 1, 2),
     (48, 9, 53, 32, 1, 1, 2),
     (49, 9, 54, 21, 1, 1, 2);
+
+
 CREATE TABLE lecturer_requsets (
     Request_ID int NOT NULL AUTO_INCREMENT,
     Sender_ID int DEFAULT NULL,
@@ -1110,6 +1116,7 @@ CREATE TABLE lecturer_requsets (
         FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID) ON DELETE
     SET NULL
 );
+
 INSERT INTO lecturer_requsets(
         Sender_ID,
         Reciver_ID,
@@ -1120,6 +1127,8 @@ INSERT INTO lecturer_requsets(
     )
 VALUES(2, 7, null, 40, 1, null),
     (2, 7, null, 7, 1, null);
+
+
 Create table E_T_T(
     ETT_ID int auto_increment not null,
     Module_ID int,
@@ -1139,6 +1148,8 @@ Create table E_T_T(
     SET NULL,
         foreign key(Group_ID) references batch_groups(Group_ID) ON DELETE CASCADE
 );
+
+
 Create table system_state (
     System_State_ID int primary key AUTO_INCREMENT NOT NULL,
     System_Name varchar(300) not null,
@@ -1147,6 +1158,7 @@ Create table system_state (
     Default_Weights boolean not null,
     check (System_Semester in (1, 2))
 );
+
 INSERT INTO system_state (
         System_State_ID,
         System_Name,
@@ -1155,11 +1167,14 @@ INSERT INTO system_state (
         Default_Weights
     )
 VALUES (1, "جامعة حضرموت", 1, '2023/2024', 1);
+
+
 Create table fitnes_weight (
     Weight_ID int primary key auto_increment,
     Weight_Name varchar(300) not null,
     Weight double not null
 );
+
 INSERT INTO fitnes_weight (Weight_Name, Weight)
 VALUES ('lecturerAvailabilty', 0.75),
     ('timeGap', 0.75),

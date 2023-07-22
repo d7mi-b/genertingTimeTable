@@ -1,4 +1,4 @@
-import { faAngleDoubleLeft, faXmark, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
+import { faAngleDoubleLeft, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
@@ -36,7 +36,6 @@ const CreateTable = () => {
     const [Subject_Type_ID, setSubject_TypeID] = useState("")
     const [Reciver_ID, setReciver_ID] = useState('')
     const [lecturerArray] = useState([])
-    const [hallArray] = useState([])
     const [Module_ID,setModule_ID] = useState()
 
     const [errorHours, setErrorHours] = useState([]);
@@ -57,26 +56,26 @@ const CreateTable = () => {
         requestSection.style.cssText = 'display: none';
     }
 
-    const handleSave = async () => {
-        if(hallArray.length !== 0)
-        {await fetchPut(`http://localhost:5000/module/updateHall`, hallArray)}
-        if(lecturerArray.length !== 0)
-        {await fetchPut(`http://localhost:5000/module/updateLecturer`, lecturerArray)}
+    // const handleSave = async () => {
+    //     if(hallArray.length !== 0)
+    //     {await fetchPut(`http://localhost:5000/module/updateHall`, hallArray)}
+    //     if(lecturerArray.length !== 0)
+    //     {await fetchPut(`http://localhost:5000/module/updateLecturer`, lecturerArray)}
 
-        const btn = document.querySelector('#btn')
-        const check = document.querySelector('#check')
+    //     const btn = document.querySelector('#btn')
+    //     const check = document.querySelector('#check')
 
-        btn.style.cssText = 'display: none';
+    //     btn.style.cssText = 'display: none';
 
-        check.style.cssText = 'display:inline';
+    //     check.style.cssText = 'display:inline';
 
-        setTimeout(() =>{
-            btn.style.cssText = 'display: inline';
+    //     setTimeout(() =>{
+    //         btn.style.cssText = 'display: inline';
 
-            check.style.cssText = 'display:none';
-        } ,2000)
+    //         check.style.cssText = 'display:none';
+    //     } ,2000)
         
-    }
+    // }
 
     const handleChange = (e) => {
         const list = document.querySelector(".list").querySelectorAll("li");
@@ -118,7 +117,7 @@ const CreateTable = () => {
         return +lecturer[0].Total_Hours
     }
 
-    const handleSelect = async (element,Module_ID,SubjectID,SubjectName,SubjectType,SubjectTypeID) => {
+    const handleSelectLecturer = async (element,Module_ID,SubjectID,SubjectName,SubjectType,SubjectTypeID) => {
         
         const requestSection = document.getElementById('sendRequest')
 
@@ -142,9 +141,8 @@ const CreateTable = () => {
             const hours = await totalHours(LecturerID);
 
             if (hours < 19) {
-                lecturerArray.push({
-                    'Lecturer_ID':Number(LecturerID),
-                    Module_ID
+                await fetchPut(`http://localhost:5000/module/updateLecturer`, {
+                    Lecturer_ID: LecturerID, Module_ID
                 })
                 setErrorHours(() => errorHours.filter(l => l.Module_ID !== Module_ID))
                 element.style.color = '#554148'
@@ -153,14 +151,11 @@ const CreateTable = () => {
                 setErrorHours(() => [...errorHours, {Module_ID, LecturerID}])
             }
         }
-
     }
 
-    const handleSetHall = (e,Module_ID) => {
-        
-        hallArray.push({
-            Module_ID,
-            'Hall_Type_ID':Number(e)
+    const handleSetHall = async (e,Module_ID) => {
+        await fetchPut(`http://localhost:5000/module/updateHall`, {
+            Hall_Type_ID: e, Module_ID
         })
     }
 
@@ -210,7 +205,7 @@ const CreateTable = () => {
                                 <div key={i.Module_ID} className={style.courseDiv}>
                                 <select 
                                     id={i.Module_ID}
-                                    onChange={e => handleSelect(e.target,i.Module_ID,i.Subject_ID,i.Subject_Name,i.Subject_Type_Name,i.Subject_Type_ID)}
+                                    onChange={e => handleSelectLecturer(e.target,i.Module_ID,i.Subject_ID,i.Subject_Name,i.Subject_Type_Name,i.Subject_Type_ID)}
                                     defaultValue={i.Lecturer_ID}
                                 >
                                     <option>اختر المدرس : </option>
@@ -298,10 +293,10 @@ const CreateTable = () => {
                 </ul>
             </article>
             { errorHours.length > 0 && <p className={`${style.errorHours}`}>هناك محاضرين لا يمكن اختيارهم تجاوزوا نصاب التدريس</p> }
-            <footer className={style.createTable_footer}>
+            {/* <footer className={style.createTable_footer}>
                 <button className={`btn ${style.button}`} id='btn' onClick={handleSave}>حفظ</button>
                 <FontAwesomeIcon icon={faCheckCircle} id='check' className={style.check} />
-            </footer>
+            </footer> */}
         </section>
     )
 }

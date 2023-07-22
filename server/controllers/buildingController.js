@@ -21,7 +21,7 @@ module.exports.addBuilding = async (req, res) => {
             insert into building (Building_Name) values (?)
         `, [Building_Name]);
 
-        return res.status(200).json(building);
+        return res.status(201).json(building);
     }
     catch (err) {
         res.status(400).json({err: err.message});
@@ -51,7 +51,7 @@ module.exports.updateBuilding = async (req, res) => {
             update building set Building_Name = ? where Building_ID = ?
         `, [Building_Name, Building_ID])
 
-        return res.status(200).json(building);
+        return res.status(202).json(building);
     }
     catch (err) {
         res.status(400).json({err: err.message});
@@ -66,7 +66,7 @@ module.exports.deleteBuilding = async (req, res) => {
             delete from building where Building_ID = ?;
         `, [Building_ID]);
 
-        return res.status(200).json(building);
+        return res.status(202).json(building);
     }
     catch(err) {
         res.status(400).json({err: err.message});

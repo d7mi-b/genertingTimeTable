@@ -54,3 +54,42 @@
     width: 100%;
     margin: 0;
 }
+
+.timetablePage .timetableContainer .timetable header h3 {
+    font-size: .9rem;
+    margin: 2px auto;
+}
+
+.timetablePage .timetableContainer2 {
+    width: 90%;
+    margin: 20px auto;
+}
+
+.timetablePage .timetableContainer2 .timetable table {
+    width: 90%;
+}
+
+.timetablePage .timetableContainer2 .timetable table th {
+    border-radius: 5px;
+    box-shadow: none;
+    background-image: linear-gradient(45deg, var(--secondary-color), var(--main-color));
+}
+
+.timetablePage .timetableContainer2 .timetable table td {
+    background-image: linear-gradient(45deg, var(--card-color), #fefefe);
+    border-radius: 5px;
+    box-shadow: none;
+    padding: 10px;
+    width: 200px;
+    margin: 2px 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.timetablePage .timetableContainer2 .timetable table .OFFDay div {
+    background-color: transparent;
+    width: 100%;
+    box-shadow: none;
+    padding: 3px;
+}

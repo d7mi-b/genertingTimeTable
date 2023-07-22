@@ -79,7 +79,7 @@ module.exports.deleteGroup = async (req,res) => {
         delete from batch_groups where Group_ID = ?
         `,[Group_ID])
 
-        res.status(200).json(deleted)
+        res.status(202).json(deleted)
     }
     catch (err) {
         res.status(400).json({err: err.message})
@@ -95,7 +95,7 @@ module.exports.updateBatch = async (req,res) => {
         where Batch_ID = ?
         `,[Batch_General_Count,Batch_Parallel_Count,Batch_Payment_Count,Batch_ID])
         
-        res.status(200).json(batch)
+        res.status(202).json(batch)
     }
     catch (err) {
         res.status(400).json({err: err.message})
@@ -111,7 +111,7 @@ module.exports.updateGroup = async (req,res) => {
         where Group_ID = ? 
         `,[Group_Count,Batch_Type_ID,Group_ID])
 
-        res.status(200).json(group)
+        res.status(202).json(group)
     }
     catch (err) {
         res.status(400).json({err: err.message})

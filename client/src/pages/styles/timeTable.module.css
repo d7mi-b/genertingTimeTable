@@ -1,0 +1,180 @@
+.TableContainer {
+    margin: 0 3%;
+}
+
+.timeTable_header {
+    margin-top: 4%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.timeTable_header div{
+    display: flex;
+}
+
+.switch{
+    display: flex;
+    justify-content: flex-end;
+    margin: 3% 0;
+}
+
+.switch div{
+    border: 1px solid var(--border-color);
+    padding: 6px;
+    cursor: pointer;
+}
+
+.switch div:hover{
+    background-color: var(--border-color);
+    color: white;
+}
+
+.singleTable{
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.multipleTable{
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+.table{
+    width: 100%;
+
+}
+
+.tableHeader th, .tableHeader td{
+    border-left: 1px solid var(--font-color);
+    padding: 10px;
+    border-radius: 10px;
+    background-image: linear-gradient(to left bottom, #82194e, #711644, #60133a);
+    color: white;
+}
+
+.tableBody th{
+    background-image: linear-gradient(to left bottom, #82194e, #711644, #60133a, #501030);
+    color: white;
+    width:10%;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 2%;
+    box-shadow: 1px 1px 5px 0px var(--font-color);
+    
+}
+
+.tableBody td{
+    font-size:smaller;
+    height: inherit;
+}
+
+.tableBody tr{
+    height: 1px;
+}
+
+
+
+.cell{
+    display: flex;
+    background-color: var(--card-color);
+    border-radius: 10px;
+    padding: 6px;
+    text-align: center;
+    width: 400px;
+    height: 100%;
+    margin: 0.5% 1%;
+    align-items: center;
+    justify-content: center;
+}
+
+.data{
+    height: 100%;
+}
+
+.data span{
+    display: flex;
+    background-color: var(--card-color);
+    border-radius: 10px;
+    padding: 6px;
+    text-align: center;
+    width: 400px;
+    height: 100%;
+    margin: 0.5% 1%;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.spanHeight{
+    height:auto;
+
+}
+
+.modules{
+    display: flex;
+    margin: 0 3%;
+    
+}
+
+.practicalDiv{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    
+}
+
+.practicalDiv div{
+    padding: 3px;
+
+}
+
+.tableDiv{
+    overflow-x: auto;
+}
+
+/* styles for single tables */
+
+.diffTables{
+    margin-bottom: 5%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.diffTables table {
+    width: 700px;
+    box-shadow: 0px 0px 10px 5px var(--card-color);
+    padding: 1%;
+}
+
+.diffTables th{
+    background-color: var(--main-color);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    margin: 2px 2px;
+    box-shadow: 1px 1px 5px 0px var(--font-color);
+}
+
+.diffTables div {
+    background-color: var(--card-color);
+    border-radius: 10px;
+    padding: 10px;
+    width: 200px;
+    margin: 2px 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 1px 1px 5px 0px var(--font-color);
+}
+
+.diffTables tr{
+    display: flex;
+}
+
+.diffTables h2{
+    margin-bottom: 20px;
+}

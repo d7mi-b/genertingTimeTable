@@ -1,25 +1,15 @@
 const db = require('../DB');
 
 module.exports.updateLecturer = async (req,res) => {
-    
-    const data = req.body;
-    let array = [];
-
-
-    data.map(i => {
-        array.push([i.Lecturer_ID, i.Module_ID])
-    })
+    const { Lecturer_ID, Module_ID } = req.body;
 
     try{
-        array.map(i => {
-            db.query(`
+        await db.query(`
             update module set Lecturer_ID = ? 
             where Module_ID = ?;
-        `,i)
-        })
+        `, [Lecturer_ID, Module_ID])
 
-        
-        return res.status(201).json("update Success")
+        return res.status(202).json("update Success")
     }
     catch(err){ 
         res.status(400).json({err:err.message})
@@ -27,24 +17,15 @@ module.exports.updateLecturer = async (req,res) => {
 }
 
 module.exports.updateHall = async (req,res) => {
-    
-    const data = req.body;
-    let array = [];
-
-    data.map(i => {
-        array.push([i.Hall_Type_ID, i.Module_ID])
-    })
+    const { Hall_Type_ID, Module_ID } = req.body;
 
     try{
-        array.map(i => {
-            db.query(`
+        await db.query(`
             update module set Hall_Type_ID = ? 
             where Module_ID = ?;
-        `,i)
-        })
+        `, [Hall_Type_ID, Module_ID])
 
-        
-        return res.status(201).json("update Success")
+        return res.status(202).json("update Success")
     }
     catch(err){ 
         res.status(400).json({err:err.message})

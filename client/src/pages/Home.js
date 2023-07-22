@@ -6,6 +6,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faSquareTwitter, faSquareFacebook, faSquareInstagram } from '@fortawesome/free-brands-svg-icons';
 import style from './styles/home.module.css';
+import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const features = [
     {
@@ -29,6 +31,26 @@ const features = [
 ]
 
 const Home = () => {
+
+    useEffect(() => {
+        const featuresSection = document.getElementById('features');
+        const featuresList = document.querySelectorAll('.feature');
+        
+        window.onscroll = () => {
+            if (featuresSection.offsetTop <= window.scrollY + 500) {
+                featuresList.forEach(e => {
+                    e.classList.add('translateAnimation');
+                })
+            }
+            else if (featuresSection.offsetTop >= window.scrollY + 500) {
+                featuresList.forEach(e => {
+                    e.classList.remove('translateAnimation');
+                })
+            }
+        }
+    }, [])
+
+
     return (
         <div className='homePage'>
             {/* START HERO SECTHION */}
@@ -51,7 +73,7 @@ const Home = () => {
                         <p>توفر لك خدمة الاستعلام عن الجداول إمكانية الاطلاع على جدول قسم معين او أعضاء هيئة التدريس.</p>
                     </article>
                     <section className={`btnContainer`}>
-                        <button className={`btn ${style.btn}`}>ابدأ الخدمة </button>
+                        <Link to='/timetables' className={`link ${style.btn}`}>ابدأ الخدمة </Link>
                     </section>
                 </section>
             </div>

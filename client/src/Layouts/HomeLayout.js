@@ -23,22 +23,6 @@ export default function HomeLayout () {
     }
 
     useEffect(() => {
-        const featuresSection = document.getElementById('features');
-        const featuresList = document.querySelectorAll('.feature');
-        
-        window.onscroll = () => {
-            if (featuresSection.offsetTop <= window.scrollY + 500) {
-                featuresList.forEach(e => {
-                    e.classList.add('translateAnimation');
-                })
-            }
-            else if (featuresSection.offsetTop >= window.scrollY + 500) {
-                featuresList.forEach(e => {
-                    e.classList.remove('translateAnimation');
-                })
-            }
-        }
-
         const loginBtn = document.querySelector('.btnLogin');
         const loginContainer = document.querySelector('.loginContainer');
 
@@ -60,11 +44,11 @@ export default function HomeLayout () {
             <nav className={`${style.navbar}`}>
                 <section className={style.listContainer}>
                     <p className={`${style.bar}`}><FontAwesomeIcon icon={faBars} size='xl'/></p>
-                    <p className={`${style.logo}`}>
+                    <section className={`${style.logo}`}>
                         <section>
                             ULTS <FontAwesomeIcon icon={faCalendarDay} />
                         </section>
-                    </p>
+                    </section>
                     <ul className={`${style.list}`}>
                         <li><Link className={`link`} to='/'>الرئيسية</Link></li>
                         <li><Link className={`link`} to={`/timetables`}>الجداول</Link></li>

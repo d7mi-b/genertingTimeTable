@@ -102,7 +102,7 @@ module.exports.updateLecturer = async (req,res) => {
                     where Lecturer_ID= ?`
                 ,[Not_Available, Lecturer_ID]);
                 }
-            return res.status(201).json(Lecturer1+Lecturer2+Lecturer3+Lecturer4+Lecturer5+Lecturer6+Lecturer7)
+            return res.status(202).json(Lecturer1+Lecturer2+Lecturer3+Lecturer4+Lecturer5+Lecturer6+Lecturer7)
             }
             catch (err) {
                 res.status(400).json({err: err.message});
@@ -119,7 +119,7 @@ module.exports.deleteLecturer = async (req,res) => {
         delete from lecturer where Lecturer_ID = ?`,
         [Lecturer_ID]);
 
-        return res.status(200).json(Lecturer);
+        return res.status(202).json(Lecturer);
     }
     catch(err){
         res.status(400).json({err: err.message});

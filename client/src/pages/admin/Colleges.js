@@ -118,7 +118,7 @@ const Colleges = () => {
                 <section className={`${style.buldingsContainer}`} id='collegesContainer'>
                     {
                         colleges &&
-                        colleges.map(e => {
+                        colleges.filter(e => e.College_Name !== 'رئاسة الجامعة').map(e => {
                             return (
                                 <Link to={`${e.College_ID}`} className={`${style.bulding}`} id={e.College_ID} key={e.College_ID}>
                                     <section className={`${style.img}`}>
@@ -187,7 +187,7 @@ const Colleges = () => {
                             <select value={College_ID} onChange={e => setCollege_ID(+e.target.value)}>
                                 {
                                     colleges &&
-                                    colleges.map(e => {
+                                    colleges.filter(e => e.College_Name !== 'رئاسة الجامعة').map(e => {
                                         return (
                                         <option value={e.College_ID} key={e.College_ID}>{e.College_Name}</option>
                                         )
@@ -226,7 +226,7 @@ const Colleges = () => {
                             <select value={College_ID} onChange={e => setCollege_ID(+e.target.value)}>
                                 {
                                     colleges &&
-                                    colleges.map(e => {
+                                    colleges.filter(e => e.College_Name !== 'رئاسة الجامعة').map(e => {
                                         return (
                                         <option value={e.College_ID} key={e.College_ID}>{e.College_Name}</option>
                                         )

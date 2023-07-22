@@ -1,9 +1,10 @@
 const express = require('express');
-const timetableController = require('../controllers/timetableController');
+const timeTableController = require('../controllers/timetableController');
 
 const router = express.Router();
 
-router.get('/groupsNumber', timetableController.groupsNumberInTimetable);
-router.get('/search/:search', timetableController.timetableSearch);
+router.get('/', timeTableController.getAllSchedules);
+router.get('/groupsNumber', timeTableController.groupsNumberInTimetable);
+router.get('/search/:search', timeTableController.timetableSearch);
 
 module.exports = router;

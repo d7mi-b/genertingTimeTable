@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import style from './styles/notFound.module.css';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const NotFound = () => {
+    const { user } = useAuthContext();
+
     return (
-        <div className={`containerPage`}>
+        <div className={user && user.type === 1 ? 'containerPage' : ''}>
             <section className={`${style.notFound}`}>
                 <article className={`${style.content}`}>
                     <header>

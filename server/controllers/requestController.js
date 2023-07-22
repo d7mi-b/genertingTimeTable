@@ -57,7 +57,7 @@ module.exports.updateRequest = async (req,res) => {
         where Request_ID = ?
         `,[Lecturer_ID,Reply,Request_ID])
 
-        return res.status(200).json(request)
+        return res.status(202).json(request)
     }
     catch(err){
         res.status(400).json({err:err.message})
