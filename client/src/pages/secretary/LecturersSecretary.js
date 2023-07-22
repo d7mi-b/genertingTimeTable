@@ -381,11 +381,7 @@ const LecturersSecretary = () => {
                       ></input>
                     </section>
                   </section>
-                  <button
-                    className={style.addButton}
-                    id="submitLecturer"
-                    onClick={handleSubmit}
-                  >
+                  <button className={style.addButton} id="submitLecturer">
                     إضافة
                   </button>
                 </div>
