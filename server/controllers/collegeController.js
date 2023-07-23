@@ -2,7 +2,7 @@ const db = require('../DB');
 
 module.exports.getColleges = async (req, res) => {
     try {
-        const [ colleges ] = await db.query('select * from college')
+        const [ colleges ] = await db.query('select * from college where College_Name != "رئاسة الجامعة"')
         return res.status(200).json(colleges)
     }
     catch(err) {

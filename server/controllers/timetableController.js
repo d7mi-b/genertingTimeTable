@@ -67,7 +67,7 @@ module.exports.timetableSearch = async (req, res) => {
 
     try {
         const [timetable] = await db.query(`
-            SELECT ETT_ID, e_t_t.Module_ID, Subject_Name, Subject_Type_Name, Lecturer_Name, Hall_Name, Day_Name, Start_Time, End_Time, Semester_Name, Department_Name FROM e_t_t 
+            SELECT ETT_ID, e_t_t.Module_ID, Subject_Name, Subject_Type_Name, Lecturer_Name, Rank_, Hall_Name, Day_Name, Start_Time, End_Time, Semester_Name, Department_Name FROM e_t_t 
             join module on e_t_t.Module_ID = module.Module_ID
             join subjects on module.Subject_ID = subjects.Subject_ID
             join subject_type on module.Subject_Type_ID = subject_type.Subject_Type_ID
@@ -97,9 +97,9 @@ module.exports.checkModulesForGenerating = async (req, res) => {
 
     try {
         const [modules] = await db.query(`
-            select department.Department_ID, count(*) as modules, count(Lecturer_ID) as lecturers, count(Hall_Type_ID) as Hall_Type from module
+            select department.Department_ID, count(Module_ID) as modules, count(Lecturer_ID) as lecturers, count(Hall_Type_ID) as Hall_Type from module
             right outer join department on module.Department_ID = department.Department_ID
-            where department.College_ID = ?
+            where department.College_ID = 1
             group by department.Department_ID;
         `, [College_ID]);
 

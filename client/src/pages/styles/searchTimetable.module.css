@@ -75,7 +75,7 @@
     background-image: linear-gradient(45deg, var(--secondary-color), var(--main-color));
 }
 
-.timetablePage .timetableContainer2 .timetable table td {
+.timetablePage .timetableContainer2 .timetable table div {
     background-image: linear-gradient(45deg, var(--card-color), #fefefe);
     border-radius: 5px;
     box-shadow: none;
@@ -87,9 +87,21 @@
     justify-content: center;
 }
 
-.timetablePage .timetableContainer2 .timetable table .OFFDay div {
-    background-color: transparent;
-    width: 100%;
-    box-shadow: none;
-    padding: 3px;
+@media (max-width: 992px) {
+    .timetablePage .timetableContainer2 .timetable table tr {
+        display: grid;
+    }
+
+    .timetablePage .timetableContainer2 .timetable table th {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .timetablePage .timetableContainer2 .timetable table div {
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+
 }

@@ -2,7 +2,7 @@ const db = require('../DB');
 
 module.exports.getDepartements = async (req, res) => {
     try {
-        const [ row ] = await db.query('select * from department')
+        const [ row ] = await db.query('select * from department where Department_Name != "مركز المعلومات"')
         return res.status(200).json(row)
     }
     catch(err) {

@@ -6,7 +6,7 @@
     );
     display: flex;
     justify-content: space-between;
-    padding: 15px 10%;
+    padding: 15px 5%;
     color: var(--card-color);
     grid-row: 1 / 2;
 }

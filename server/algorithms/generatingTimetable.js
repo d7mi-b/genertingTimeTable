@@ -122,7 +122,7 @@ module.exports.generatingTimetable = async (req, res) => {
         tabuList.push([candidateTimetable, candidateTimetable]);
       }
       // Keep the tabu list within a certain length limit
-      if (tabuList.length > 50) tabuList.shift();
+      if (tabuList.length > 500) tabuList.shift();
       // Update the best timetable found so far
       if (
         fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >

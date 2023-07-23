@@ -178,3 +178,9 @@
 .diffTables h2{
     margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+    .practicalDiv {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

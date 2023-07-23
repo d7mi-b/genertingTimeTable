@@ -33,6 +33,7 @@ const SearchTimetable = () => {
 
     const [search, setSearch] = useState('');
     const [timetable, setTimetable] = useState(null);
+    const [departemnt, setDepartment] = useState([]);
 
     const handelSearch = async (search) => {
         const res = await fetch(`http://localhost:5000/timetable/search/${search}`);
@@ -48,7 +49,14 @@ const SearchTimetable = () => {
 
         if (!search)
             setTimetable(null);
-    }, [search])
+
+        if (timetable) {
+            timetable.map(t => {
+                if (!departemnt.includes(t.Department_Name))
+                    setDepartment([...departemnt, t.Department_Name]);
+            })
+        }
+    }, [search, timetable])
 
     return (
         <section className={`${style.timetablePage} ${user && user.type === 1 ? 'containerPage' : ""}`}>
@@ -74,9 +82,9 @@ const SearchTimetable = () => {
                 </form>
             </section>
 
-            <section className={timetable && timetable.length < 3 ? style.timetableContainer : style.timetableContainer2}>
+            <section className={timetable && timetable.length <= 3 ? style.timetableContainer : style.timetableContainer2}>
                 {
-                    timetable && timetable.length < 3 && timetable.map(t => {
+                    timetable && timetable.length <= 3 && timetable.map(t => {
                         return (
                             <article id={t.ETT_ID} key={t.ETT_ID} className={style.timetable}>
                                 <header>
@@ -98,90 +106,92 @@ const SearchTimetable = () => {
                     timetable && timetable.length > 3 && semesters.filter(s => {
                         return timetable.filter(t => t.Semester_Name === s).map(t => t.Semester_Name).includes(s)
                     }).map(s => {
-                        return (
-                            <div  className={`${styleB.diffTables} ${style.timetable}`} key={s}>
-                                <header>
-                                    <h1>{s}</h1>
-                                </header>
-
-                                <table>
-                                    <tbody>
-                                        {
-                                            days.map(d => {
-                                                let arr = []
-                                                return (
-                                                    <tr key={d}>
-                                                        <th>{d}</th>
-                                                        {
-                                                            timetable.filter((t, index) => {
-                                                                if (index > 0 && index < timetable.length - 1) {
-
-                                                                    if (timetable[index].Module_ID === timetable[index - 1].Module_ID || timetable[index].Module_ID === timetable[index + 1].Module_ID) {
-                                                                        
-                                                                        if(!timetable.includes(timetable[index-1]))
-                                                                            arr.push(timetable[index-1])
-                                                                        
-                                                                        arr.push(t)
-                                                                    }
-                                                                    return (t.Day_Name === d && t.Semester_Name === s && !(timetable[index].Module_ID === timetable[index-1].Module_ID) 
-                                                                    && !(timetable[index].Module_ID === timetable[index+1].Module_ID)) 
-                                                                }
-                                                                else if (index === 0) {
-                                                                    return (t.Day_Name === d && t.Semester_Name === s && !(timetable[index].Module_ID === timetable[index + 1].Module_ID)) 
-                                                                }
-                                                                else if (index === timetable.length - 1) {
-                                                                    return (t.Day_Name === d && t.Semester_Name === s && !(timetable[index].Module_ID === timetable[index - 1].Module_ID)) 
-                                                                }
-                                                                else {
-                                                                    return t.Day_Name === d && t.Semester_Name === s
-                                                                } 
-                                                            }).map(i => {
-                                                                return(
-                                                                    <td key={i.ETT_ID}>
-                                                                        <h4>{i.Subject_Name}</h4>
-                                                                        <h5>{i.Lecturer_Name}</h5>
-                                                                        <p>{i.Group_}</p>
-                                                                        <p>{i.Hall_Name}</p>
-                                                                        <p>{handelTime(i.Start_Time.slice(0, 2), i.End_Time.slice(0, 2))}</p>
-                                                                    </td>
-                                                                )
-                                                            })
-                                                        }
-                                                        
-                                                        <td className={styleB.practicalDiv}>
+                        return departemnt && departemnt.map(dep => {
+                            return (
+                                <div  className={`${styleB.diffTables} ${style.timetable}`} key={s}>
+                                    <header>
+                                        <h1>{dep} - {s}</h1>
+                                    </header>
+                                    <table>
+                                        <tbody>
+                                            {
+                                                days.map(d => {
+                                                    let arr = []
+                                                    return (
+                                                        <tr key={d}>
+                                                            <th>{d}</th>
+                                                            
                                                             {
-                                                                arr.length > 0 &&
-                                                                arr.filter(t => t.Day_Name === d && t.Semester_Name === s).map(j => {
+                                                                timetable.filter((t, index) => {
+                                                                    if (index > 0 && index < timetable.length - 1) {
+    
+                                                                        if (timetable[index].Module_ID === timetable[index - 1].Module_ID || timetable[index].Module_ID === timetable[index + 1].Module_ID) {
+                                                                            
+                                                                            if(!timetable.includes(timetable[index-1]))
+                                                                                arr.push(timetable[index-1])
+                                                                            
+                                                                            arr.push(t)
+                                                                        }
+                                                                        return (t.Day_Name === d && t.Semester_Name === s && t.Department_Name === dep && !(timetable[index].Module_ID === timetable[index-1].Module_ID) 
+                                                                        && !(timetable[index].Module_ID === timetable[index+1].Module_ID)) 
+                                                                    }
+                                                                    else if (index === 0) {
+                                                                        return (t.Day_Name === d && t.Semester_Name === s && t.Department_Name === dep && !(timetable[index].Module_ID === timetable[index + 1].Module_ID)) 
+                                                                    }
+                                                                    else if (index === timetable.length - 1) {
+                                                                        return (t.Day_Name === d && t.Semester_Name === s && t.Department_Name === dep && !(timetable[index].Module_ID === timetable[index - 1].Module_ID)) 
+                                                                    }
+                                                                    else {
+                                                                        return t.Day_Name === d && t.Semester_Name === s && t.Department_Name === dep
+                                                                    } 
+                                                                }).map(i => {
                                                                     return(
-                                                                        <td key={j.ETT_ID}>
-                                                                            <h4>{j.Subject_Name}</h4>
-                                                                            <h5>{j.Lecturer_Name}</h5>
-                                                                            <p>{j.Group_}</p>
-                                                                            <p>{j.Hall_Name}</p>
-                                                                            <p>{handelTime(j.Start_Time.slice(0, 2), j.End_Time.slice(0, 2))}</p>
-                                                                        </td>
+                                                                        <div key={i.ETT_ID}>
+                                                                            <h4>{i.Subject_Name}</h4>
+                                                                            <h5>{i.Rank_ === 'doctor' ? `د. ${i.Lecturer_Name}` : i.Lecturer_Name}</h5>
+                                                                            <p>{i.Group_}</p>
+                                                                            <p>{i.Hall_Name}</p>
+                                                                            <p>{handelTime(i.Start_Time.slice(0, 2), i.End_Time.slice(0, 2))}</p>
+                                                                        </div>
                                                                     )
                                                                 })
                                                             }
-                                                        </td>
-
-                                                        <td className={style.OFFDay}>
-                                                            {
-                                                                timetable.filter(t => t.Day_Name === d && t.Semester_Name === s).length === 0 &&
-                                                                <div>
-                                                                    <h4>OFF</h4>
-                                                                </div>
-                                                            }
-                                                        </td>
-                                                        
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        )
+                                                            
+                                                            <td className={styleB.practicalDiv}>
+                                                                {
+                                                                    arr.length > 0 &&
+                                                                    arr.filter(t => t.Day_Name === d && t.Semester_Name === s).map(j => {
+                                                                        return(
+                                                                            <div key={j.ETT_ID}>
+                                                                                <h4>{j.Subject_Name}</h4>
+                                                                                <h5>{j.Rank_ === 'doctor' ? `د. ${j.Lecturer_Name}` : j.Lecturer_Name}</h5>
+                                                                                <p>{j.Group_}</p>
+                                                                                <p>{j.Hall_Name}</p>
+                                                                                <p>{handelTime(j.Start_Time.slice(0, 2), j.End_Time.slice(0, 2))}</p>
+                                                                            </div>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </td>
+    
+                                                            <td className={style.OFFDay}>
+                                                                {
+                                                                    timetable.filter(t => t.Day_Name === d && t.Semester_Name === s).length === 0 &&
+                                                                    <div>
+                                                                        <h4>OFF</h4>
+                                                                    </div>
+                                                                }
+                                                            </td>
+                                                            
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            )
+                        })
                     })
                 }
             </section>
