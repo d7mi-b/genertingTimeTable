@@ -21,16 +21,6 @@ const sections = [
   //   link: "departments",
   // },
   {
-    name: "القاعات والمعامل الدراسية",
-    icon: faBuilding,
-    link: "halls",
-  },
-  {
-    name: "الجداول الحالية",
-    icon: faCalendarDays,
-    link: "current-schedules",
-  },
-  {
     name: "أعضاء هيئة التدريس",
     icon: faUserTie,
     link: "lecturers",
@@ -39,6 +29,16 @@ const sections = [
     name: "مراجعة الطلبات",
     icon: faFile,
     link: "requests",
+  },
+  {
+    name: "القاعات والمعامل الدراسية",
+    icon: faBuilding,
+    link: "halls",
+  },
+  {
+    name: "الجداول",
+    icon: faCalendarDays,
+    link: "timetables",
   },
   {
     name: "إنشاء جدول جديد",
