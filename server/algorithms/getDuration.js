@@ -3,11 +3,11 @@ function getDuration(module) {
   if (!module) {
     return 0;
   }
-  const [starHours, startMinutes, startSeconds] =
-    module.Start_Time.split(":").map(Number);
+  const [starHours, startMinutes, startSeconds] = module.Start_Time ?
+    module.Start_Time.split(":").map(Number) : [];
 
-  const [endHours, endMinutes, endSeconds] =
-    module.End_Time.split(":").map(Number);
+  const [endHours, endMinutes, endSeconds] = module.End_Time ?
+    module.End_Time.split(":").map(Number) : [];
 
   const startInSecond = starHours * 3600 + startMinutes * 60 + startSeconds;
   const endInsSecond = endHours * 3600 + endMinutes * 60 + endSeconds;

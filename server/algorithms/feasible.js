@@ -17,8 +17,10 @@ module.exports.feasible = (neighborhood, lecturers) => {
 
         // To check if the day its available to lecturer or not
         const lecturerDay = lecturers.filter(l => l.Lecturer_ID === timetable[i].Lecturer_ID);
-        if (!lecturerDays(lecturerDay, timetable[i].Day_ID))
+        if (!lecturerDays(lecturerDay, timetable[i].Day_ID)) {
+            console.log(timetable[i].Module_ID, " - ", timetable[i].Lecturer_ID, ' - ', timetable[i].Day_ID)
             conflicts = conflicts + 1;
+        }
 
         //if The end time is out of limit it's not acceptable
         if(timetable[i].End_Time > "17:00:00"){

@@ -7,8 +7,8 @@ module.exports.timeGap = (timeTable, groups, days) => {
         groups.map(g => {
             days.map(d => {
                 timeTable.filter(t => t.Group_ID === g.Group_ID && t.Day_ID === d.Day_ID).map(t => {
-                    let start = t.Start_Time.split(':')[0]
-                    let end = t.End_Time.split(':')[0]
+                    let start = t.Start_Time ? t.Start_Time.split(':')[0] : '';
+                    let end = t.End_Time ? t.End_Time.split(':')[0] : '';
                     times.push(Number(start))
                     times.push(Number(end))
                 })
