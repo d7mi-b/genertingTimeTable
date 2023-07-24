@@ -117,7 +117,7 @@ const Courses = () => {
 
             <main className={style.courses_main}>
                  <header>
-                    <h3>الترم الأول: </h3>
+                    <h3>الفصل الأول:</h3>
                     <button className="btn" id="addCoursebtn">إضافة مادة</button>
                 </header>
                 <section>
@@ -162,12 +162,12 @@ const Courses = () => {
                             Courses &&
                             Courses.filter(e => e.Semester_ID === first_semester).length === 0 && 
                             <div className={style.table_Data}>
-                                <h4>لايوجد مواد لهذا الترم</h4>
+                                <h4>لايوجد مواد لهذا الفصل</h4>
                             </div>
                         }
                 </section>
                 <header>
-                    <h3>الترم الثاني:</h3>
+                    <h3>الفصل الثاني:</h3>
                 </header>
                 <section>
                     <div className={style.table_Header}>
@@ -207,7 +207,7 @@ const Courses = () => {
                             Courses &&
                             Courses.filter(e => e.Semester_ID === second_semester).length === 0 && 
                             <div className={style.table_Data}>
-                                <h4>لايوجد مواد لهذا الترم</h4>
+                                <h4>لايوجد مواد لهذا الفصل</h4>
                             </div>
                         }
                 </section>
@@ -232,11 +232,11 @@ const Courses = () => {
                             <label htmlFor="excersise">تمارين</label>
                             <input type='number' name='excersise' className="input" onChange={e => setCredit_Tutorial(e.target.value)} />
                         </section>
-                    <label htmlFor="semester">الترم :</label>
+                    <label htmlFor="semester">الفصل :</label>
                     <select className="input" required onChange={e => setSemester_ID(e.target.value)}>
-                        <option>اختر الترم</option>
-                        <option  value={first_semester}>الترم الأول</option>
-                        <option  value={second_semester}>الترم الثاني</option>
+                        <option>اختر الفصل</option>
+                        <option  value={first_semester}>الفصل الأول</option>
+                        <option  value={second_semester}>الفصل الثاني</option>
                     </select>
                     
                     <section className="btnContainer">
