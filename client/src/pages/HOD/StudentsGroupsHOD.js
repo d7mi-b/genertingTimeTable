@@ -205,9 +205,7 @@ const Students = () => {
                                             }}
                                             className={style.editbtn}/></td>
                                         </tr>
-                                        <tr >
-                                            <td className={style.a3}></td>
-                                        </tr>
+                                        
                                         
                                     </tbody>
                                 </table>
