@@ -128,7 +128,7 @@ const Lecturers = () => {
     },[]);
 
     return(
-        <section className={`container ${style.section_HOD}`}>
+        <section className={`container ${style.section_HOD} ${style.container}`}>
             {
                     isPending && <Loading />
             }
@@ -174,14 +174,14 @@ const Lecturers = () => {
                     info &&
                     info.filter(e => e.Not_Available === 0).map(i => {
                         return(
-                            <div id={i.Lecturer_ID} key={i.Lecturer_ID}>
+                            <div id={i.Lecturer_ID} key={i.Lecturer_ID} className={style.lecturer_box}>
                                 <section className={style.first_section}>
                                     <label className={style.labels}>
                                     {handleRank(i.Rank_)}
-                                    <p>{i.Lecturer_Name}</p>
+                                    <h4>{i.Lecturer_Name}</h4>
                                     </label>
                                     <label className={style.labels}>
-                                    <p>قسم: {i.Department_Name}</p>
+                                    <h4>قسم: {i.Department_Name}</h4>
                                     </label>
                                     <label className={style.labels}>
                                         <input type='checkbox' name='Not_avilable' value='Not_avilable' 
@@ -190,17 +190,17 @@ const Lecturers = () => {
                                     </label>
                                 </section>
                                 <section>
-                                    <label className={style.labels}>
+                                    <div className={style.labels}>
                                         <p>عدد أيام الحضور : </p>
                                         <input type='number' name="daysNum" 
                                         defaultValue={i.NO_Available_Days}
                                         onChange={e => setNO_AV_Days(e.target.value)}/>
-                                    </label>
-                                    <label className={style.labels}>
+                                    </div>
+                                    <div className={style.labels}>
                                         <p> الأيام المتاحة :</p>
-                                    </label>
-                                    <article className={style.editbtn}>
-                                        <section className={style.labels}>
+                                    </div>
+                                    <div className={style.editbtn}>
+                                        <div className={style.labels}>
                                             {i.Sunday === 1 && <input type='checkbox' name='sunday' defaultChecked
                                              onChange={() => setSunday("0")} />}
                                             {i.Sunday === 0 && <input type='checkbox' name='sunday' 
@@ -226,12 +226,12 @@ const Lecturers = () => {
                                             {i.Thursday === 0 && <input type='checkbox' name='Thursday' 
                                              onChange={() => setThursday("1")} />}
                                             <p>الخميس</p>
-                                        </section>
-                                        <section>
+                                        </div>
+                                        <div>
                                             <button className="btn" onClick={() => handleUpdate(i.Lecturer_ID)}>حفظ</button>
                                             <button className="btn" onClick={() => openDeleteSection(i.Lecturer_ID)}><FontAwesomeIcon icon={faTrash} className={style.deletebtn}/></button>
-                                        </section>
-                                    </article>
+                                        </div>
+                                    </div>
                                 </section>
                                 <section className={`container-section ${style.deleteLecturer}`} id='deleteSection'>
                                     <article className={`center-section`}>
@@ -253,7 +253,7 @@ const Lecturers = () => {
                     info &&
                     info.filter(e => e.Not_Available === 1).map(i => {
                         return(
-                            <div id={i.Lecturer_ID} key={i.Lecturer_ID} className={style.selected}>
+                            <div id={i.Lecturer_ID} key={i.Lecturer_ID} className={`${style.selected} ${style.lecturer_box}`}>
                                 <section className={style.first_section}>
                                     <label className={style.labels}>
                                     {handleRank(i.Rank_)}
