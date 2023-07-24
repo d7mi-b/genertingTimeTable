@@ -23,7 +23,7 @@
 .tableSection{
     background-color: #f7f7f7;
     padding: 30px;
-    width: fit-content;
+    width: 55%;
     border-radius: 5px;
     box-shadow: 2px 3px 3px 2px rgba(85,65,72,0.5);
     display: flex;
@@ -66,6 +66,7 @@
 }
 
 .div{
+    position:relative;
     display: flex;
     background-color: white;
     align-items: center;
@@ -73,7 +74,7 @@
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding-right: 8px;
-    z-index: 0  ;
+    z-index: 1 ;
 }
 
 .div p{
@@ -112,20 +113,32 @@
 .a2{
     background-color: #C9C9C9;
     position: absolute;
-    width: 53px ;
+    width: 45px ;
     height: 10px;
-    left: 688px;
-    z-index: 0;
+    left: 100%;
+    z-index: -1000;
     border-top: 1px solid #707070;
     border-bottom: 1px solid #707070;
 }
 
-.a3{
+.a1{
     background-color: #C9C9C9;
     position: absolute;
     width: 17.9px ;
     height: 51px;
     left: 66.1%;
+    border-right: 1px solid #707070;
+    border-left: 1px solid #707070;
+    border-bottom: 1px solid #707070;
+    z-index: 1;
+}
+ 
+.a3{
+    background-color: #C9C9C9;
+    position: absolute;
+    width: 17.9px ;
+    height: 60px;
+    left: 114.4%;
     border-right: 1px solid #707070;
     border-left: 1px solid #707070;
     border-bottom: 1px solid #707070;
@@ -135,6 +148,12 @@
 .editSection{
     display: none;
     right: 0;
+}
+
+.editSection header{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .editSection article{

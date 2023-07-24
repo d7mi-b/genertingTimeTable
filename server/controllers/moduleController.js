@@ -44,7 +44,7 @@ module.exports.getDepartmentModule = async (req,res) => {
         select Module_ID, Hall_Type_ID, module.Semester_ID, module.Subject_ID, Subject_Name, module.Lecturer_ID, Lecturer_Name,
         subject_type.Subject_Type_Name, subject_type.Subject_Type_ID from module 
         natural join subjects
-        join lecturer on lecturer.Lecturer_ID = module.Lecturer_ID
+        left outer join lecturer on lecturer.Lecturer_ID = module.Lecturer_ID
         join subject_type on module.Subject_Type_ID = subject_type.Subject_Type_ID
         where module.Department_ID = ? and (module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ?)
         `,[Department_ID,1,3,5,7,9])
@@ -55,7 +55,7 @@ module.exports.getDepartmentModule = async (req,res) => {
         select Module_ID, Hall_Type_ID, module.Semester_ID, module.Subject_ID, Subject_Name, module.Lecturer_ID,Lecturer_Name,
         subject_type.Subject_Type_Name, subject_type.Subject_Type_ID from module 
         natural join subjects
-        join lecturer on lecturer.Lecturer_ID = module.Lecturer_ID
+        left outer join lecturer on lecturer.Lecturer_ID = module.Lecturer_ID
         join subject_type on module.Subject_Type_ID = subject_type.Subject_Type_ID
         where module.Department_ID = ? and (module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ? or module.Semester_ID = ?)
         `,[Department_ID,2,4,6,8,10])

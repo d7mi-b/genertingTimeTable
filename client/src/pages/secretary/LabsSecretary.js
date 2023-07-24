@@ -21,7 +21,6 @@ const SecretaryLaps = () => {
             <p>
               عدد المباني والقاعات <span>{hallsData.length}</span>
             </p>
-            <button className={style.addButton}>إضافة</button>
           </>
         )}
       </div>

@@ -87,14 +87,16 @@ module.exports.deleteGroup = async (req,res) => {
 }
 
 module.exports.updateBatch = async (req,res) => {
-    const { Batch_ID,Batch_General_Count, Batch_Parallel_Count, Batch_Payment_Count } = req.body;
+    const { Batch_ID, Batch_NO, Batch_General_Count, Batch_Parallel_Count, Batch_Payment_Count } = req.body;
 
     try{
         const [batch] = await db.query(`
-        update batches set Batch_General_Count = ?, Batch_Parallel_Count = ?, Batch_Payment_Count = ?
+        update batches set Batch_General_Count = ?, Batch_Parallel_Count = ?, Batch_Payment_Count = ?, Batch_NO = ?
         where Batch_ID = ?
-        `,[Batch_General_Count,Batch_Parallel_Count,Batch_Payment_Count,Batch_ID])
+        `,[Batch_General_Count,Batch_Parallel_Count,Batch_Payment_Count,Batch_NO,Batch_ID])
         
+        console.log(batch)
+
         res.status(202).json(batch)
     }
     catch (err) {

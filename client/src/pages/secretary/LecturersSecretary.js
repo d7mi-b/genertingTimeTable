@@ -74,7 +74,10 @@ const LecturersSecretary = () => {
       });
     }
 
-    window.location.reload();
+    // window.location.reload();
+    const button = document.getElementById("myButton");
+    const parent = button.closest("div");
+    parent.classList.add("parent-class");
   };
 
   const handleUpdate = async (lecturer) => {
@@ -149,12 +152,17 @@ const LecturersSecretary = () => {
                     Department_ID: lecturer.Department_ID,
                     Rank_: lecturer.Rank_,
                     Not_Available: "0",
-                    NO_Available_Days: "0",
+                    NO_Available_Days: lecturer.NO_Available_Days,
                     Sunday: lecturer.Sunday,
                     Monday: lecturer.Monday,
                     Tuesday: lecturer.Tuesday,
                     Wednesday: lecturer.Wednesday,
                     Thursday: lecturer.Thursday,
+                  };
+                  const handleChange = (event) => {
+                    if (event.target.value <= 5 || event.target.value < 1) {
+                      lecturerHolder.NO_Available_Days = event.target.value;
+                    } else alert("أيام الحضور تتجاوز عدد الأيام المتاحة");
                   };
                   return (
                     <div className={`${style.lectureor}`} key={index}>
@@ -192,8 +200,10 @@ const LecturersSecretary = () => {
                           <input
                             className={style.daysInput}
                             type="number"
-                            value={lecturer.NO_Available_Days || 0}
-                            readOnly={true}
+                            defaultValue={lecturer.NO_Available_Days || 0}
+                            max={5}
+                            min={1}
+                            onChange={handleChange}
                           ></input>
                         </div>
                         <div className="daysCheckBoxes">

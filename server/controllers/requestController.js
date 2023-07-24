@@ -1,15 +1,16 @@
 const db = require('../DB');
 
 module.exports.postRequest = async (req,res) => {
-    const { Sender_ID, Reciver_ID, Subject_ID, Subject_Type_ID, Module_ID } = req.body;
+    const { Sender_ID, Reciver_ID, Subject_Type_ID, Module_ID } = req.body;
 
-    console.log(Sender_ID,Reciver_ID,Subject_ID,Subject_Type_ID,Module_ID)
+    console.log(Sender_ID,Reciver_ID,Subject_Type_ID,Module_ID)
     try{
         const [request] = await db.query(`
-        insert into lecturer_requsets ( Sender_ID, Reciver_ID, Subject_ID, Subject_Type_ID, Module_ID,Reply)
-        values(?,?,?,?,?,?)
-        `,[Sender_ID,Reciver_ID,Subject_ID,Subject_Type_ID,Module_ID,0])
+        insert into lecturer_requsets ( Sender_ID, Reciver_ID, Subject_Type_ID, Module_ID,Reply)
+        values(?,?,?,?,?)
+        `,[Sender_ID,Reciver_ID,Subject_Type_ID,Module_ID,0])
 
+        console.log(request)
         return res.status(201).json(request)
     }
     catch(err){
@@ -24,23 +25,26 @@ module.exports.getRequests = async (req,res) => {
     
     try{
         const [requests] = await db.query(`
-            select Request_ID, Sender_ID, Reciver_ID, Subject_Name, Subject_Type_Name, Department_Name, Reply, Lecturer_Name, Module_ID
-            from lecturer_requsets 
-            natural join subjects
+            select Request_ID, Sender_ID, Reciver_ID, Subject_Name, Subject_Type_Name, Department_Name, Reply, Lecturer_Name, 
+            lecturer_requsets.Module_ID from lecturer_requsets 
+            join module on lecturer_requsets.Module_ID = module.Module_ID
+            join subjects on module.Subject_ID = subjects.Subject_ID
             join department on department.Department_ID = lecturer_requsets.Sender_ID 
-            natural join subject_type 
+            join subject_type on lecturer_requsets.Subject_Type_ID = subject_type.Subject_Type_ID
             left outer join lecturer on lecturer.Lecturer_ID = lecturer_requsets.Lecturer_ID
             where Reciver_ID = ? 
             union 
-            select Request_ID, Sender_ID, Reciver_ID, Subject_Name, Subject_Type_Name, Department_Name, Reply, Lecturer_Name, Module_ID
-            from lecturer_requsets 
-            natural join subjects
+            select Request_ID, Sender_ID, Reciver_ID, Subject_Name, Subject_Type_Name, Department_Name, Reply, Lecturer_Name, 
+            lecturer_requsets.Module_ID from lecturer_requsets 
+            join module on lecturer_requsets.Module_ID = module.Module_ID
+            join subjects on module.Subject_ID = subjects.Subject_ID
             join department on department.Department_ID = lecturer_requsets.Reciver_ID 
-            natural join subject_type 
+            join subject_type on lecturer_requsets.Subject_Type_ID = subject_type.Subject_Type_ID
             left outer join lecturer on lecturer.Lecturer_ID = lecturer_requsets.Lecturer_ID
             where Sender_ID = ? 
         `,[Deparetment_ID,Deparetment_ID])
 
+        console.log(requests)
         return res.status(200).json(requests)
     }
     catch(err){

@@ -27,7 +27,6 @@
     width: 120px;
 }
 
-
 .lecturers_main{
     padding: 40px;
     display: flex;
@@ -36,20 +35,21 @@
     align-items: center;
 }
 
-.lecturers_main div{
+.lecturer_box{
     margin-top: 20px;
     padding: 15px;
     border:1px solid var(--font-color);
     background-color: #fff;
     display: flex;
-    gap: 30px;
+    flex-direction: column;
+    gap: 20px;
     box-shadow: 0px 3px 3px 0px rgba(85,65,72,0.3);
-    width: 95%;
+    width: 100%;
 }
 
 .labels{
     display: flex;
-    gap: 8px;
+    gap: 5px;
     align-items: center;
 }
 
@@ -75,9 +75,92 @@
     border: 1px solid black;
 }
 
+
+.editbtn{
+    display: flex;
+    gap: 5px;
+    width: 100%;
+}
+
+.editbtn button{
+    background-color: var(--main-color);
+    color: var(--card-color);
+    margin: 3px 8px;
+    width: 60px;
+}
+
+.editbtn section{
+    display: flex;
+    left: 0;
+
+}
+
+.deletebtn{
+    font-size: large;
+}
+
+@media only screen and (min-width: 992px) {
+    .container{
+        width: 70%;
+        right: 150px;
+    }
+    .lecturer_box{
+        width: 98%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    .first_section{
+        width: 100%;
+        border-bottom: 2px solid var(--card-color);
+        display: flex;
+        gap: 10%;
+    }
+    .editbtn{
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-width: 600px){
+    .editbtn{
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 1240px) {
+    .lecturers_main{
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .lecturer_box{
+        margin-top: 20px;
+        padding: 15px;
+        border:1px solid var(--font-color);
+        background-color: #fff;
+        display: flex;
+        gap: 20px;
+        box-shadow: 0px 3px 3px 0px rgba(85,65,72,0.3);
+        width: 95%;
+    }
+    .first_section{
+        width: 200px;
+    }
+    .editbtn{
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 2px;
+        width: 100%;
+    }
+}
+
 .first_section{
-    width: 200px;
-    border-left: 2px solid var(--card-color);
+    width: 100%;
+    border-bottom: 2px solid var(--card-color);
+    display: flex;
 }
 
 .addLecturerSection{
@@ -95,27 +178,6 @@
 
 .selected input[type="number"]{
     color: lightgray;
-}
-
-.editbtn{
-    display: flex;
-    gap: 200px;
-}
-
-.editbtn button{
-    background-color: var(--main-color);
-    color: var(--card-color);
-    margin: 0 8px;
-    width: 60px;
-}
-
-.editbtn section{
-    display: flex;
-    left: o;
-}
-
-.deletebtn{
-    font-size: large;
 }
 
 .deleteLecturer{

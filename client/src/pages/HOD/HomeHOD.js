@@ -1,4 +1,4 @@
-import { faAngleDoubleLeft, faUserGroup, faBookOpen, faBuilding, faFile, faChalkboardTeacher } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDoubleLeft, faUserGroup, faBookOpen, faBuilding, faFile, faChalkboardTeacher, faTable } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; 
 import { NavLink } from "react-router-dom";
 import style from '../styles/HOD/HomeHOD.module.css';
@@ -34,6 +34,12 @@ const services = [
         name: 'أعضاء هيئة التدريس',
         icon: faChalkboardTeacher,
         route:'/lecturers'
+    },
+    {
+        id:6,
+        name: 'ربط البيانات',
+        icon: faTable,
+        route:'/create_table'
     }
     
 ]
@@ -64,9 +70,6 @@ const HomeHOD = () => {
                 })
             }
             </main>
-            <footer className={style.Home_footer}>
-                <NavLink to='/create_table'><button className="btn">إنشاء جدول</button></NavLink>
-            </footer>
         </section>
     );
 }

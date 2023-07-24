@@ -1103,7 +1103,7 @@ CREATE TABLE lecturer_requsets (
     Lecturer_ID int DEFAULT NULL,
     Module_ID int DEFAULT NULL,
     Subject_Type_ID int DEFAULT null,
-    Reply varchar(300) DEFAULT NULL,
+    Reply int DEFAULT NULL,
     PRIMARY KEY (Request_ID),
     FOREIGN KEY (Sender_ID) REFERENCES department (Department_ID) ON DELETE
     SET NULL,
@@ -1125,10 +1125,11 @@ INSERT INTO lecturer_requsets(
         Subject_Type_ID,
         Reply
     )
-VALUES(2, 7, null, 40, 1, null),
-    (2, 7, null, 7, 1, null);
-
-
+VALUES(1, 7, null, 40, 1, 0),
+    (2, 1, null, 7, 1, 0),
+    (1, 4, null, 15, 1, 1),
+    (6, 1, null, 20, 1, 1);
+    
 Create table E_T_T(
     ETT_ID int auto_increment not null,
     Module_ID int,
