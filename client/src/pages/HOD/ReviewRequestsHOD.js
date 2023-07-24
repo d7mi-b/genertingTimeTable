@@ -7,7 +7,7 @@ import useFetch from '../../hooks/useFetch';
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useFetchPut } from '../../hooks/useFetchPut';
 
-
+ 
 
 const Review_Requests = () => {
     const [state, setState] = useState('import');
@@ -172,7 +172,7 @@ const Review_Requests = () => {
                                 
                                 <div className={style.reply_DivExport}>
                                     <h4>اسم المدرس :</h4>
-                                    <input type="text" className="input" readOnly placeholder='تم رفض الطلب' value={i.Lecturer_Name} />
+                                    <input type="text" className="input" readOnly placeholder='تم رفض الطلب' defaultValue={i.Lecturer_Name} />
                                 </div>
                                 
                             </section>
