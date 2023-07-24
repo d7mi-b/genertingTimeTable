@@ -21,11 +21,12 @@ module.exports.addCourse = async (req,res) => {
     const { Department_ID, Subject_Name, Subject_Code, Credit_Theoretical, 
         Credit_Practical, Credit_Tutorial, Semester_ID } = req.body;
 
+
         try{
             const [Course] = await db.query(`
             insert into subjects (Subject_Name, Subject_Code, Credit_Theoretical, 
             Credit_Practical, Credit_Tutorial, Department_ID, Semester_ID)
-            values (?,?,?,?,?,?,?,?)
+            values (?,?,?,?,?,?,?)
             `,[Subject_Name,Subject_Code,Credit_Theoretical,Credit_Practical,
             Credit_Tutorial,Department_ID,Semester_ID]);
 
@@ -34,19 +35,19 @@ module.exports.addCourse = async (req,res) => {
            {
                 if(Credit_Theoretical != 0){
                     await db.query(`
-                    insert into module (Subject_ID, Semester_ID, Department_ID, Subject_Type) 
+                    insert into module (Subject_ID, Semester_ID, Department_ID, Subject_Type_ID) 
                     values(?,?,?,?)
                     `,[Course.insertId,Semester_ID,Department_ID,1])
                 }
                 if(Credit_Practical != 0){
                     await db.query(`
-                    insert into module (Subject_ID, Semester_ID, Department_ID, Subject_Type) 
+                    insert into module (Subject_ID, Semester_ID, Department_ID, Subject_Type_ID) 
                     values(?,?,?,?)
                     `,[Course.insertId,Semester_ID,Department_ID,2])
                 }
                 if(Credit_Tutorial != 0){
                     await db.query(`
-                    insert into module (Subject_ID, Semester_ID, Department_ID, Subject_Type) 
+                    insert into module (Subject_ID, Semester_ID, Department_ID, Subject_Type_ID) 
                     values(?,?,?,?)
                     `,[Course.insertId,Semester_ID,Department_ID,3])
                 }

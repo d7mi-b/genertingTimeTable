@@ -13,7 +13,6 @@ import { useFetchDelete } from "../../hooks/useFetchDelete"
 const Courses = () => {
     const { user } = useAuthContext();
     const { data:Courses, isPending } = useFetch(`http://localhost:5000/courses/${user.Department_ID}`)
-    const { data:colleges } = useFetch(`http://localhost:5000/colleges`)
     const { fetchPost } = useFetchPost(); 
     const { fetchDelete } = useFetchDelete();
     
@@ -25,11 +24,9 @@ const Courses = () => {
     const [Credit_Practical, setCredit_Practical] = useState('0');
     const [Credit_Tutorial, setCredit_Tutorial] = useState('0');
     const [Semester_ID, setSemester_ID] = useState('');
-    const [College_ID, setCollege_ID] = useState('')
     
     
-    const handleSubmit = async () => {
-       
+    const handleSubmit = async (e) => {
         
         await fetchPost('http://localhost:5000/courses/addCourse', {
             Subject_Name,
@@ -38,7 +35,6 @@ const Courses = () => {
             Credit_Practical,
             Credit_Tutorial,
             Semester_ID,
-            College_ID,
             "Department_ID":user.Department_ID
         })
     }
@@ -242,18 +238,7 @@ const Courses = () => {
                         <option  value={first_semester}>الترم الأول</option>
                         <option  value={second_semester}>الترم الثاني</option>
                     </select>
-                    <label htmlFor="college">الكلية :</label>
-                    <select className="input" required onChange={e => setCollege_ID(e.target.value)}>
-                        <option>اختر الكلية</option>
-                        {
-                            colleges &&
-                            colleges.map(i => {
-                                return(
-                                    <option key={i.College_ID} value={i.College_ID}>{i.College_Name}</option>
-                                )
-                            })  
-                        }
-                    </select>
+                    
                     <section className="btnContainer">
                         <input className={`btn ${style.btn}`} type="submit" name="submit" value="إضافة" />
                     </section>

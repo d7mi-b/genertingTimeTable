@@ -14,16 +14,13 @@ import Loading from '../../components/Loading';
 const Lecturers = () => {
     const { user } = useAuthContext();
     const { data:info, isPending, error } = useFetch(`http://localhost:5000/lecturers/department/${user.Department_ID}`)
-    const { data:colleges } = useFetch(`http://localhost:5000/colleges`)
-    const { data:departments } = useFetch(`http://localhost:5000/departements`)
     const { fetchPost} = useFetchPost()
     const { fetchPut } = useFetchPut()
     const { fetchDelete } = useFetchDelete()
 
     const [Lecturer_ID,setLecturer_ID] = useState('')
     const [Lecturer_Name, setLecturer_Name] = useState('');
-    const [College_ID, setCollege_id] = useState('');
-    const [Department_ID, setDepartment_id] = useState('');
+    const [Department_ID, setDepartment_id] = useState(user.Department_ID);
     const [Rank_, setRank] = useState('');
     const [Not_Available] = useState('0');
     const [NO_Available_Days, setNO_AV_Days] = useState(null);
@@ -40,7 +37,6 @@ const Lecturers = () => {
         {
             Lecturer_Name,
             Department_ID,
-            College_ID,
             Rank_,
             Not_Available,
             NO_Available_Days,
@@ -164,33 +160,8 @@ const Lecturers = () => {
                             <input type='radio' name="position" value="teacher" onClick={e => setRank(e.target.value)}/>
                             <label htmlFor="teacher">أستاذ\ة</label>
                         </section>
-                        <label htmlFor="collage">الكلية:</label>
-                        <select required className="input"  onChange={e =>setCollege_id(e.target.value)}>
-                            <option>اختر الكلية</option>
-                        {
-                            colleges &&
-                            colleges.map(i => {
-                                return(
-                                    <option key={i.College_ID} value={i.College_ID}>{i.College_Name}</option>
-                                )
-                            })  
-                        }
-                        </select>
-                        <label htmlFor="department">القسم:</label>
-                        <select required className="input" onChange={e => setDepartment_id(e.target.value)} >
-                            <option>اختر القسم</option>
-                        {
-                            departments &&
-                            departments.map(i => {
-                                return(
-                                    <option
-                                    value={i.Department_ID}
-                                     key={i.Department_ID} >{i.Department_Name}</option>
-                                )
-                            })  
-                            
-                        }
-                        </select>
+                
+                        
                         <section className="btnContainer">
                             <input className={`btn ${style.btn}`} type="submit" name="submit" value="إضافة" />
                         </section>
@@ -229,7 +200,7 @@ const Lecturers = () => {
                                         <p> الأيام المتاحة :</p>
                                     </label>
                                     <article className={style.editbtn}>
-                                        <label className={style.labels}>
+                                        <section className={style.labels}>
                                             {i.Sunday === 1 && <input type='checkbox' name='sunday' defaultChecked
                                              onChange={() => setSunday("0")} />}
                                             {i.Sunday === 0 && <input type='checkbox' name='sunday' 
@@ -255,7 +226,7 @@ const Lecturers = () => {
                                             {i.Thursday === 0 && <input type='checkbox' name='Thursday' 
                                              onChange={() => setThursday("1")} />}
                                             <p>الخميس</p>
-                                        </label>
+                                        </section>
                                         <section>
                                             <button className="btn" onClick={() => handleUpdate(i.Lecturer_ID)}>حفظ</button>
                                             <button className="btn" onClick={() => openDeleteSection(i.Lecturer_ID)}><FontAwesomeIcon icon={faTrash} className={style.deletebtn}/></button>
