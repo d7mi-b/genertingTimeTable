@@ -136,6 +136,10 @@ const CreateTable = () => {
                 Module_ID
             })
 
+            await fetchPut(`http://localhost:5000/module/updateLecturer`, {
+                    Lecturer_ID: null, Module_ID
+                })
+
         }
         else{
             const hours = await totalHours(LecturerID);
