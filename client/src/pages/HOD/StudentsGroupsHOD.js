@@ -55,13 +55,18 @@ const Students = () => {
         const text1 = document.createElement('input')
         text1.setAttribute("type","text")
         text1.setAttribute('id','groupName')
+        text1.setAttribute('class','groupName')
+
 
         const text2  = document.createElement('input')
         text2.setAttribute("type","number")
         text2.setAttribute('id','groupCount')
+        text2.setAttribute('class','groupCount')
 
         const select  = document.createElement('select')
         select.setAttribute('id','BatchTypeID')
+        select.setAttribute('class','BatchTypeID')
+        
         select.defaultValue=batchTypes[0].Batch_Type_ID
         const option1 = document.createElement('option')
         option1.value=batchTypes[0].Batch_Type_ID;
@@ -102,7 +107,8 @@ const Students = () => {
         e.preventDefault()
 
         let groupCount = 0;
-        const Newgroup = document.getElementById('groupCount')
+        const Newgroup = document.querySelectorAll('.groupCount')
+        
 
         if(groups) {
 
@@ -115,8 +121,13 @@ const Students = () => {
             })
         }
         
-        if(Newgroup)
-        groupCount+=Number(Newgroup.value)
+        if(Newgroup.length > 0){
+            Newgroup.forEach(i => {
+                groupCount+=Number(i.value)
+            })
+
+        }
+        
 
         groupCount-=deletedGroup
         console.log(Batch_General_Count+Batch_Parallel_Count+Batch_Payment_Count,groupCount)
@@ -124,10 +135,12 @@ const Students = () => {
         if(Batch_General_Count+Batch_Parallel_Count+Batch_Payment_Count === groupCount ){
             await fetchPut('http://localhost:5000/batches/updateBatch',{
                 Batch_ID,
+                Batch_NO,
                 Batch_General_Count, 
                 Batch_Parallel_Count, 
                 Batch_Payment_Count 
             })
+            
             
             await fetchPut('http://localhost:5000/batches/updateGroup',{
                 Group_ID,
@@ -135,20 +148,25 @@ const Students = () => {
                 Batch_Type_ID
             })
 
-            const groupName = document.getElementById('groupName')
-            const newGroup = document.getElementById('groupCount')
-            const select = document.getElementById('BatchTypeID')
+            const groupName = document.querySelectorAll('.groupName')
+            const newGroup = document.querySelectorAll('.groupCount')
+            const select = document.querySelectorAll('.BatchTypeID')
             
+            console.log( groupName[0], newGroup[0], select[0], Batch_ID )
 
-            if(groupName && newGroup && select)
+            if(groupName.length > 0 && newGroup.length > 0 && select.length > 0)
             {
-                console.log( groupName.value, newGroup.value, select.value, Batch_ID )
-                await fetchPost('http://localhost:5000/batches/addGroup',{
-                    "Group_": groupName.value, 
-                    "Group_Count": newGroup.value, 
-                    "Batch_Type_ID": select.value, 
-                    Batch_ID 
+                
+                groupName.forEach(async (i,index) => {
+                    console.log( groupName[index].value, newGroup[index].value, select[index].value, Batch_ID )
+                    await fetchPost('http://localhost:5000/batches/addGroup',{
+                        "Group_": groupName[index].value, 
+                        "Group_Count": newGroup[index].value, 
+                        "Batch_Type_ID": select[index].value, 
+                        Batch_ID 
+                    })
                 })
+                
             }
         
             window.location.reload()
@@ -231,13 +249,15 @@ const Students = () => {
                                         <FontAwesomeIcon className={`close-btn ${style.btnClose}`} 
                                         onClick={()=>handleCloseSection(i.Batch_ID)} icon={faXmark} size="xl" />
                                         <header>
-                                            <h1>تعديل معلومات المجموعات</h1>
+                                            <p>تعديل معلومات المجموعات</p>
+                                            <h1>{i.Semester_Name}</h1>
                                         </header>
                                         
                                         <form className={`addForm `}>
                                             <section className={style.NoInput}>
                                                 <label htmlFor="name">رقم الدفعة:</label>
-                                                <input type="text" readOnly value={Batch_NO} name="L_name" />
+                                                <input type="text" defaultValue={Batch_NO}
+                                                onChange={e => setBatch_NO(Number(e.target.value))} name="L_name" />
                                             </section>
                                             <label htmlFor="student_NO">عدد الطلاب:</label>
                                             <section className={style.NoInput}>

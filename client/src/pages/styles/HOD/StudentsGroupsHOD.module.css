@@ -150,6 +150,12 @@
     right: 0;
 }
 
+.editSection header{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .editSection article{
     margin-right: -10%;
 }
