@@ -169,14 +169,13 @@ const College = () => {
                         departments && departments.length === 0 && <p className='emptyElement'>لا يوجد أقسام</p>
                     }
 
-                    {
-                        departments && departments.length > 0 &&
-                        <section className={style.buttons}>
-                            <button className={`btn`} id='btnAddDepartment'>إضافة قسم</button>
-                            <button className={`btn`} id='btnUpdateDepartment'>تعديل بيانات قسم</button>
-                            <button className={`btn`} id='btnDeleteDepartment'>حذف قسم</button>
-                        </section>
-                    }
+                    
+                    <section className={style.buttons}>
+                        <button className={`btn`} id='btnAddDepartment'>إضافة قسم</button>
+                        { departments && departments.length > 0 && <button className={`btn`} id='btnUpdateDepartment'>تعديل بيانات قسم</button> }
+                        { departments && departments.length > 0 && <button className={`btn`} id='btnDeleteDepartment'>حذف قسم</button> }
+                    </section>
+                    
 
                     <section className={`container-section ${style.updateDepartementSection}`} id='addDepartmentSec' >
                         <article className={`center-section`}>

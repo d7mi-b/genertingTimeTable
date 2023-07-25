@@ -140,14 +140,11 @@ const Colleges = () => {
                 isPending && <Loading />
             }
 
-            {
-                colleges && colleges.length > 0 &&
-                <section className={style.buttons}>
-                    <button className={`btn`} id='btnAddCollege'>إضافة كلية</button>
-                    <button className={`btn`} id='btnUpdateCollege'>تعديل بيانات كلية</button>
-                    <button className={`btn`} id='btnDeleteCollege'>حذف كلية</button>
-                </section>
-            }
+            <section className={style.buttons}>
+                <button className={`btn`} id='btnAddCollege'>إضافة كلية</button>
+                { colleges && colleges.length > 0 && <button className={`btn`} id='btnUpdateCollege'>تعديل بيانات كلية</button> }
+                { colleges && colleges.length > 0 && <button className={`btn`} id='btnDeleteCollege'>حذف كلية</button> }
+            </section>
 
             <section className={`container-section ${style.addBuldingSection}`} id='addCollegeSection'>
                 <article className={`center-section`}>

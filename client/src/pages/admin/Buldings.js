@@ -145,8 +145,8 @@ const Bulding = () => {
 
             <section className={style.buttons}>
                 <button className={`btn`} id='btnAddBuilding'>إضافة مبنى</button>
-                <button className={`btn`} id="btnUpdateBuilding">تعديل بيانات المبنى</button>
-                <button className={`btn`} id='btnDeleteBuilding'>حذف المبنى</button>
+                { buildings && buildings.length > 0 && <button className={`btn`} id="btnUpdateBuilding">تعديل بيانات المبنى</button> }
+                { buildings && buildings.length > 0 && <button className={`btn`} id='btnDeleteBuilding'>حذف المبنى</button> }
             </section>
 
             <section className={`container-section ${style.addBuldingSection}`} id='addBuldingSection'>

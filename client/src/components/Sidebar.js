@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRightFromBracket, faBars, faBuilding, faBuildingColumns, faCalendarDay, faGear, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRightFromBracket, faBars, faBoxArchive, faBuilding, faBuildingColumns, faCalendarDay, faGear, faHome, faUser } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
 import { useLogout } from '../hooks/useLogout';
 import style from './styles/sidebar.module.css';
@@ -37,6 +37,9 @@ const Sidebar = () => {
                 </li>
                 <li>
                     <NavLink to='systemState' className='link'><FontAwesomeIcon icon={faGear} /><span>إعدادات النظام</span></NavLink>
+                </li>
+                <li>
+                    <NavLink to='systemState' className='link'><FontAwesomeIcon icon={faBoxArchive} /><span>الأرشيف</span></NavLink>
                 </li>
             </ul>
 

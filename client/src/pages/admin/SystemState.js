@@ -21,7 +21,7 @@ const SystemState = () => {
     const [lecturerAvailabilty, setLecturerAvailabilty] = useState(0);
     const [timeGap, setTimeGap] = useState(0);
     const [labsOnSameDay, setLabsOnSameDay] = useState(0);
-    const [dayOFF, setdayOFF] = useState(0);
+    const [dayOFF, setDayOFF] = useState(0);
     const [lecturesOnDay, setLecturesOnDay] = useState(0);
     const [groupsTimes, setGroupsTimes] = useState(0);
 
@@ -66,7 +66,7 @@ const SystemState = () => {
             setLecturerAvailabilty(weights.lecturerAvailabilty);
             setTimeGap(weights.timeGap);
             setLabsOnSameDay(weights.labsOnSameDay);
-            setdayOFF(weights.dayOFF);
+            setDayOFF(weights.dayOFF);
             setLecturesOnDay(weights.lecturesOnDay);
             setGroupsTimes(weights.groupsTimes);
         }
@@ -82,7 +82,7 @@ const SystemState = () => {
                         <h1> <FontAwesomeIcon icon={faGear} /> إعدادات النظام</h1>
                     </header>
                     <section className={style.systemInfo}>
-                        <p>إسم النظام:  {data.System_Name}</p>
+                        <p>إسم الجامعة:  {data.System_Name}</p>
                         <p>العام الجامعي: {yaer}</p>
                         <p>الفصل الدراسي: {semester === 1 ? 'الأول' : "الثاني"}</p>
                     </section>
@@ -167,113 +167,388 @@ const SystemState = () => {
                         {
                             !defaultSetting && 
                             <form className={`${style.weightsSetting}`} onSubmit={handelWeightsController}>
+                                <header>
+                                    <h3>
+                                        عند تكوين الجدول يجب تلبية الشروط الأتية:
+                                    </h3>
+                                </header>
                                 <section className={style.weightsController}>
-                                    <section>
-                                        <p>نصاب التدريس لأعضاء هيئة التدريس</p>
-                                        <input 
-                                            className={style.weightsRange}
-                                            type='range' value={lecturerAvailabilty} 
-                                            min='0' max='1' step='0.25' 
-                                            list="rangelabel"
-                                            onChange={(e) => setLecturerAvailabilty(+e.target.value)}
-                                        />
-                                        <datalist id="rangelabel">
-                                            <option value="0" label="0%" />
-                                            <option value="0.25" label="25%" />
-                                            <option value="0.50" label="50%"/>
-                                            <option value="0.75" label="75%" />
-                                            <option value="1" label="100%"/>                                            
-                                        </datalist>
+                                    <section className={style.containerWehigs}>
+                                        <p>
+                                            الإلتزام بعدد أيام حضور المحاضرين التي تم توضيحها في اعدادات المحاضر
+                                        </p>
+                                        <section className={style.chooseWeight}>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight1" 
+                                                    required 
+                                                    value='0' 
+                                                    checked={ lecturerAvailabilty === 0 }
+                                                    onChange={e => setLecturerAvailabilty(+e.target.value)}
+                                                />
+                                                1
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight1" 
+                                                    required 
+                                                    value='0.25' 
+                                                    checked={ lecturerAvailabilty === 0.25 }
+                                                    onChange={e => setLecturerAvailabilty(+e.target.value)}
+                                                />
+                                                2
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight1" 
+                                                    required 
+                                                    value='0.5' 
+                                                    checked={ lecturerAvailabilty === 0.5 }
+                                                    onChange={e => setLecturerAvailabilty(+e.target.value)}
+                                                />
+                                                3
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight1" 
+                                                    required 
+                                                    value='0.75' 
+                                                    checked={ lecturerAvailabilty === 0.75 }
+                                                    onChange={e => setLecturerAvailabilty(+e.target.value)}
+                                                />
+                                                4
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight1" 
+                                                    required 
+                                                    value='1' 
+                                                    checked={ lecturerAvailabilty === 1 }
+                                                    onChange={e => setLecturerAvailabilty(+e.target.value)}
+                                                />
+                                                5
+                                            </section>
+                                        </section>
                                     </section>
 
-                                    <section>
-                                        <p>أوقات الفراغ بين المحاضرات</p>
-                                        <input 
-                                            className={style.weightsRange}
-                                            type='range' value={timeGap} 
-                                            min='0' max='1' step='0.25' 
-                                            list="rangelabel"
-                                            onChange={(e) => setTimeGap(+e.target.value)}
-                                        />
-                                        <datalist id="rangelabel">
-                                            <option value="0" label="0%" />
-                                            <option value="0.25" label="25%" />
-                                            <option value="0.50" label="50%"/>
-                                            <option value="0.75" label="75%" />
-                                            <option value="1" label="100%"/>                                            
-                                        </datalist>
+                                    <section className={style.containerWehigs}>
+                                        <p>
+                                            تقليل الزمن الفارغ بين المحاضرات
+                                        </p>
+                                        <section className={style.chooseWeight}>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight2" 
+                                                    required 
+                                                    value='0' 
+                                                    checked={ timeGap === 0 }
+                                                    onChange={e => setTimeGap(+e.target.value)}
+                                                />
+                                                1
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight2" 
+                                                    required 
+                                                    value='0.25' 
+                                                    checked={ timeGap === 0.25 }
+                                                    onChange={e => setTimeGap(+e.target.value)}
+                                                />
+                                                2
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight2" 
+                                                    required 
+                                                    value='0.5' 
+                                                    checked={ timeGap === 0.5 }
+                                                    onChange={e => setTimeGap(+e.target.value)}
+                                                />
+                                                3
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight2" 
+                                                    required 
+                                                    value='0.75' 
+                                                    checked={ timeGap === 0.75 }
+                                                    onChange={e => setTimeGap(+e.target.value)}
+                                                />
+                                                4
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight2" 
+                                                    required 
+                                                    value='1' 
+                                                    checked={ timeGap === 1 }
+                                                    onChange={e => setTimeGap(+e.target.value)}
+                                                />
+                                                5
+                                            </section>
+                                        </section>
                                     </section>
 
-                                    <section>
-                                        <p>محاضرات العملي في يوم واحد</p>
-                                        <input 
-                                            className={style.weightsRange}
-                                            type='range' value={labsOnSameDay} 
-                                            min='0' max='1' step='0.25' 
-                                            list="rangelabel"
-                                            onChange={(e) => setLabsOnSameDay(+e.target.value)}
-                                        />
-                                        <datalist id="rangelabel">
-                                            <option value="0" label="0%" />
-                                            <option value="0.25" label="25%" />
-                                            <option value="0.50" label="50%"/>
-                                            <option value="0.75" label="75%" />
-                                            <option value="1" label="100%"/>                                            
-                                        </datalist>
+                                    <section className={style.containerWehigs}>
+                                        <p>
+                                            تكون محاضرات العملي في يوم واحد
+                                        </p>
+                                        <section className={style.chooseWeight}>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight3" 
+                                                    required 
+                                                    value='0' 
+                                                    checked={ labsOnSameDay === 0 }
+                                                    onChange={e => setLabsOnSameDay(+e.target.value)}
+                                                />
+                                                1
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight3" 
+                                                    required 
+                                                    value='0.25' 
+                                                    checked={ labsOnSameDay === 0.25 }
+                                                    onChange={e => setLabsOnSameDay(+e.target.value)}
+                                                />
+                                                2
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight3" 
+                                                    required 
+                                                    value='0.5' 
+                                                    checked={ labsOnSameDay === 0.5 }
+                                                    onChange={e => setLabsOnSameDay(+e.target.value)}
+                                                />
+                                                3
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight3" 
+                                                    required 
+                                                    value='0.75' 
+                                                    checked={ labsOnSameDay === 0.75 }
+                                                    onChange={e => setLabsOnSameDay(+e.target.value)}
+                                                />
+                                                4
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight3" 
+                                                    required 
+                                                    value='1' 
+                                                    checked={ labsOnSameDay === 1 }
+                                                    onChange={e => setLabsOnSameDay(+e.target.value)}
+                                                />
+                                                5
+                                            </section>
+                                        </section>
                                     </section>
 
-                                    <section>
-                                        <p>أيام الأوف للطلاب</p>
-                                        <input 
-                                            className={style.weightsRange}
-                                            type='range' value={dayOFF} 
-                                            min='0' max='1' step='0.25' 
-                                            list="rangelabel"
-                                            onChange={(e) => setdayOFF(+e.target.value)}
-                                        />
-                                        <datalist id="rangelabel">
-                                            <option value="0" label="0%" />
-                                            <option value="0.25" label="25%" />
-                                            <option value="0.50" label="50%"/>
-                                            <option value="0.75" label="75%" />
-                                            <option value="1" label="100%"/>                                            
-                                        </datalist>
+                                    <section className={style.containerWehigs}>
+                                        <p>
+                                            يعطى الطلاب يوم فارغ
+                                        </p>
+                                        <section className={style.chooseWeight}>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight4" 
+                                                    required 
+                                                    value='0' 
+                                                    checked={ dayOFF === 0 }
+                                                    onChange={e => setDayOFF(+e.target.value)}
+                                                />
+                                                1
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight4" 
+                                                    required 
+                                                    value='0.25' 
+                                                    checked={ dayOFF === 0.25 }
+                                                    onChange={e => setDayOFF(+e.target.value)}
+                                                />
+                                                2
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight4" 
+                                                    required 
+                                                    value='0.5' 
+                                                    checked={ dayOFF === 0.5 }
+                                                    onChange={e => setDayOFF(+e.target.value)}
+                                                />
+                                                3
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight4" 
+                                                    required 
+                                                    value='0.75' 
+                                                    checked={ dayOFF === 0.75 }
+                                                    onChange={e => setDayOFF(+e.target.value)}
+                                                />
+                                                4
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight4" 
+                                                    required 
+                                                    value='1' 
+                                                    checked={ dayOFF === 1 }
+                                                    onChange={e => setDayOFF(+e.target.value)}
+                                                />
+                                                5
+                                            </section>
+                                        </section>
                                     </section>
 
-                                    <section>
-                                        <p>عدد المحاضرات في اليوم للطلاب</p>
-                                        <input 
-                                            className={style.weightsRange}
-                                            type='range' value={lecturesOnDay} 
-                                            min='0' max='1' step='0.25' 
-                                            list="rangelabel"
-                                            onChange={(e) => setLecturesOnDay(+e.target.value)}
-                                        />
-                                        <datalist id="rangelabel">
-                                            <option value="0" label="0%" />
-                                            <option value="0.25" label="25%" />
-                                            <option value="0.50" label="50%"/>
-                                            <option value="0.75" label="75%" />
-                                            <option value="1" label="100%"/>                                            
-                                        </datalist>
+                                    <section className={style.containerWehigs}>
+                                        <p>
+                                            لا يزيد عدد المحاضرات عن ثلاث محاضرات للطلاب في اليوم الواحد
+                                        </p>
+                                        <section className={style.chooseWeight}>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight5" 
+                                                    required 
+                                                    value='0' 
+                                                    checked={ lecturesOnDay === 0 }
+                                                    onChange={e => setLecturesOnDay(+e.target.value)}
+                                                />
+                                                1
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight5" 
+                                                    required 
+                                                    value='0.25' 
+                                                    checked={ lecturesOnDay === 0.25 }
+                                                    onChange={e => setLecturesOnDay(+e.target.value)}
+                                                />
+                                                2
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight5" 
+                                                    required 
+                                                    value='0.5' 
+                                                    checked={ lecturesOnDay === 0.5 }
+                                                    onChange={e => setLecturesOnDay(+e.target.value)}
+                                                />
+                                                3
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight5" 
+                                                    required 
+                                                    value='0.75' 
+                                                    checked={ lecturesOnDay === 0.75 }
+                                                    onChange={e => setLecturesOnDay(+e.target.value)}
+                                                />
+                                                4
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight5" 
+                                                    required 
+                                                    value='1' 
+                                                    checked={ lecturesOnDay === 1 }
+                                                    onChange={e => setLecturesOnDay(+e.target.value)}
+                                                />
+                                                5
+                                            </section>
+                                        </section>
                                     </section>
 
-                                    <section>
-                                        <p>أوقات إبتداء الدوام</p>
-                                        <input 
-                                            className={style.weightsRange}
-                                            type='range' value={groupsTimes} 
-                                            min='0' max='1' step='0.25' 
-                                            list="rangelabel"
-                                            onChange={(e) => setGroupsTimes(+e.target.value)}
-                                        />
-                                        <datalist id="rangelabel">
-                                            <option value="0" label="0%" />
-                                            <option value="0.25" label="25%" />
-                                            <option value="0.50" label="50%"/>
-                                            <option value="0.75" label="75%" />
-                                            <option value="1" label="100%"/>                                            
-                                        </datalist>
+                                    <section className={style.containerWehigs}>
+                                        <p>
+                                            أن تبدأ المحاضرة الأولى في الساعة الثامنة صباحًا
+                                        </p>
+                                        <section className={style.chooseWeight}>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight6" 
+                                                    required 
+                                                    value='0' 
+                                                    checked={ lecturesOnDay === 0 }
+                                                    onChange={e => setGroupsTimes(+e.target.value)}
+                                                />
+                                                1
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight6" 
+                                                    required 
+                                                    value='0.25' 
+                                                    checked={ groupsTimes === 0.25 }
+                                                    onChange={e => setGroupsTimes(+e.target.value)}
+                                                />
+                                                2
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight6" 
+                                                    required 
+                                                    value='0.5' 
+                                                    checked={ groupsTimes === 0.5 }
+                                                    onChange={e => setGroupsTimes(+e.target.value)}
+                                                />
+                                                3
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight6" 
+                                                    required 
+                                                    value='0.75' 
+                                                    checked={ groupsTimes === 0.75 }
+                                                    onChange={e => setGroupsTimes(+e.target.value)}
+                                                />
+                                                4
+                                            </section>
+                                            <section className={style.radio}>
+                                                <input 
+                                                    type='radio' 
+                                                    name="weight6" 
+                                                    required 
+                                                    value='1' 
+                                                    checked={ groupsTimes === 1 }
+                                                    onChange={e => setGroupsTimes(+e.target.value)}
+                                                />
+                                                5
+                                            </section>
+                                        </section>
                                     </section>
                                 </section>
                                 <section className={`btnContainer ${style.btnContaineer}`}>

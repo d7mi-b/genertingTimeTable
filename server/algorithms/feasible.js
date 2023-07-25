@@ -18,7 +18,6 @@ module.exports.feasible = (neighborhood, lecturers) => {
         // To check if the day its available to lecturer or not
         const lecturerDay = lecturers.filter(l => l.Lecturer_ID === timetable[i].Lecturer_ID);
         if (!lecturerDays(lecturerDay, timetable[i].Day_ID)) {
-            console.log(timetable[i].Module_ID, " - ", timetable[i].Lecturer_ID, ' - ', timetable[i].Day_ID)
             conflicts = conflicts + 1;
         }
 
@@ -37,9 +36,6 @@ module.exports.feasible = (neighborhood, lecturers) => {
                 && timetable[i].Day_ID === timetable[j].Day_ID 
                 && isOverLapping(timetable[i], timetable[j])
             ){
-                // if((timetable[i].Subject_Type_ID === 2 || timetable[j].Subject_Type_ID === 2)) {
-                    // console.log('Module 1: ', timetable[i].Module_ID, ' - ', timetable[i].Lecturer_ID, ", Module 2:", timetable[j].Module_ID, ' - ', timetable[j].Lecturer_ID)
-                // }
                 conflicts = conflicts + 1;
             }
 
@@ -50,8 +46,7 @@ module.exports.feasible = (neighborhood, lecturers) => {
                 && timetable[i].Day_ID === timetable[j].Day_ID 
                 && isOverLapping(timetable[i], timetable[j])
             ){
-                // if (timetable[i].Group_ID === 3 || timetable[j].Group_ID === 3)
-                //     console.log('Group: ', timetable[i].Group_ID, ': Modules: ', timetable[i].Module_ID, ' - ', timetable[j].Module_ID)
+                
                 conflicts = conflicts + 1;
             }
 
@@ -61,8 +56,6 @@ module.exports.feasible = (neighborhood, lecturers) => {
                 && timetable[i].Day_ID === timetable[j].Day_ID
                 && isOverLapping(timetable[i], timetable[j])
             ){
-                // if (timetable[i].Subject_Type_ID === 2 && timetable[j].Subject_Type_ID === 2)
-                //     console.log('Group: ', timetable[i].Group_ID, ' - Hall: ', timetable[i].Hall_ID, ', Group: ', timetable[j].Group_ID, ' - Hall: ', timetable[j].Hall_ID)
                 conflicts = conflicts + 1;
             }
 
