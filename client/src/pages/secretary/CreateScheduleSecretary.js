@@ -7,8 +7,11 @@ import {
 import style from "../styles/secretary/create_schedule_secretary.module.css";
 import useFetch from "../../hooks/useFetch";
 import Loading from "../../components/Loading";
+import { useEffect, useState } from "react";
 
 const CreateScheduleSecretary = () => {
+  const [loading, setLoading] = useState(false);
+
   const {
     data: department,
     isPending: isLoading,
@@ -22,6 +25,12 @@ const CreateScheduleSecretary = () => {
     error: stateError,
   } = useFetch("http://localhost:5000/timeTable/checkModulesForGenerating");
   console.log(currentState);
+
+  const [result, setResult] = useState(false);
+  const schedule = async () => {
+    await fetch("http://localhost:5000/generatingTimetable");
+    setResult(true);
+  };
 
   function stateCalculator(id) {
     let state = false;
@@ -38,6 +47,8 @@ const CreateScheduleSecretary = () => {
     });
     return state;
   }
+
+  // useEffect((() => {}, [result]));
   return (
     <>
       <div className={style.topBar}>
@@ -47,12 +58,15 @@ const CreateScheduleSecretary = () => {
       </div>
       <div className={style.page}>
         <div className={style.tableHolder}>
-          <div className={style.section}>
-            <p className={`${style.sectionDivider} ${style.title}`}>التخصص</p>
-            <p className={`${style.sectionDivider} ${style.title}`}>الحالة</p>
-            <p className={`${style.iconDivider} ${style.title}`}>تنبيه</p>
-          </div>
-          {department &&
+          {!loading && department && currentState && (
+            <div className={style.section}>
+              <p className={`${style.sectionDivider} ${style.title}`}>التخصص</p>
+              <p className={`${style.sectionDivider} ${style.title}`}>الحالة</p>
+              <p className={`${style.iconDivider} ${style.title}`}>تنبيه</p>
+            </div>
+          )}
+          {!loading &&
+            department &&
             currentState &&
             department.map((element, index) => (
               <div className={`${style.section} ${style.status}`} key={index}>
@@ -82,11 +96,22 @@ const CreateScheduleSecretary = () => {
                 />
               </div>
             ))}
+          {!loading && department && currentState && (
+            <button
+              className={style.button}
+              onClick={() => {
+                schedule();
+                setLoading(true);
+              }}
+            >
+              إنشاء جداول
+            </button>
+          )}
+          {result && <p>إذهب إلى الجداول لإستعراض</p>}
         </div>
-        <button className={style.button} onClick={() => stateCalculator(1)}>
-          إنشاء جداول
-        </button>
+
         {isLoading && stateLoading && <Loading />}
+        {loading && !result && <Loading />}
       </div>
     </>
   );
