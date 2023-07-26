@@ -20,6 +20,7 @@ const CreateTable = () => {
     const {data:departments} = useFetch(`http://localhost:5000/departements`)
     const {data:modules, isPending} = useFetch(`http://localhost:5000/module/${Department_ID}/${semesterSelected}`)
     const {data:systemState} = useFetch(`http://localhost:5000/systemState`);
+    const {data:Batches} = useFetch(`http://localhost:5000/batches/department/${Department_ID}`)
     const { fetchPut } = useFetchPut();
     const { fetchPost } = useFetchPost();
     
@@ -56,26 +57,6 @@ const CreateTable = () => {
         requestSection.style.cssText = 'display: none';
     }
 
-    // const handleSave = async () => {
-    //     if(hallArray.length !== 0)
-    //     {await fetchPut(`http://localhost:5000/module/updateHall`, hallArray)}
-    //     if(lecturerArray.length !== 0)
-    //     {await fetchPut(`http://localhost:5000/module/updateLecturer`, lecturerArray)}
-
-    //     const btn = document.querySelector('#btn')
-    //     const check = document.querySelector('#check')
-
-    //     btn.style.cssText = 'display: none';
-
-    //     check.style.cssText = 'display:inline';
-
-    //     setTimeout(() =>{
-    //         btn.style.cssText = 'display: inline';
-
-    //         check.style.cssText = 'display:none';
-    //     } ,2000)
-        
-    // }
 
     const handleChange = (e) => {
         const list = document.querySelector(".list").querySelectorAll("li");
@@ -163,6 +144,26 @@ const CreateTable = () => {
         })
     }
 
+    const handleSetGroup = async (value,Module_ID,Subject_ID,Hall_Type_ID, Subject_Type_ID) => {
+        console.log(Number(value),
+            Module_ID,
+            Department_ID,
+            semester,
+            Subject_ID,
+            Hall_Type_ID)
+
+        await fetch('http://localhost:5000/module/updateGroup?' + new URLSearchParams({
+            Group_ID:Number(value),
+            Module_ID,
+            Department_ID,
+            Semester_ID:semester,
+            Subject_ID,
+            Hall_Type_ID,
+            Subject_Type_ID
+        })).then(res => {
+            console.log(res)
+        }).catch(err => console.log(err))
+    }
 
     useEffect(() => {
         const list = document.querySelector(".list").querySelector("li");
@@ -202,15 +203,13 @@ const CreateTable = () => {
                         isPending && <Loading />
                     }
                     {
-                        modules && 
+                        modules && Batches &&
                         modules.filter(e => e.Semester_ID === semester).map(i => {
                             return(
 
                                 <div key={i.Module_ID} className={style.courseDiv}>
-                                <section className={style.groupNumbers}>
-                                    <label htmlFor="groupsNumber">عدد القروبات الفرعية</label>
-                                    <input name="groupsNumber" type="number" />
-                                </section>
+                                <label>عدد مجموعات العملي: </label>
+                                <input type="number" defaultValue={i.practical_Groups_No}/>
                                 <hr />
                                 <select 
                                     id={i.Module_ID}
@@ -243,6 +242,30 @@ const CreateTable = () => {
                                     })
                                 }
                             </select>
+                            <hr />
+                            <label>المجموعة: </label>
+                                {
+                                    Batches && 
+                                    Batches.filter(t => t.Semester_ID === semester).map(b => {
+                                        console.log(i.Group_ID)
+                                        return(
+                                    <select defaultValue={i.Group_ID} required 
+                                    onChange={e => handleSetGroup(e.target.value,i.Module_ID,i.Subject_ID,i.Hall_Type_ID,i.Subject_Type_ID)}>
+                                        <option>حدد المجموعة</option>
+                                       {
+                                        b.Groups &&
+                                        b.Groups.map(g => {
+                                            return(
+                                                <option key={g.Group_ID} value={g.Group_ID}>{g.Group_}</option>
+                                            )
+                                    
+                                            })
+                                        }
+                                    </select>
+                                        )
+                                    })
+                                }
+                            
                             <hr />
                             <p>{i.Subject_Type_Name}</p>
                             <hr />

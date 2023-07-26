@@ -29,6 +29,23 @@
     color: white;
 }
 
+.subHeader{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.printTableSection{
+    display: flex;
+    height: 90px;
+    width: 940px;
+    justify-content: space-between;
+    align-items: center;
+}
+.button{
+    background-color: #82194e;
+    color: white;
+    padding: 10px;
+}
 .singleTable{
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
