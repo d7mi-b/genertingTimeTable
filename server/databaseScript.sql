@@ -57,7 +57,8 @@ Create table batch_type (
 INSERT INTO batch_type (Batch_Type_ID, Batch_Type)
 VALUES (1, 'صباحي'),
     (2, "موازي"),
-    (3, "نفقه خاصه");
+    (3, "نفقه خاصه"),
+    (4, "الكل");
 
 
 Create table level (
@@ -1024,17 +1025,20 @@ Create table module(
     Module_ID int auto_increment not null,
     Semester_ID int,
     Subject_ID int,
-    Lecturer_ID int,
+    Lecturer_ID int NULL,
     Department_ID int,
     Hall_Type_ID int DEFAULT NULL,
     Subject_Type_ID int,
+    Group_ID int NULL,
+    practical_Groups_No int null,
     primary key(Module_ID),
     foreign key(Semester_ID) references semester(Semester_ID) ON DELETE RESTRICT,
     foreign key(Subject_ID) references subjects(Subject_ID) ON DELETE CASCADE,
     foreign key(Lecturer_ID) references lecturer(Lecturer_ID) ON DELETE SET NULL,
     foreign key (Department_ID) references department(Department_ID) ON DELETE CASCADE,
     foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID) ON DELETE SET NULL
+    FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID) ON DELETE SET NULL,
+    FOREIGN KEY (Group_ID) REFERENCES batch_groups (Group_ID) ON DELETE SET NULL
 );
 
 INSERT INTO module (
