@@ -165,6 +165,13 @@ const CreateTable = () => {
         }).catch(err => console.log(err))
     }
 
+    const handleSetPracGroups = async (practical_Groups_No,Module_ID) => {
+        await fetchPut(`http://localhost:5000/module/updatePracticalNo`, {
+            practical_Groups_No:Number(practical_Groups_No),
+            Module_ID
+        })
+    }
+
     useEffect(() => {
         const list = document.querySelector(".list").querySelector("li");
         list.style.cssText="background-color: var(--card-color);";
@@ -208,8 +215,10 @@ const CreateTable = () => {
                             return(
 
                                 <div key={i.Module_ID} className={style.courseDiv}>
-                                <label>عدد مجموعات العملي: </label>
-                                <input type="number" defaultValue={i.practical_Groups_No}/>
+                                <p>عدد مجموعات العملي: </p>
+                                <input type="number" defaultValue={i.practical_Groups_No} 
+                                onChange={e => handleSetPracGroups(e.target.value,i.Module_ID)}
+                                />
                                 <hr />
                                 <select 
                                     id={i.Module_ID}
@@ -243,7 +252,7 @@ const CreateTable = () => {
                                 }
                             </select>
                             <hr />
-                            <label>المجموعة: </label>
+                            <p>المجموعة: </p>
                                 {
                                     Batches && 
                                     Batches.filter(t => t.Semester_ID === semester).map(b => {
