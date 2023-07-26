@@ -37,20 +37,25 @@ const LecturersSecretary = () => {
   );
 
   const handleSubmit = async (e) => {
-    console.log(result);
+    console.log("lecturerName");
     e.preventDefault();
-    await fetchPost(`http://localhost:5000/lecturers/addLecturer`, {
-      Lecturer_Name: lecturerName,
-      Department_ID: user.Department_ID,
-      Rank_: lecturerRefrence,
-      Not_Available: "0",
-      NO_Available_Days: "0",
-      Sunday: "0",
-      Monday: "0",
-      Tuesday: "0",
-      Wednesday: "0",
-      Thursday: "0",
-    });
+    if (lecturerName !== "" && lecturerRefrence !== "") {
+      await fetchPost(`http://localhost:5000/lecturers/addLecturer`, {
+        Lecturer_Name: lecturerName,
+        Department_ID: user.Department_ID,
+        Rank_: lecturerRefrence,
+        Not_Available: "0",
+        NO_Available_Days: "0",
+        Sunday: "0",
+        Monday: "0",
+        Tuesday: "0",
+        Wednesday: "0",
+        Thursday: "0",
+      });
+      window.location.reload();
+    } else {
+      window.alert("يرجى تحديد الأسم و الرتبة");
+    }
   };
 
   const handleDelete = async (Lecturer_ID) => {
@@ -72,6 +77,7 @@ const LecturersSecretary = () => {
         Lecturer_ID: id,
         Not_Available: "1",
       });
+      window.location.reload();
     }
 
     // window.location.reload();
@@ -91,7 +97,11 @@ const LecturersSecretary = () => {
       Wednesday: `${lecturer.Wednesday}`,
       Thursday: `${lecturer.Thursday}`,
     });
+    window.location.reload();
   };
+
+  const [sortAV, setSortAV] = useState(true);
+  const [sortNM, setSortNM] = useState("");
 
   useEffect(() => {
     const btnAddLecturer = document.querySelector("#addLecturer");
@@ -120,6 +130,7 @@ const LecturersSecretary = () => {
     <>
       <div className={style.topBar}>
         <p>
+          مسؤول الجداول &#62;
           <span>أعضاء</span> هيئة التدريس
         </p>
         <button className={style.addButton} id="addLecturer">
@@ -134,8 +145,8 @@ const LecturersSecretary = () => {
         <div className={style.sort}>
           <p>الترتيب حسب</p>
           <select>
-            <option value="new">الأحدث</option>
-            <option value="old">الأقدم</option>
+            <option onClick={(x) => setSortAV(true)}>المتاح</option>
+            <option onClick={(x) => setSortAV(false)}>غير متاح</option>
           </select>
         </div>
         <input type="text" placeholder="البحث بالإسم" />
@@ -144,196 +155,208 @@ const LecturersSecretary = () => {
         <section className={style.lectureorsContainer}>
           {lectureorData && (
             <div>
-              {lectureorData.map((lecturer, index) => {
-                if (lecturer.Not_Available === 0) {
-                  let lecturerHolder = {
-                    Lecturer_ID: lecturer.Lecturer_ID,
-                    Lecturer_Name: lecturer.Lecturer_Name,
-                    Department_ID: lecturer.Department_ID,
-                    Rank_: lecturer.Rank_,
-                    Not_Available: "0",
-                    NO_Available_Days: lecturer.NO_Available_Days,
-                    Sunday: lecturer.Sunday,
-                    Monday: lecturer.Monday,
-                    Tuesday: lecturer.Tuesday,
-                    Wednesday: lecturer.Wednesday,
-                    Thursday: lecturer.Thursday,
-                  };
-                  const handleChange = (event) => {
-                    if (event.target.value <= 5 || event.target.value < 1) {
-                      lecturerHolder.NO_Available_Days = event.target.value;
-                    } else alert("أيام الحضور تتجاوز عدد الأيام المتاحة");
-                  };
-                  return (
-                    <div className={`${style.lectureor}`} key={index}>
-                      <div className={style.infoSection}>
-                        <p className={style.name}>
-                          {lecturer.Rank_ === "doctor"
-                            ? "الدكتور/ة"
-                            : "الأستاذ/ة"}
-                          : {lecturer.Lecturer_Name}
-                        </p>
-                        <p>{lecturer.Department_Name}</p>
-                        <div className={style.lecturerAvailabel}>
-                          <label className={style.labels}>
-                            <input
-                              type={"checkbox"}
-                              className={style.checkBox}
-                              checked={
-                                lecturer.Not_Available > 0 ? true : false
-                              }
-                              onChange={() =>
-                                updateAvailability(
-                                  lecturer.Lecturer_ID,
-                                  lecturer.Not_Available
-                                )
-                              }
-                            ></input>{" "}
-                            غير متاح
-                          </label>
-                        </div>
-                      </div>
-                      <hr className={style.sectionHR} />
-                      <div className={style.daySection}>
-                        <div className={style.availabelDays}>
-                          <p>عدد أيام الحضور: </p>
-                          <input
-                            className={style.daysInput}
-                            type="number"
-                            defaultValue={lecturer.NO_Available_Days || 0}
-                            max={5}
-                            min={1}
-                            onChange={handleChange}
-                          ></input>
-                        </div>
-                        <div className="daysCheckBoxes">
-                          <div className="checkboxTitle">
-                            <p>الأيام المتاحة: </p>
+              {lectureorData
+                .sort((a, b) => {
+                  if (sortAV) {
+                    return a.Not_Available - b.Not_Available;
+                  }
+                  return b.Not_Available - a.Not_Available;
+                })
+                .map((lecturer, index) => {
+                  if (lecturer.Not_Available === 0) {
+                    let lecturerHolder = {
+                      Lecturer_ID: lecturer.Lecturer_ID,
+                      Lecturer_Name: lecturer.Lecturer_Name,
+                      Department_ID: lecturer.Department_ID,
+                      Rank_: lecturer.Rank_,
+                      Not_Available: "0",
+                      NO_Available_Days: lecturer.NO_Available_Days,
+                      Sunday: lecturer.Sunday,
+                      Monday: lecturer.Monday,
+                      Tuesday: lecturer.Tuesday,
+                      Wednesday: lecturer.Wednesday,
+                      Thursday: lecturer.Thursday,
+                    };
+                    const handleChange = (event) => {
+                      if (event.target.value <= 5 || event.target.value < 1) {
+                        lecturerHolder.NO_Available_Days = event.target.value;
+                      } else alert("أيام الحضور تتجاوز عدد الأيام المتاحة");
+                    };
+                    return (
+                      <div className={`${style.lectureor}`} key={index}>
+                        <div className={style.infoSection}>
+                          <p className={style.name}>
+                            {lecturer.Rank_ === "doctor"
+                              ? "الدكتور/ة"
+                              : "الأستاذ/ة"}
+                            : {lecturer.Lecturer_Name}
+                          </p>
+                          <p>{lecturer.Department_Name}</p>
+                          <div className={style.lecturerAvailabel}>
+                            <label className={style.labels}>
+                              <input
+                                type={"checkbox"}
+                                className={style.checkBox}
+                                checked={
+                                  lecturer.Not_Available > 0 ? true : false
+                                }
+                                onChange={() =>
+                                  updateAvailability(
+                                    lecturer.Lecturer_ID,
+                                    lecturer.Not_Available
+                                  )
+                                }
+                              ></input>{" "}
+                              غير متاح
+                            </label>
                           </div>
-                          <div className={style.checkboxDays}>
-                            {days.map((element, index) => (
-                              <div className="days" key={index}>
-                                <label className={style.labels}>
-                                  <input
-                                    type="checkbox"
-                                    className={style.checkBox}
-                                    defaultChecked={
-                                      lecturer[`${element.value}`] === 1
-                                        ? true
-                                        : false
-                                    }
-                                    onChange={() => {
-                                      if (
-                                        lecturerHolder[`${element.value}`] === 0
-                                      ) {
-                                        lecturerHolder[`${element.value}`] = 1;
-                                      } else {
-                                        lecturerHolder[`${element.value}`] = 0;
+                        </div>
+                        <hr className={style.sectionHR} />
+                        <div className={style.daySection}>
+                          <div className={style.availabelDays}>
+                            <p>عدد أيام الحضور: </p>
+                            <input
+                              className={style.daysInput}
+                              type="number"
+                              defaultValue={lecturer.NO_Available_Days || 0}
+                              max={5}
+                              min={1}
+                              onChange={handleChange}
+                            ></input>
+                          </div>
+                          <div className="daysCheckBoxes">
+                            <div className="checkboxTitle">
+                              <p>الأيام المتاحة: </p>
+                            </div>
+                            <div className={style.checkboxDays}>
+                              {days.map((element, index) => (
+                                <div className="days" key={index}>
+                                  <label className={style.labels}>
+                                    <input
+                                      type="checkbox"
+                                      className={style.checkBox}
+                                      defaultChecked={
+                                        lecturer[`${element.value}`] === 1
+                                          ? true
+                                          : false
                                       }
-                                    }}
-                                  ></input>{" "}
-                                  {element.day}
-                                </label>
-                              </div>
-                            ))}
+                                      onChange={() => {
+                                        if (
+                                          lecturerHolder[`${element.value}`] ===
+                                          0
+                                        ) {
+                                          lecturerHolder[
+                                            `${element.value}`
+                                          ] = 1;
+                                        } else {
+                                          lecturerHolder[
+                                            `${element.value}`
+                                          ] = 0;
+                                        }
+                                      }}
+                                    ></input>{" "}
+                                    {element.day}
+                                  </label>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
+                        <div className={style.saveAndDelete}>
+                          <button
+                            className={style.save}
+                            onClick={() => handleUpdate(lecturerHolder)}
+                          >
+                            حفظ <FontAwesomeIcon icon={faSave} size="1x" />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(lecturer.Lecturer_ID)}
+                          >
+                            حذف <FontAwesomeIcon icon={faTrashCan} size="1x" />
+                          </button>
+                        </div>
                       </div>
-                      <div className={style.saveAndDelete}>
-                        <button
-                          className={style.save}
-                          onClick={() => handleUpdate(lecturerHolder)}
-                        >
-                          حفظ <FontAwesomeIcon icon={faSave} size="1x" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(lecturer.Lecturer_ID)}
-                        >
-                          حذف <FontAwesomeIcon icon={faTrashCan} size="1x" />
-                        </button>
-                      </div>
-                    </div>
-                  );
-                } else {
-                  return (
-                    <div
-                      className={`${style.lectureor} ${style.invalid}`}
-                      key={index}
-                    >
-                      <div className={style.infoSection}>
-                        <p className={style.name}>
-                          {lecturer.Rank_ === "doctor"
-                            ? "الدكتور/ة"
-                            : "الأستاذ/ة"}
-                          : {lecturer.Lecturer_Name}
-                        </p>
-                        <p>{lecturer.Department_Name}</p>
-                        <div className={style.lecturerAvailabel}>
-                          <label className={style.labels}>
+                    );
+                  } else {
+                    return (
+                      <div
+                        className={`${style.lectureor} ${style.invalid}`}
+                        key={index}
+                      >
+                        <div className={style.infoSection}>
+                          <p className={style.name}>
+                            {lecturer.Rank_ === "doctor"
+                              ? "الدكتور/ة"
+                              : "الأستاذ/ة"}
+                            : {lecturer.Lecturer_Name}
+                          </p>
+                          <p>{lecturer.Department_Name}</p>
+                          <div className={style.lecturerAvailabel}>
+                            <label className={style.labels}>
+                              <input
+                                type={"checkbox"}
+                                className={style.checkBox}
+                                checked={
+                                  lecturer.Not_Available > 0 ? true : false
+                                }
+                                onChange={() =>
+                                  updateAvailability(
+                                    lecturer.Lecturer_ID,
+                                    lecturer.Not_Available
+                                  )
+                                }
+                              ></input>{" "}
+                              غير متاح
+                            </label>
+                          </div>
+                        </div>
+                        <hr className={style.sectionHR} />
+                        <div className={style.daySection}>
+                          <div className={style.availabelDays}>
+                            <p>عدد أيام الحضور: </p>
                             <input
-                              type={"checkbox"}
-                              className={style.checkBox}
-                              checked={
-                                lecturer.Not_Available > 0 ? true : false
-                              }
-                              onChange={() =>
-                                updateAvailability(
-                                  lecturer.Lecturer_ID,
-                                  lecturer.Not_Available
-                                )
-                              }
-                            ></input>{" "}
-                            غير متاح
-                          </label>
-                        </div>
-                      </div>
-                      <hr className={style.sectionHR} />
-                      <div className={style.daySection}>
-                        <div className={style.availabelDays}>
-                          <p>عدد أيام الحضور: </p>
-                          <input
-                            className={`${style.daysInput} ${style.invalid}`}
-                            type="number"
-                            value={0}
-                            readOnly={true}
-                          ></input>
-                        </div>
-                        <div className="daysCheckBoxes">
-                          <div className="checkboxTitle">
-                            <p>الأيام المتاحة: </p>
+                              className={`${style.daysInput} ${style.invalid}`}
+                              type="number"
+                              value={0}
+                              readOnly={true}
+                            ></input>
                           </div>
-                          <div className={style.checkboxDays}>
-                            {days.map((element, index) => (
-                              <div className="days" key={index}>
-                                <label className={style.labels}>
-                                  <input
-                                    type="checkbox"
-                                    className={`${style.checkBox} ${style.invalid}`}
-                                    checked={false}
-                                    disabled={true}
-                                    onChange={() => {}}
-                                  ></input>{" "}
-                                  {element.day}
-                                </label>
-                              </div>
-                            ))}
+                          <div className="daysCheckBoxes">
+                            <div className="checkboxTitle">
+                              <p>الأيام المتاحة: </p>
+                            </div>
+                            <div className={style.checkboxDays}>
+                              {days.map((element, index) => (
+                                <div className="days" key={index}>
+                                  <label className={style.labels}>
+                                    <input
+                                      type="checkbox"
+                                      className={`${style.checkBox} ${style.invalid}`}
+                                      checked={false}
+                                      disabled={true}
+                                      onChange={() => {}}
+                                    ></input>{" "}
+                                    {element.day}
+                                  </label>
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
+                        <div className={style.saveAndDelete}>
+                          <button className={`${style.save} ${style.invalid}`}>
+                            حفظ <FontAwesomeIcon icon={faSave} size="1x" />
+                          </button>
+                          <button
+                            onClick={() => handleDelete(lecturer.Lecturer_ID)}
+                          >
+                            حذف <FontAwesomeIcon icon={faTrashCan} size="1x" />
+                          </button>
+                        </div>
                       </div>
-                      <div className={style.saveAndDelete}>
-                        <button className={`${style.save} ${style.invalid}`}>
-                          حفظ <FontAwesomeIcon icon={faSave} size="1x" />
-                        </button>
-                        <button
-                          onClick={() => handleDelete(lecturer.Lecturer_ID)}
-                        >
-                          حذف <FontAwesomeIcon icon={faTrashCan} size="1x" />
-                        </button>
-                      </div>
-                    </div>
-                  );
-                }
-              })}
+                    );
+                  }
+                })}
             </div>
           )}
         </section>
@@ -343,7 +366,7 @@ const LecturersSecretary = () => {
           id="addLecturerContainer"
         >
           <div className={style.inputCard}>
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="card">
                 <div className={style.cardHeader}>
                   <p className={style.title}> إضافة عضو هيئة تدرس</p>
@@ -391,7 +414,11 @@ const LecturersSecretary = () => {
                       ></input>
                     </section>
                   </section>
-                  <button className={style.addButton} id="submitLecturer">
+                  <button
+                    className={style.addButton}
+                    id="submitLecturer"
+                    onClick={handleSubmit}
+                  >
                     إضافة
                   </button>
                 </div>

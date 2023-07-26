@@ -7,6 +7,8 @@ import {
 import style from "../styles/secretary/create_schedule_secretary.module.css";
 import useFetch from "../../hooks/useFetch";
 import Loading from "../../components/Loading";
+import { Link } from "react-router-dom";
+
 import { useEffect, useState } from "react";
 
 const CreateScheduleSecretary = () => {
@@ -17,14 +19,12 @@ const CreateScheduleSecretary = () => {
     isPending: isLoading,
     error: isErorr,
   } = useFetch("http://localhost:5000/departements");
-  console.log(department);
 
   const {
     data: currentState,
     isPending: stateLoading,
     error: stateError,
   } = useFetch("http://localhost:5000/timeTable/checkModulesForGenerating");
-  console.log(currentState);
 
   const [result, setResult] = useState(false);
   const schedule = async () => {
@@ -53,6 +53,7 @@ const CreateScheduleSecretary = () => {
     <>
       <div className={style.topBar}>
         <p>
+          مسؤول الجداول &#62;
           <span>إنشاء</span> الجداول
         </p>
       </div>
@@ -107,7 +108,15 @@ const CreateScheduleSecretary = () => {
               إنشاء جداول
             </button>
           )}
-          {result && <p>إذهب إلى الجداول لإستعراض</p>}
+          {result && (
+            <p className={style.result}>
+              إنتهت العملية، توجه إلى{" "}
+              <span>
+                <Link to={"/timetables"}>الجداول</Link>
+              </span>
+              للإستعراض
+            </p>
+          )}
         </div>
 
         {isLoading && stateLoading && <Loading />}
