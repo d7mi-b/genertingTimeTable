@@ -132,10 +132,14 @@
     
 }
 
-.practicalDiv{
+.practicalDiv3{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    
+}
+
+.practicalDiv2{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .practicalDiv div{

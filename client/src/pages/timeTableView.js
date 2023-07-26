@@ -173,7 +173,7 @@ const TimeTableView = () => {
                                                             })
                                                             
                                                         }
-                                                        <div className={style.practicalDiv}>
+                                                        <div className={arr.filter(f => f.Day_Name === d && f.Semester_ID === l).length%3 === 0 ? `${style.practicalDiv3}`:`${style.practicalDiv2}`}>
                                                         {
                                                             
                                                             arr.filter(f => f.Day_Name === d && f.Semester_ID === l).map(j => {
