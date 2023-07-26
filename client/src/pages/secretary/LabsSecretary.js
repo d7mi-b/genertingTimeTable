@@ -19,7 +19,8 @@ const SecretaryLaps = () => {
         {hallsData && (
           <>
             <p>
-              عدد المباني والقاعات <span>{hallsData.length}</span>
+              مسؤول الجداول &#62; المباني والقاعات{" "}
+              <span>{hallsData.length}</span>
             </p>
           </>
         )}

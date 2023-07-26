@@ -29,7 +29,7 @@ const DepartmentsSecretary = () => {
         {data && (
           <>
             <p>
-              نظرة عامة على <span>الأقسام</span>
+              مسؤول الجداول &#62; نظرة عامة على <span>الأقسام</span>
             </p>
             <p>
               عدد الأقسام <span>{data.length}</span>
