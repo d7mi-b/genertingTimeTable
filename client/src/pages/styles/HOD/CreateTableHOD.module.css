@@ -18,7 +18,7 @@
 
 .createTable_main{
     display: flex;
-    padding: 60px 60px 0px;
+    margin-top: 5%;
 }
 
 .createTable_main ul{
@@ -86,6 +86,13 @@
     padding-left: 10px;
     text-align: center;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.16);
+}
+
+.courseDiv input{
+    background-color: transparent;
+    width: 5%;
+    border-bottom: 1px solid var( --border-color);
+    margin-left: 5px;
 }
 
 .courseDiv select{
