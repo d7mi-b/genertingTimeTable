@@ -70,7 +70,8 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
         if (
           groups[g].Semester_ID === modules[m].Semester_ID &&
           groups[g].Department_ID === modules[m].Department_ID &&
-          lecturers[l].Lecturer_ID === modules[m].Lecturer_ID
+          lecturers[l].Lecturer_ID === modules[m].Lecturer_ID &&
+          modules[m].Group_ID === groups[g].Group_ID
         ) {
           if (modules[m].Subject_Type_ID === 2) {
             for (let i = 0; i < 3; i++) {

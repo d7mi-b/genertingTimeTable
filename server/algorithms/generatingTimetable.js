@@ -10,7 +10,7 @@ module.exports.generatingTimetable = async (req, res) => {
   try {
     // Fetch data from the database
     const [modules] = await db.query(`
-        select Module_ID, module.Semester_ID, module.Subject_ID, Lecturer_ID, 
+        select Module_ID, module.Semester_ID, module.Subject_ID, Lecturer_ID, Group_ID, 
         module.Department_ID, Hall_Type_ID, Subject_Type_ID, Credit_Theoretical, Credit_Practical, Credit_Tutorial 
         from module join subjects on subjects.Subject_ID = module.Subject_ID;
     `);
@@ -83,7 +83,7 @@ module.exports.generatingTimetable = async (req, res) => {
     // Start the search loop
     let i = 0;
 
-    while (i < 1) {
+    while (i < 10) {
       
       // Generate the neighborhood of the current candidate timetable
       const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times, lecturers);
@@ -120,7 +120,7 @@ module.exports.generatingTimetable = async (req, res) => {
         tabuList.push([candidateTimetable, candidateTimetable]);
       }
       // Keep the tabu list within a certain length limit
-      if (tabuList.length > 500) tabuList.shift();
+      if (tabuList.length > 100) tabuList.shift();
       // Update the best timetable found so far
       if (
         fitness(candidateTimetable, modules, lecturers, groups, days, weights[0], stateWeights[0].Default_Weights) >
