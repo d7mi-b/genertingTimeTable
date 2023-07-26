@@ -57,6 +57,12 @@ const Archive = () => {
     }, [departement, departements]);
 
     useEffect(() => {
+        if (years && !year) {
+            setYear(years[0].System_Year);
+        }
+    }, [year, years]);
+
+    useEffect(() => {
         handelSearch();
     }, [departement, year]);
 

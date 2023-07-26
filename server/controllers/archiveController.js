@@ -28,7 +28,7 @@ module.exports.archiveTimetable = async (req, res) => {
         })
 
         await db.query(`
-            Delete from e_t_t;
+            DELETE FROM e_t_t;
         `)
 
         return res.status(201).json(Schedules);
