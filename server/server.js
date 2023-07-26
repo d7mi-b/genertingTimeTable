@@ -15,7 +15,8 @@ const coursesRoutes = require('./routes/coursesRoutes')
 const moduleRoutes = require('./routes/moduleRoutes')
 const requestRoutes = require('./routes/requestRoutes');
 const systemStateRoutes = require('./routes/systemstateRoutes');
-const timeTableRoutes = require('./routes/timeTableRoutes')
+const timeTableRoutes = require('./routes/timeTableRoutes');
+const archiveRoutes = require('./routes/archiveRoutes');
 
 const algorithmRoutes = require('./routes/algorithmRoutes');
 
@@ -66,6 +67,7 @@ if (cluster.isMaster) {
     app.use('/generatingTimetable', algorithmRoutes);
     app.use('/systemState', systemStateRoutes);
     app.use('/timeTable',timeTableRoutes);
+    app.use('/archive', archiveRoutes);
     
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}`);

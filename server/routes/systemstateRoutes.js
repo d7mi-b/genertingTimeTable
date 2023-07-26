@@ -11,5 +11,6 @@ router.put('/update', systemStateController.updateSystemstate);
 router.put('/changeDefaultWieghts', systemStateController.changeDefaultWeights);
 router.get('/weights', systemStateController.weights);
 router.put('/weights/update', systemStateController.updateWeights);
+router.get('/yerasOfSystem', systemStateController.getYearsOfSystemState);
 
 module.exports = router;

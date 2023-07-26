@@ -93,18 +93,30 @@ VALUES (1, 'مختبر حاسوب'),
     (10, 'مختبر منطق رقمي'),
     (11, 'مختبر أنظمة تحكم');
 
+Create table college (
+    College_ID int auto_increment not null,
+    College_Name varchar(150) not null UNIQUE,
+    primary key(College_ID)
+);
+
+INSERT INTO college(College_ID, College_Name)
+VALUES (1, 'كلية الهندسة والبترول'),
+    (2, 'كلية الطب');
+
 
 Create table building (
     Building_ID int auto_increment not null,
     Building_Name varchar(50) not null UNIQUE,
-    primary key(Building_ID)
+    College_ID int,
+    primary key(Building_ID),
+    foreign key(College_ID) references college(College_ID) on DELETE SET NULL
 );
 
-INSERT INTO building (Building_ID, Building_Name)
-VALUES (1, 'A'),
-    (2, 'B'),
-    (3, 'C'),
-    (4, 'D');
+INSERT INTO building (Building_ID, Building_Name, College_ID)
+VALUES (1, 'A', 1),
+    (2, 'B', 1),
+    (3, 'C', 1),
+    (4, 'D', 1);
 
 
 Create table semester (
@@ -124,17 +136,6 @@ VALUES (1, 'المستوى الدراسي الأول'),
     (8, 'المستوى الدراسي الثامن'),
     (9, 'المستوى الدراسي التاسع'),
     (10, 'المستوى الدراسي العاشر');
-
-
-Create table college (
-    College_ID int auto_increment not null,
-    College_Name varchar(150) not null UNIQUE,
-    primary key(College_ID)
-);
-
-INSERT INTO college(College_ID, College_Name)
-VALUES (1, 'كلية الهندسة والبترول'),
-    (2, 'كلية الطب');
 
 
 Create table department (
@@ -1167,7 +1168,7 @@ INSERT INTO system_state (
         System_Year,
         Default_Weights
     )
-VALUES (1, "جامعة حضرموت", 1, '2023/2024', 1);
+VALUES (1, "جامعة حضرموت", 1, '2023-2024', 1);
 
 
 Create table fitnes_weight (
@@ -1183,3 +1184,19 @@ VALUES ('lecturerAvailabilty', 0.75),
     ('dayOFF', 0.5),
     ('lecturesOnDay', 0.5),
     ('groupsTimes', 0.25);
+
+Create table Archive(
+    ETT_Archive_ID int auto_increment not null,
+    Subject_Name varchar(200),
+    Lecturer_Name varchar(200),
+    Group_ varchar(100),
+    Hall_Name varchar(200),
+    Day_Name varchar(100),
+    Start_Time time,
+    End_Time time,
+    Semester_ID int,
+    Department_Name varchar(300),
+    Year varchar(20),
+    primary key(ETT_Archive_ID),
+    foreign key(Semester_ID) references semester(Semester_ID) ON DELETE CASCADE
+);

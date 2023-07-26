@@ -89,3 +89,16 @@ module,exports.updateWeights = async (req, res) => {
         res.status(400).json({err: err.message});
     }
 }
+
+module.exports.getYearsOfSystemState = async (req, res) => {
+    try {
+        const [ system ] = await db.query(`
+            select System_Year from system_state
+        `);
+
+        return res.status(200).json(system)
+    }
+    catch (err) {
+        res.status(400).json({err: err.message});
+    }
+}

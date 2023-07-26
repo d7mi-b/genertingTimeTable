@@ -52,6 +52,7 @@ export default function HomeLayout () {
                     <ul className={`${style.list}`}>
                         <li><Link className={`link`} to='/'>الرئيسية</Link></li>
                         <li><Link className={`link`} to={`/timetables`}>الجداول</Link></li>
+                        <li><Link className={`link`} to='/availableHalls'>القاعات الفارغة</Link></li>
                         <li><a className={`link`} href='#ourSystem'>نظامنا</a></li>
                         <li><a className={`link`} href='#contactUs'>تواصل معنا</a></li>
                     </ul>

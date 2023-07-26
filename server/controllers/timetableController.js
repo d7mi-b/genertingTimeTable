@@ -108,3 +108,60 @@ module.exports.checkModulesForGenerating = async (req, res) => {
         return res.status(400).json(err)
     }
 }
+
+module.exports.avilableHallsinTimetable = async (req, res) => {
+    const { search } = req.params;
+    
+    try {
+        const [halls] = await db.query(`
+            SELECT halls.Hall_ID, halls.Hall_Name, Hall_Capacity, Building_Name, College_Name, day.Day_Name, time.Start_Time, time.End_Time
+            FROM halls 
+            natural join building
+            natural join college
+            CROSS JOIN time
+            CROSS JOIN day
+            WHERE (halls.Hall_ID, day.Day_ID, time.Start_Time) NOT IN (
+                SELECT e_t_t.Hall_ID, e_t_t.Day_ID, e_t_t.Start_Time
+                FROM e_t_t
+                INNER JOIN time ON e_t_t.Start_Time = time.Start_Time
+                WHERE time.Start_Time < '18:00:00' AND time.End_Time > '07:00:00'
+            ) AND (halls.Hall_ID, day.Day_ID, time.End_Time) NOT IN (
+                SELECT e_t_t.Hall_ID, e_t_t.Day_ID, e_t_t.End_Time
+                FROM e_t_t
+                INNER JOIN time ON e_t_t.End_Time = time.End_Time
+                WHERE time.Start_Time < '18:00:00' AND time.End_Time > '07:00:00'
+            ) AND (
+                college.College_Name like ? OR building.Building_Name like ?
+            )
+            ORDER BY halls.Hall_ID, day.Day_ID, time.Start_Time;
+        `, [`%${search}%`, `%${search}%`]);
+
+        return res.status(200).json(halls);
+    }
+    catch(err) {
+        res.status(400).json({err: err.message});
+    }
+}
+
+module.exports.avilableHallsAllWeek = async (req, res) => {
+    const { search } = req.params;
+
+    try {
+        const [halls] = await db.query(`
+            SELECT halls.Hall_ID, Hall_Name, Hall_Capacity, Building_Name, College_Name
+            FROM halls 
+            natural join building
+            natural join college
+            where (halls.Hall_ID) NOT IN (
+                select halls.Hall_ID from halls natural join e_t_t
+            ) AND (
+                College_Name like ? OR Building_Name like ?
+            );
+            `, [`%${search}%`, `%${search}%`]);
+
+        return res.status(200).json(halls);
+    }
+    catch(err) {
+        res.status(400).json({err: err.message});
+    }
+}

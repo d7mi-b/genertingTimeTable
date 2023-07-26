@@ -102,13 +102,13 @@ module.exports.hallsOfDepartment = async (req, res) => {
 
 module.exports.checkHallsNumbers = async (req, res) => {
     try {
-        const halls = await db.query(`
+        const [halls] = await db.query(`
             SELECT count(distinct ifnull(e_t_t.Hall_ID, null)) as Hall, 
             count(*) - count(ifnull(e_t_t.Hall_ID, null)) as EmptyHall 
             FROM halls left outer join e_t_t on e_t_t.Hall_ID = halls.Hall_ID;
         `);
 
-        return res.status(200).json(halls[0][0]);
+        return res.status(200).json(halls[0]);
     }
     catch(err) {
         res.status(400).json({err: err.message});

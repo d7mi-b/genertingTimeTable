@@ -13,6 +13,7 @@ const SearchTimetable = lazy(() => import("./pages/SearchTimetable"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const ErrorElement = lazy(() => import("./components/ErrorElement"));
 const TimeTableView = lazy(() => import("./pages/timeTableView"));
+const AvilableHall = lazy(() => import('./pages/AvilableHall'));
 
 const HomeLayout = lazy(() => import("./Layouts/HomeLayout"));
 const AdminLayout = lazy(() => import("./Layouts/AdminLayout"));
@@ -24,12 +25,12 @@ const Colleges = lazy(() => import("./pages/admin/Colleges"));
 const College = lazy(() => import("./pages/admin/College"));
 const Buldings = lazy(() => import("./pages/admin/Buldings"));
 const Building = lazy(() => import("./pages/admin/Building"));
-const Departements = lazy(() => import("./pages/admin/Departements"));
 const Department = lazy(() => import("./pages/admin/Department"));
 const HomeAdmin = lazy(() => import("./pages/admin/HomeAdmin"));
 const Users = lazy(() => import("./pages/admin/Users"));
 const HallType = lazy(() => import("./pages/admin/HallType"));
 const SystemState = lazy(() => import("./pages/admin/SystemState"));
+const Archive = lazy(() => import('./pages/admin/Archive'));
 
 const HomeHOD = lazy(() => import("./pages/HOD/HomeHOD"));
 const LecturersHOD = lazy(() => import("./pages/HOD/LecturersHOD"));
@@ -59,6 +60,7 @@ const routerHome = createBrowserRouter(
     <Route path="/" element={<HomeLayout />}>
       <Route index element={<Home />} />
       <Route path="timetables" element={<SearchTimetable />} />
+      <Route path="availableHalls" element={<AvilableHall />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
@@ -94,16 +96,11 @@ const routerAdmin = createBrowserRouter(
 
       <Route path="timetables" element={<SearchTimetable />} />
 
-      <Route
-        path="departements"
-        element={<PageLayout />}
-        errorElement={<ErrorElement />}
-      >
-        <Route index element={<Departements />} />
-        {/* <Route path=":Department_ID" element={<Department />} /> */}
-      </Route>
+      <Route path="availableHalls" element={<AvilableHall />} />
 
       <Route path="systemState" element={<SystemState />} />
+
+      <Route path="archive" element={<Archive />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
@@ -120,6 +117,7 @@ const routerHOD = createBrowserRouter(
       <Route path="courses" element={<Courses />} />
       <Route path="create_table" element={<CreateTable />} />
       <Route path="timeTableView" element={<TimeTableView />} />
+      <Route path="availableHalls" element={<AvilableHall />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
@@ -135,6 +133,7 @@ const routerSecretary = createBrowserRouter(
       <Route path="requests" element={<RequestManagementSecretary />} />
       <Route path="lecturers" element={<LecturersSecretary />} />
       <Route path="timetables" element={<SearchTimetable />} />
+      <Route path="availableHalls" element={<AvilableHall />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

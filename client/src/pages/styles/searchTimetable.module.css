@@ -87,6 +87,47 @@
     justify-content: center;
 }
 
+.selectContainer {
+    width: 90%;
+    margin: 15px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 25px;
+}
+
+.selectContainer select {
+    background-color: var(--card-color);
+    border-radius: 5px;
+}
+
+.flex {
+    display: flex;
+    width: 100%;
+}
+
+.x {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.HallContainer {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    width: 100%;
+}
+
+.HallContainer th {
+    width: 100%;
+    padding: 15px 10px;
+}
+
+.HallContainer .timeContainer {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
 @media (max-width: 992px) {
     .timetablePage .timetableContainer2 .timetable table tr {
         display: grid;
@@ -102,6 +143,8 @@
     }
 }
 
-@media (max-width: 992px) {
-
+@media (max-width: 768px) {
+    .selectContainer {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

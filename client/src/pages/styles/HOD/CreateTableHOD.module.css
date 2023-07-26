@@ -163,3 +163,17 @@
     
     transition: all .9s;
 }
+
+.groupNumbers {
+    width: 400px;
+    display: flex;
+    padding: 0 5px;
+}
+
+.groupNumbers input {
+    width: 100px;
+    background-color: var(--card-color);
+    border-radius: 5px;
+    color: var(--font-color);
+    font-family: Tajawal;
+}

@@ -83,7 +83,7 @@ module.exports.generatingTimetable = async (req, res) => {
     // Start the search loop
     let i = 0;
 
-    while (i < 1700) {
+    while (i < 1) {
       
       // Generate the neighborhood of the current candidate timetable
       const neighborhood = getNeighbors(candidateTimetable, modules, groups, halls, days, times, lecturers);

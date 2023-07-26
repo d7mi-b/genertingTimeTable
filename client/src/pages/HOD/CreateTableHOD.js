@@ -207,6 +207,11 @@ const CreateTable = () => {
                             return(
 
                                 <div key={i.Module_ID} className={style.courseDiv}>
+                                <section className={style.groupNumbers}>
+                                    <label htmlFor="groupsNumber">عدد القروبات الفرعية</label>
+                                    <input name="groupsNumber" type="number" />
+                                </section>
+                                <hr />
                                 <select 
                                     id={i.Module_ID}
                                     onChange={e => handleSelectLecturer(e.target,i.Module_ID,i.Subject_ID,i.Subject_Name,i.Subject_Type_Name,i.Subject_Type_ID)}
