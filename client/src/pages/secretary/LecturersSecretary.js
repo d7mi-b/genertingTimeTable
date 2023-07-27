@@ -37,7 +37,6 @@ const LecturersSecretary = () => {
   );
 
   const handleSubmit = async (e) => {
-    console.log("lecturerName");
     e.preventDefault();
     if (lecturerName !== "" && lecturerRefrence !== "") {
       await fetchPost(`http://localhost:5000/lecturers/addLecturer`, {
@@ -77,10 +76,9 @@ const LecturersSecretary = () => {
         Lecturer_ID: id,
         Not_Available: "1",
       });
-      window.location.reload();
     }
 
-    // window.location.reload();
+    window.location.reload();
     const button = document.getElementById("myButton");
     const parent = button.closest("div");
     parent.classList.add("parent-class");
@@ -366,7 +364,7 @@ const LecturersSecretary = () => {
           id="addLecturerContainer"
         >
           <div className={style.inputCard}>
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="card">
                 <div className={style.cardHeader}>
                   <p className={style.title}> إضافة عضو هيئة تدرس</p>
@@ -414,11 +412,7 @@ const LecturersSecretary = () => {
                       ></input>
                     </section>
                   </section>
-                  <button
-                    className={style.addButton}
-                    id="submitLecturer"
-                    onClick={handleSubmit}
-                  >
+                  <button className={style.addButton} id="submitLecturer">
                     إضافة
                   </button>
                 </div>

@@ -12,6 +12,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const CreateScheduleSecretary = () => {
+  console.log('push it ');
   const [loading, setLoading] = useState(false);
 
   const {
