@@ -16,7 +16,7 @@ module.exports.getNeighbors = (
   times,
   lecturers
 ) => {
-  const MAX_ITERATIONS = 1000; // maximum number of iterations
+  const MAX_ITERATIONS = 500; // maximum number of iterations
   let neighbors = [];
   let type = getRandomItem([1, 2, 3, 4, 5]);
   let i = 0;

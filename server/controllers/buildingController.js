@@ -2,7 +2,7 @@ const db = require('../DB');
 
 module.exports.getAllBuilding = async (req, res) => {
     try {
-        const [ buildings ] = await db.query(`select * from building`);
+        const [ buildings ] = await db.query(`select * from building natural join college`);
         res.status(200).json(buildings);
     }
     catch (err) {

@@ -18,7 +18,8 @@ const systemStateRoutes = require('./routes/systemstateRoutes');
 const timeTableRoutes = require('./routes/timeTableRoutes');
 const archiveRoutes = require('./routes/archiveRoutes');
 const algorithmRoutes = require('./routes/algorithmRoutes');
-const pdfRoutes = require('./routes/pdfRoutes')
+const pdfRoutes = require('./routes/pdfRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 
 // port of server
 const PORT = process.env.PORT;
@@ -68,7 +69,8 @@ if (cluster.isMaster) {
     app.use('/systemState', systemStateRoutes);
     app.use('/timeTable',timeTableRoutes);
     app.use('/archive', archiveRoutes);
-    app.use('/pdf',pdfRoutes)
+    app.use('/pdf',pdfRoutes);
+    app.use('/notification', notificationRoutes)
     
     app.listen(PORT, () => {
         console.log(`Listening on port ${PORT}`);

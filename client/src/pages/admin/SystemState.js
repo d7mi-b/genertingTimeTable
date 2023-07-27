@@ -61,7 +61,9 @@ const SystemState = () => {
             setSemester(data.System_Semester);
             setDefaultSetting(data.Default_Weights)
         }
+    }, [data])
 
+    useEffect(() => {
         if (weights) {
             setLecturerAvailabilty(weights.lecturerAvailabilty);
             setTimeGap(weights.timeGap);
@@ -70,8 +72,7 @@ const SystemState = () => {
             setLecturesOnDay(weights.lecturesOnDay);
             setGroupsTimes(weights.groupsTimes);
         }
-
-    }, [data, weights])
+    }, [weights])
 
     return (
         <section className={`containerPage ${style.systemState}`}>
@@ -301,7 +302,7 @@ const SystemState = () => {
 
                                     <section className={style.containerWehigs}>
                                         <p>
-                                            تكون محاضرات العملي في يوم واحد
+                                            أن يكون اليوم مخصص لمحاضرات العملي
                                         </p>
                                         <section className={style.chooseWeight}>
                                             <section className={style.radio}>

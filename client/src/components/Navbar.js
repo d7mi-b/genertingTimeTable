@@ -12,6 +12,7 @@ const Navbar = () => {
     const { user } = useAuthContext();
 
     const { data: department } = useFetch(`http://localhost:5000/departements/${user.Department_ID}`);
+    const { data: notification } = useFetch(`http://localhost:5000/notification/${user.Department_ID}`);
 
     const handelLogout = () => {
         logout();
@@ -44,9 +45,18 @@ const Navbar = () => {
                         <header>
                             <h4>التنبيهات</h4>
                         </header>
-                        <li className={`${style.ntivication}`}>تنبيه</li>
-                        <li className={`${style.ntivication}`}>تنبيه</li>
-                        <li className={`${style.ntivication}`}>تنبيه</li>
+                        {
+                            notification && notification.map(n => {
+                                return (
+                                    <li className={`${style.ntivication}`} key={n.Notification_ID}>
+                                        {n.Notification_Text}
+                                    </li>
+                                )
+                            })
+                        }
+                        {
+                            notification && notification.length === 0 && <p className='emptyElement'>لا توجد تنبيهات</p>
+                        }
                     </ul>
                 </section>
                 <section className={`${style.profile} ${style.icons}`}>

@@ -131,7 +131,7 @@ const Bulding = () => {
                                     <section className={`${style.img}`}>
                                         <img src='/images/Mask Group 10.png' alt='bulding' />
                                     </section>
-                                    <h1>{e.Building_Name}</h1>
+                                    <h1>{e.College_Name ? `${e.College_Name} - ` : ''} مبنى {e.Building_Name}</h1>
                                 </Link>
                             )
                         })

@@ -39,10 +39,10 @@ const Sidebar = () => {
                     <NavLink className={`link`} to='/availableHalls'><FontAwesomeIcon icon={faBuilding} /> القاعات الفارغة</NavLink>
                 </li>
                 <li>
-                    <NavLink to='systemState' className='link'><FontAwesomeIcon icon={faGear} /><span>إعدادات النظام</span></NavLink>
+                    <NavLink to='archive' className='link'><FontAwesomeIcon icon={faBoxArchive} /><span>الأرشيف</span></NavLink>
                 </li>
                 <li>
-                    <NavLink to='archive' className='link'><FontAwesomeIcon icon={faBoxArchive} /><span>الأرشيف</span></NavLink>
+                    <NavLink to='systemState' className='link'><FontAwesomeIcon icon={faGear} /><span>إعدادات النظام</span></NavLink>
                 </li>
             </ul>
 
