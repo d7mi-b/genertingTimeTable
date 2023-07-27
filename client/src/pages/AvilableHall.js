@@ -72,27 +72,30 @@ const AvilableHall = () => {
                 </form>
             </section>
 
-            <section >
-                <header>
-                    <h2>قاعات فارغة طوال الأسبوع</h2>
-                </header>
-                <section className={style.timetableContainer}>
-                    {
-                        emptyHall && emptyHall.length > 0 && emptyHall.map(t => {
-                            return (
-                                <article id={t.Hall_ID  * Math.random()} key={t.Hall_ID} className={style.timetable}>
-                                    <header>
-                                        <h1>{t.Hall_Name}</h1>
-                                    </header>
-                                    <p>السعة {t.Hall_Capacity} مقعد</p>
-                                    <p>مبنى {t.Building_Name}</p>
-                                    <p>{t.College_Name}</p>
-                                </article>
-                            )
-                        })
-                    }
+            {
+                emptyHall && emptyHall.length > 0 &&
+                <section >
+                    <header>
+                        <h1>قاعات فارغة طوال الأسبوع</h1>
+                    </header>
+                    <section className={style.timetableContainer}>
+                        {
+                            emptyHall && emptyHall.length > 0 && emptyHall.map(t => {
+                                return (
+                                    <article id={t.Hall_ID  * Math.random()} key={t.Hall_ID} className={style.timetable}>
+                                        <header>
+                                            <h1>{t.Hall_Name}</h1>
+                                        </header>
+                                        <p>السعة {t.Hall_Capacity} مقعد</p>
+                                        <p>مبنى {t.Building_Name}</p>
+                                        <p>{t.College_Name}</p>
+                                    </article>
+                                )
+                            })
+                        }
+                    </section>
                 </section>
-            </section>
+            }
 
             <section className={timetable && timetable.length <= 3 ? style.timetableContainer : style.timetableContainer2}>
                 {

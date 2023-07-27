@@ -116,6 +116,7 @@ const routerHOD = createBrowserRouter(
       <Route path="students_groups" element={<SudentsGroups />} />
       <Route path="courses" element={<Courses />} />
       <Route path="create_table" element={<CreateTable />} />
+      <Route path="timetables" element={<SearchTimetable />} />
       <Route path="timeTableView" element={<TimeTableView />} />
       <Route path="availableHalls" element={<AvilableHall />} />
       <Route path="*" element={<NotFound />} />
