@@ -31,7 +31,7 @@ const TimeTableView = () => {
         await fetch('http://localhost:5000/pdf/Scheduels?' + new URLSearchParams({
             Level,
             Department_ID: user.Department_ID,
-            Department_Name: schedules[0].Department_Name,
+            Department_Name: schedules[0] ? schedules[0].Department_Name : schedules,
             year: data.System_Year,
             semester: data.System_Semester
         }))
@@ -42,7 +42,7 @@ const TimeTableView = () => {
                 // Setting various property values
                 let alink = document.createElement('a');
                 alink.href = fileURL;
-                alink.download = `جدول ${schedules[0].Department_Name} ${title}.pdf`;
+                alink.download = `جدول ${schedules[0] ? schedules[0].Department_Name : schedules} ${title}.pdf`;
                 alink.click();
             })
         })
@@ -84,7 +84,7 @@ const TimeTableView = () => {
                 <div>
                     <h3>الجدول الحالي</h3>
                     <FontAwesomeIcon className='arrows' icon={faAngleDoubleLeft} />
-                    { schedules && <h3>قسم {schedules[0].Department_Name} </h3>}    
+                    { schedules && <h3>قسم {schedules[0] ? schedules[0].Department_Name : schedules} </h3>}    
                 </div>
                 <h3>
                     {user.semester === 1 && "الترم الأول"}
@@ -267,7 +267,7 @@ const TimeTableView = () => {
                                             })
                                         }
                                         
-                                        <section className={style.practicalDiv}>
+                                        <section className={arr.filter(f => f.Day_Name === d && f.Semester_ID === l).length%3 === 0 ? `${style.practicalDiv3}`:`${style.practicalDiv2}`}>
                                         {
                                             arr.filter(t => t.Day_Name === d && t.Semester_ID === l).map(j => {
                                                 return(

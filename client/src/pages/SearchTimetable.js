@@ -156,7 +156,7 @@ const SearchTimetable = () => {
                                                                 })
                                                             }
                                                             
-                                                            <td className={styleB.practicalDiv}>
+                                                            <td className={styleB.practicalDiv3}>
                                                                 {
                                                                     arr.length > 0 &&
                                                                     arr.filter(t => t.Day_Name === d && t.Semester_Name === s).map(j => {

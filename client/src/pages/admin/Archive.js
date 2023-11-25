@@ -24,7 +24,7 @@ const Archive = () => {
     // const { data: departements } = useFetch('http://localhost:5000/departements/');
     const { data: years } = useFetch('http://localhost:5000/systemState/yerasOfSystem');
 
-    const [timetable, setTimetable] = useState(null);
+    const [timetable, setTimetable] = useState([]);
     const [college, setCollege] = useState('');
     const [departements, setDepartements] = useState([]);
     const [departement, setDepartement] = useState('');
@@ -32,9 +32,12 @@ const Archive = () => {
 
     const handelSearch = async () => {
         setTimetable(null);
-        const res = await fetch(`http://localhost:5000/archive/timetable/${departement}/${year}`);
-        const timetable = await res.json();
-        setTimetable(timetable);
+        const res = await fetch(`http://localhost:5000/archive/timetable/${departement}/${year}` , {
+            headers: { "Authorization": `Bearer ${user.token}`}
+        });
+        const data = await res.json();
+        console.log(data)
+        setTimetable(data);
     }
 
     const getDepartment = async () => {
@@ -63,7 +66,8 @@ const Archive = () => {
     }, [year, years]);
 
     useEffect(() => {
-        handelSearch();
+        if (departement && year)
+            handelSearch();
     }, [departement, year]);
 
     return (
@@ -112,7 +116,7 @@ const Archive = () => {
 
             <section className={timetable && timetable.length <= 3 ? style.timetableContainer : style.timetableContainer2}>
                 {
-                    timetable && semesters.filter(s => {
+                    timetable && timetable.length > 0 && semesters.filter(s => {
                         return timetable.filter(t => t.Semester_ID === s).map(t => t.Semester_ID).includes(s)
                     }).map(s => {
                         return departements && departements.map(dep => {
@@ -206,6 +210,13 @@ const Archive = () => {
                             )
                         })
                     })
+                }
+            </section>
+
+            <section>
+                {
+                    timetable && timetable.length === 0 && 
+                    <p className="emptyElement">لا يوجد جدول في الأرشيف</p>
                 }
             </section>
         </section>

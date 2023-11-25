@@ -10,13 +10,17 @@ import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
 
 import { useEffect, useState } from "react";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 const CreateScheduleSecretary = () => {
+  const { user } = useAuthContext();
   console.log('push it ');
   const [loading, setLoading] = useState(false);
 
+  const { data: department } = useFetch(`http://localhost:5000/departements/${user.Department_ID}`);
+
   const {
-    data: department,
+    data: departments,
     isPending: isLoading,
     error: isErorr,
   } = useFetch("http://localhost:5000/departements");
@@ -25,7 +29,7 @@ const CreateScheduleSecretary = () => {
     data: currentState,
     isPending: stateLoading,
     error: stateError,
-  } = useFetch("http://localhost:5000/timeTable/checkModulesForGenerating");
+  } = useFetch(`http://localhost:5000/timeTable/checkModulesForGenerating/1`);
 
   const [result, setResult] = useState(false);
   const schedule = async () => {
@@ -60,7 +64,7 @@ const CreateScheduleSecretary = () => {
       </div>
       <div className={style.page}>
         <div className={style.tableHolder}>
-          {!loading && department && currentState && (
+          {!loading && departments && currentState && (
             <div className={style.section}>
               <p className={`${style.sectionDivider} ${style.title}`}>التخصص</p>
               <p className={`${style.sectionDivider} ${style.title}`}>الحالة</p>
@@ -68,9 +72,9 @@ const CreateScheduleSecretary = () => {
             </div>
           )}
           {!loading &&
-            department &&
+            departments &&
             currentState &&
-            department.map((element, index) => (
+            departments.map((element, index) => (
               <div className={`${style.section} ${style.status}`} key={index}>
                 <p className={style.sectionDivider}>
                   {element.Department_Name}
@@ -98,7 +102,7 @@ const CreateScheduleSecretary = () => {
                 />
               </div>
             ))}
-          {!loading && department && currentState && (
+          {!loading && departments && currentState && (
             <button
               className={style.button}
               onClick={() => {

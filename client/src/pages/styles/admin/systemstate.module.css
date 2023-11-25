@@ -147,6 +147,11 @@ option {
     font-size: 0.7rem;
 }
 
+.containerWehigs .inputNumber {
+    width: 70px;
+    margin: 0 5px;
+}
+
 @media (min-width: 283px) and (max-width: 767px) {
     .systemState header {
         margin: 50px 0 20px;

@@ -1,8 +1,6 @@
 const { getDuration } = require("./getDuration");
 const { feasible } = require("./feasible");
 const { getRandomItem } = require("./getRandomItem");
-const { getCredit } = require("./getCredit");
-const { calculateEndTime } = require("./calculateEndTime");
 const { getEndTime } = require("./getEndTime");
 const { getDay } = require("./getDay");
 const { getHall } = require("./getHall");
@@ -16,7 +14,7 @@ module.exports.getNeighbors = (
   times,
   lecturers
 ) => {
-  const MAX_ITERATIONS = 500; // maximum number of iterations
+  const MAX_ITERATIONS = 70; // maximum number of iterations
   let neighbors = [];
   let type = getRandomItem([1, 2, 3, 4, 5]);
   let i = 0;

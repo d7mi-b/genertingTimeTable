@@ -17,6 +17,9 @@ const SystemState = () => {
     const [yaer, setYear] = useState('');
     const [semester, setSemester] = useState('');
     const [defaultSetting, setDefaultSetting] = useState(null);
+    const [maximumLecturerSt, setMaximumLecturerSt] = useState(0);
+    const [minimumLecturerSt, setMinimumLecturerSt] = useState(0);
+
 
     const [lecturerAvailabilty, setLecturerAvailabilty] = useState(0);
     const [timeGap, setTimeGap] = useState(0);
@@ -53,13 +56,21 @@ const SystemState = () => {
             lecturesOnDay: lecturesOnDay, 
             groupsTimes: groupsTimes
         });
+
+        await fetchPut('http://localhost:5000/systemState/updateNumbersOfConstraints', {
+            System_State_ID: data.System_State_ID, 
+            Maximum_Lecturers_Student: maximumLecturerSt,
+            Minimum_Lecturers_Student: minimumLecturerSt
+        })
     }
 
     useEffect(() => {
         if (data) {
             setYear(data.System_Year);
             setSemester(data.System_Semester);
-            setDefaultSetting(data.Default_Weights)
+            setDefaultSetting(data.Default_Weights);
+            setMaximumLecturerSt(data.Maximum_Lecturers_Student);
+            setMinimumLecturerSt(data.Minimum_Lecturers_Student);
         }
     }, [data])
 
@@ -428,7 +439,11 @@ const SystemState = () => {
 
                                     <section className={style.containerWehigs}>
                                         <p>
-                                            لا يزيد عدد المحاضرات عن ثلاث محاضرات للطلاب في اليوم الواحد
+                                            لا يزيد عدد المحاضرات عن 
+                                            <input className={style.inputNumber} type='number' name="maximumLecturerStudent" value={maximumLecturerSt} onChange={e => setMaximumLecturerSt(+e.target.value)} />
+                                            ولا تقل عن
+                                            <input className={style.inputNumber} type='number' name="minimumLecturerStudent" value={minimumLecturerSt} onChange={e => setMinimumLecturerSt(+e.target.value)} />
+                                            للطلاب في اليوم الواحد
                                         </p>
                                         <section className={style.chooseWeight}>
                                             <section className={style.radio}>

@@ -5,7 +5,7 @@ const { dayOFF } = require("./fitness_functions/dayOFF");
 const { lecturesOnDay } = require("./fitness_functions/lecturesOnDay");
 const { groupsTime } = require("./fitness_functions/groupsTime");
 
-module.exports.fitness = (timetable, modules, lecturers, groups, days, weights, stateWeights) => {
+module.exports.fitness = (timetable, modules, lecturers, groups, days, weights, stateWeights, system) => {
 
   if (stateWeights) {
     weights = defaultWeights;
@@ -17,7 +17,7 @@ module.exports.fitness = (timetable, modules, lecturers, groups, days, weights, 
   fitness += timeGap(timetable, groups, days) * 1000 * weights.timeGap;
   fitness += labsOnSameDay(timetable, modules, groups, days) * 10 * weights.labsOnSameDay;
   fitness += dayOFF(timetable, groups) * weights.dayOFF;
-  fitness += lecturesOnDay(timetable, groups, days) * weights.lecturesOnDay;
+  fitness += lecturesOnDay(timetable, groups, days, system) * weights.lecturesOnDay;
   fitness += groupsTime(timetable, modules, groups) * weights.groupsTimes;
 
   return fitness;

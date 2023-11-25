@@ -9,9 +9,9 @@ const { lecturerDays } = require("./lecturerDays");
 // initialTimetable function to generate initial timetable
 module.exports.initialTimetable = (modules, groups, halls, days, times, lecturers) => {
   let i = 0;
-  while (i < 1) {
+  while (true) {
     let timetable = generate(modules, groups, halls, days, times, lecturers);
-  
+
     if (feasible(timetable, lecturers, modules) === 0) {
       console.log("number of iteration to get initial timetable:", i)
       return timetable;
@@ -73,19 +73,9 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
           lecturers[l].Lecturer_ID === modules[m].Lecturer_ID &&
           modules[m].Group_ID === groups[g].Group_ID
         ) {
-          if (modules[m].Subject_Type_ID === 2) {
-            for (let i = 0; i < 3; i++) {
-              timetable.push({
-                id: `${groups[g].Group_ID}-${modules[m].Module_ID}-${i}`,
-                Module_ID: modules[m].Module_ID,
-                Lecturer_ID: modules[m].Lecturer_ID,
-                Group_ID: groups[g].Group_ID,
-                Subject_Type_ID: modules[m].Subject_Type_ID,
-              });
-            }
-          } else {
+          for (let i = 0; i < +modules[m].practical_Groups_No; i++) {
             timetable.push({
-              id: `${groups[g].Group_ID}-${modules[m].Module_ID}-0`,
+              id: `${groups[g].Group_ID}-${modules[m].Module_ID}-${i}`,
               Module_ID: modules[m].Module_ID,
               Lecturer_ID: modules[m].Lecturer_ID,
               Group_ID: groups[g].Group_ID,
@@ -99,25 +89,8 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
 
   for (let i = 0; i < timetable.length; i++) {
 
-    // if (i !== 0 &&  timetable[i].Module_ID === timetable[i - 1].Module_ID) {
-    //   timetable[i].Day_ID = timetable[i - 1].Day_ID;
-      
-    //   timetable[i].Start_Time =`${
-    //     +timetable[i - 1].Start_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical < 10
-    //       ? `0${+timetable[i - 1].Start_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical}`
-    //       : +timetable[i - 1].Start_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical
-    //   }:00:00`;
-
-    //   timetable[i].End_Time = `${
-    //     +timetable[i - 1].End_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical < 10
-    //       ? `0${+timetable[i - 1].End_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical}`
-    //       : +timetable[i - 1].End_Time.slice(0, 2) + modules.filter(m => m.Module_ID === timetable[i].Module_ID)[0].Credit_Practical
-    //   }:00:00`;
-
-    //   timetable[i].Hall_ID = timetable[i - 1].Hall_ID;
-
+    // if (timetable[i].Day_ID && timetable[i].Start_Time && timetable[i].End_Time && timetable.Hall_ID)
     //   continue;
-    // }
 
     for (let g = 0; g < groups.length; g++) {
       for (let m = 0; m < modules.length; m++) {
@@ -143,6 +116,29 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
 
           timetable[i].End_Time = getEndTime(+time.Start_Time.slice(0, 2), modules[m]);
 
+          // if (timetable[i].Subject_Type_ID === 2) {
+
+          //   timetable.filter(j => j.Module_ID === timetable[i].Module_ID).forEach((j, index) => {
+          //     if (index > 0) {
+          //       j.Hall_ID = timetable[i].Hall_ID;
+
+          //       j.Day_ID = timetable[i].Day_ID;
+        
+          //       j.Start_Time =`${
+          //         +timetable[i].Start_Time.slice(0, 2) + modules[m].Credit_Practical < 10
+          //           ? `0${+timetable[i].Start_Time.slice(0, 2) + modules[m].Credit_Practical}`
+          //           : +timetable[i].Start_Time.slice(0, 2) + modules[m].Credit_Practical
+          //       }:00:00`;
+
+          //       j.End_Time = `${
+          //         +timetable[i].End_Time.slice(0, 2) + modules[m].Credit_Practical < 10
+          //           ? `0${+timetable[i].End_Time.slice(0, 2) + modules[m].Credit_Practical}`
+          //           : +timetable[i].End_Time.slice(0, 2) + modules[m].Credit_Practical
+          //       }:00:00`;
+          //     }
+          //   })
+          // }
+
           while (
             searchConflictsLecturer(timetable, timetable[i]) || 
             searchConflictsGroup(timetable, timetable[i]) ||
@@ -153,10 +149,11 @@ const generate = (modules, groups, halls, days, times, lecturers) => {
               for (let d = 0; d < daysAvailable.length; d++) {
                 for (let t = 0; t < times.length; t++) {
                   let time = times[t];
-      
+
                   timetable[i].Start_Time = time.Start_Time;
       
                   timetable[i].End_Time = getEndTime(+time.Start_Time.slice(0, 2), modules[m])
+
                   if (
                     !searchConflictsGroup(timetable, timetable[i]) && 
                     !searchConflictsLecturer(timetable, timetable[i]) &&

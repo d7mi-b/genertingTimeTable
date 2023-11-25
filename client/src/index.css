@@ -196,6 +196,10 @@ h1 {
     color: var(--main-color);
 }
 
+.smallFont {
+    font-size: .8rem;
+}
+
 @media (min-width: 283px) and (max-width: 992px) {
     .container-section {
         animation: none;

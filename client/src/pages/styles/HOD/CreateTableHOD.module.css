@@ -18,7 +18,7 @@
 
 .createTable_main{
     display: flex;
-    margin-top: 5%;
+    margin-top: 2%;
 }
 
 .createTable_main ul{
@@ -183,4 +183,21 @@
     border-radius: 5px;
     color: var(--font-color);
     font-family: Tajawal;
+}
+
+.groupsContainer {
+    margin: 0 10px;
+}
+
+.groupsContainer li {
+    margin: auto;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.GroupInfo {
+    margin: 20px auto;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
 }

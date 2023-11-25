@@ -51,7 +51,7 @@ module.exports.getTimetable = async (req, res) => {
 
 module.exports.getTimetableOf = async (req, res) => {
     const { Department_Name, Year } = req.params;
-    console.log(req.params)
+
     try {
         const [timetable] = await db.query(`
             SELECT * FROM timetable.archive where Department_Name = ? and Year = ?;

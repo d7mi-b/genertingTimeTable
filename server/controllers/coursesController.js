@@ -24,33 +24,42 @@ module.exports.addCourse = async (req,res) => {
 
         try{
             const [Course] = await db.query(`
-            insert into subjects (Subject_Name, Subject_Code, Credit_Theoretical, 
-            Credit_Practical, Credit_Tutorial, Department_ID, Semester_ID)
-            values (?,?,?,?,?,?,?)
-            `,[Subject_Name,Subject_Code,Credit_Theoretical,Credit_Practical,
-            Credit_Tutorial,Department_ID,Semester_ID]);
+                insert into subjects (Subject_Name, Subject_Code, Credit_Theoretical, 
+                Credit_Practical, Credit_Tutorial, Department_ID, Semester_ID)
+                values (?,?,?,?,?,?,?)
+            `,[
+                Subject_Name,Subject_Code,Credit_Theoretical,Credit_Practical,
+                Credit_Tutorial,Department_ID,Semester_ID
+            ]);
+
+            const [groups] = await db.query(`
+                SELECT Group_ID FROM timetable.batch_groups natural join batches
+                where batches.Semester_ID = ? and batches.Department_ID = ?;
+            `, [Semester_ID, Department_ID]);
 
             
             if(Course.insertId)
-           {
-                if(Credit_Theoretical != 0){
-                    await db.query(`
-                    insert into module (Subject_ID, Semester_ID, Department_ID, Subject_Type_ID) 
-                    values(?,?,?,?)
-                    `,[Course.insertId,Semester_ID,Department_ID,1])
-                }
-                if(Credit_Practical != 0){
-                    await db.query(`
-                    insert into module (Subject_ID, Semester_ID, Department_ID, Subject_Type_ID) 
-                    values(?,?,?,?)
-                    `,[Course.insertId,Semester_ID,Department_ID,2])
-                }
-                if(Credit_Tutorial != 0){
-                    await db.query(`
-                    insert into module (Subject_ID, Semester_ID, Department_ID, Subject_Type_ID) 
-                    values(?,?,?,?)
-                    `,[Course.insertId,Semester_ID,Department_ID,3])
-                }
+            {
+                groups.forEach(async g => {
+                    if(Credit_Theoretical != 0){
+                        await db.query(`
+                            insert into module (Subject_ID, Group_ID, Semester_ID, Department_ID, Subject_Type_ID) 
+                            values(?,?,?,?,?)
+                        `,[Course.insertId, g.Group_ID, Semester_ID, Department_ID, 1])
+                    }
+                    if(Credit_Practical != 0){
+                        await db.query(`
+                            insert into module (Subject_ID, Group_ID, Semester_ID, Department_ID, Subject_Type_ID) 
+                            values(?,?,?,?,?)
+                        `,[Course.insertId, g.Group_ID, Semester_ID, Department_ID, 2])
+                    }
+                    if(Credit_Tutorial != 0){
+                        await db.query(`
+                            insert into module (Subject_ID, Group_ID, Semester_ID, Department_ID, Subject_Type_ID) 
+                            values(?,?,?,?,?)
+                        `,[Course.insertId, g.Group_ID, Semester_ID, Department_ID, 3])
+                    }
+                })
 
                 res.status(201).json(Course)
             }

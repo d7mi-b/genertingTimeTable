@@ -99,7 +99,7 @@ module.exports.checkModulesForGenerating = async (req, res) => {
         const [modules] = await db.query(`
             select department.Department_ID, count(Module_ID) as modules, count(Lecturer_ID) as lecturers, count(Hall_Type_ID) as Hall_Type from module
             right outer join department on module.Department_ID = department.Department_ID
-            where department.College_ID = 1
+            where department.College_ID = ?
             group by department.Department_ID;
         `, [College_ID]);
 

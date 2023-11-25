@@ -20,7 +20,7 @@ const CreateTable = () => {
     const {data:departments} = useFetch(`http://localhost:5000/departements`)
     const {data:modules, isPending} = useFetch(`http://localhost:5000/module/${Department_ID}/${semesterSelected}`)
     const {data:systemState} = useFetch(`http://localhost:5000/systemState`);
-    const {data:Batches} = useFetch(`http://localhost:5000/batches/department/${Department_ID}`)
+    const {data:Groups} = useFetch(`http://localhost:5000/batches/groups/${Department_ID}`)
     const { fetchPut } = useFetchPut();
     const { fetchPost } = useFetchPost();
     
@@ -30,7 +30,9 @@ const CreateTable = () => {
     const [level_three] = useState(semesterSelected+4);
     const [level_four] = useState(semesterSelected+6);
     const [level_five] = useState(semesterSelected+8);
-    const [semester, setSemester] = useState(level_one)
+    const [semester, setSemester] = useState(level_one);
+    const [groups, setGroups] = useState([]);
+    const [Group_ID, setGroup_ID] = useState('');
     const [Subject_ID, setSubject_ID] = useState('')
     const [Subject_Name, setSubject_Name] = useState('')
     const [Subject_Type, setSubject_Type] = useState("")
@@ -86,6 +88,20 @@ const CreateTable = () => {
             break;
             default: console.log('Nothing')
         }
+
+        setGroups(() => Groups.filter(g => {
+            if (semester === level_one)
+                return g.Semester_ID === level_one
+            else if (semester === level_two)
+                return g.Semester_ID === level_two
+            else if (semester === level_three)
+                return g.Semester_ID === level_three
+            else if (semester === level_four)
+                return g.Semester_ID === level_four
+            else
+                return g.Semester_ID === level_five
+        }))
+
     }
 
     const totalHours = async (Lecturer_ID) => {
@@ -144,26 +160,26 @@ const CreateTable = () => {
         })
     }
 
-    const handleSetGroup = async (value,Module_ID,Subject_ID,Hall_Type_ID, Subject_Type_ID) => {
-        console.log(Number(value),
-            Module_ID,
-            Department_ID,
-            semester,
-            Subject_ID,
-            Hall_Type_ID)
+    // const handleSetGroup = async (value,Module_ID,Subject_ID,Hall_Type_ID, Subject_Type_ID) => {
+    //     console.log(Number(value),
+    //         Module_ID,
+    //         Department_ID,
+    //         semester,
+    //         Subject_ID,
+    //         Hall_Type_ID)
 
-        await fetch('http://localhost:5000/module/updateGroup?' + new URLSearchParams({
-            Group_ID:Number(value),
-            Module_ID,
-            Department_ID,
-            Semester_ID:semester,
-            Subject_ID,
-            Hall_Type_ID,
-            Subject_Type_ID
-        })).then(res => {
-            console.log(res)
-        }).catch(err => console.log(err))
-    }
+    //     await fetch('http://localhost:5000/module/updateGroup?' + new URLSearchParams({
+    //         Group_ID:Number(value),
+    //         Module_ID,
+    //         Department_ID,
+    //         Semester_ID:semester,
+    //         Subject_ID,
+    //         Hall_Type_ID,
+    //         Subject_Type_ID
+    //     })).then(res => {
+    //         console.log(res)
+    //     }).catch(err => console.log(err))
+    // }
 
     const handleSetPracGroups = async (practical_Groups_No,Module_ID) => {
         await fetchPut(`http://localhost:5000/module/updatePracticalNo`, {
@@ -171,6 +187,12 @@ const CreateTable = () => {
             Module_ID
         })
     }
+
+    useEffect(() => {
+        if (Groups && groups.length === 0) {
+            setGroups(() => Groups.filter(g => g.Semester_ID === semesterSelected));
+        }
+    }, [Groups, groups, semesterSelected])
 
     useEffect(() => {
         const list = document.querySelector(".list").querySelector("li");
@@ -185,6 +207,11 @@ const CreateTable = () => {
 
     },[])
 
+    useEffect(() => {
+        if (groups[0])
+            setGroup_ID(groups[0].Group_ID)
+    }, [groups])
+
     return(
         <section className="container">
             <header className={style.createTable_header}>
@@ -196,93 +223,96 @@ const CreateTable = () => {
                 <div>
                     {
                         systemState && 
-                        <h3>السنة الدراسية - {systemState.System_Year} - {
-                            semesterSelected === 1 && <p>الترم الأول</p>
-                        }
-                        {semesterSelected === 2 && <p>الترم الثاني</p>
-                        }</h3>
+                        <h3>
+                            السنة الدراسية - { systemState.System_Year} - 
+                            { semesterSelected === 1 && <p>الترم الأول</p> }
+                            { semesterSelected === 2 && <p>الترم الثاني</p> }
+                        </h3>
                     }
                 </div>
             </header>
+
+            <section>
+                {
+                    Groups && Groups.filter(g => g.Group_ID === Group_ID).map(g => {
+                        return (
+                            <section key={`info-${g.Group_ID}`} className={style.GroupInfo}>
+                                <p>المجموعة: {g.Group_} {g.Batch_Type}</p>
+                                <p>عدد المجموعة: {g.Group_Count}</p>
+                            </section>
+                        )
+                    })
+                }
+            </section>
+
             <article className={style.createTable_main}>
+                {
+                    Groups &&
+                    <ul className={`list ${style.listDiv} ${style.groupsContainer}`}>
+                        {
+                            Groups.filter(g => g.Semester_ID === semester).map(g => {
+                                return <li 
+                                    key={g.Group_ID}
+                                    onClick={() => setGroup_ID(g.Group_ID)}
+                                    >
+                                        {g.Group_} {g.Batch_Type}
+                                    </li>
+                            })
+                        }
+                    </ul>
+                }
                 <main>
                     {
                         isPending && <Loading />
                     }
                     {
-                        modules && Batches &&
-                        modules.filter(e => e.Semester_ID === semester).map(i => {
-                            return(
+                        modules && Groups &&
+                        modules.filter(e => e.Semester_ID === semester && Group_ID === e.Group_ID).map(i => {
+                                return(
+                                    <div key={i.Module_ID} className={style.courseDiv}>
+                                        <p className="smallFont">عدد المجموعات الفرعية: </p>
+                                        <input type="number" defaultValue={i.practical_Groups_No} 
+                                            onChange={e => handleSetPracGroups(e.target.value,i.Module_ID)}
+                                        />
+                                        <hr />
+                                        <select 
+                                            id={i.Module_ID}
+                                            onChange={e => handleSelectLecturer(e.target,i.Module_ID,i.Subject_ID,i.Subject_Name,i.Subject_Type_Name,i.Subject_Type_ID)}
+                                            defaultValue={i.Lecturer_ID}
+                                        >
+                                            <option>اختر المدرس : </option>
+                                            {
+                                                lecturers && 
+                                                lecturers.map(i => {
+                                                    
+                                                    return(
+                                                        <option key={i.Lecturer_ID} value={i.Lecturer_ID}>{i.Lecturer_Name}</option>
+                                                    )
+                                                })
+                                            }
+                                            {i.Lecturer_ID && <option key={i.Lecturer_ID} value={i.Lecturer_ID}>{i.Lecturer_Name}</option>}
 
-                                <div key={i.Module_ID} className={style.courseDiv}>
-                                <p>عدد مجموعات العملي: </p>
-                                <input type="number" defaultValue={i.practical_Groups_No} 
-                                onChange={e => handleSetPracGroups(e.target.value,i.Module_ID)}
-                                />
-                                <hr />
-                                <select 
-                                    id={i.Module_ID}
-                                    onChange={e => handleSelectLecturer(e.target,i.Module_ID,i.Subject_ID,i.Subject_Name,i.Subject_Type_Name,i.Subject_Type_ID)}
-                                    defaultValue={i.Lecturer_ID}
-                                >
-                                    <option>اختر المدرس : </option>
-                                    {
-                                        lecturers && 
-                                        lecturers.map(i => {
-                                            
-                                            return(
-                                                <option key={i.Lecturer_ID} value={i.Lecturer_ID}>{i.Lecturer_Name}</option>
-                                            )
-                                        })
-                                    }
-                                    {i.Lecturer_ID && <option key={i.Lecturer_ID} value={i.Lecturer_ID}>{i.Lecturer_Name}</option>}
-
-                                    <option value='else'>غير ذلك ..</option>
-                                </select>
-                            <hr />
-                            <select defaultValue={i.Hall_Type_ID} required onChange={e => handleSetHall(e.target.value,i.Module_ID)}>
-                                <option>اختر نوع القاعة :</option>
-                                {
-                                    hall_types && 
-                                    hall_types.map(i => {
-                                        return(
-                                            <option key={i.Hall_Type_ID} value={i.Hall_Type_ID}>{i.Type_Name}</option>
-                                        )
-                                    })
-                                }
-                            </select>
-                            <hr />
-                            <p>المجموعة: </p>
-                                {
-                                    Batches && 
-                                    Batches.filter(t => t.Semester_ID === semester).map(b => {
-                                        console.log(i.Group_ID)
-                                        return(
-                                    <select defaultValue={i.Group_ID} required 
-                                    onChange={e => handleSetGroup(e.target.value,i.Module_ID,i.Subject_ID,i.Hall_Type_ID,i.Subject_Type_ID)}>
-                                        <option>حدد المجموعة</option>
-                                       {
-                                        b.Groups &&
-                                        b.Groups.map(g => {
-                                            return(
-                                                <option key={g.Group_ID} value={g.Group_ID}>{g.Group_}</option>
-                                            )
-                                    
+                                            <option value='else'>غير ذلك ..</option>
+                                        </select>
+                                    <hr />
+                                    <select defaultValue={i.Hall_Type_ID} required onChange={e => handleSetHall(e.target.value,i.Module_ID)}>
+                                        <option>اختر نوع القاعة :</option>
+                                        {
+                                            hall_types && 
+                                            hall_types.map(i => {
+                                                return(
+                                                    <option key={i.Hall_Type_ID} value={i.Hall_Type_ID}>{i.Type_Name}</option>
+                                                )
                                             })
                                         }
-                                    </select>
-                                        )
-                                    })
-                                }
-                            
-                            <hr />
-                            <p>{i.Subject_Type_Name}</p>
-                            <hr />
-                            <h4>{i.Subject_Name}</h4>
-                            </div>
-                                    
-                            )
-                        })
+                                        </select>
+                                        <hr />
+                                        <p>{i.Subject_Type_Name}</p>
+                                        <hr />
+                                        <h4>{i.Subject_Name}</h4>
+                                    </div>
+                                )
+                            })
                     }
                     
                     {
@@ -292,6 +322,7 @@ const CreateTable = () => {
                         
                     }
                 </main>
+
                 <section className={`container-section ${style.sendRequest}`} id='sendRequest'>
                     <article className={`center-section`}>
                         <FontAwesomeIcon className={`close-btn`} id="colseLogin" icon={faXmark} size="xl" />
@@ -320,6 +351,7 @@ const CreateTable = () => {
                         
                     </article>
                 </section>
+                
                 <div className={`${style.link} DivLink`}/>
                 <ul className={`list ${style.listDiv}`}>
                     <li value='1' onClick={handleChange}>1</li>

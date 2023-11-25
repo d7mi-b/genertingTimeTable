@@ -12,5 +12,6 @@ router.delete('/deleteGroup',batchesController.deleteGroup)
 router.put('/updateBatch',batchesController.updateBatch)
 router.put('/updateGroup',batchesController.updateGroup)
 router.post('/addGroup',batchesController.addGroup)
+router.get('/groups/:Department_ID', batchesController.getGroupsOfDepartment);
 
 module.exports = router;

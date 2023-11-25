@@ -1003,8 +1003,7 @@ Create table batch_groups(
     Batch_Type_ID int,
     primary key(Group_ID),
     foreign key(Batch_ID) references batches(Batch_ID) ON DELETE CASCADE,
-    foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID) ON DELETE
-    SET DEFAULT
+    foreign key(Batch_Type_ID) references batch_type(Batch_Type_ID)
 );
 
 INSERT INTO batch_groups(
@@ -1038,7 +1037,7 @@ Create table module(
     foreign key (Department_ID) references department(Department_ID) ON DELETE CASCADE,
     foreign key (Hall_Type_ID) references hall_type(Hall_Type_ID) ON DELETE SET NULL,
     FOREIGN KEY (Subject_Type_ID) REFERENCES subject_type (Subject_Type_ID) ON DELETE SET NULL,
-    FOREIGN KEY (Group_ID) REFERENCES batch_groups (Group_ID) ON DELETE SET NULL
+    FOREIGN KEY (Group_ID) REFERENCES batch_groups (Group_ID) ON DELETE CASCADE
 );
 
 INSERT INTO module (
@@ -1164,6 +1163,8 @@ Create table system_state (
     System_Year varchar(100) not null,
     System_Semester int not null,
     Default_Weights boolean not null,
+    Maximum_Lecturers_Student int,
+    Minimum_Lecturers_Student int,
     check (System_Semester in (1, 2))
 );
 
@@ -1172,9 +1173,11 @@ INSERT INTO system_state (
         System_Name,
         System_Semester,
         System_Year,
-        Default_Weights
+        Default_Weights,
+        Maximum_Lecturers_Student,
+        Minimum_Lecturers_Student
     )
-VALUES (1, "جامعة حضرموت", 1, '2023-2024', 1);
+VALUES (1, "جامعة حضرموت", 1, '2023-2024', 1, 3, 2);
 
 
 Create table fitnes_weight (
